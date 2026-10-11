@@ -38,6 +38,35 @@ Requires WordPress 6.2+, WooCommerce 8.0+ and PHP 7.4+.
 - **CSV export**, and **webhooks** for Zapier, Make and Pabbly.
 - **Bangla included.**
 
+Want more? See [Cartlum Pro](#cartlum-pro) below.
+
+## Cartlum Pro
+
+Cartlum Pro is a paid add-on. It installs next to the free plugin and adds:
+
+| | Free | Pro |
+|---|:---:|:---:|
+| Save carts at checkout and with the popup | ✅ | ✅ |
+| SMS, WhatsApp, email and call from each cart | ✅ | ✅ |
+| One automatic reminder | ✅ | ✅ |
+| **Multi-step reminders**: as many steps as you like, each with its own time, channel and message | | ✅ |
+| **A/B tests**: two versions of a message; the winner is shown | | ✅ |
+| **Smart coupons**: a discount only when it helps (not for loyal or risky customers) | | ✅ |
+| **Automatic WhatsApp** through Meta's WhatsApp Cloud API | | ✅ |
+| **AI call**: an AI voice agent calls the customer in Bangla over your own phone line and reports back | | ✅ |
+| **AI message writer**: drafts SMS in English, Bangla or Banglish | | ✅ |
+| **Win-back SMS** to past buyers who haven't ordered for a while | | ✅ |
+| Fake-order protection: blocklist, limits, SMS code for risky orders | ✅ | ✅ |
+| **Courier check**: each customer's delivered and refused parcels at Steadfast, Pathao, RedX and Paperfly | | ✅ |
+| **Advance payment**: bKash / Nagad Send Money with Transaction ID before cash-on-delivery orders | | ✅ |
+| **Facebook Pixel and Conversions API**: no double counting, customer details hashed | | ✅ |
+| **Bundle offers** on product pages, and a **customer score** on every cart | | ✅ |
+| Updates and support with a licence key | | ✅ |
+
+Each Pro feature connects with the store's own accounts (SMS gateway, ElevenLabs, FraudBD, Meta). You pay those services directly; Cartlum adds nothing on top.
+
+**Cartlum Pro is coming soon.** To be told when it launches, click **Watch → Custom → Releases** at the top of this page.
+
 ## Screenshots
 
 | Dashboard | A cart |
