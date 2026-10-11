@@ -1,0 +1,237 @@
+/* Cartlum phone login card on My Account. --clx-accent / --clx-on-accent are printed inline. */
+
+.clx-login {
+	--clx-ink: #1a1a1a;
+	--clx-muted: #5e5e5e;
+	--clx-field: #8c8c8c;
+	--clx-line: #dedede;
+	--clx-error: #c4320a;
+	--clx-ok: #1f7a3f;
+
+	box-sizing: border-box;
+	width: 100%;
+	max-width: 440px;
+	margin: 24px auto 48px;
+	padding: 28px 24px;
+	border: 1px solid var(--clx-line);
+	border-radius: 8px;
+	background: #fff;
+	color: var(--clx-ink);
+	font-size: 15px;
+	line-height: 1.5;
+}
+
+.clx-login *,
+.clx-login *::before,
+.clx-login *::after {
+	box-sizing: border-box;
+}
+
+.clx-login .clx-login__title {
+	margin: 0 0 6px;
+	padding: 0;
+	color: var(--clx-ink);
+	font-size: 24px;
+	font-weight: 600;
+	line-height: 1.25;
+	letter-spacing: -.01em;
+	text-transform: none;
+}
+
+.clx-login .clx-login__lead {
+	margin: 0 0 20px;
+	color: var(--clx-muted);
+}
+
+.clx-login .clx-login__field {
+	margin: 0 0 12px;
+}
+
+.clx-login .clx-login__field[hidden] {
+	display: none;
+}
+
+.clx-login .clx-login__field label {
+	display: block;
+	margin: 0 0 6px;
+	color: var(--clx-ink);
+	font-size: 14px;
+	font-weight: 600;
+}
+
+.clx-login .clx-login__field input {
+	display: block;
+	width: 100%;
+	height: 52px;
+	margin: 0;
+	padding: 0 14px;
+	border: 1px solid var(--clx-field);
+	border-radius: 6px;
+	background: #fff;
+	box-shadow: none;
+	color: var(--clx-ink);
+	font-size: 17px;          /* phones zoom in on anything under 16px */
+	line-height: 1.4;
+	outline: 0;
+	transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+.clx-login .clx-login__field input:focus {
+	border-color: var(--clx-accent);
+	box-shadow: 0 0 0 1px var(--clx-accent);
+}
+
+.clx-login .clx-login__field input[readonly] {
+	background: #f5f5f5;
+	color: var(--clx-muted);
+}
+
+.clx-login #clx-login-code {
+	font-size: 22px;
+	letter-spacing: .3em;
+	font-variant-numeric: tabular-nums;
+}
+
+.clx-login .clx-login__msg {
+	min-height: 0;
+	margin: 0 0 12px;
+	color: var(--clx-ok);
+	font-size: 14px;
+}
+
+.clx-login .clx-login__msg:empty {
+	display: none;
+}
+
+.clx-login .clx-login__msg.is-error {
+	color: var(--clx-error);
+}
+
+.clx-login .clx-login__submit {
+	display: block;
+	width: 100%;
+	min-height: 52px;
+	margin: 0;
+	padding: 12px 20px;
+	border: 0;
+	border-radius: 6px;
+	background: var(--clx-accent);
+	color: var(--clx-on-accent);
+	font-size: 17px;
+	font-weight: 600;
+	line-height: 1.3;
+	text-transform: none;
+	letter-spacing: 0;
+	cursor: pointer;
+	transition: filter .15s ease;
+}
+
+.clx-login .clx-login__submit:hover,
+.clx-login .clx-login__submit:focus {
+	background: var(--clx-accent);
+	color: var(--clx-on-accent);
+	filter: brightness(.92);
+}
+
+.clx-login .clx-login__submit:focus-visible {
+	outline: 2px solid var(--clx-accent);
+	outline-offset: 3px;
+}
+
+.clx-login .clx-login__submit:disabled {
+	opacity: .7;
+	cursor: progress;
+}
+
+.clx-login .clx-login__links {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	gap: 8px;
+	margin: 12px 0 0;
+}
+
+.clx-login .clx-login__links[hidden] {
+	display: none;
+}
+
+.clx-login .clx-login__link {
+	min-height: 44px;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background: none;
+	box-shadow: none;
+	color: var(--clx-ink);
+	font-size: 14px;
+	font-weight: 500;
+	text-decoration: underline;
+	text-underline-offset: 2px;
+	text-transform: none;
+	cursor: pointer;
+}
+
+.clx-login .clx-login__link:disabled {
+	color: var(--clx-muted);
+	text-decoration: none;
+	cursor: default;
+}
+
+.clx-login .clx-login__note {
+	margin: 18px 0 0;
+	color: var(--clx-muted);
+	font-size: 13px;
+}
+
+.clx-login .clx-login__classic {
+	margin: 22px 0 0;
+	padding: 16px 0 0;
+	border-top: 1px solid var(--clx-line);
+}
+
+.clx-login .clx-login__classic summary {
+	min-height: 44px;
+	padding: 10px 0;
+	color: var(--clx-ink);
+	font-size: 14px;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+/* WooCommerce's own form inside: one column, no repeated heading. */
+.clx-login .clx-login__classic-body .u-columns,
+.clx-login .clx-login__classic-body .col2-set,
+.clx-login .clx-login__classic-body .u-column1,
+.clx-login .clx-login__classic-body .u-column2 {
+	float: none;
+	width: 100%;
+	max-width: none;
+	margin: 0;
+	padding: 0;
+}
+
+.clx-login .clx-login__classic-body > h2,
+.clx-login .clx-login__classic-body .u-column1 > h2 {
+	display: none;
+}
+
+.clx-login .clx-login__classic-body form.login,
+.clx-login .clx-login__classic-body form.register {
+	margin: 8px 0 0;
+	padding: 0;
+	border: 0;
+}
+
+@media (max-width: 480px) {
+	.clx-login {
+		margin: 12px 0 32px;
+		padding: 22px 16px;
+		border: 0;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.clx-login * {
+		transition: none !important;
+	}
+}

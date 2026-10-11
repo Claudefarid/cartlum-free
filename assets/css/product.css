@@ -1,0 +1,196 @@
+/*
+ * Cartlum product page buttons: Add to cart, Buy now, Order on WhatsApp and Call to order as one
+ * 2 x 2 group under the quantity. --clx-accent / --clx-on-accent (Buy now) and --clx-btn /
+ * --clx-on-btn (all four, when a product button colour is set) are printed inline.
+ */
+
+/* The group wraps WooCommerce's quantity and button, so it fills whatever row the theme gives it. */
+.cartlum-actions {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+	gap: 10px;
+	flex: 1 1 100%;
+	grid-column: 1 / -1;
+	width: 100%;
+	margin: 0 0 16px;
+	clear: both;
+	box-sizing: border-box;
+}
+
+.cartlum-actions > .quantity {
+	grid-column: 1 / -1;
+	float: none;
+	margin: 0;
+}
+
+/* WhatsApp and Call join the grid as if they were its own items. */
+.cartlum-actions .cartlum-contact {
+	display: contents;
+}
+
+.cartlum-actions .single_add_to_cart_button.single_add_to_cart_button,
+.cartlum-actions .cartlum-buy-now.cartlum-buy-now,
+.cartlum-actions .cartlum-contact__btn.cartlum-contact__btn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	float: none;
+	width: 100%;
+	min-height: 48px;
+	margin: 0;
+	padding: 10px 12px;
+	box-sizing: border-box;
+	font-size: 15px;
+	font-weight: 600;
+	line-height: 1.3;
+	text-align: center;
+	text-decoration: none;
+}
+
+/* Buy now: the checkout colour. */
+.cartlum-buy-now.cartlum-buy-now {
+	border: 0;
+	border-radius: 6px;
+	background: var(--clx-accent);
+	color: var(--clx-on-accent);
+	cursor: pointer;
+	letter-spacing: 0;
+	text-transform: none;
+	transition: filter .15s ease;
+}
+
+.cartlum-buy-now.cartlum-buy-now:hover,
+.cartlum-buy-now.cartlum-buy-now:focus {
+	background: var(--clx-accent);
+	color: var(--clx-on-accent);
+	filter: brightness(.92);
+}
+
+/* WhatsApp and Call: outlined, so they do not compete with buying. */
+.cartlum-contact__btn.cartlum-contact__btn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	min-height: 48px;
+	margin: 0;
+	padding: 10px 12px;
+	border: 1.5px solid #c7c7c7;
+	border-radius: 6px;
+	background: #fff;
+	color: #1a1a1a;
+	font-size: 15px;
+	font-weight: 600;
+	line-height: 1.3;
+	text-align: center;
+	text-decoration: none;
+	box-sizing: border-box;
+	transition: border-color .15s ease, background-color .15s ease;
+}
+
+.cartlum-contact__btn.cartlum-contact__btn:hover {
+	border-color: #1a1a1a;
+	background: #fafafa;
+	color: #1a1a1a;
+}
+
+.cartlum-contact__btn--wa.cartlum-contact__btn--wa {
+	border-color: #25d366;
+}
+
+.cartlum-contact__btn--wa svg {
+	color: #1a9e4b;
+}
+
+.cartlum-contact__btn--wa.cartlum-contact__btn--wa:hover {
+	border-color: #1a9e4b;
+	background: #f3fcf6;
+}
+
+.cartlum-contact__btn svg {
+	flex: 0 0 auto;
+}
+
+/* Outside the group (out-of-stock products, the shortcode): side by side on their own. */
+.cartlum-contact {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: 10px;
+	margin: 10px 0 16px;
+	clear: both;
+}
+
+.cartlum-contact--two {
+	grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+
+/* One colour for all four, when the store sets one. */
+.cartlum-actions--uniform .single_add_to_cart_button.single_add_to_cart_button,
+.cartlum-actions--uniform .cartlum-buy-now.cartlum-buy-now,
+.cartlum-actions--uniform .cartlum-contact__btn.cartlum-contact__btn,
+.cartlum-contact--uniform .cartlum-contact__btn.cartlum-contact__btn {
+	border: 0;
+	border-radius: 4px;
+	background: var(--clx-btn);
+	color: var(--clx-on-btn);
+	filter: none;
+}
+
+.cartlum-actions--uniform .single_add_to_cart_button.single_add_to_cart_button:hover,
+.cartlum-actions--uniform .cartlum-buy-now.cartlum-buy-now:hover,
+.cartlum-actions--uniform .cartlum-contact__btn.cartlum-contact__btn:hover,
+.cartlum-contact--uniform .cartlum-contact__btn.cartlum-contact__btn:hover {
+	background: var(--clx-btn);
+	color: var(--clx-on-btn);
+	filter: brightness(1.15);
+}
+
+.cartlum-actions--uniform .cartlum-contact__btn svg,
+.cartlum-contact--uniform .cartlum-contact__btn svg {
+	color: inherit;
+}
+
+/* Shared states. */
+.cartlum-actions .single_add_to_cart_button:focus-visible,
+.cartlum-buy-now:focus-visible,
+.cartlum-contact__btn:focus-visible {
+	outline: 2px solid currentColor;
+	outline-offset: 2px;
+}
+
+.cartlum-actions .single_add_to_cart_button.disabled,
+.cartlum-buy-now.disabled,
+.cartlum-buy-now:disabled {
+	opacity: .5;
+	cursor: not-allowed;
+	filter: none;
+}
+
+/* Buy now under products on shop pages. */
+.cartlum-buy-now--loop.cartlum-buy-now--loop {
+	display: block;
+	width: 100%;
+	min-height: 40px;
+	margin: .5em 0 0;
+	padding: 9px 14px;
+	font-size: 15px;
+	font-weight: 600;
+	text-align: center;
+	text-decoration: none;
+	box-sizing: border-box;
+}
+
+@media (max-width: 359px) {
+	.cartlum-actions,
+	.cartlum-contact--two {
+		grid-template-columns: minmax(0, 1fr);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.cartlum-buy-now,
+	.cartlum-contact__btn {
+		transition: none;
+	}
+}

@@ -1,0 +1,1237 @@
+/*
+ * Cartlum phone-first checkout.
+ *
+ * A focused page (templates/checkout/page.php): the form on the left, the order summary on a grey
+ * panel on the right; on phones the summary folds into a bar at the top. Everything is scoped to
+ * .clx-page and set explicitly, because the theme's stylesheet still loads on this page.
+ */
+
+.clx-page {
+	--clx-ink: #1a1a1a;
+	--clx-muted: #5e5e5e;      /* 6.4:1 on white, 5.9:1 on the panel */
+	--clx-line: #dedede;       /* dividers */
+	--clx-field: #8c8c8c;      /* field borders, 3.4:1 on white */
+	--clx-panel: #f5f5f5;
+	--clx-error: #c4320a;
+	--clx-ok: #1f7a3f;
+	--clx-radius: 6px;
+	--clx-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans", "Noto Sans Bengali", "Helvetica Neue", Arial, sans-serif;
+	--clx-ease: cubic-bezier(.22, 1, .36, 1);
+
+	margin: 0;
+	background: #fff;
+	color: var(--clx-ink);
+	font-family: var(--clx-font);
+	font-size: 15px;
+	line-height: 1.5;
+	-webkit-font-smoothing: antialiased;
+}
+
+.clx-page .clx-header *,
+.clx-page .clx-header *::before,
+.clx-page .clx-header *::after,
+.clx-page form.clx *,
+.clx-page form.clx *::before,
+.clx-page form.clx *::after {
+	box-sizing: border-box;
+}
+
+.clx-page .clx-sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	padding: 0;
+	overflow: hidden;
+	clip: rect(0 0 0 0);
+	border: 0;
+}
+
+.clx-page .cartlum-hide {
+	display: none !important;
+}
+
+/* ---------- Page frame ---------- */
+
+.clx-page .clx-page__main,
+.clx-page .clx-page__main > .woocommerce {
+	max-width: none;
+	margin: 0;
+	padding: 0;
+}
+
+.clx-page .clx-cols {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+}
+
+.clx-page .clx-inner {
+	width: 100%;
+	max-width: 600px;
+	margin: 0 auto;
+	padding: 0 20px;
+}
+
+.clx-page .clx-header {
+	border-bottom: 1px solid var(--clx-line);
+	background: #fff;
+}
+
+.clx-page .clx-header .clx-col-side {
+	display: none;
+}
+
+.clx-page .clx-header__bar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	min-height: 68px;
+}
+
+.clx-page .clx-logo {
+	display: inline-flex;
+	align-items: center;
+	color: var(--clx-ink);
+	text-decoration: none;
+}
+
+.clx-page .clx-logo img {
+	display: block;
+	width: auto;
+	max-width: 180px;
+	max-height: 40px;
+	height: auto;
+}
+
+.clx-page .clx-logo__text {
+	font-size: 21px;
+	font-weight: 600;
+	letter-spacing: -.01em;
+}
+
+.clx-page .clx-cart-link {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 44px;
+	height: 44px;
+	margin-right: -10px;
+	color: var(--clx-ink);
+	border-radius: var(--clx-radius);
+}
+
+.clx-page .clx-cart-link:focus-visible,
+.clx-page .clx-logo:focus-visible {
+	outline: 2px solid var(--clx-accent);
+	outline-offset: 2px;
+}
+
+/* ---------- Order summary ---------- */
+
+.clx-page .clx-summary {
+	background: var(--clx-panel);
+	border-bottom: 1px solid var(--clx-line);
+}
+
+.clx-page .clx-summary__toggle {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	width: 100%;
+	min-height: 60px;
+	margin: 0;
+	padding: 14px max(20px, calc((100% - 560px) / 2));
+	background: var(--clx-panel);
+	border: 0;
+	border-radius: 0;
+	box-shadow: none;
+	color: var(--clx-ink);
+	font: inherit;
+	font-size: 15px;
+	text-align: left;
+	cursor: pointer;
+}
+
+.clx-page .clx-summary__toggle:hover,
+.clx-page .clx-summary__toggle:focus {
+	background: var(--clx-panel);
+	color: var(--clx-ink);
+}
+
+.clx-page .clx-summary__toggle:focus-visible {
+	outline: 2px solid var(--clx-accent);
+	outline-offset: -2px;
+}
+
+.clx-page .clx-summary__toggle-label {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.clx-page .clx-chevron {
+	transition: transform .2s var(--clx-ease);
+}
+
+.clx-page .clx-summary.is-open .clx-chevron {
+	transform: rotate(180deg);
+}
+
+.clx-page .clx-total-amount,
+.clx-page .clx-total-amount strong {
+	font-size: 18px;
+	font-weight: 600;
+	white-space: nowrap;
+}
+
+.clx-page .clx-summary__body {
+	display: none;
+	padding-top: 20px;
+	padding-bottom: 24px;
+}
+
+.clx-page .clx-summary.is-open .clx-summary__body {
+	display: block;
+}
+
+.clx-page .clx-items {
+	list-style: none;
+	margin: 0 0 20px;
+	padding: 0;
+}
+
+.clx-page .clx-item {
+	display: grid;
+	grid-template-columns: 64px minmax(0, 1fr) auto;
+	align-items: center;
+	gap: 14px;
+	margin: 0;
+	padding: 8px 0;
+}
+
+.clx-page .clx-item__thumb {
+	position: relative;
+	width: 64px;
+	height: 64px;
+	border: 1px solid var(--clx-line);
+	border-radius: 8px;
+	background: #fff;
+}
+
+.clx-page .clx-item__thumb img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	object-fit: cover;
+	border-radius: 7px;
+}
+
+.clx-page .clx-item__qty {
+	position: absolute;
+	top: -9px;
+	right: -9px;
+	min-width: 22px;
+	height: 22px;
+	padding: 0 6px;
+	border-radius: 11px;
+	background: #666;
+	color: #fff;
+	font-size: 12px;
+	font-weight: 600;
+	line-height: 22px;
+	text-align: center;
+}
+
+.clx-page .clx-item__name {
+	font-size: 14px;
+	line-height: 1.4;
+}
+
+.clx-page .clx-item__name dl.variation {
+	margin: 2px 0 0;
+	color: var(--clx-muted);
+	font-size: 13px;
+}
+
+.clx-page .clx-item__name dl.variation dt,
+.clx-page .clx-item__name dl.variation dd,
+.clx-page .clx-item__name dl.variation p {
+	display: inline;
+	margin: 0;
+	padding: 0;
+	font-weight: 400;
+}
+
+.clx-page .clx-item__price {
+	font-size: 14px;
+	font-weight: 500;
+	white-space: nowrap;
+}
+
+.clx-page .clx-totals {
+	margin: 0;
+	padding: 0;
+}
+
+.clx-page .clx-totals__row {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 16px;
+	padding: 4px 0;
+	font-size: 14px;
+}
+
+.clx-page .clx-totals dt,
+.clx-page .clx-totals dd {
+	margin: 0;
+	padding: 0;
+	font-weight: 400;
+}
+
+.clx-page .clx-totals dd {
+	text-align: right;
+}
+
+.clx-page .clx-totals__row--discount dd {
+	color: var(--clx-ok);
+}
+
+.clx-page .clx-totals .woocommerce-remove-coupon {
+	margin-left: 6px;
+	color: var(--clx-muted);
+	font-size: 13px;
+}
+
+.clx-page .clx-totals__row--total {
+	margin-top: 10px;
+	padding-top: 6px;
+	font-size: 17px;
+	font-weight: 600;
+}
+
+.clx-page .clx-totals__row--total dt {
+	font-weight: 600;
+}
+
+.clx-page .clx-totals__row--total strong,
+.clx-page .clx-totals__row--total .amount {
+	font-size: 20px;
+	font-weight: 600;
+}
+
+.clx-page .clx-totals__row--total small {
+	display: block;
+	color: var(--clx-muted);
+	font-size: 12px;
+	font-weight: 400;
+}
+
+.clx-page .clx-currency {
+	margin-right: 4px;
+	color: var(--clx-muted);
+	font-size: 12px;
+	font-weight: 400;
+}
+
+.clx-page .clx-muted {
+	color: var(--clx-muted);
+}
+
+/* Discount code */
+
+.clx-page .clx-coupon {
+	margin: 0 0 20px;
+}
+
+.clx-page .clx-coupon__row {
+	display: flex;
+	gap: 10px;
+}
+
+.clx-page .clx-coupon__field {
+	flex: 1 1 auto;
+	min-width: 0;
+	margin: 0 !important;
+}
+
+.clx-page .clx-btn-secondary {
+	flex: 0 0 auto;
+	min-width: 76px;
+	height: 52px;
+	margin: 0;
+	padding: 0 18px;
+	border: 1px solid var(--clx-line);
+	border-radius: var(--clx-radius);
+	background: #e9e9e9;
+	box-shadow: none;
+	color: var(--clx-ink);
+	font: inherit;
+	font-size: 15px;
+	font-weight: 600;
+	cursor: pointer;
+	transition: background-color .15s ease;
+}
+
+.clx-page .clx-btn-secondary:hover:not(:disabled) {
+	background: #dcdcdc;
+	color: var(--clx-ink);
+}
+
+.clx-page .clx-btn-secondary:focus-visible {
+	outline: 2px solid var(--clx-accent);
+	outline-offset: 2px;
+}
+
+.clx-page .clx-btn-secondary:disabled {
+	color: #6b6b6b;
+	cursor: default;
+}
+
+.clx-page .clx-btn-secondary[aria-busy="true"] {
+	cursor: progress;
+}
+
+.clx-page .clx-coupon__msg:not(:empty) {
+	margin-top: 8px;
+	font-size: 13px;
+}
+
+.clx-page .clx-coupon__msg.is-error {
+	color: var(--clx-error);
+}
+
+.clx-page .clx-coupon__msg.is-ok {
+	color: var(--clx-ok);
+}
+
+/* ---------- Form ---------- */
+
+.clx-page .clx-section {
+	margin: 0;
+	padding: 28px 0 0;
+}
+
+.clx-page .clx-h {
+	margin: 0 0 14px;
+	padding: 0;
+	color: var(--clx-ink);
+	font-family: var(--clx-font);
+	font-size: 20px;
+	font-weight: 600;
+	line-height: 1.3;
+	letter-spacing: -.01em;
+	text-transform: none;
+}
+
+.clx-page form.clx .form-row {
+	position: relative;
+	float: none;
+	width: 100%;
+	margin: 0 0 12px;
+	padding: 0;
+}
+
+.clx-page form.clx .form-row label {
+	display: block;
+	margin: 0 0 4px;
+	color: var(--clx-muted);
+	font-size: 13px;
+	font-weight: 400;
+	line-height: 1.3;
+}
+
+.clx-page form.clx .form-row label .required,
+.clx-page form.clx .form-row abbr.required {
+	display: none;
+}
+
+.clx-page form.clx .form-row label .optional {
+	color: inherit;
+}
+
+.clx-page form.clx .woocommerce-input-wrapper {
+	display: block;
+}
+
+.clx-page form.clx .form-row .input-text,
+.clx-page form.clx .form-row select,
+.clx-page form.clx .form-row textarea {
+	display: block;
+	width: 100%;
+	height: 52px;
+	margin: 0;
+	padding: 0 13px;
+	border: 1px solid var(--clx-field);
+	border-radius: var(--clx-radius);
+	background: #fff;
+	box-shadow: none;
+	color: var(--clx-ink);
+	font-family: var(--clx-font);
+	font-size: 16px;          /* phones zoom in on anything smaller */
+	line-height: 1.4;
+	outline: 0;
+	transition: border-color .15s ease, box-shadow .15s ease;
+	-webkit-appearance: none;
+	appearance: none;
+}
+
+.clx-page form.clx .form-row textarea {
+	height: auto;
+	min-height: 92px;
+	padding: 12px 13px;
+	resize: vertical;
+}
+
+.clx-page form.clx .form-row .input-text:focus,
+.clx-page form.clx .form-row textarea:focus,
+.clx-page form.clx .form-row select:focus {
+	border-color: var(--clx-accent);
+	box-shadow: 0 0 0 1px var(--clx-accent);
+}
+
+.clx-page form.clx .form-row .input-text::placeholder,
+.clx-page form.clx .form-row textarea::placeholder {
+	color: #707070;
+	opacity: 1;
+}
+
+.clx-page form.clx .form-row.woocommerce-invalid .input-text,
+.clx-page form.clx .form-row.woocommerce-invalid textarea,
+.clx-page form.clx .form-row.woocommerce-invalid .select2-container.select2-container--default .select2-selection {
+	border-color: var(--clx-error);
+	box-shadow: 0 0 0 1px var(--clx-error);
+}
+
+.clx-page form.clx .form-row.woocommerce-invalid label {
+	color: var(--clx-error);
+}
+
+.clx-page form.clx .form-row .description {
+	display: block !important;
+	position: static;
+	margin: 6px 0 0;
+	padding: 0;
+	background: none;
+	color: var(--clx-muted);
+	font-size: 13px;
+	line-height: 1.45;
+}
+
+.clx-page form.clx .form-row .description::before {
+	display: none;
+}
+
+/* No green "valid" borders: only problems get a colour. */
+.clx-page form.clx .form-row.woocommerce-validated .input-text,
+.clx-page form.clx .form-row.woocommerce-validated select,
+.clx-page form.clx .form-row.woocommerce-validated textarea,
+.clx-page form.clx .form-row.woocommerce-validated .select2-container.select2-container--default .select2-selection {
+	border-color: var(--clx-field);
+}
+
+.clx-page form.clx .form-row.woocommerce-validated .select2-container.select2-container--focus .select2-selection,
+.clx-page form.clx .form-row.woocommerce-validated .select2-container.select2-container--open .select2-selection {
+	border-color: var(--clx-accent);
+}
+
+.clx-page form.clx .form-row.woocommerce-validated .input-text:focus,
+.clx-page form.clx .form-row.woocommerce-validated textarea:focus {
+	border-color: var(--clx-accent);
+}
+
+/* District: the searchable list WooCommerce builds on the select. */
+
+.clx-page form.clx .select2-container {
+	display: block;
+	width: 100% !important;
+}
+
+.clx-page form.clx .select2-container .select2-selection--single {
+	height: 52px;
+	margin: 0;
+	border: 1px solid var(--clx-field);
+	border-radius: var(--clx-radius);
+	background: #fff;
+	outline: 0;
+	transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+.clx-page form.clx .select2-container--focus .select2-selection--single,
+.clx-page form.clx .select2-container--open .select2-selection--single {
+	border-color: var(--clx-accent);
+	box-shadow: 0 0 0 1px var(--clx-accent);
+}
+
+.clx-page form.clx .select2-container .select2-selection--single .select2-selection__rendered {
+	padding: 0 36px 0 13px;
+	color: var(--clx-ink);
+	font-size: 16px;
+	line-height: 50px;
+}
+
+.clx-page form.clx .select2-container .select2-selection--single .select2-selection__arrow {
+	top: 1px;
+	right: 8px;
+	height: 50px;
+}
+
+.clx-page .select2-dropdown {
+	border-color: var(--clx-field);
+	border-radius: var(--clx-radius);
+	font-family: var(--clx-font);
+	overflow: hidden;
+}
+
+.clx-page .select2-search--dropdown .select2-search__field {
+	height: 44px;
+	padding: 0 10px;
+	border: 1px solid var(--clx-field);
+	border-radius: var(--clx-radius);
+	font-size: 16px;
+}
+
+.clx-page .select2-results__option {
+	padding: 10px 13px;
+	font-size: 15px;
+}
+
+.clx-page .select2-container--default .select2-results__option--highlighted[aria-selected],
+.clx-page .select2-container--default .select2-results__option--highlighted[data-selected] {
+	background: var(--clx-accent);
+	color: var(--clx-on-accent);
+}
+
+/*
+ * Labels inside the fields, Shopify-style: they sit where the text goes and move up once the
+ * field has focus or a value. Only with JavaScript running (.clx-js); without it the labels stay
+ * above the fields.
+ */
+
+.clx-js .clx-page form.clx .form-row:not(.clx-no-float) > label {
+	position: absolute;
+	top: 15px;
+	left: 14px;
+	right: 14px;
+	z-index: 1;
+	margin: 0;
+	overflow: hidden;
+	color: var(--clx-muted);
+	font-size: 16px;
+	line-height: 22px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	pointer-events: none;
+	transform-origin: left top;
+	transition: transform .18s var(--clx-ease);
+}
+
+.clx-js .clx-page form.clx .form-row.clx-float:not(.clx-no-float) > label {
+	right: auto;
+	max-width: calc(133% - 37px);
+	transform: translateY(-9px) scale(.75);
+}
+
+.clx-js .clx-page form.clx .form-row:not(.clx-no-float) .input-text,
+.clx-js .clx-page form.clx .form-row:not(.clx-no-float) select {
+	padding-top: 18px;
+}
+
+.clx-js .clx-page form.clx .form-row:not(.clx-no-float) textarea {
+	padding-top: 24px;
+}
+
+.clx-js .clx-page form.clx .form-row:not(.clx-no-float) .select2-selection__rendered {
+	padding-top: 16px;
+	line-height: 34px;
+}
+
+/* Placeholders only once the label has moved up, or they overlap. */
+.clx-js .clx-page form.clx .form-row:not(.clx-float) .input-text::placeholder,
+.clx-js .clx-page form.clx .form-row:not(.clx-float) textarea::placeholder {
+	color: transparent;
+}
+
+/* ---------- Choices: shipping and payment ---------- */
+
+/* Each option has its own border and overlaps the one above by 1px, so the chosen one can show
+   its whole border in the brand colour on top of its neighbours. */
+.clx-page .clx-options,
+.clx-page form.clx #payment ul.payment_methods {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background: none;
+}
+
+.clx-page .clx-option,
+.clx-page form.clx #payment ul.payment_methods li {
+	position: relative;
+	margin: -1px 0 0;
+	padding: 0;
+	border: 1px solid var(--clx-line);
+	background: #fff;
+	overflow: hidden;
+	transition: border-color .15s ease;
+}
+
+.clx-page .clx-option:first-child,
+.clx-page form.clx #payment ul.payment_methods li:first-child {
+	margin-top: 0;
+	border-top-left-radius: var(--clx-radius);
+	border-top-right-radius: var(--clx-radius);
+}
+
+.clx-page .clx-option:last-child,
+.clx-page form.clx #payment ul.payment_methods li:last-child {
+	border-bottom-left-radius: var(--clx-radius);
+	border-bottom-right-radius: var(--clx-radius);
+}
+
+.clx-page .clx-option label {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	min-height: 56px;
+	margin: 0;
+	padding: 14px 16px;
+	color: var(--clx-ink);
+	font-size: 15px;
+	cursor: pointer;
+}
+
+.clx-page .clx-option input[type="radio"],
+.clx-page form.clx #payment ul.payment_methods li > input[type="radio"] {
+	flex: 0 0 auto;
+	width: 18px;
+	height: 18px;
+	margin: 0;
+	accent-color: var(--clx-accent);
+	cursor: pointer;
+}
+
+.clx-page .clx-option__price {
+	margin-left: auto;
+	font-weight: 600;
+	white-space: nowrap;
+}
+
+/* The chosen option: its border in the brand colour, with the faintest tint of it. */
+.clx-page .clx-option:has(input:checked),
+.clx-page form.clx #payment ul.payment_methods li:has(> input:checked) {
+	z-index: 1;
+	border-color: var(--clx-accent);
+}
+
+.clx-page .clx-option:has(input:checked),
+.clx-page form.clx #payment ul.payment_methods li:has(> input:checked) > label {
+	background: color-mix(in srgb, var(--clx-accent) 4%, #fff);
+}
+
+.clx-page .clx-empty {
+	margin: 0;
+	padding: 16px;
+	border: 1px solid var(--clx-line);
+	border-radius: var(--clx-radius);
+	background: var(--clx-panel);
+	color: var(--clx-muted);
+	font-size: 14px;
+}
+
+/* Payment, on WooCommerce's own markup. */
+
+.clx-page form.clx #payment {
+	margin: 0;
+	padding: 0;
+	border-radius: 0;
+	background: none;
+}
+
+.clx-page form.clx #payment ul.payment_methods li {
+	line-height: 1.5;
+	list-style: none;
+}
+
+.clx-page form.clx #payment ul.payment_methods li > input[type="radio"] {
+	position: absolute;
+	top: 19px;
+	left: 16px;
+	z-index: 1;
+}
+
+.clx-page form.clx #payment ul.payment_methods li > label {
+	display: block;
+	min-height: 56px;
+	margin: 0;
+	padding: 15px 16px 15px 46px;
+	color: var(--clx-ink);
+	font-size: 15px;
+	font-weight: 500;
+	cursor: pointer;
+	transition: background-color .15s ease;
+}
+
+/* With one payment method WooCommerce hides the radio; nothing needs room for it. */
+.clx-page form.clx #payment ul.payment_methods li > input[type="radio"][style*="none"] + label,
+.clx-page form.clx #payment ul.payment_methods li:has(> input[type="radio"][style*="none"]) div.payment_box {
+	padding-left: 16px;
+}
+
+.clx-page form.clx #payment ul.payment_methods li > label img {
+	float: right;
+	max-height: 24px;
+	margin: 0 0 0 8px;
+}
+
+.clx-page form.clx #payment div.payment_box {
+	margin: 0;
+	padding: 14px 16px 16px 46px;
+	border-top: 1px solid var(--clx-line);
+	border-radius: 0;
+	background: var(--clx-panel);
+	color: var(--clx-ink);
+	font-size: 14px;
+}
+
+.clx-page form.clx #payment div.payment_box::before {
+	display: none;
+}
+
+.clx-page form.clx #payment div.payment_box p:last-child {
+	margin-bottom: 0;
+}
+
+.clx-page form.clx #payment div.form-row.place-order {
+	margin: 0;
+	padding: 18px 0 0;
+}
+
+.clx-page form.clx .woocommerce-privacy-policy-text,
+.clx-page form.clx .woocommerce-terms-and-conditions-wrapper {
+	color: var(--clx-muted);
+	font-size: 13px;
+}
+
+.clx-page form.clx .woocommerce-privacy-policy-text p {
+	margin: 0 0 14px;
+}
+
+.clx-page .clx-pay-total {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	margin: 0 0 14px;
+	font-size: 16px;
+}
+
+/* The order button. */
+
+.clx-page form.clx #place_order {
+	display: block;
+	float: none;
+	width: 100%;
+	min-height: 56px;
+	margin: 0;
+	padding: 14px 20px;
+	border: 0;
+	border-radius: var(--clx-radius);
+	background: var(--clx-accent);
+	box-shadow: none;
+	color: var(--clx-on-accent);
+	font-family: var(--clx-font);
+	font-size: 17px;
+	font-weight: 600;
+	line-height: 1.3;
+	letter-spacing: 0;
+	text-transform: none;
+	cursor: pointer;
+	transition: filter .15s ease, transform .1s ease;
+}
+
+.clx-page form.clx #place_order:hover {
+	background: var(--clx-accent);
+	color: var(--clx-on-accent);
+	filter: brightness(.92);
+}
+
+.clx-page form.clx #place_order:active {
+	transform: scale(.99);
+}
+
+.clx-page form.clx #place_order:focus-visible {
+	outline: 2px solid var(--clx-accent);
+	outline-offset: 3px;
+}
+
+.clx-page form.clx.processing #place_order {
+	opacity: .7;
+	cursor: progress;
+}
+
+.clx-page .clx-policies {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px 20px;
+	margin: 36px 0 0;
+	padding: 16px 0 40px;
+	border-top: 1px solid var(--clx-line);
+	font-size: 13px;
+}
+
+.clx-page .clx-policies a {
+	color: var(--clx-ink);
+	text-decoration: underline;
+	text-underline-offset: 2px;
+}
+
+.clx-page form.clx .clx-col-main > .clx-inner {
+	padding-bottom: 8px;
+}
+
+/* ---------- Messages ---------- */
+
+/* Notices printed before the form (e.g. "added to your cart"), kept inside the page frame. */
+.clx-page .clx-page__main > .woocommerce > .woocommerce-notices-wrapper:not(:empty) {
+	max-width: 600px;
+	margin: 16px auto 0;
+	padding: 0 20px;
+	font-size: 14px;
+}
+
+.clx-page .clx-page__main > .woocommerce > .woocommerce-notices-wrapper .wc-block-components-notice-banner,
+.clx-page .clx-page__main > .woocommerce > .woocommerce-notices-wrapper .woocommerce-message {
+	margin: 0;
+	border-radius: var(--clx-radius);
+}
+
+.clx-page form.clx .woocommerce-NoticeGroup {
+	margin: 20px 0 0;
+}
+
+.clx-page form.clx .woocommerce-error,
+.clx-page form.clx .wc-block-components-notice-banner.is-error {
+	display: flex;
+	align-items: flex-start;
+	gap: 10px;
+	margin: 0;
+	padding: 12px 14px;
+	border: 1px solid var(--clx-error);
+	border-radius: var(--clx-radius);
+	background: #fff5f2;
+	color: var(--clx-ink);
+	font-size: 14px;
+	list-style: none;
+}
+
+.clx-page form.clx .woocommerce-error::before {
+	display: none;
+}
+
+.clx-page form.clx .wc-block-components-notice-banner svg {
+	flex: 0 0 auto;
+	width: 20px;
+	height: 20px;
+	fill: var(--clx-error);
+}
+
+.clx-page form.clx .woocommerce-error li,
+.clx-page form.clx .wc-block-components-notice-banner ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+/* ---------- Thank-you page ---------- */
+
+.clx-page .clx-thanks *,
+.clx-page .clx-thanks *::before,
+.clx-page .clx-thanks *::after {
+	box-sizing: border-box;
+}
+
+.clx-page .clx-thanks__solo {
+	padding-top: 40px;
+	padding-bottom: 40px;
+}
+
+.clx-page .clx-thanks__head {
+	display: flex;
+	align-items: center;
+	gap: 14px;
+	padding: 28px 0 20px;
+}
+
+.clx-page .clx-thanks__icon {
+	display: inline-flex;
+	flex: 0 0 auto;
+	align-items: center;
+	justify-content: center;
+	width: 44px;
+	height: 44px;
+	border: 2px solid var(--clx-ok);
+	border-radius: 50%;
+	color: var(--clx-ok);
+}
+
+.clx-page .clx-thanks__icon.is-failed {
+	border-color: var(--clx-error);
+	color: var(--clx-error);
+}
+
+.clx-page .clx-thanks__order {
+	margin: 0;
+	color: var(--clx-muted);
+	font-size: 14px;
+}
+
+.clx-page .clx-thanks__title {
+	margin: 0;
+	padding: 0;
+	color: var(--clx-ink);
+	font-family: var(--clx-font);
+	font-size: 24px;
+	font-weight: 600;
+	line-height: 1.25;
+	letter-spacing: -.01em;
+	text-transform: none;
+	text-wrap: balance;
+}
+
+.clx-page .clx-card {
+	margin: 0 0 14px;
+	padding: 16px 18px;
+	border: 1px solid var(--clx-line);
+	border-radius: var(--clx-radius);
+	background: #fff;
+	font-size: 14px;
+}
+
+.clx-page .clx-card p {
+	margin: 0;
+}
+
+.clx-page .clx-card p + p {
+	margin-top: 10px;
+}
+
+.clx-page .clx-card__title {
+	margin: 0 0 6px;
+	padding: 0;
+	color: var(--clx-ink);
+	font-family: var(--clx-font);
+	font-size: 17px;
+	font-weight: 600;
+	line-height: 1.35;
+	text-transform: none;
+	letter-spacing: 0;
+}
+
+.clx-page .clx-details {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: 16px;
+	margin: 10px 0 0;
+	padding: 0;
+}
+
+.clx-page .clx-details dt {
+	margin: 0 0 2px;
+	color: var(--clx-ink);
+	font-weight: 600;
+}
+
+.clx-page .clx-details dd {
+	margin: 0;
+	color: var(--clx-ink);
+	line-height: 1.55;
+}
+
+.clx-page .clx-details address {
+	margin: 0;
+	font-style: normal;
+}
+
+@media (min-width: 560px) {
+	.clx-page .clx-details {
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+	}
+}
+
+.clx-page .clx-item__meta {
+	display: block;
+	color: var(--clx-muted);
+	font-size: 13px;
+}
+
+.clx-page .clx-item__meta p {
+	display: inline;
+	margin: 0;
+}
+
+/* Payment instructions from the payment method (e.g. bank details). */
+.clx-page .clx-gateway-note {
+	margin: 0 0 14px;
+	padding: 16px 18px;
+	border: 1px solid var(--clx-line);
+	border-radius: var(--clx-radius);
+	font-size: 14px;
+}
+
+.clx-page .clx-gateway-note h2,
+.clx-page .clx-gateway-note h3 {
+	margin: 0 0 8px;
+	font-family: var(--clx-font);
+	font-size: 16px;
+	font-weight: 600;
+}
+
+.clx-page .clx-gateway-note p {
+	margin: 0;
+}
+
+.clx-page .clx-gateway-note p + p {
+	margin-top: 8px;
+}
+
+.clx-page .clx-gateway-note ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.clx-page .clx-thanks__actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	margin: 18px 0 40px;
+}
+
+.clx-page .clx-btn {
+	display: inline-flex;
+	flex: 1 1 200px;
+	align-items: center;
+	justify-content: center;
+	min-height: 52px;
+	padding: 12px 20px;
+	border: 0;
+	border-radius: var(--clx-radius);
+	background: var(--clx-accent);
+	color: var(--clx-on-accent);
+	font-size: 16px;
+	font-weight: 600;
+	text-align: center;
+	text-decoration: none;
+	transition: filter .15s ease;
+}
+
+.clx-page .clx-btn:hover,
+.clx-page .clx-btn:focus {
+	color: var(--clx-on-accent);
+	filter: brightness(.92);
+}
+
+.clx-page .clx-btn--ghost {
+	border: 1px solid var(--clx-field);
+	background: #fff;
+	color: var(--clx-ink);
+}
+
+.clx-page .clx-btn--ghost:hover,
+.clx-page .clx-btn--ghost:focus {
+	background: var(--clx-panel);
+	color: var(--clx-ink);
+	filter: none;
+}
+
+.clx-page .clx-btn:focus-visible {
+	outline: 2px solid var(--clx-accent);
+	outline-offset: 2px;
+}
+
+/* ---------- Desktop: two halves ---------- */
+
+@media (min-width: 1000px) {
+	.clx-page .clx-page__main > .woocommerce > .woocommerce-notices-wrapper:not(:empty) {
+		max-width: none;
+		margin: 20px 0 0;
+		padding-left: max(32px, calc(50% - 620px + 32px));
+		padding-right: calc(50% + 44px);
+	}
+
+	.clx-page .clx-cols {
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+	}
+
+	.clx-page .clx-col-main {
+		grid-column: 1;
+		grid-row: 1;
+	}
+
+	.clx-page .clx-col-side {
+		grid-column: 2;
+		grid-row: 1;
+	}
+
+	.clx-page .clx-inner--main {
+		max-width: 620px;
+		margin: 0 0 0 auto;
+		padding: 0 44px 0 32px;
+	}
+
+	.clx-page .clx-inner--side {
+		max-width: 500px;
+		margin: 0 auto 0 0;
+		padding: 0 32px 0 44px;
+	}
+
+	/* The header bar spans the page, its ends lined up with the form and the summary. */
+	.clx-page .clx-header .clx-col-main {
+		grid-column: 1 / -1;
+	}
+
+	.clx-page .clx-header .clx-header__bar {
+		max-width: none;
+		margin: 0;
+		padding-left: max(32px, calc(50% - 620px + 32px));
+		padding-right: max(32px, calc(50% - 500px + 32px));
+	}
+
+	.clx-page .clx-summary {
+		min-height: calc(100vh - 69px);
+		border-bottom: 0;
+		border-left: 1px solid var(--clx-line);
+	}
+
+	.clx-page .clx-summary__toggle {
+		display: none;
+	}
+
+	.clx-page .clx-summary__body,
+	.clx-page .clx-summary.is-open .clx-summary__body {
+		display: block;
+		position: sticky;
+		top: 0;
+		padding-top: 40px;
+		padding-bottom: 40px;
+	}
+
+	.clx-page .clx-section {
+		padding-top: 36px;
+	}
+
+	.clx-page .clx-pay-total {
+		display: none;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.clx-page *,
+	.clx-page *::before,
+	.clx-page *::after {
+		transition-duration: .01ms !important;
+	}
+}

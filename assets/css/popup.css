@@ -1,0 +1,152 @@
+/* Save-cart popup. Bottom sheet on phones, centred card on larger screens. */
+.clx-popup[hidden],
+.clx-popup [hidden] {
+	display: none !important;
+}
+.clx-popup {
+	position: fixed;
+	inset: 0;
+	z-index: 999999;
+	display: flex;
+	align-items: flex-end;
+	justify-content: center;
+	font-size: 16px;
+	line-height: 1.5;
+	color: #1f2937;
+}
+.clx-popup-open,
+.clx-popup-open body {
+	overflow: hidden;
+}
+.clx-popup__backdrop {
+	position: absolute;
+	inset: 0;
+	background: rgba(17, 24, 39, 0.55);
+	animation: clx-popup-fade 0.2s ease-out;
+}
+.clx-popup__card {
+	position: relative;
+	box-sizing: border-box;
+	width: 100%;
+	max-width: 420px;
+	padding: 28px 22px 22px;
+	background: #fff;
+	border-radius: 18px 18px 0 0;
+	box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.15);
+	animation: clx-popup-up 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.clx-popup__x {
+	position: absolute;
+	top: 6px;
+	right: 6px;
+	width: 40px;
+	height: 40px;
+	padding: 0;
+	border: 0;
+	background: none;
+	color: #6b7280;
+	font-size: 26px;
+	line-height: 1;
+	cursor: pointer;
+}
+.clx-popup .clx-popup__title {
+	margin: 0 32px 8px 0;
+	font-size: 21px;
+	line-height: 1.3;
+	font-weight: 700;
+	color: #111;
+}
+.clx-popup__text {
+	margin: 0 0 16px;
+	color: #4b5563;
+	font-size: 15px;
+}
+.clx-popup .clx-popup__input {
+	box-sizing: border-box;
+	width: 100%;
+	height: 50px;
+	margin: 0;
+	padding: 0 14px;
+	border: 1px solid #d1d5db;
+	border-radius: 10px;
+	background: #fff;
+	color: #111;
+	font-size: 17px;
+}
+.clx-popup .clx-popup__input:focus {
+	outline: none;
+	border-color: var(--clx-accent, #1f2937);
+	box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.08);
+}
+.clx-popup__hp {
+	position: absolute !important;
+	left: -9999px !important;
+	width: 1px;
+	height: 1px;
+	opacity: 0;
+}
+.clx-popup__error {
+	min-height: 0;
+	margin: 6px 0 0;
+	color: #b91c1c;
+	font-size: 14px;
+}
+.clx-popup__error:empty {
+	margin: 0;
+}
+.clx-popup .clx-popup__button {
+	display: block;
+	box-sizing: border-box;
+	width: 100%;
+	min-height: 50px;
+	margin: 12px 0 0;
+	padding: 12px 16px;
+	border: 0;
+	border-radius: 10px;
+	background: var(--clx-accent, #1f2937);
+	color: var(--clx-on-accent, #fff);
+	font-size: 17px;
+	font-weight: 700;
+	cursor: pointer;
+}
+.clx-popup .clx-popup__button:disabled {
+	opacity: 0.6;
+}
+.clx-popup .clx-popup__later {
+	display: block;
+	width: 100%;
+	margin: 6px 0 0;
+	padding: 10px;
+	border: 0;
+	background: none;
+	color: #6b7280;
+	font-size: 14px;
+	cursor: pointer;
+}
+@media (min-width: 600px) {
+	.clx-popup {
+		align-items: center;
+		padding: 16px;
+	}
+	.clx-popup__card {
+		padding: 32px 28px 24px;
+		border-radius: 16px;
+		box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+		animation-name: clx-popup-in;
+	}
+}
+@keyframes clx-popup-fade {
+	from { opacity: 0; }
+}
+@keyframes clx-popup-up {
+	from { transform: translateY(40px); opacity: 0; }
+}
+@keyframes clx-popup-in {
+	from { transform: scale(0.96); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+	.clx-popup__backdrop,
+	.clx-popup__card {
+		animation: none;
+	}
+}
