@@ -30,6 +30,8 @@ class Cartlum_Order_SMS {
 		}
 		add_action( 'woocommerce_order_status_completed', array( __CLASS__, 'on_delivered' ) );
 		add_action( 'woocommerce_order_status_cancelled', array( __CLASS__, 'on_cancelled' ) );
+		// Store alerts for chosen statuses (e.g. cancelled), to the store's numbers only.
+		add_action( 'woocommerce_order_status_changed', array( __CLASS__, 'on_status_changed' ), 10, 3 );
 		// Handed to the courier: a Steadfast consignment was created; other couriers can call
 		// do_action( 'cartlum_order_shipped', $order_id ).
 		add_action( 'added_post_meta', array( __CLASS__, 'on_meta' ), 10, 4 );
@@ -101,6 +103,46 @@ class Cartlum_Order_SMS {
 	}
 
 	/**
+	 * Order changed status: tell the store, if it asked for this status.
+	 *
+	 * @param int    $order_id Order.
+	 * @param string $from     Old status.
+	 * @param string $to       New status.
+	 */
+	public static function on_status_changed( $order_id, $from, $to ) {
+		unset( $from );
+		$to = 0 === strpos( (string) $to, 'wc-' ) ? substr( (string) $to, 3 ) : (string) $to;
+		if ( in_array( $to, (array) Cartlum_Settings::get( 'order_sms_status_alert' ), true ) ) {
+			self::queue( $order_id, 'status_' . sanitize_key( $to ) );
+		}
+	}
+
+	/**
+	 * Default store status SMS.
+	 *
+	 * @return string
+	 */
+	public static function status_alert_default() {
+		return __( 'Order #{order} is now {status}: {customer}, {phone}, Tk {amount}.', 'cartlum' );
+	}
+
+	/**
+	 * The store's numbers.
+	 *
+	 * @return string[] Normalized.
+	 */
+	public static function admin_numbers() {
+		$out = array();
+		foreach ( preg_split( '/[,;\s]+/', (string) Cartlum_Settings::get( 'order_sms_admin_phone' ) ) as $raw ) {
+			$phone = Cartlum_Phone::normalize( $raw );
+			if ( '' !== $phone ) {
+				$out[ $phone ] = $phone;
+			}
+		}
+		return array_values( $out );
+	}
+
+	/**
 	 * Schedules one message for an order, once.
 	 *
 	 * @param int    $order_id Order.
@@ -108,7 +150,8 @@ class Cartlum_Order_SMS {
 	 */
 	private static function queue( $order_id, $event ) {
 		$order = wc_get_order( $order_id );
-		if ( ! $order || 'yes' !== Cartlum_Settings::get( 'order_sms_' . $event ) ) {
+		$on    = 0 === strpos( $event, 'status_' ) ? true : 'yes' === Cartlum_Settings::get( 'order_sms_' . $event );
+		if ( ! $order || ! $on ) {
 			return;
 		}
 		if ( $order->get_meta( '_cartlum_sms_' . $event ) ) {
@@ -145,20 +188,36 @@ class Cartlum_Order_SMS {
 	 * @param string $event    Event.
 	 */
 	public static function send( $order_id, $event ) {
-		$order = wc_get_order( $order_id );
-		if ( ! $order || ! in_array( $event, array_merge( self::EVENTS, array( 'admin' ) ), true ) ) {
+		$order  = wc_get_order( $order_id );
+		$status = 0 === strpos( (string) $event, 'status_' ) ? substr( (string) $event, 7 ) : '';
+		if ( ! $order || ( '' === $status && ! in_array( $event, array_merge( self::EVENTS, array( 'admin' ) ), true ) ) ) {
 			return;
 		}
-		$to = 'admin' === $event
-			? Cartlum_Phone::normalize( (string) Cartlum_Settings::get( 'order_sms_admin_phone' ) )
-			: Cartlum_Phone::normalize( $order->get_billing_phone() );
-		if ( '' === $to ) {
-			return;
+		if ( '' !== $status ) {
+			$template = trim( (string) Cartlum_Settings::get( 'order_sms_status_alert_text' ) );
+			$template = '' !== $template ? $template : self::status_alert_default();
+		} else {
+			$template = trim( (string) Cartlum_Settings::get( 'order_sms_' . $event . '_text' ) );
+			$defaults = self::default_texts();
+			$template = '' !== $template ? $template : $defaults[ $event ];
 		}
-		$template = trim( (string) Cartlum_Settings::get( 'order_sms_' . $event . '_text' ) );
-		$defaults = self::default_texts();
-		$message  = self::render( '' !== $template ? $template : $defaults[ $event ], $order );
-		$result   = Cartlum_SMS::send_raw( $to, $message );
+		$message = self::render( $template, $order );
+		$numbers = ( 'admin' === $event || '' !== $status ) ? self::admin_numbers() : array_filter( array( Cartlum_Phone::normalize( $order->get_billing_phone() ) ) );
+		foreach ( $numbers as $to ) {
+			self::deliver( $order, $event, $to, $message );
+		}
+	}
+
+	/**
+	 * Sends one message and notes it on the order.
+	 *
+	 * @param WC_Order $order   Order.
+	 * @param string   $event   Event.
+	 * @param string   $to      Normalized phone.
+	 * @param string   $message Text.
+	 */
+	private static function deliver( $order, $event, $to, $message ) {
+		$result = Cartlum_SMS::send_raw( $to, $message );
 
 		$labels = array(
 			'placed'    => __( 'order received', 'cartlum' ),
@@ -167,6 +226,10 @@ class Cartlum_Order_SMS {
 			'cancelled' => __( 'cancelled', 'cartlum' ),
 			'admin'     => __( 'new order (to the store)', 'cartlum' ),
 		);
+		if ( ! isset( $labels[ $event ] ) ) {
+			/* translators: %s: order status */
+			$labels[ $event ] = sprintf( __( '%s (to the store)', 'cartlum' ), wc_get_order_status_name( substr( $event, 7 ) ) );
+		}
 		if ( is_wp_error( $result ) ) {
 			/* translators: 1: kind of message, 2: error */
 			$order->add_order_note( sprintf( __( 'Cartlum: the “%1$s” SMS could not be sent: %2$s', 'cartlum' ), $labels[ $event ], $result->get_error_message() ) );
@@ -187,15 +250,33 @@ class Cartlum_Order_SMS {
 		$courier = Cartlum_Order_Tracking::courier( $order );
 		$total   = html_entity_decode( wp_strip_all_tags( wc_price( $order->get_total(), array( 'currency' => $order->get_currency() ) ) ), ENT_QUOTES, 'UTF-8' );
 		$items   = array();
+		$detail  = array();
 		foreach ( $order->get_items() as $item ) {
 			$items[] = $item->get_name() . ( $item->get_quantity() > 1 ? ' x' . $item->get_quantity() : '' );
+			// For the store: SKU (or name), quantity and colour, one line per item.
+			$product = $item->get_product();
+			$line    = ( $product && $product->get_sku() ? $product->get_sku() : $item->get_name() ) . ' x' . $item->get_quantity();
+			foreach ( $item->get_formatted_meta_data() as $meta ) {
+				if ( false !== stripos( $meta->display_key, 'colour' ) || false !== stripos( $meta->display_key, 'color' ) || false !== stripos( $meta->display_key, 'রং' ) ) {
+					$line .= ' - ' . wp_strip_all_tags( $meta->display_key ) . ': ' . wp_strip_all_tags( $meta->display_value );
+					break;
+				}
+			}
+			$detail[] = $line;
 		}
+		$states  = WC()->countries ? WC()->countries->get_states( $order->get_billing_country() ) : array();
+		$state   = is_array( $states ) && isset( $states[ $order->get_billing_state() ] ) ? $states[ $order->get_billing_state() ] : $order->get_billing_state();
 		return strtr(
 			$template,
 			array(
 				'{name}'        => Cartlum_Messages::safe_name( $order->get_billing_first_name() ),
 				'{order}'       => $order->get_order_number(),
 				'{total}'       => trim( str_replace( "\xc2\xa0", ' ', $total ) ),
+				'{amount}'      => number_format( (float) $order->get_total(), 0 ),
+				'{customer}'    => trim( $order->get_billing_first_name() . ' ' . $order->get_billing_last_name() ),
+				'{items_detail}' => implode( "\n", $detail ),
+				'{address}'     => trim( implode( ', ', array_filter( array( $order->get_billing_address_1(), $state ) ) ) ),
+				'{status}'      => wc_get_order_status_name( $order->get_status() ),
 				'{items}'       => implode( ', ', $items ),
 				'{phone}'       => $order->get_billing_phone(),
 				'{store}'       => wp_specialchars_decode( get_bloginfo( 'name' ), ENT_QUOTES ),

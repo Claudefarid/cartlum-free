@@ -4,7 +4,7 @@ Tags: abandoned cart, cart recovery, sms, whatsapp, woocommerce
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.20.2
+Stable tag: 0.21.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -90,6 +90,11 @@ It can, for stores that only used CartFlows for a shorter checkout. CartFlows' g
 6. Settings: SMS gateways with a test button.
 
 == Changelog ==
+
+= 0.21.0 =
+* Order SMS to the store: several numbers (comma-separated), {items_detail} (one line per item with SKU or name, quantity and colour), {customer}, {address}, {amount}, and an SMS to the store when an order changes to statuses you choose (for example Cancelled).
+* Cancellation reasons: pick why an order was cancelled on the order screen (7 reasons), see it in the orders list, and on Fake Orders see the last 30 days' reasons plus the cancelled orders still missing one, taggable in two clicks. Reasons saved by an earlier tool can be read through a filter.
+* Phone-first checkout: a Place order bar at the bottom of the screen on phones while the real button is out of view.
 
 = 0.20.2 =
 * Log in with phone number: customers whose account was made by another phone-login system (user name = their phone number) now get that same account, with all its orders, the first time they log in with a Cartlum code, instead of a new empty one. Staff accounts are never matched.

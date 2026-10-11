@@ -318,6 +318,13 @@ h1 .cl-badge { font-size: 13px; margin-left: var(--cl-s2); vertical-align: 4px; 
 .cl-pro-list span { color: var(--cl-muted); font-size: 13px; }
 .cl-pro-cta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--cl-s3) var(--cl-s4); margin: var(--cl-s5) 0 0; }
 
+.cl-reason-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--cl-s2); margin: 0 0 var(--cl-s2); }
+.cl-reason-row a { min-width: 64px; font-weight: 600; }
+.cl-reason-row__name { flex: 1 1 120px; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cl-reason-row select { flex: 1 1 200px; max-width: 100%; }
+.cl-checks { display: flex; flex-wrap: wrap; gap: 6px 18px; }
+.cl-checks label { white-space: nowrap; }
+
 /* ---------- Narrow screens (WordPress admin's own breakpoint) ---------- */
 
 @media (max-width: 782px) {

@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Cartlum – Abandoned Cart Recovery for WooCommerce 0.20.1\n"
+"Project-Id-Version: Cartlum – Abandoned Cart Recovery for WooCommerce 0.21.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/cartlum\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Bangla\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-11T19:21:03+00:00\n"
+"POT-Creation-Date: 2026-10-11T20:04:48+00:00\n"
 "PO-Revision-Date: 2026-10-10 12:00+0600
 "
 "X-Generator: WP-CLI 2.12.0\n"
@@ -67,7 +67,8 @@ msgstr "ভুল নম্বর"
 #: includes/admin/class-cartlum-admin-actions.php:295
 #: includes/admin/class-cartlum-admin-actions.php:345
 #: includes/admin/class-cartlum-admin-protection.php:223
-#: includes/admin/class-cartlum-admin-settings.php:881
+#: includes/admin/class-cartlum-admin-settings.php:911
+#: includes/admin/class-cartlum-cancel-reasons.php:278
 #: includes/class-cartlum-email.php:209
 #: includes/class-cartlum-webhooks.php:307
 msgid "You are not allowed to do that."
@@ -254,7 +255,7 @@ msgid "Set up protection"
 msgstr "সুরক্ষা সেট আপ করুন"
 
 #. translators: %d: count
-#: includes/admin/class-cartlum-admin-fraud.php:95
+#: includes/admin/class-cartlum-admin-fraud.php:96
 #, php-format
 msgid "%d number"
 msgid_plural "%d numbers"
@@ -262,7 +263,7 @@ msgstr[0] "%dটি নম্বর"
 msgstr[1] "%dটি নম্বর"
 
 #. translators: %d: count
-#: includes/admin/class-cartlum-admin-fraud.php:97
+#: includes/admin/class-cartlum-admin-fraud.php:98
 #, php-format
 msgid "%d IP address or range"
 msgid_plural "%d IP addresses or ranges"
@@ -270,7 +271,7 @@ msgstr[0] "%dটি IP ঠিকানা বা রেঞ্জ"
 msgstr[1] "%dটি IP ঠিকানা বা রেঞ্জ"
 
 #. translators: %d: count
-#: includes/admin/class-cartlum-admin-fraud.php:99
+#: includes/admin/class-cartlum-admin-fraud.php:100
 #, php-format
 msgid "%d device"
 msgid_plural "%d devices"
@@ -278,45 +279,45 @@ msgstr[0] "%dটি ডিভাইস"
 msgstr[1] "%dটি ডিভাইস"
 
 #. translators: %s: list of blocked counts
-#: includes/admin/class-cartlum-admin-fraud.php:106
+#: includes/admin/class-cartlum-admin-fraud.php:107
 #, php-format
 msgid "Blocked: %s."
 msgstr "ব্লক করা: %s।"
 
-#: includes/admin/class-cartlum-admin-fraud.php:108
+#: includes/admin/class-cartlum-admin-fraud.php:109
 msgid "Edit the blocklist and rules"
 msgstr "ব্লকলিস্ট ও নিয়ম বদলান"
 
 #. translators: %d: number of days
-#: includes/admin/class-cartlum-admin-fraud.php:118
+#: includes/admin/class-cartlum-admin-fraud.php:119
 #, php-format
 msgid "No orders from risky or blocked numbers in the last %d days."
 msgstr "গত %d দিনে ঝুঁকিপূর্ণ বা ব্লক করা নম্বর থেকে কোনো অর্ডার নেই।"
 
-#: includes/admin/class-cartlum-admin-fraud.php:121
+#: includes/admin/class-cartlum-admin-fraud.php:122
 msgid "A number becomes risky when it cancels or refuses orders more often than it completes them. Orders from such numbers appear here so you can call before shipping."
 msgstr "কোনো নম্বর যখন সম্পন্ন করার চেয়ে বেশিবার অর্ডার বাতিল বা ফেরত দেয়, তখন সেটি ঝুঁকিপূর্ণ হয়। এমন নম্বরের অর্ডার এখানে দেখায়, যাতে পাঠানোর আগে কল করতে পারেন।"
 
-#: includes/admin/class-cartlum-admin-fraud.php:123
+#: includes/admin/class-cartlum-admin-fraud.php:124
 msgid "No recent orders with a phone number."
 msgstr "ফোন নম্বরসহ সাম্প্রতিক কোনো অর্ডার নেই।"
 
 #. translators: 1: order number, 2: order status
-#: includes/admin/class-cartlum-admin-fraud.php:146
+#: includes/admin/class-cartlum-admin-fraud.php:147
 #, php-format
 msgid "Order #%1$s · %2$s"
 msgstr "অর্ডার #%1$s · %2$s"
 
 #. translators: %s: time
 #. translators: %s: human time difference
-#: includes/admin/class-cartlum-admin-fraud.php:149
+#: includes/admin/class-cartlum-admin-fraud.php:150
 #: includes/admin/class-cartlum-admin.php:200
 #, php-format
 msgid "%s ago"
 msgstr "%s আগে"
 
 #. translators: 1: completed orders, 2: cancelled orders
-#: includes/admin/class-cartlum-admin-fraud.php:156
+#: includes/admin/class-cartlum-admin-fraud.php:157
 #: includes/admin/class-cartlum-admin-protection.php:92
 #, php-format
 msgid "%1$d completed · %2$d cancelled"
@@ -324,7 +325,7 @@ msgstr "%1$d সম্পন্ন · %2$d বাতিল"
 
 #. translators: %s: name
 #. translators: %s: customer name
-#: includes/admin/class-cartlum-admin-fraud.php:166
+#: includes/admin/class-cartlum-admin-fraud.php:167
 #: includes/admin/class-cartlum-carts-table.php:235
 #: includes/admin/views/partials/person-row.php:36
 #, php-format
@@ -332,7 +333,7 @@ msgid "Call %s"
 msgstr "%s-কে কল করুন"
 
 #. translators: %d: number of days
-#: includes/admin/class-cartlum-admin-fraud.php:174
+#: includes/admin/class-cartlum-admin-fraud.php:175
 #, php-format
 msgid "Orders from the last %d days with a phone number. Open an order to block its number, IP address or device."
 msgstr "গত %d দিনের ফোন নম্বরসহ অর্ডার। নম্বর, IP ঠিকানা বা ডিভাইস ব্লক করতে অর্ডারটি খুলুন।"
@@ -499,7 +500,7 @@ msgid "Automation"
 msgstr "অটোমেশন"
 
 #: includes/admin/class-cartlum-admin-settings.php:37
-#: includes/admin/class-cartlum-admin-settings.php:591
+#: includes/admin/class-cartlum-admin-settings.php:614
 #: includes/admin/views/cart.php:128
 #: includes/admin/views/dashboard.php:22
 msgid "SMS"
@@ -814,7 +815,7 @@ msgid "“Call to order”: one tap dials your number on a phone."
 msgstr "“কল করে অর্ডার করুন”: ফোনে এক ট্যাপে আপনার নম্বরে কল যায়।"
 
 #: includes/admin/class-cartlum-admin-settings.php:413
-#: includes/admin/class-cartlum-admin-settings.php:825
+#: includes/admin/class-cartlum-admin-settings.php:848
 msgid "Your phone number"
 msgstr "আপনার ফোন নম্বর"
 
@@ -863,8 +864,8 @@ msgid "Most SMS codes sent per day — login and checkout codes, all numbers tog
 msgstr "দিনে সর্বোচ্চ কতটি SMS কোড যাবে — লগইন ও চেকআউট কোড, সব নম্বর মিলিয়ে। আপনার SMS ব্যালেন্স রক্ষা করে। 0 = সীমা নেই।"
 
 #: includes/admin/class-cartlum-admin-settings.php:455
-msgid "Text messages to the customer about their order, each sent once. Use {name}, {order}, {total}, {items}, {store}, {track_link}, {courier} and {consignment}. Leave a text empty to use the default shown."
-msgstr "ক্রেতাকে তার অর্ডার নিয়ে টেক্সট মেসেজ, প্রতিটি একবারই যাবে। {name}, {order}, {total}, {items}, {store}, {track_link}, {courier} ও {consignment} ব্যবহার করুন। দেখানো ডিফল্ট ব্যবহার করতে লেখা খালি রাখুন।"
+msgid "Text messages about orders, each sent once. Use {name}, {customer} (full name), {order}, {total}, {amount} (plain number: write “Tk {amount}” to keep an SMS free of Bangla characters), {items}, {items_detail} (one line per item: SKU or name, quantity, colour), {phone}, {address}, {status}, {store}, {track_link}, {courier} and {consignment}. Leave a text empty to use the default shown."
+msgstr "অর্ডার নিয়ে টেক্সট মেসেজ, প্রতিটি একবারই যায়। ব্যবহার করুন {name}, {customer} (পুরো নাম), {order}, {total}, {amount} (শুধু সংখ্যা: SMS-এ বাংলা অক্ষর এড়াতে “Tk {amount}” লিখুন), {items}, {items_detail} (প্রতি লাইনে একটি পণ্য: SKU বা নাম, পরিমাণ, রং), {phone}, {address}, {status}, {store}, {track_link}, {courier} ও {consignment}। দেখানো ডিফল্ট ব্যবহার করতে খালি রাখুন।"
 
 #: includes/admin/class-cartlum-admin-settings.php:457
 msgid "Set up an SMS gateway on the SMS tab first."
@@ -926,292 +927,317 @@ msgid "A message to your own number for every new order."
 msgstr "প্রতিটি নতুন অর্ডারে আপনার নিজের নম্বরে একটি মেসেজ।"
 
 #: includes/admin/class-cartlum-admin-settings.php:481
-msgid "Your number"
-msgstr "আপনার নম্বর"
+msgid "Your numbers"
+msgstr "আপনার নম্বরগুলো"
+
+#: includes/admin/class-cartlum-admin-settings.php:483
+msgid "One or more, separated by commas, e.g. 01712345678, 01812345678. Every number gets each message for the store."
+msgstr "এক বা একাধিক, কমা দিয়ে আলাদা করে, যেমন 01712345678, 01812345678। স্টোরের জন্য প্রতিটি মেসেজ সব নম্বরে যায়।"
 
 #. translators: %s: kind of message
-#: includes/admin/class-cartlum-admin-settings.php:487
+#: includes/admin/class-cartlum-admin-settings.php:488
 #, php-format
 msgid "“%s” text"
 msgstr "“%s”-এর লেখা"
 
 #. translators: %s: default message
-#: includes/admin/class-cartlum-admin-settings.php:490
+#: includes/admin/class-cartlum-admin-settings.php:491
+#: includes/admin/class-cartlum-admin-settings.php:509
 #, php-format
 msgid "Default: %s"
 msgstr "ডিফল্ট: %s"
 
-#: includes/admin/class-cartlum-admin-settings.php:494
+#: includes/admin/class-cartlum-admin-settings.php:500
+msgid "Tell the store when an order becomes"
+msgstr "অর্ডার যখন এই অবস্থায় যায় তখন স্টোরকে জানান"
+
+#: includes/admin/class-cartlum-admin-settings.php:503
+msgid "An SMS to your numbers above each time an order changes to one of these statuses, for example Cancelled. Customers get nothing from this."
+msgstr "অর্ডার এগুলোর কোনো একটিতে গেলে উপরের নম্বরগুলোতে একটি SMS যায়, যেমন বাতিল। ক্রেতা এ থেকে কিছু পান না।"
+
+#: includes/admin/class-cartlum-admin-settings.php:506
+msgid "Store status SMS text"
+msgstr "স্টোরের অবস্থা-SMS-এর লেখা"
+
+#: includes/admin/class-cartlum-admin-settings.php:512
 msgid "Order tracking in My Account"
 msgstr "My Account-এ অর্ডার ট্র্যাকিং"
 
-#: includes/admin/class-cartlum-admin-settings.php:496
+#: includes/admin/class-cartlum-admin-settings.php:514
 msgid "On each order’s page: placed → processing → with the courier → delivered, and the courier’s consignment number and status (Steadfast is read automatically)."
 msgstr "প্রতিটি অর্ডারের পেজে: অর্ডার দেওয়া → প্রসেসিং → কুরিয়ারের কাছে → ডেলিভারি, সাথে কুরিয়ারের কনসাইনমেন্ট নম্বর ও অবস্থা (Steadfast নিজে থেকে পড়া হয়)।"
 
-#: includes/admin/class-cartlum-admin-settings.php:499
+#: includes/admin/class-cartlum-admin-settings.php:517
 msgid "Courier tracking link"
 msgstr "কুরিয়ার ট্র্যাকিং লিংক"
 
-#: includes/admin/class-cartlum-admin-settings.php:501
+#: includes/admin/class-cartlum-admin-settings.php:519
 msgid "Optional: your courier’s tracking page address with {consignment} where the consignment number goes. With it, customers get a “Track parcel” button."
 msgstr "ঐচ্ছিক: আপনার কুরিয়ারের ট্র্যাকিং পেজের ঠিকানা, কনসাইনমেন্ট নম্বরের জায়গায় {consignment} দিয়ে। এটি দিলে ক্রেতারা “পার্সেল ট্র্যাক করুন” বাটন পাবেন।"
 
-#: includes/admin/class-cartlum-admin-settings.php:508
+#: includes/admin/class-cartlum-admin-settings.php:526
 msgid "Fake-order protection"
 msgstr "ভুয়া অর্ডার থেকে সুরক্ষা"
 
-#: includes/admin/class-cartlum-admin-settings.php:510
+#: includes/admin/class-cartlum-admin-settings.php:528
 msgid "Stops blocked numbers, repeat orders and bots at checkout, and shows staff each number’s order history on the Orders screen. Shop managers placing orders are never stopped."
 msgstr "চেকআউটে ব্লক করা নম্বর, বারবার অর্ডার ও বট আটকায়, আর অর্ডার পেজে স্টাফদের প্রতিটি নম্বরের অর্ডারের ইতিহাস দেখায়। শপ ম্যানেজার অর্ডার দিলে কখনো আটকানো হয় না।"
 
-#: includes/admin/class-cartlum-admin-settings.php:513
+#: includes/admin/class-cartlum-admin-settings.php:531
 msgid "Repeat order wait (minutes)"
 msgstr "আবার অর্ডারের আগে অপেক্ষা (মিনিট)"
 
-#: includes/admin/class-cartlum-admin-settings.php:517
+#: includes/admin/class-cartlum-admin-settings.php:535
 msgid "A number that ordered within this time cannot order again online; it is told its earlier order number and asked to call. 0 = off."
 msgstr "এই সময়ের মধ্যে অর্ডার দেওয়া নম্বর আবার অনলাইনে অর্ডার করতে পারবে না; তাকে আগের অর্ডার নম্বর জানিয়ে কল করতে বলা হবে। 0 = বন্ধ।"
 
-#: includes/admin/class-cartlum-admin-settings.php:520
+#: includes/admin/class-cartlum-admin-settings.php:538
 msgid "Orders per number per day"
 msgstr "প্রতি নম্বরে দিনে অর্ডার"
 
-#: includes/admin/class-cartlum-admin-settings.php:524
+#: includes/admin/class-cartlum-admin-settings.php:542
 msgid "Cancelled and failed orders do not count. 0 = no limit."
 msgstr "বাতিল ও ব্যর্থ অর্ডার গণনায় আসে না। 0 = সীমা নেই।"
 
-#: includes/admin/class-cartlum-admin-settings.php:527
+#: includes/admin/class-cartlum-admin-settings.php:545
 msgid "Orders per IP address per day"
 msgstr "প্রতি IP ঠিকানায় দিনে অর্ডার"
 
-#: includes/admin/class-cartlum-admin-settings.php:531
+#: includes/admin/class-cartlum-admin-settings.php:549
 msgid "Stops one device ordering under many numbers. Many mobile customers can share one address, so keep this generous. 0 = no limit."
 msgstr "একটি ডিভাইস থেকে অনেক নম্বরে অর্ডার আটকায়। অনেক মোবাইল ক্রেতা একই ঠিকানা ভাগ করেন, তাই সীমা বেশি রাখুন। 0 = সীমা নেই।"
 
-#: includes/admin/class-cartlum-admin-settings.php:534
+#: includes/admin/class-cartlum-admin-settings.php:552
+msgid "Cancellation reasons"
+msgstr "বাতিলের কারণ"
+
+#: includes/admin/class-cartlum-admin-settings.php:554
+msgid "Pick why an order was cancelled on the order screen; see the reasons, and the cancelled orders still missing one, on Fake Orders."
+msgstr "অর্ডারের পেজে বাতিলের কারণ বেছে নিন; কারণগুলো এবং যেসব বাতিল অর্ডারে কারণ নেই সেগুলো Fake Orders-এ দেখুন।"
+
+#: includes/admin/class-cartlum-admin-settings.php:557
 msgid "Blocked numbers, IP addresses and devices"
 msgstr "ব্লক করা নম্বর, IP ঠিকানা ও ডিভাইস"
 
-#: includes/admin/class-cartlum-admin-settings.php:536
+#: includes/admin/class-cartlum-admin-settings.php:559
 msgid "One per line. Any way of writing a number works (01712345678, +8801712345678). IP addresses can be single (103.4.5.6) or ranges (103.4.5.0/24). Devices are added from an order’s screen, as are numbers and IP addresses."
 msgstr "প্রতি লাইনে একটি। নম্বর যেকোনোভাবে লিখলেই হবে (01712345678, +8801712345678)। IP ঠিকানা একক (103.4.5.6) বা রেঞ্জ (103.4.5.0/24) হতে পারে। ডিভাইস, নম্বর ও IP ঠিকানা অর্ডারের পেজ থেকেও যোগ করা যায়।"
 
-#: includes/admin/class-cartlum-admin-settings.php:539
+#: includes/admin/class-cartlum-admin-settings.php:562
 msgid "Message to blocked customers"
 msgstr "ব্লক করা ক্রেতার জন্য মেসেজ"
 
-#: includes/admin/class-cartlum-admin-settings.php:541
+#: includes/admin/class-cartlum-admin-settings.php:564
 msgid "Empty = “We cannot take this order online. Please call us to order.”"
 msgstr "খালি = “এই অর্ডারটি অনলাইনে নেওয়া যাচ্ছে না। অর্ডার করতে আমাদের কল করুন।”"
 
-#: includes/admin/class-cartlum-admin-settings.php:544
+#: includes/admin/class-cartlum-admin-settings.php:567
 msgid "“Often cancels” after"
 msgstr "“প্রায়ই বাতিল করে” ধরা হবে"
 
-#: includes/admin/class-cartlum-admin-settings.php:548
+#: includes/admin/class-cartlum-admin-settings.php:571
 msgid "Cancelled orders before a number is marked “Often cancels” (when it also cancelled at least as many as it completed). Its new orders get a note to call before shipping."
 msgstr "কতটি বাতিল অর্ডারের পর নম্বরটিকে “প্রায়ই বাতিল করে” ধরা হবে (যখন সম্পন্ন অর্ডারের চেয়ে বাতিল কম নয়)। এর নতুন অর্ডারে পাঠানোর আগে কল করার নোট যোগ হয়।"
 
-#: includes/admin/class-cartlum-admin-settings.php:551
+#: includes/admin/class-cartlum-admin-settings.php:574
 msgid "SMS code for risky orders"
 msgstr "ঝুঁকিপূর্ণ অর্ডারে SMS কোড"
 
-#: includes/admin/class-cartlum-admin-settings.php:553
+#: includes/admin/class-cartlum-admin-settings.php:576
 msgid "Cash-on-delivery customers confirm their number with a code before ordering when the number often cancels, a new number orders a large amount, or the connection already ordered twice today. Everyone else orders as before. Works on classic checkouts (also CartFlows and Cartlum’s), not the block checkout. Needs an SMS gateway."
 msgstr "ক্যাশ অন ডেলিভারির ক্রেতাকে অর্ডারের আগে কোড দিয়ে নম্বর নিশ্চিত করতে হয় যখন নম্বরটি প্রায়ই বাতিল করে, নতুন নম্বর বড় অর্ডার দেয়, অথবা একই সংযোগ থেকে আজ আগেই দুবার অর্ডার হয়েছে। বাকি সবাই আগের মতোই অর্ডার করেন। ক্লাসিক চেকআউটে কাজ করে (CartFlows ও Cartlum-এর চেকআউটসহ), ব্লক চেকআউটে নয়। SMS গেটওয়ে লাগবে।"
 
-#: includes/admin/class-cartlum-admin-settings.php:556
+#: includes/admin/class-cartlum-admin-settings.php:579
 msgid "Code for new numbers from"
 msgstr "নতুন নম্বরে কোড, অর্ডার যখন এর বেশি"
 
-#: includes/admin/class-cartlum-admin-settings.php:560
+#: includes/admin/class-cartlum-admin-settings.php:583
 msgid "A number with no completed orders yet gets a code when the order is at least this much. 0 = not for this reason."
 msgstr "যে নম্বরের এখনো কোনো সম্পন্ন অর্ডার নেই, অর্ডার এই পরিমাণ বা বেশি হলে কোড পাবে। 0 = এই কারণে নয়।"
 
-#: includes/admin/class-cartlum-admin-settings.php:563
+#: includes/admin/class-cartlum-admin-settings.php:586
 msgid "Order code message"
 msgstr "অর্ডার কোডের মেসেজ"
 
-#: includes/admin/class-cartlum-admin-settings.php:565
+#: includes/admin/class-cartlum-admin-settings.php:588
 msgid "Use {code} and {store}. Empty = “{code} is your {store} order code. It expires in 10 minutes.”"
 msgstr "{code} ও {store} ব্যবহার করুন। খালি = “{code} হলো আপনার {store} অর্ডার কোড। ১০ মিনিটের মধ্যে মেয়াদ শেষ হবে।”"
 
-#: includes/admin/class-cartlum-admin-settings.php:576
+#: includes/admin/class-cartlum-admin-settings.php:599
 msgid "Automatic reminder"
 msgstr "অটোমেটিক রিমাইন্ডার"
 
-#: includes/admin/class-cartlum-admin-settings.php:578
+#: includes/admin/class-cartlum-admin-settings.php:601
 msgid "Send a reminder automatically after a cart is abandoned. It stops as soon as the customer orders, unsubscribes, or you stop it on the cart."
 msgstr "কার্ট অসম্পূর্ণ হলে নিজে থেকে রিমাইন্ডার পাঠান। ক্রেতা অর্ডার দিলে, আনসাবস্ক্রাইব করলে বা আপনি কার্টে বন্ধ করলে সাথে সাথে থেমে যায়।"
 
-#: includes/admin/class-cartlum-admin-settings.php:581
+#: includes/admin/class-cartlum-admin-settings.php:604
 msgid "Send after (minutes)"
 msgstr "পাঠানো হবে (মিনিট পর)"
 
-#: includes/admin/class-cartlum-admin-settings.php:585
+#: includes/admin/class-cartlum-admin-settings.php:608
 msgid "Counted from the moment the cart is marked abandoned."
 msgstr "কার্ট অসম্পূর্ণ হিসেবে চিহ্নিত হওয়ার সময় থেকে গোনা হয়।"
 
-#: includes/admin/class-cartlum-admin-settings.php:588
+#: includes/admin/class-cartlum-admin-settings.php:611
 msgid "Send by"
 msgstr "পাঠানোর মাধ্যম"
 
-#: includes/admin/class-cartlum-admin-settings.php:592
+#: includes/admin/class-cartlum-admin-settings.php:615
 msgid "Email (uses the Email tab’s message)"
 msgstr "ইমেইল (ইমেইল ট্যাবের মেসেজ ব্যবহার করে)"
 
-#: includes/admin/class-cartlum-admin-settings.php:596
+#: includes/admin/class-cartlum-admin-settings.php:619
 #: includes/admin/views/cart.php:144
 msgid "SMS message"
 msgstr "SMS মেসেজ"
 
-#: includes/admin/class-cartlum-admin-settings.php:598
+#: includes/admin/class-cartlum-admin-settings.php:621
 msgid "Add {coupon} to include a one-time coupon. Without it no coupon is created, which keeps your margin for customers who would have bought anyway."
 msgstr "একবার ব্যবহারযোগ্য কুপন দিতে {coupon} যোগ করুন। এটি না থাকলে কুপন তৈরি হয় না, ফলে যারা এমনিতেই কিনতেন তাদের ক্ষেত্রে আপনার লাভ রক্ষা পায়।"
 
-#: includes/admin/class-cartlum-admin-settings.php:601
+#: includes/admin/class-cartlum-admin-settings.php:624
 msgid "Quiet hours from"
 msgstr "নীরব সময় শুরু"
 
-#: includes/admin/class-cartlum-admin-settings.php:606
+#: includes/admin/class-cartlum-admin-settings.php:629
 msgid "Quiet hours until"
 msgstr "নীরব সময় শেষ"
 
 #. translators: %s: timezone name
-#: includes/admin/class-cartlum-admin-settings.php:610
+#: includes/admin/class-cartlum-admin-settings.php:633
 #, php-format
 msgid "No automatic messages in this window; they wait until it ends. Store time zone: %s. Same hour in both = no quiet hours."
 msgstr "এই সময়ে কোনো অটোমেটিক মেসেজ যাবে না; শেষ হওয়া পর্যন্ত অপেক্ষা করবে। স্টোরের টাইম জোন: %s। দুটিতেই একই ঘণ্টা = নীরব সময় নেই।"
 
-#: includes/admin/class-cartlum-admin-settings.php:613
+#: includes/admin/class-cartlum-admin-settings.php:636
 msgid "Daily SMS limit"
 msgstr "দিনে SMS-এর সীমা"
 
-#: includes/admin/class-cartlum-admin-settings.php:617
+#: includes/admin/class-cartlum-admin-settings.php:640
 msgid "Most automatic SMS per day. Protects your SMS balance. 0 = no limit."
 msgstr "দিনে সর্বোচ্চ কতটি অটোমেটিক SMS যাবে। আপনার SMS ব্যালেন্স রক্ষা করে। 0 = সীমা নেই।"
 
-#: includes/admin/class-cartlum-admin-settings.php:620
+#: includes/admin/class-cartlum-admin-settings.php:643
 msgid "Test mode: send to"
 msgstr "টেস্ট মোড: পাঠান এখানে"
 
-#: includes/admin/class-cartlum-admin-settings.php:622
+#: includes/admin/class-cartlum-admin-settings.php:645
 msgid "While a number is set here, every automatic SMS goes to it instead of the customer — use it to check the flow before going live. Leave empty to send to customers."
 msgstr "এখানে নম্বর থাকলে প্রতিটি অটোমেটিক SMS ক্রেতার বদলে এই নম্বরে যাবে — চালু করার আগে যাচাই করতে ব্যবহার করুন। ক্রেতাদের পাঠাতে খালি রাখুন।"
 
-#: includes/admin/class-cartlum-admin-settings.php:629
+#: includes/admin/class-cartlum-admin-settings.php:652
 msgid "Gateway"
 msgstr "গেটওয়ে"
 
-#: includes/admin/class-cartlum-admin-settings.php:631
+#: includes/admin/class-cartlum-admin-settings.php:654
 msgid "— None —"
 msgstr "— কোনোটি নয় —"
 
-#: includes/admin/class-cartlum-admin-settings.php:646
-#: includes/admin/class-cartlum-admin-settings.php:655
+#: includes/admin/class-cartlum-admin-settings.php:669
+#: includes/admin/class-cartlum-admin-settings.php:678
 msgid "Default message"
 msgstr "ডিফল্ট মেসেজ"
 
-#: includes/admin/class-cartlum-admin-settings.php:648
+#: includes/admin/class-cartlum-admin-settings.php:671
 msgid "Keep it short: one SMS is 160 letters in English, 70 in Bangla and other non-Latin scripts."
 msgstr "ছোট রাখুন: একটি SMS-এ ইংরেজিতে ১৬০ অক্ষর, বাংলা ও অন্য অ-লাতিন লিপিতে ৭০ অক্ষর।"
 
-#: includes/admin/class-cartlum-admin-settings.php:657
+#: includes/admin/class-cartlum-admin-settings.php:680
 msgid "Opens in WhatsApp for you to send."
 msgstr "আপনি পাঠানোর জন্য WhatsApp-এ খোলে।"
 
-#: includes/admin/class-cartlum-admin-settings.php:664
+#: includes/admin/class-cartlum-admin-settings.php:687
 msgid "Design"
 msgstr "ডিজাইন"
 
-#: includes/admin/class-cartlum-admin-settings.php:667
+#: includes/admin/class-cartlum-admin-settings.php:690
 msgid "Cartlum design — logo, product photos and a button"
 msgstr "Cartlum ডিজাইন — লোগো, পণ্যের ছবি ও একটি বাটন"
 
-#: includes/admin/class-cartlum-admin-settings.php:668
+#: includes/admin/class-cartlum-admin-settings.php:691
 msgid "Plain — your WooCommerce email style"
 msgstr "সাধারণ — আপনার WooCommerce ইমেইলের স্টাইল"
 
-#: includes/admin/class-cartlum-admin-settings.php:670
+#: includes/admin/class-cartlum-admin-settings.php:693
 msgid "The design uses the logo and button colour from the Checkout tab (or your theme’s logo). In the message, a line with only {items} becomes the product list and a line with only {cart_link} becomes the button."
 msgstr "ডিজাইনে চেকআউট ট্যাবের লোগো ও বাটনের রং ব্যবহার হয় (না থাকলে থিমের লোগো)। মেসেজে যে লাইনে শুধু {items} আছে সেটি পণ্যের তালিকা হয়, আর যে লাইনে শুধু {cart_link} আছে সেটি বাটন হয়।"
 
-#: includes/admin/class-cartlum-admin-settings.php:673
+#: includes/admin/class-cartlum-admin-settings.php:696
 #: includes/admin/views/cart.php:184
 msgid "Subject"
 msgstr "বিষয়"
 
-#: includes/admin/class-cartlum-admin-settings.php:677
+#: includes/admin/class-cartlum-admin-settings.php:700
 #: includes/admin/views/cart.php:186
 msgid "Message"
 msgstr "মেসেজ"
 
-#: includes/admin/class-cartlum-admin-settings.php:679
+#: includes/admin/class-cartlum-admin-settings.php:702
 msgid "Plain text; links become clickable. An unsubscribe line is added automatically."
 msgstr "সাধারণ লেখা; লিংক ক্লিকযোগ্য হয়। আনসাবস্ক্রাইবের লাইন নিজে থেকে যোগ হয়।"
 
-#: includes/admin/class-cartlum-admin-settings.php:686
+#: includes/admin/class-cartlum-admin-settings.php:709
 msgid "Discount type"
 msgstr "ছাড়ের ধরন"
 
-#: includes/admin/class-cartlum-admin-settings.php:689
+#: includes/admin/class-cartlum-admin-settings.php:712
 msgid "Fixed amount"
 msgstr "নির্দিষ্ট পরিমাণ"
 
-#: includes/admin/class-cartlum-admin-settings.php:690
+#: includes/admin/class-cartlum-admin-settings.php:713
 msgid "Percentage"
 msgstr "শতাংশ"
 
-#: includes/admin/class-cartlum-admin-settings.php:694
+#: includes/admin/class-cartlum-admin-settings.php:717
 msgid "Amount"
 msgstr "পরিমাণ"
 
-#: includes/admin/class-cartlum-admin-settings.php:700
+#: includes/admin/class-cartlum-admin-settings.php:723
 msgid "Valid for (days)"
 msgstr "মেয়াদ (দিন)"
 
-#: includes/admin/class-cartlum-admin-settings.php:706
+#: includes/admin/class-cartlum-admin-settings.php:729
 msgid "Code prefix"
 msgstr "কোডের শুরু"
 
-#: includes/admin/class-cartlum-admin-settings.php:708
+#: includes/admin/class-cartlum-admin-settings.php:731
 msgid "Codes look like PREFIX-7KQ2XP. Each works once, for one cart."
 msgstr "কোড দেখতে PREFIX-7KQ2XP-এর মতো। প্রতিটি একবার, একটি কার্টের জন্য কাজ করে।"
 
-#: includes/admin/class-cartlum-admin-settings.php:715
+#: includes/admin/class-cartlum-admin-settings.php:738
 msgid "Delete carts after (days)"
 msgstr "কার্ট মুছে ফেলুন (দিন পর)"
 
-#: includes/admin/class-cartlum-admin-settings.php:719
+#: includes/admin/class-cartlum-admin-settings.php:742
 msgid "0 keeps them forever."
 msgstr "0 দিলে চিরকাল থাকবে।"
 
-#: includes/admin/class-cartlum-admin-settings.php:722
+#: includes/admin/class-cartlum-admin-settings.php:745
 msgid "Delete all data on uninstall"
 msgstr "আনইনস্টল করলে সব ডেটা মুছে ফেলুন"
 
-#: includes/admin/class-cartlum-admin-settings.php:811
+#: includes/admin/class-cartlum-admin-settings.php:834
 msgid "Insert into the message you are editing"
 msgstr "যে মেসেজ লিখছেন তাতে যোগ করুন"
 
-#: includes/admin/class-cartlum-admin-settings.php:821
+#: includes/admin/class-cartlum-admin-settings.php:844
 msgid "Send a test SMS"
 msgstr "একটি টেস্ট SMS পাঠান"
 
-#: includes/admin/class-cartlum-admin-settings.php:826
+#: includes/admin/class-cartlum-admin-settings.php:849
 msgid "Send test"
 msgstr "টেস্ট পাঠান"
 
-#: includes/admin/class-cartlum-admin-settings.php:827
+#: includes/admin/class-cartlum-admin-settings.php:850
 msgid "Save your settings first — the test uses the saved ones."
 msgstr "আগে সেটিংস সেভ করুন — টেস্ট সেভ করা সেটিংস ব্যবহার করে।"
 
-#: includes/admin/class-cartlum-admin-settings.php:866
+#: includes/admin/class-cartlum-admin-settings.php:896
 msgid "Saved — leave empty to keep"
 msgstr "সেভ করা আছে — রাখতে খালি রাখুন"
 
-#: includes/admin/class-cartlum-admin-settings.php:934
+#: includes/admin/class-cartlum-admin-settings.php:967
 msgid "Settings saved."
 msgstr "সেটিংস সেভ হয়েছে।"
 
@@ -1413,8 +1439,92 @@ msgstr "Cartlum Pro নিন"
 msgid "Pro uses your own accounts for SMS, AI and courier data; you pay those services directly."
 msgstr "Pro আপনার নিজের SMS, AI ও কুরিয়ার ডেটার অ্যাকাউন্ট ব্যবহার করে; সেসব সার্ভিসের খরচ আপনি সরাসরি দেন।"
 
+#: includes/admin/class-cartlum-cancel-reasons.php:50
+msgid "Unreachable on the confirmation call"
+msgstr "কনফার্মেশন কলে পাওয়া যায়নি"
+
+#: includes/admin/class-cartlum-cancel-reasons.php:51
+msgid "Said no on the confirmation call"
+msgstr "কনফার্মেশন কলে না বলেছেন"
+
+#: includes/admin/class-cartlum-cancel-reasons.php:52
+msgid "Refused at delivery — changed mind"
+msgstr "ডেলিভারিতে নেননি — মত পাল্টেছেন"
+
+#: includes/admin/class-cartlum-cancel-reasons.php:53
+msgid "Refused at delivery — doubts about the product"
+msgstr "ডেলিভারিতে নেননি — পণ্য নিয়ে সন্দেহ"
+
+#: includes/admin/class-cartlum-cancel-reasons.php:54
+msgid "Price or delivery charge"
+msgstr "দাম বা ডেলিভারি চার্জ"
+
+#: includes/admin/class-cartlum-cancel-reasons.php:55
+msgid "Duplicate or wrong order"
+msgstr "ডুপ্লিকেট বা ভুল অর্ডার"
+
+#: includes/admin/class-cartlum-cancel-reasons.php:56
+msgid "Other"
+msgstr "অন্য কারণ"
+
+#. translators: %s: reason
+#: includes/admin/class-cartlum-cancel-reasons.php:106
+#, php-format
+msgid "Cancellation reason: %s"
+msgstr "বাতিলের কারণ: %s"
+
+#: includes/admin/class-cartlum-cancel-reasons.php:121
+msgid "Cancellation reason"
+msgstr "বাতিলের কারণ"
+
+#: includes/admin/class-cartlum-cancel-reasons.php:123
+msgid "— If cancelling, pick a reason —"
+msgstr "— বাতিল করলে একটি কারণ বেছে নিন —"
+
+#: includes/admin/class-cartlum-cancel-reasons.php:156
+msgid "Cancel reason"
+msgstr "বাতিলের কারণ"
+
+#: includes/admin/class-cartlum-cancel-reasons.php:176
+msgid "not set"
+msgstr "দেওয়া হয়নি"
+
+#: includes/admin/class-cartlum-cancel-reasons.php:224
+msgid "Why orders were cancelled (last 30 days)"
+msgstr "অর্ডার কেন বাতিল হলো (গত ৩০ দিন)"
+
+#: includes/admin/class-cartlum-cancel-reasons.php:226
+msgid "No cancelled orders in the last 30 days."
+msgstr "গত ৩০ দিনে কোনো বাতিল অর্ডার নেই।"
+
+#. translators: 1: cancelled orders, 2: with a reason
+#: includes/admin/class-cartlum-cancel-reasons.php:231
+#, php-format
+msgid "%1$d cancelled, %2$d with a reason."
+msgstr "%1$dটি বাতিল, %2$dটিতে কারণ দেওয়া আছে।"
+
+#: includes/admin/class-cartlum-cancel-reasons.php:246
+msgid "Still need a reason"
+msgstr "এখনো কারণ দরকার"
+
+#: includes/admin/class-cartlum-cancel-reasons.php:254
+msgid "Reason"
+msgstr "কারণ"
+
+#: includes/admin/class-cartlum-cancel-reasons.php:255
+msgid "Choose…"
+msgstr "বেছে নিন…"
+
+#: includes/admin/class-cartlum-cancel-reasons.php:260
+msgid "Save"
+msgstr "সেভ"
+
+#: includes/admin/class-cartlum-cancel-reasons.php:264
+msgid "Every cancelled order has a reason."
+msgstr "প্রতিটি বাতিল অর্ডারে কারণ দেওয়া আছে।"
+
 #: includes/admin/class-cartlum-carts-table.php:40
-#: includes/class-cartlum-phone-login.php:251
+#: includes/class-cartlum-phone-login.php:288
 msgid "Customer"
 msgstr "ক্রেতা"
 
@@ -2190,54 +2300,64 @@ msgstr "আনসাবস্ক্রাইব লিংক"
 msgid "there"
 msgstr "আপনি"
 
-#: includes/class-cartlum-order-sms.php:133
+#: includes/class-cartlum-order-sms.php:126
+msgid "Order #{order} is now {status}: {customer}, {phone}, Tk {amount}."
+msgstr "অর্ডার #{order} এখন {status}: {customer}, {phone}, Tk {amount}।"
+
+#: includes/class-cartlum-order-sms.php:176
 msgid "Thank you {name}! We received your order #{order} ({total}). Track it here: {track_link} - {store}"
 msgstr "ধন্যবাদ {name}! আপনার অর্ডার #{order} ({total}) পেয়েছি। এখানে ট্র্যাক করুন: {track_link} - {store}"
 
-#: includes/class-cartlum-order-sms.php:134
+#: includes/class-cartlum-order-sms.php:177
 msgid "Your order #{order} is on its way with {courier} (consignment {consignment}). - {store}"
 msgstr "আপনার অর্ডার #{order} {courier}-এর মাধ্যমে পথে আছে (কনসাইনমেন্ট {consignment})। - {store}"
 
-#: includes/class-cartlum-order-sms.php:135
+#: includes/class-cartlum-order-sms.php:178
 msgid "Your order #{order} has been delivered. Thank you for shopping with {store}!"
 msgstr "আপনার অর্ডার #{order} ডেলিভারি হয়েছে। {store} থেকে কেনাকাটার জন্য ধন্যবাদ!"
 
-#: includes/class-cartlum-order-sms.php:136
+#: includes/class-cartlum-order-sms.php:179
 msgid "Your order #{order} has been cancelled. If this is a mistake, please contact {store}."
 msgstr "আপনার অর্ডার #{order} বাতিল হয়েছে। ভুল হয়ে থাকলে {store}-এর সাথে যোগাযোগ করুন।"
 
-#: includes/class-cartlum-order-sms.php:137
+#: includes/class-cartlum-order-sms.php:180
 msgid "New order #{order}: {total} from {name}, {phone}."
 msgstr "নতুন অর্ডার #{order}: {total}, {name}, {phone}।"
 
-#: includes/class-cartlum-order-sms.php:164
+#: includes/class-cartlum-order-sms.php:223
 msgid "order received"
 msgstr "অর্ডার পাওয়া গেছে"
 
-#: includes/class-cartlum-order-sms.php:165
+#: includes/class-cartlum-order-sms.php:224
 msgid "handed to courier"
 msgstr "কুরিয়ারে দেওয়া হয়েছে"
 
-#: includes/class-cartlum-order-sms.php:166
+#: includes/class-cartlum-order-sms.php:225
 msgid "delivered"
 msgstr "ডেলিভারি হয়েছে"
 
-#: includes/class-cartlum-order-sms.php:167
+#: includes/class-cartlum-order-sms.php:226
 msgid "cancelled"
 msgstr "বাতিল"
 
-#: includes/class-cartlum-order-sms.php:168
+#: includes/class-cartlum-order-sms.php:227
 msgid "new order (to the store)"
 msgstr "নতুন অর্ডার (স্টোরকে)"
 
+#. translators: %s: order status
+#: includes/class-cartlum-order-sms.php:231
+#, php-format
+msgid "%s (to the store)"
+msgstr "%s (স্টোরকে)"
+
 #. translators: 1: kind of message, 2: error
-#: includes/class-cartlum-order-sms.php:172
+#: includes/class-cartlum-order-sms.php:235
 #, php-format
 msgid "Cartlum: the “%1$s” SMS could not be sent: %2$s"
 msgstr "Cartlum: “%1$s” SMS পাঠানো যায়নি: %2$s"
 
 #. translators: 1: kind of message, 2: phone number
-#: includes/class-cartlum-order-sms.php:176
+#: includes/class-cartlum-order-sms.php:239
 #, php-format
 msgid "Cartlum: “%1$s” SMS sent to %2$s."
 msgstr "Cartlum: “%1$s” SMS %2$s নম্বরে পাঠানো হয়েছে।"
@@ -2377,7 +2497,7 @@ msgstr "আপনার অ্যাকাউন্ট তৈরি করা �
 msgid "This number belongs to a staff account. Please log in with your email and password."
 msgstr "এই নম্বরটি একটি স্টাফ অ্যাকাউন্টের। ইমেইল ও পাসওয়ার্ড দিয়ে লগইন করুন।"
 
-#: includes/class-cartlum-phone-login.php:316
+#: includes/class-cartlum-phone-login.php:353
 msgid "Linked to the customer’s account after they logged in with this phone number (Cartlum)."
 msgstr "ক্রেতা এই ফোন নম্বর দিয়ে লগইন করার পর তার অ্যাকাউন্টের সাথে যুক্ত করা হয়েছে (Cartlum)।"
 
@@ -2553,19 +2673,19 @@ msgstr "শপে ফিরে যান"
 msgid "We save your details so we can help if your order does not go through."
 msgstr "অর্ডার সম্পন্ন না হলে আপনাকে সাহায্য করতে আমরা আপনার তথ্য সংরক্ষণ করি।"
 
-#: includes/class-cartlum-settings.php:117
+#: includes/class-cartlum-settings.php:120
 msgid "Hi {name}, you left something in your cart at {store}. Complete your order here: {cart_link}"
 msgstr "{name}, {store}-এ আপনার কার্টে কিছু রয়ে গেছে। এখানে অর্ডার সম্পন্ন করুন: {cart_link}"
 
-#: includes/class-cartlum-settings.php:120
+#: includes/class-cartlum-settings.php:123
 msgid "Hi {name}! This is {store}. You were about to order {items}. Can we help you finish? Your cart is saved here: {cart_link}"
 msgstr "আসসালামু আলাইকুম {name}! আমরা {store} থেকে বলছি। আপনি {items} অর্ডার করতে যাচ্ছিলেন। শেষ করতে কোনো সাহায্য লাগবে? আপনার কার্ট এখানে সেভ আছে: {cart_link}"
 
-#: includes/class-cartlum-settings.php:124
+#: includes/class-cartlum-settings.php:127
 msgid "You left something behind at {store}"
 msgstr "{store}-এ আপনার কিছু রয়ে গেছে"
 
-#: includes/class-cartlum-settings.php:125
+#: includes/class-cartlum-settings.php:128
 msgid ""
 "Hi {name},\n"
 "\n"
@@ -2579,7 +2699,7 @@ msgid ""
 "{store}"
 msgstr "{name},\n\nআপনি অর্ডার করতে যাচ্ছিলেন:\n{items}\n\nআপনার কার্ট সেভ আছে — এক ক্লিকে অর্ডার শেষ করুন:\n{cart_link}\n\nধন্যবাদ,\n{store}"
 
-#: includes/class-cartlum-settings.php:137
+#: includes/class-cartlum-settings.php:140
 msgid "Hi {name}, your cart at {store} is saved. Finish your order here: {cart_link}"
 msgstr "{name}, {store}-এ আপনার কার্ট সেভ আছে। এখানে অর্ডার শেষ করুন: {cart_link}"
 
@@ -2641,7 +2761,7 @@ msgstr "সেভ করা URL-এ একটি নমুনা ফেলে �
 msgid "Test event sent. Check your Zapier, Make or Pabbly scenario for it."
 msgstr "টেস্ট ইভেন্ট পাঠানো হয়েছে। আপনার Zapier, Make বা Pabbly-তে দেখে নিন।"
 
-#: includes/class-cartlum.php:139
+#: includes/class-cartlum.php:141
 msgid "Cartlum needs WooCommerce to be installed and active."
 msgstr "Cartlum চালাতে WooCommerce ইনস্টল ও চালু থাকতে হবে।"
 

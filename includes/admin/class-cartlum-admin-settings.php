@@ -452,7 +452,7 @@ class Cartlum_Admin_Settings {
 
 			case 'orders':
 				$defaults = Cartlum_Order_SMS::default_texts();
-				$sms_help = __( 'Text messages to the customer about their order, each sent once. Use {name}, {order}, {total}, {items}, {store}, {track_link}, {courier} and {consignment}. Leave a text empty to use the default shown.', 'cartlum' );
+				$sms_help = __( 'Text messages about orders, each sent once. Use {name}, {customer} (full name), {order}, {total}, {amount} (plain number: write “Tk {amount}” to keep an SMS free of Bangla characters), {items}, {items_detail} (one line per item: SKU or name, quantity, colour), {phone}, {address}, {status}, {store}, {track_link}, {courier} and {consignment}. Leave a text empty to use the default shown.', 'cartlum' );
 				if ( ! Cartlum_SMS::gateway() ) {
 					$sms_help .= ' ' . __( 'Set up an SMS gateway on the SMS tab first.', 'cartlum' );
 				}
@@ -478,8 +478,9 @@ class Cartlum_Admin_Settings {
 					);
 					if ( 'admin' === $event ) {
 						$fields['order_sms_admin_phone'] = array(
-							'label' => __( 'Your number', 'cartlum' ),
+							'label' => __( 'Your numbers', 'cartlum' ),
 							'type'  => 'text',
+							'help'  => __( 'One or more, separated by commas, e.g. 01712345678, 01812345678. Every number gets each message for the store.', 'cartlum' ),
 						);
 					}
 					$fields[ 'order_sms_' . $event . '_text' ] = array(
@@ -490,6 +491,23 @@ class Cartlum_Admin_Settings {
 						'help'  => sprintf( __( 'Default: %s', 'cartlum' ), $defaults[ $event ] ),
 					);
 				}
+				$statuses = array();
+				foreach ( wc_get_order_statuses() as $slug => $label ) {
+					$statuses[ 0 === strpos( $slug, 'wc-' ) ? substr( $slug, 3 ) : $slug ] = $label;
+				}
+				unset( $statuses['checkout-draft'] );
+				$fields['order_sms_status_alert']      = array(
+					'label'   => __( 'Tell the store when an order becomes', 'cartlum' ),
+					'type'    => 'checkboxes',
+					'options' => $statuses,
+					'help'    => __( 'An SMS to your numbers above each time an order changes to one of these statuses, for example Cancelled. Customers get nothing from this.', 'cartlum' ),
+				);
+				$fields['order_sms_status_alert_text'] = array(
+					'label' => __( 'Store status SMS text', 'cartlum' ),
+					'type'  => 'textarea',
+					/* translators: %s: default message */
+					'help'  => sprintf( __( 'Default: %s', 'cartlum' ), Cartlum_Order_SMS::status_alert_default() ),
+				);
 				$fields['order_tracking']       = array(
 					'label' => __( 'Order tracking in My Account', 'cartlum' ),
 					'type'  => 'checkbox',
@@ -529,6 +547,11 @@ class Cartlum_Admin_Settings {
 						'min'   => 0,
 						'max'   => 1000,
 						'help'  => __( 'Stops one device ordering under many numbers. Many mobile customers can share one address, so keep this generous. 0 = no limit.', 'cartlum' ),
+					),
+					'cancel_reasons'            => array(
+						'label' => __( 'Cancellation reasons', 'cartlum' ),
+						'type'  => 'checkbox',
+						'help'  => __( 'Pick why an order was cancelled on the order screen; see the reasons, and the cancelled orders still missing one, on Fake Orders.', 'cartlum' ),
 					),
 					'protect_blocklist'         => array(
 						'label' => __( 'Blocked numbers, IP addresses and devices', 'cartlum' ),
@@ -855,6 +878,13 @@ class Cartlum_Admin_Settings {
 			case 'textarea':
 				printf( '<textarea id="%1$s" name="%2$s" rows="5" class="large-text">%3$s</textarea>', esc_attr( $id ), esc_attr( $name ), esc_textarea( $value ) );
 				break;
+			case 'checkboxes':
+				echo '<fieldset id="' . esc_attr( $id ) . '" class="cl-checks">';
+				foreach ( $field['options'] as $opt => $label ) {
+					printf( '<label><input type="checkbox" name="%1$s[]" value="%2$s" %3$s> %4$s</label>', esc_attr( $name ), esc_attr( $opt ), checked( in_array( (string) $opt, (array) $value, true ), true, false ), esc_html( $label ) );
+				}
+				echo '</fieldset>';
+				break;
 			case 'number':
 				printf( '<input type="number" id="%1$s" name="%2$s" value="%3$s" min="%4$s" max="%5$s" class="small-text">', esc_attr( $id ), esc_attr( $name ), esc_attr( $value ), esc_attr( $field['min'] ?? 0 ), esc_attr( $field['max'] ?? '' ) );
 				break;
@@ -903,6 +933,9 @@ class Cartlum_Admin_Settings {
 					break;
 				case 'textarea':
 					$values[ $key ] = sanitize_textarea_field( $raw );
+					break;
+				case 'checkboxes':
+					$values[ $key ] = array_values( array_intersect( array_map( 'strval', (array) $raw ), array_map( 'strval', array_keys( $field['options'] ) ) ) );
 					break;
 				case 'color':
 					$values[ $key ] = (string) sanitize_hex_color( $raw );

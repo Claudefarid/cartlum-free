@@ -85,6 +85,9 @@ class Cartlum_Settings {
 			'order_sms_cancelled'     => 'no',
 			'order_sms_cancelled_text' => '',
 			'order_sms_admin'         => 'no',
+			'order_sms_status_alert'  => array(), // Statuses that send the store an SMS, e.g. array( 'cancelled' ).
+			'order_sms_status_alert_text' => '',
+			'cancel_reasons'          => 'yes',
 			'order_sms_admin_phone'   => '',
 			'order_sms_admin_text'    => '',
 			'order_tracking'          => 'no',

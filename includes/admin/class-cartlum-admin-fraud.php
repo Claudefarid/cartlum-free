@@ -84,6 +84,7 @@ class Cartlum_Admin_Fraud {
 						<p><a class="button button-primary" href="<?php echo esc_url( $rules ); ?>"><?php esc_html_e( 'Set up protection', 'cartlum' ); ?></a></p>
 					</div>
 				</div>
+				<?php Cartlum_Cancel_Reasons::panel(); ?>
 			</div>
 				<?php
 				return;
@@ -176,6 +177,7 @@ class Cartlum_Admin_Fraud {
 					</p>
 				<?php endif; ?>
 			</section>
+			<?php Cartlum_Cancel_Reasons::panel(); ?>
 		</div>
 		<?php
 	}

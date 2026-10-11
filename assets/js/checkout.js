@@ -155,4 +155,44 @@
 		var reduce = window.matchMedia && window.matchMedia( '(prefers-reduced-motion: reduce)' ).matches;
 		$( 'html, body' ).stop().animate( { scrollTop: $notices.offset().top - 16 }, reduce ? 0 : 250 );
 	} );
+
+	/* ---------- Place order in reach on phones ---------- */
+
+	// On a phone the real button sits far below the last field. While it is off screen, a bar at the
+	// bottom shows the same label (with the total) and presses the real button.
+	( function () {
+		if ( ! window.matchMedia || ! document.querySelector( 'form.clx' ) ) {
+			return;
+		}
+		var mq = window.matchMedia( '(max-width: 768px)' );
+		var $bar = $( '<div class="clx-sticky-order" hidden><button type="button" class="clx-sticky-order__btn"></button></div>' ).appendTo( 'body' );
+		var $btn = $bar.find( 'button' );
+		function real() {
+			return document.querySelector( 'form.clx #place_order' );
+		}
+		function sync() {
+			var el = real();
+			var show = false;
+			if ( el && mq.matches ) {
+				var r = el.getBoundingClientRect();
+				show = r.top > window.innerHeight || r.bottom < 0;
+				$btn.text( $.trim( $( el ).text() ) || $.trim( el.value || '' ) );
+			}
+			$bar.prop( 'hidden', ! show );
+			$body.toggleClass( 'clx-has-sticky-order', show );
+		}
+		$( window ).on( 'scroll resize', sync );
+		$body.on( 'updated_checkout checkout_error', sync );
+		$btn.on( 'click', function () {
+			var el = real();
+			if ( el ) {
+				$btn.prop( 'disabled', true );
+				el.click();
+				setTimeout( function () {
+					$btn.prop( 'disabled', false );
+				}, 3000 );
+			}
+		} );
+		sync();
+	}() );
 }( window.jQuery ) );

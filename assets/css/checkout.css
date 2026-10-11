@@ -1235,3 +1235,11 @@
 		transition-duration: .01ms !important;
 	}
 }
+
+/* Place order in reach on phones (see checkout.js). */
+.clx-sticky-order[hidden] { display: none !important; }
+.clx-sticky-order { position: fixed; left: 0; right: 0; bottom: 0; z-index: 9998; padding: 10px 12px calc(10px + env(safe-area-inset-bottom, 0px)); background: #fff; border-top: 1px solid var(--clx-line, #e5e5e5); box-shadow: 0 -4px 14px rgba(0, 0, 0, .08); }
+.clx-sticky-order__btn { display: block; width: 100%; min-height: 52px; margin: 0; padding: 12px 18px; border: 0; border-radius: 6px; background: var(--clx-accent, #1f2937); color: var(--clx-on-accent, #fff); font-size: 16px; font-weight: 600; cursor: pointer; }
+.clx-sticky-order__btn:disabled { opacity: .7; cursor: progress; }
+body.clx-has-sticky-order { padding-bottom: 76px; }
+@media (min-width: 769px) { .clx-sticky-order { display: none !important; } }

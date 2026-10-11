@@ -116,10 +116,12 @@ final class Cartlum {
 			require_once CARTLUM_DIR . 'includes/admin/class-cartlum-admin-actions.php';
 			require_once CARTLUM_DIR . 'includes/admin/class-cartlum-admin-protection.php';
 			require_once CARTLUM_DIR . 'includes/admin/class-cartlum-admin-fraud.php';
+			require_once CARTLUM_DIR . 'includes/admin/class-cartlum-cancel-reasons.php';
 			Cartlum_Admin::init();
 			Cartlum_Admin_Settings::init();
 			Cartlum_Admin_Actions::init();
 			Cartlum_Admin_Protection::init();
+			Cartlum_Cancel_Reasons::init();
 			add_action( 'cartlum_settings_after_fields', array( 'Cartlum_Email', 'preview_link' ) );
 			add_action( 'admin_post_cartlum_email_preview', array( 'Cartlum_Email', 'preview' ) );
 			add_action( 'cartlum_settings_after_fields', array( 'Cartlum_Webhooks', 'settings_extra' ) );
