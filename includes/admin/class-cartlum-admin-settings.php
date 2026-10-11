@@ -294,6 +294,11 @@ class Cartlum_Admin_Settings {
 						'type'  => 'text',
 						'help'  => __( 'Empty = WooCommerce’s default (“Place order”).', 'cartlum' ),
 					),
+					'checkout_note'        => array(
+						'label' => __( 'Note above the order button', 'cartlum' ),
+						'type'  => 'textarea',
+						'help'  => __( 'For example your delivery charge and refund policy, in one or two languages. Write [link text](https://…) for a link. Shown on this checkout, and on WooCommerce’s classic checkout when this one is off (not the block checkout). Empty = none.', 'cartlum' ),
+					),
 					'checkout_accent'      => array(
 						'label' => __( 'Button colour', 'cartlum' ),
 						'type'  => 'color',
@@ -447,6 +452,11 @@ class Cartlum_Admin_Settings {
 						'min'   => 0,
 						'max'   => 100000,
 						'help'  => __( 'Most SMS codes sent per day — login and checkout codes, all numbers together. Protects your SMS balance. 0 = no limit.', 'cartlum' ),
+					),
+					'account_cart_link'       => array(
+						'label' => __( 'Cart link in My Account', 'cartlum' ),
+						'type'  => 'checkbox',
+						'help'  => __( 'Adds “Cart” to the My Account menu, after Orders. Works with or without phone login.', 'cartlum' ),
 					),
 				);
 

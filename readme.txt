@@ -4,7 +4,7 @@ Tags: abandoned cart, cart recovery, sms, whatsapp, woocommerce
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.21.0
+Stable tag: 0.22.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -90,6 +90,10 @@ It can, for stores that only used CartFlows for a shorter checkout. CartFlows' g
 6. Settings: SMS gateways with a test button.
 
 == Changelog ==
+
+= 0.22.0 =
+* Checkout: a note above the order button, for example your delivery charge and refund policy, with links. Works on the phone-first checkout and WooCommerce’s classic checkout.
+* My Account: optional "Cart" link in the menu.
 
 = 0.21.0 =
 * Order SMS to the store: several numbers (comma-separated), {items_detail} (one line per item with SKU or name, quantity and colour), {customer}, {address}, {amount}, and an SMS to the store when an order changes to statuses you choose (for example Cancelled).

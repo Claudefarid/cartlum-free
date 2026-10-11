@@ -22,6 +22,10 @@ class Cartlum_Phone_Login {
 	 * Hooks.
 	 */
 	public static function init() {
+		if ( 'yes' === Cartlum_Settings::get( 'account_cart_link' ) ) {
+			add_filter( 'woocommerce_account_menu_items', array( __CLASS__, 'menu_cart' ) );
+			add_filter( 'woocommerce_get_endpoint_url', array( __CLASS__, 'menu_cart_url' ), 10, 2 );
+		}
 		if ( 'yes' !== Cartlum_Settings::get( 'phone_login' ) ) {
 			return;
 		}
@@ -386,5 +390,36 @@ class Cartlum_Phone_Login {
 			}
 		}
 		return $fields;
+	}
+
+	/**
+	 * My Account menu: a "Cart" link after Orders.
+	 *
+	 * @param array $items Menu items.
+	 * @return array
+	 */
+	public static function menu_cart( $items ) {
+		$out = array();
+		foreach ( $items as $key => $label ) {
+			$out[ $key ] = $label;
+			if ( 'orders' === $key ) {
+				$out['cartlum-cart'] = __( 'Cart', 'cartlum' );
+			}
+		}
+		if ( ! isset( $out['cartlum-cart'] ) ) {
+			$out = array_slice( $out, 0, 1, true ) + array( 'cartlum-cart' => __( 'Cart', 'cartlum' ) ) + array_slice( $out, 1, null, true );
+		}
+		return $out;
+	}
+
+	/**
+	 * The "Cart" menu link goes to the cart page.
+	 *
+	 * @param string $url      URL.
+	 * @param string $endpoint Endpoint.
+	 * @return string
+	 */
+	public static function menu_cart_url( $url, $endpoint ) {
+		return 'cartlum-cart' === $endpoint ? wc_get_cart_url() : $url;
 	}
 }

@@ -68,6 +68,10 @@ class Cartlum_Checkout {
 		// Orders from this checkout have the district as their city; do not print it twice.
 		add_filter( 'woocommerce_order_formatted_billing_address', array( __CLASS__, 'dedupe_state' ), 10, 1 );
 		add_filter( 'woocommerce_order_formatted_shipping_address', array( __CLASS__, 'dedupe_state' ), 10, 1 );
+		// Any classic checkout, Cartlum's or WooCommerce's own.
+		if ( '' !== trim( (string) Cartlum_Settings::get( 'checkout_note' ) ) ) {
+			add_action( 'woocommerce_review_order_before_submit', array( __CLASS__, 'note' ), 5 );
+		}
 
 		if ( ! self::active() ) {
 			return;
@@ -107,6 +111,22 @@ class Cartlum_Checkout {
 		// CartFlows' "global checkout" shows its own checkout on the store's checkout page; let the
 		// store's page through for visitors who get Cartlum's checkout. (CartFlows' own filter.)
 		add_filter( 'cartflows_allow_display_global_checkout', '__return_true' );
+	}
+
+	/**
+	 * The store's note above the order button, e.g. its delivery and refund policy. [text](url)
+	 * becomes a link that opens in a new tab.
+	 */
+	public static function note() {
+		$html = esc_html( trim( (string) Cartlum_Settings::get( 'checkout_note' ) ) );
+		$html = preg_replace_callback(
+			'/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/',
+			function ( $m ) {
+				return '<a href="' . esc_url( html_entity_decode( $m[2] ) ) . '" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">' . $m[1] . '</a>';
+			},
+			$html
+		);
+		echo '<p class="cartlum-checkout-note" style="background:#fbf3e7;border:1px solid #e8d9bf;border-radius:6px;padding:10px 14px;margin:0 0 14px;font-size:13px;line-height:1.5;color:#4a4038">' . wp_kses_post( nl2br( $html ) ) . '</p>';
 	}
 
 	/**

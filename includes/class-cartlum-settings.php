@@ -44,6 +44,7 @@ class Cartlum_Settings {
 			'checkout_email'        => 'optional', // optional|required|hidden.
 			'checkout_notes'        => 'yes',
 			'checkout_button_text'  => '',
+			'checkout_note'         => '',
 			'checkout_accent'       => '#1f2937',
 			'checkout_logo'         => '',
 			'thankyou_message'      => '',      // Empty = the default text, translated. {phone} = the customer's number.
@@ -73,6 +74,7 @@ class Cartlum_Settings {
 			'phone_login'             => 'no',
 			'otp_message'             => '',    // Empty = the default text, translated. {code} {store}.
 			'phone_login_daily_limit' => 300,   // Login codes per day, all numbers together.
+			'account_cart_link'       => 'no',
 
 			// Order SMS and tracking.
 			'order_sms_enabled'       => 'no',

@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Cartlum – Abandoned Cart Recovery for WooCommerce 0.21.0\n"
+"Project-Id-Version: Cartlum – Abandoned Cart Recovery for WooCommerce 0.22.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/cartlum\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-11T20:04:48+00:00\n"
+"POT-Creation-Date: 2026-10-11T21:03:34+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: cartlum\n"
@@ -64,7 +64,7 @@ msgstr ""
 #: includes/admin/class-cartlum-admin-actions.php:295
 #: includes/admin/class-cartlum-admin-actions.php:345
 #: includes/admin/class-cartlum-admin-protection.php:223
-#: includes/admin/class-cartlum-admin-settings.php:911
+#: includes/admin/class-cartlum-admin-settings.php:921
 #: includes/admin/class-cartlum-cancel-reasons.php:278
 #: includes/class-cartlum-email.php:209
 #: includes/class-cartlum-webhooks.php:307
@@ -152,6 +152,8 @@ msgstr ""
 
 #: includes/admin/class-cartlum-admin-actions.php:359
 #: includes/admin/views/cart.php:226
+#: includes/class-cartlum-phone-login.php:406
+#: includes/class-cartlum-phone-login.php:410
 msgid "Cart"
 msgstr ""
 
@@ -179,7 +181,7 @@ msgstr ""
 #: includes/admin/class-cartlum-admin-settings.php:39
 #: includes/admin/views/cart.php:130
 #: includes/admin/views/dashboard.php:24
-#: includes/class-cartlum-checkout.php:447
+#: includes/class-cartlum-checkout.php:467
 msgid "Email"
 msgstr ""
 
@@ -227,7 +229,7 @@ msgid "Fake orders"
 msgstr ""
 
 #: includes/admin/class-cartlum-admin-fraud.php:70
-#: includes/admin/class-cartlum-admin-settings.php:337
+#: includes/admin/class-cartlum-admin-settings.php:342
 msgid "Show"
 msgstr ""
 
@@ -497,7 +499,7 @@ msgid "Automation"
 msgstr ""
 
 #: includes/admin/class-cartlum-admin-settings.php:37
-#: includes/admin/class-cartlum-admin-settings.php:614
+#: includes/admin/class-cartlum-admin-settings.php:624
 #: includes/admin/views/cart.php:128
 #: includes/admin/views/dashboard.php:22
 msgid "SMS"
@@ -655,245 +657,261 @@ msgid "Empty = WooCommerce’s default (“Place order”)."
 msgstr ""
 
 #: includes/admin/class-cartlum-admin-settings.php:298
-msgid "Button colour"
+msgid "Note above the order button"
 msgstr ""
 
 #: includes/admin/class-cartlum-admin-settings.php:300
-msgid "Your brand colour, used for the order button and selected options. The text on it turns white or black to stay readable."
+msgid "For example your delivery charge and refund policy, in one or two languages. Write [link text](https://…) for a link. Shown on this checkout, and on WooCommerce’s classic checkout when this one is off (not the block checkout). Empty = none."
 msgstr ""
 
 #: includes/admin/class-cartlum-admin-settings.php:303
-msgid "Logo image address"
+msgid "Button colour"
 msgstr ""
 
 #: includes/admin/class-cartlum-admin-settings.php:305
-msgid "Shown at the top of the checkout. Empty = your theme’s logo, or the site name."
+msgid "Your brand colour, used for the order button and selected options. The text on it turns white or black to stay readable."
 msgstr ""
 
 #: includes/admin/class-cartlum-admin-settings.php:308
-msgid "Thank-you message"
+msgid "Logo image address"
 msgstr ""
 
 #: includes/admin/class-cartlum-admin-settings.php:310
+msgid "Shown at the top of the checkout. Empty = your theme’s logo, or the site name."
+msgstr ""
+
+#: includes/admin/class-cartlum-admin-settings.php:313
+msgid "Thank-you message"
+msgstr ""
+
+#: includes/admin/class-cartlum-admin-settings.php:315
 msgid "Shown under “Your order is confirmed”. {phone} becomes the customer’s number. Empty = “We have received your order and will contact you on {phone} about delivery.”"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:317
+#: includes/admin/class-cartlum-admin-settings.php:322
 msgid "Webhook URL"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:319
+#: includes/admin/class-cartlum-admin-settings.php:324
 msgid "Cartlum posts cart events here as JSON — paste the URL from a Zapier “Catch Hook”, a Make or Pabbly webhook, or your own system. Empty = off."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:332
+#: includes/admin/class-cartlum-admin-settings.php:337
 msgid "Save-cart popup"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:334
+#: includes/admin/class-cartlum-admin-settings.php:339
 msgid "Asks shoppers who have something in the cart for their mobile number, so the cart is saved even if they never reach the checkout. Never shown on the checkout, account or thank-you pages, or to shoppers whose number you already have. After “No thanks” it stays away for 3 days."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:340
+#: includes/admin/class-cartlum-admin-settings.php:345
 msgid "When they are about to leave"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:341
+#: includes/admin/class-cartlum-admin-settings.php:346
 msgid "Right after “Add to cart”"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:342
+#: includes/admin/class-cartlum-admin-settings.php:347
 msgid "Both (once)"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:344
+#: includes/admin/class-cartlum-admin-settings.php:349
 msgid "On computers “about to leave” means the mouse heads out of the window; on phones, a quick scroll back to the top. On phones “Right after Add to cart” catches more shoppers."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:347
+#: includes/admin/class-cartlum-admin-settings.php:352
 msgid "Heading"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:349
+#: includes/admin/class-cartlum-admin-settings.php:354
 msgid "Empty = “Save your cart?”"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:352
+#: includes/admin/class-cartlum-admin-settings.php:357
 msgid "Text"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:354
+#: includes/admin/class-cartlum-admin-settings.php:359
 msgid "Empty = “Leave your mobile number and we will keep your cart for you. We may send you a reminder by SMS.”"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:357
+#: includes/admin/class-cartlum-admin-settings.php:362
 msgid "Button"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:359
+#: includes/admin/class-cartlum-admin-settings.php:364
 msgid "Empty = “Save my cart”"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:365
+#: includes/admin/class-cartlum-admin-settings.php:370
 msgid "Buy now button"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:367
+#: includes/admin/class-cartlum-admin-settings.php:372
 msgid "A “Buy now” button next to “Add to cart” that adds the product, with the chosen options and quantity, and goes straight to checkout. Works with any checkout."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:370
+#: includes/admin/class-cartlum-admin-settings.php:375
 msgid "Buy now text"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:372
+#: includes/admin/class-cartlum-admin-settings.php:377
 msgid "Empty = “Buy now”."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:375
+#: includes/admin/class-cartlum-admin-settings.php:380
 msgid "Buy now checks out"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:378
+#: includes/admin/class-cartlum-admin-settings.php:383
 msgid "This product plus anything already in the cart"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:379
+#: includes/admin/class-cartlum-admin-settings.php:384
 msgid "Only this product (the cart is emptied first)"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:383
+#: includes/admin/class-cartlum-admin-settings.php:388
 msgid "Buy now on shop pages"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:385
+#: includes/admin/class-cartlum-admin-settings.php:390
 msgid "Also under each product in the shop and category pages (products without options only)."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:388
+#: includes/admin/class-cartlum-admin-settings.php:393
 msgid "WhatsApp button"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:390
+#: includes/admin/class-cartlum-admin-settings.php:395
 msgid "“Order on WhatsApp” under the buy buttons: opens a chat with your number, with the product, chosen options, quantity and price already written."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:393
+#: includes/admin/class-cartlum-admin-settings.php:398
 msgid "Your WhatsApp number"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:395
+#: includes/admin/class-cartlum-admin-settings.php:400
 msgid "e.g. 01712345678 or +8801712345678."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:398
+#: includes/admin/class-cartlum-admin-settings.php:403
 msgid "WhatsApp button text"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:400
+#: includes/admin/class-cartlum-admin-settings.php:405
 msgid "Empty = “Order on WhatsApp”."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:403
+#: includes/admin/class-cartlum-admin-settings.php:408
 #: includes/admin/views/cart.php:164
 msgid "WhatsApp message"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:405
+#: includes/admin/class-cartlum-admin-settings.php:410
 msgid "Use {product}, {quantity}, {price} and {link}. Empty = a short English message."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:408
+#: includes/admin/class-cartlum-admin-settings.php:413
 msgid "Call button"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:410
+#: includes/admin/class-cartlum-admin-settings.php:415
 msgid "“Call to order”: one tap dials your number on a phone."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:413
-#: includes/admin/class-cartlum-admin-settings.php:848
+#: includes/admin/class-cartlum-admin-settings.php:418
+#: includes/admin/class-cartlum-admin-settings.php:858
 msgid "Your phone number"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:417
+#: includes/admin/class-cartlum-admin-settings.php:422
 msgid "Call button text"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:419
+#: includes/admin/class-cartlum-admin-settings.php:424
 msgid "Empty = “Call to order”. To place the buttons yourself in a page builder, use the shortcode [cartlum_contact_buttons]."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:422
+#: includes/admin/class-cartlum-admin-settings.php:427
 msgid "Product button colour"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:424
+#: includes/admin/class-cartlum-admin-settings.php:429
 msgid "Add to cart, Buy now, WhatsApp and Call sit together as a 2 × 2 group. Enter a colour code, e.g. #2B2620, to give all four that colour; leave empty to keep your theme’s Add to cart style."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:429
+#: includes/admin/class-cartlum-admin-settings.php:434
 msgid "Customers log in to My Account with their mobile number and a 6-digit code sent by SMS — no password. The first login creates their account, and orders placed with that number appear in it. Staff accounts must still use their password."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:431
+#: includes/admin/class-cartlum-admin-settings.php:436
 msgid "Set up an SMS gateway on the SMS tab first; without one no code can be sent."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:435
+#: includes/admin/class-cartlum-admin-settings.php:440
 msgid "Log in with phone number"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:440
+#: includes/admin/class-cartlum-admin-settings.php:445
 msgid "Code message"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:442
+#: includes/admin/class-cartlum-admin-settings.php:447
 msgid "The SMS with the code. Use {code} and {store}. Empty = “{code} is your {store} login code. It expires in 10 minutes.”"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:445
+#: includes/admin/class-cartlum-admin-settings.php:450
 msgid "Codes per day"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:449
+#: includes/admin/class-cartlum-admin-settings.php:454
 msgid "Most SMS codes sent per day — login and checkout codes, all numbers together. Protects your SMS balance. 0 = no limit."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:455
+#: includes/admin/class-cartlum-admin-settings.php:457
+msgid "Cart link in My Account"
+msgstr ""
+
+#: includes/admin/class-cartlum-admin-settings.php:459
+msgid "Adds “Cart” to the My Account menu, after Orders. Works with or without phone login."
+msgstr ""
+
+#: includes/admin/class-cartlum-admin-settings.php:465
 msgid "Text messages about orders, each sent once. Use {name}, {customer} (full name), {order}, {total}, {amount} (plain number: write “Tk {amount}” to keep an SMS free of Bangla characters), {items}, {items_detail} (one line per item: SKU or name, quantity, colour), {phone}, {address}, {status}, {store}, {track_link}, {courier} and {consignment}. Leave a text empty to use the default shown."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:457
+#: includes/admin/class-cartlum-admin-settings.php:467
 msgid "Set up an SMS gateway on the SMS tab first."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:461
+#: includes/admin/class-cartlum-admin-settings.php:471
 msgid "Order SMS"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:463
+#: includes/admin/class-cartlum-admin-settings.php:473
 msgid "If another plugin already texts customers about orders, turn that off, or customers get two messages."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:467
+#: includes/admin/class-cartlum-admin-settings.php:477
 msgid "Order received"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:467
+#: includes/admin/class-cartlum-admin-settings.php:477
 msgid "When the order goes through."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:468
+#: includes/admin/class-cartlum-admin-settings.php:478
 #: includes/class-cartlum-order-tracking.php:88
 msgid "Handed to the courier"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:468
+#: includes/admin/class-cartlum-admin-settings.php:478
 msgid "When a Steadfast parcel is created for the order."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:469
+#: includes/admin/class-cartlum-admin-settings.php:479
 #: includes/class-cartlum-order-tracking.php:78
 #: includes/class-cartlum-order-tracking.php:79
 #: includes/class-cartlum-order-tracking.php:116
@@ -901,340 +919,340 @@ msgstr ""
 msgid "Delivered"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:469
+#: includes/admin/class-cartlum-admin-settings.php:479
 msgid "When the order is marked completed, or Steadfast reports it delivered."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:470
+#: includes/admin/class-cartlum-admin-settings.php:480
 #: includes/class-cartlum-order-tracking.php:82
 #: includes/class-cartlum-order-tracking.php:83
 msgid "Cancelled"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:470
+#: includes/admin/class-cartlum-admin-settings.php:480
 msgid "When the order is cancelled. Fake orders cost an SMS too."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:471
+#: includes/admin/class-cartlum-admin-settings.php:481
 msgid "New order SMS to you"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:471
+#: includes/admin/class-cartlum-admin-settings.php:481
 msgid "A message to your own number for every new order."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:481
+#: includes/admin/class-cartlum-admin-settings.php:491
 msgid "Your numbers"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:483
+#: includes/admin/class-cartlum-admin-settings.php:493
 msgid "One or more, separated by commas, e.g. 01712345678, 01812345678. Every number gets each message for the store."
 msgstr ""
 
 #. translators: %s: kind of message
-#: includes/admin/class-cartlum-admin-settings.php:488
+#: includes/admin/class-cartlum-admin-settings.php:498
 #, php-format
 msgid "“%s” text"
 msgstr ""
 
 #. translators: %s: default message
-#: includes/admin/class-cartlum-admin-settings.php:491
-#: includes/admin/class-cartlum-admin-settings.php:509
+#: includes/admin/class-cartlum-admin-settings.php:501
+#: includes/admin/class-cartlum-admin-settings.php:519
 #, php-format
 msgid "Default: %s"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:500
+#: includes/admin/class-cartlum-admin-settings.php:510
 msgid "Tell the store when an order becomes"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:503
+#: includes/admin/class-cartlum-admin-settings.php:513
 msgid "An SMS to your numbers above each time an order changes to one of these statuses, for example Cancelled. Customers get nothing from this."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:506
+#: includes/admin/class-cartlum-admin-settings.php:516
 msgid "Store status SMS text"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:512
+#: includes/admin/class-cartlum-admin-settings.php:522
 msgid "Order tracking in My Account"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:514
+#: includes/admin/class-cartlum-admin-settings.php:524
 msgid "On each order’s page: placed → processing → with the courier → delivered, and the courier’s consignment number and status (Steadfast is read automatically)."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:517
+#: includes/admin/class-cartlum-admin-settings.php:527
 msgid "Courier tracking link"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:519
+#: includes/admin/class-cartlum-admin-settings.php:529
 msgid "Optional: your courier’s tracking page address with {consignment} where the consignment number goes. With it, customers get a “Track parcel” button."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:526
+#: includes/admin/class-cartlum-admin-settings.php:536
 msgid "Fake-order protection"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:528
+#: includes/admin/class-cartlum-admin-settings.php:538
 msgid "Stops blocked numbers, repeat orders and bots at checkout, and shows staff each number’s order history on the Orders screen. Shop managers placing orders are never stopped."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:531
+#: includes/admin/class-cartlum-admin-settings.php:541
 msgid "Repeat order wait (minutes)"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:535
+#: includes/admin/class-cartlum-admin-settings.php:545
 msgid "A number that ordered within this time cannot order again online; it is told its earlier order number and asked to call. 0 = off."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:538
+#: includes/admin/class-cartlum-admin-settings.php:548
 msgid "Orders per number per day"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:542
+#: includes/admin/class-cartlum-admin-settings.php:552
 msgid "Cancelled and failed orders do not count. 0 = no limit."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:545
+#: includes/admin/class-cartlum-admin-settings.php:555
 msgid "Orders per IP address per day"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:549
+#: includes/admin/class-cartlum-admin-settings.php:559
 msgid "Stops one device ordering under many numbers. Many mobile customers can share one address, so keep this generous. 0 = no limit."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:552
+#: includes/admin/class-cartlum-admin-settings.php:562
 msgid "Cancellation reasons"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:554
+#: includes/admin/class-cartlum-admin-settings.php:564
 msgid "Pick why an order was cancelled on the order screen; see the reasons, and the cancelled orders still missing one, on Fake Orders."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:557
+#: includes/admin/class-cartlum-admin-settings.php:567
 msgid "Blocked numbers, IP addresses and devices"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:559
+#: includes/admin/class-cartlum-admin-settings.php:569
 msgid "One per line. Any way of writing a number works (01712345678, +8801712345678). IP addresses can be single (103.4.5.6) or ranges (103.4.5.0/24). Devices are added from an order’s screen, as are numbers and IP addresses."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:562
+#: includes/admin/class-cartlum-admin-settings.php:572
 msgid "Message to blocked customers"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:564
+#: includes/admin/class-cartlum-admin-settings.php:574
 msgid "Empty = “We cannot take this order online. Please call us to order.”"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:567
+#: includes/admin/class-cartlum-admin-settings.php:577
 msgid "“Often cancels” after"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:571
+#: includes/admin/class-cartlum-admin-settings.php:581
 msgid "Cancelled orders before a number is marked “Often cancels” (when it also cancelled at least as many as it completed). Its new orders get a note to call before shipping."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:574
+#: includes/admin/class-cartlum-admin-settings.php:584
 msgid "SMS code for risky orders"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:576
+#: includes/admin/class-cartlum-admin-settings.php:586
 msgid "Cash-on-delivery customers confirm their number with a code before ordering when the number often cancels, a new number orders a large amount, or the connection already ordered twice today. Everyone else orders as before. Works on classic checkouts (also CartFlows and Cartlum’s), not the block checkout. Needs an SMS gateway."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:579
+#: includes/admin/class-cartlum-admin-settings.php:589
 msgid "Code for new numbers from"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:583
+#: includes/admin/class-cartlum-admin-settings.php:593
 msgid "A number with no completed orders yet gets a code when the order is at least this much. 0 = not for this reason."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:586
+#: includes/admin/class-cartlum-admin-settings.php:596
 msgid "Order code message"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:588
+#: includes/admin/class-cartlum-admin-settings.php:598
 msgid "Use {code} and {store}. Empty = “{code} is your {store} order code. It expires in 10 minutes.”"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:599
+#: includes/admin/class-cartlum-admin-settings.php:609
 msgid "Automatic reminder"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:601
+#: includes/admin/class-cartlum-admin-settings.php:611
 msgid "Send a reminder automatically after a cart is abandoned. It stops as soon as the customer orders, unsubscribes, or you stop it on the cart."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:604
+#: includes/admin/class-cartlum-admin-settings.php:614
 msgid "Send after (minutes)"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:608
+#: includes/admin/class-cartlum-admin-settings.php:618
 msgid "Counted from the moment the cart is marked abandoned."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:611
+#: includes/admin/class-cartlum-admin-settings.php:621
 msgid "Send by"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:615
+#: includes/admin/class-cartlum-admin-settings.php:625
 msgid "Email (uses the Email tab’s message)"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:619
+#: includes/admin/class-cartlum-admin-settings.php:629
 #: includes/admin/views/cart.php:144
 msgid "SMS message"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:621
+#: includes/admin/class-cartlum-admin-settings.php:631
 msgid "Add {coupon} to include a one-time coupon. Without it no coupon is created, which keeps your margin for customers who would have bought anyway."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:624
+#: includes/admin/class-cartlum-admin-settings.php:634
 msgid "Quiet hours from"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:629
+#: includes/admin/class-cartlum-admin-settings.php:639
 msgid "Quiet hours until"
 msgstr ""
 
 #. translators: %s: timezone name
-#: includes/admin/class-cartlum-admin-settings.php:633
+#: includes/admin/class-cartlum-admin-settings.php:643
 #, php-format
 msgid "No automatic messages in this window; they wait until it ends. Store time zone: %s. Same hour in both = no quiet hours."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:636
+#: includes/admin/class-cartlum-admin-settings.php:646
 msgid "Daily SMS limit"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:640
+#: includes/admin/class-cartlum-admin-settings.php:650
 msgid "Most automatic SMS per day. Protects your SMS balance. 0 = no limit."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:643
+#: includes/admin/class-cartlum-admin-settings.php:653
 msgid "Test mode: send to"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:645
+#: includes/admin/class-cartlum-admin-settings.php:655
 msgid "While a number is set here, every automatic SMS goes to it instead of the customer — use it to check the flow before going live. Leave empty to send to customers."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:652
+#: includes/admin/class-cartlum-admin-settings.php:662
 msgid "Gateway"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:654
+#: includes/admin/class-cartlum-admin-settings.php:664
 msgid "— None —"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:669
-#: includes/admin/class-cartlum-admin-settings.php:678
+#: includes/admin/class-cartlum-admin-settings.php:679
+#: includes/admin/class-cartlum-admin-settings.php:688
 msgid "Default message"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:671
+#: includes/admin/class-cartlum-admin-settings.php:681
 msgid "Keep it short: one SMS is 160 letters in English, 70 in Bangla and other non-Latin scripts."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:680
+#: includes/admin/class-cartlum-admin-settings.php:690
 msgid "Opens in WhatsApp for you to send."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:687
+#: includes/admin/class-cartlum-admin-settings.php:697
 msgid "Design"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:690
+#: includes/admin/class-cartlum-admin-settings.php:700
 msgid "Cartlum design — logo, product photos and a button"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:691
+#: includes/admin/class-cartlum-admin-settings.php:701
 msgid "Plain — your WooCommerce email style"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:693
+#: includes/admin/class-cartlum-admin-settings.php:703
 msgid "The design uses the logo and button colour from the Checkout tab (or your theme’s logo). In the message, a line with only {items} becomes the product list and a line with only {cart_link} becomes the button."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:696
+#: includes/admin/class-cartlum-admin-settings.php:706
 #: includes/admin/views/cart.php:184
 msgid "Subject"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:700
+#: includes/admin/class-cartlum-admin-settings.php:710
 #: includes/admin/views/cart.php:186
 msgid "Message"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:702
+#: includes/admin/class-cartlum-admin-settings.php:712
 msgid "Plain text; links become clickable. An unsubscribe line is added automatically."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:709
+#: includes/admin/class-cartlum-admin-settings.php:719
 msgid "Discount type"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:712
+#: includes/admin/class-cartlum-admin-settings.php:722
 msgid "Fixed amount"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:713
+#: includes/admin/class-cartlum-admin-settings.php:723
 msgid "Percentage"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:717
+#: includes/admin/class-cartlum-admin-settings.php:727
 msgid "Amount"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:723
+#: includes/admin/class-cartlum-admin-settings.php:733
 msgid "Valid for (days)"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:729
+#: includes/admin/class-cartlum-admin-settings.php:739
 msgid "Code prefix"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:731
+#: includes/admin/class-cartlum-admin-settings.php:741
 msgid "Codes look like PREFIX-7KQ2XP. Each works once, for one cart."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:738
+#: includes/admin/class-cartlum-admin-settings.php:748
 msgid "Delete carts after (days)"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:742
+#: includes/admin/class-cartlum-admin-settings.php:752
 msgid "0 keeps them forever."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:745
+#: includes/admin/class-cartlum-admin-settings.php:755
 msgid "Delete all data on uninstall"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:834
+#: includes/admin/class-cartlum-admin-settings.php:844
 msgid "Insert into the message you are editing"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:844
+#: includes/admin/class-cartlum-admin-settings.php:854
 msgid "Send a test SMS"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:849
+#: includes/admin/class-cartlum-admin-settings.php:859
 msgid "Send test"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:850
+#: includes/admin/class-cartlum-admin-settings.php:860
 msgid "Save your settings first — the test uses the saved ones."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:896
+#: includes/admin/class-cartlum-admin-settings.php:906
 msgid "Saved — leave empty to keep"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:967
+#: includes/admin/class-cartlum-admin-settings.php:977
 msgid "Settings saved."
 msgstr ""
 
@@ -1521,7 +1539,7 @@ msgid "Every cancelled order has a reason."
 msgstr ""
 
 #: includes/admin/class-cartlum-carts-table.php:40
-#: includes/class-cartlum-phone-login.php:288
+#: includes/class-cartlum-phone-login.php:292
 msgid "Customer"
 msgstr ""
 
@@ -2110,92 +2128,92 @@ msgstr ""
 msgid "Buy now"
 msgstr ""
 
-#: includes/class-cartlum-checkout.php:138
+#: includes/class-cartlum-checkout.php:158
 msgid "optional"
 msgstr ""
 
-#: includes/class-cartlum-checkout.php:217
+#: includes/class-cartlum-checkout.php:237
 msgid "Enter your address to see the delivery charge."
 msgstr ""
 
-#: includes/class-cartlum-checkout.php:222
+#: includes/class-cartlum-checkout.php:242
 msgid "Choose your district to see the delivery charge."
 msgstr ""
 
-#: includes/class-cartlum-checkout.php:238
-#: includes/class-cartlum-checkout.php:261
+#: includes/class-cartlum-checkout.php:258
+#: includes/class-cartlum-checkout.php:281
 msgid "Free"
 msgstr ""
 
-#: includes/class-cartlum-checkout.php:258
+#: includes/class-cartlum-checkout.php:278
 msgid "Enter district"
 msgstr ""
 
-#: includes/class-cartlum-checkout.php:272
+#: includes/class-cartlum-checkout.php:292
 msgid "Terms"
 msgstr ""
 
-#: includes/class-cartlum-checkout.php:273
+#: includes/class-cartlum-checkout.php:293
 msgid "Privacy policy"
 msgstr ""
 
-#: includes/class-cartlum-checkout.php:280
+#: includes/class-cartlum-checkout.php:300
 msgid "Store policies"
 msgstr ""
 
-#: includes/class-cartlum-checkout.php:333
+#: includes/class-cartlum-checkout.php:353
 #: includes/class-cartlum-popup.php:119
 #: includes/class-cartlum-popup.php:120
 #: templates/myaccount/form-login.php:23
 msgid "Mobile number"
 msgstr ""
 
-#: includes/class-cartlum-checkout.php:339
+#: includes/class-cartlum-checkout.php:359
 msgid "Full name"
 msgstr ""
 
-#: includes/class-cartlum-checkout.php:344
+#: includes/class-cartlum-checkout.php:364
 msgid "Full address"
 msgstr ""
 
-#: includes/class-cartlum-checkout.php:345
+#: includes/class-cartlum-checkout.php:365
 msgid "House, road, area"
 msgstr ""
 
-#: includes/class-cartlum-checkout.php:357
-#: includes/class-cartlum-checkout.php:454
+#: includes/class-cartlum-checkout.php:377
+#: includes/class-cartlum-checkout.php:474
 msgid "District"
 msgstr ""
 
-#: includes/class-cartlum-checkout.php:460
+#: includes/class-cartlum-checkout.php:480
 msgid "Order note"
 msgstr ""
 
-#: includes/class-cartlum-checkout.php:461
+#: includes/class-cartlum-checkout.php:481
 msgid "Anything we should know for delivery?"
 msgstr ""
 
-#: includes/class-cartlum-checkout.php:508
-#: includes/class-cartlum-phone-login.php:124
+#: includes/class-cartlum-checkout.php:528
+#: includes/class-cartlum-phone-login.php:128
 msgid "Please enter an 11-digit mobile number, e.g. 01712345678."
 msgstr ""
 
-#: includes/class-cartlum-checkout.php:509
+#: includes/class-cartlum-checkout.php:529
 #: includes/class-cartlum-popup.php:159
 msgid "Please enter a valid mobile number."
 msgstr ""
 
 #. translators: %s: field name, e.g. "full name"
-#: includes/class-cartlum-checkout.php:551
+#: includes/class-cartlum-checkout.php:571
 #, php-format
 msgid "Please enter your %s."
 msgstr ""
 
-#: includes/class-cartlum-checkout.php:562
+#: includes/class-cartlum-checkout.php:582
 msgid "Place order"
 msgstr ""
 
-#: includes/class-cartlum-checkout.php:591
+#: includes/class-cartlum-checkout.php:611
 msgid "The code could not be checked. Please try again."
 msgstr ""
 
@@ -2438,63 +2456,63 @@ msgid_plural "That code is not right. %d tries left."
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/class-cartlum-phone-login.php:84
+#: includes/class-cartlum-phone-login.php:88
 #: templates/myaccount/form-login.php:33
 msgid "Send code"
 msgstr ""
 
-#: includes/class-cartlum-phone-login.php:85
+#: includes/class-cartlum-phone-login.php:89
 #: templates/myaccount/form-login.php:18
 msgid "Log in"
 msgstr ""
 
-#: includes/class-cartlum-phone-login.php:86
+#: includes/class-cartlum-phone-login.php:90
 #: includes/class-cartlum-protection.php:585
 msgid "Send a new code"
 msgstr ""
 
 #. translators: %d: seconds
-#: includes/class-cartlum-phone-login.php:88
+#: includes/class-cartlum-phone-login.php:92
 #: includes/class-cartlum-protection.php:587
 #, php-format
 msgid "Send a new code (%d)"
 msgstr ""
 
-#: includes/class-cartlum-phone-login.php:89
+#: includes/class-cartlum-phone-login.php:93
 #: includes/class-cartlum-protection.php:588
 msgid "Please wait…"
 msgstr ""
 
-#: includes/class-cartlum-phone-login.php:90
+#: includes/class-cartlum-phone-login.php:94
 #: includes/class-cartlum-protection.php:589
 msgid "Could not reach the store. Check your connection and try again."
 msgstr ""
 
-#: includes/class-cartlum-phone-login.php:113
+#: includes/class-cartlum-phone-login.php:117
 #: includes/class-cartlum-protection.php:495
 msgid "This page has expired. Please reload it and try again."
 msgstr ""
 
-#: includes/class-cartlum-phone-login.php:127
+#: includes/class-cartlum-phone-login.php:131
 msgid "{code} is your {store} login code. It expires in 10 minutes."
 msgstr ""
 
 #. translators: %s: phone number
-#: includes/class-cartlum-phone-login.php:135
+#: includes/class-cartlum-phone-login.php:139
 #: includes/class-cartlum-protection.php:524
 #, php-format
 msgid "We sent a 6-digit code to %s."
 msgstr ""
 
-#: includes/class-cartlum-phone-login.php:160
+#: includes/class-cartlum-phone-login.php:164
 msgid "Your account could not be created. Please contact the store."
 msgstr ""
 
-#: includes/class-cartlum-phone-login.php:205
+#: includes/class-cartlum-phone-login.php:209
 msgid "This number belongs to a staff account. Please log in with your email and password."
 msgstr ""
 
-#: includes/class-cartlum-phone-login.php:353
+#: includes/class-cartlum-phone-login.php:357
 msgid "Linked to the customer’s account after they logged in with this phone number (Cartlum)."
 msgstr ""
 
@@ -2670,19 +2688,19 @@ msgstr ""
 msgid "We save your details so we can help if your order does not go through."
 msgstr ""
 
-#: includes/class-cartlum-settings.php:120
+#: includes/class-cartlum-settings.php:122
 msgid "Hi {name}, you left something in your cart at {store}. Complete your order here: {cart_link}"
 msgstr ""
 
-#: includes/class-cartlum-settings.php:123
+#: includes/class-cartlum-settings.php:125
 msgid "Hi {name}! This is {store}. You were about to order {items}. Can we help you finish? Your cart is saved here: {cart_link}"
 msgstr ""
 
-#: includes/class-cartlum-settings.php:127
+#: includes/class-cartlum-settings.php:129
 msgid "You left something behind at {store}"
 msgstr ""
 
-#: includes/class-cartlum-settings.php:128
+#: includes/class-cartlum-settings.php:130
 msgid ""
 "Hi {name},\n"
 "\n"
@@ -2696,7 +2714,7 @@ msgid ""
 "{store}"
 msgstr ""
 
-#: includes/class-cartlum-settings.php:140
+#: includes/class-cartlum-settings.php:142
 msgid "Hi {name}, your cart at {store} is saved. Finish your order here: {cart_link}"
 msgstr ""
 
