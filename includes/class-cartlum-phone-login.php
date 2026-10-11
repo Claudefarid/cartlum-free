@@ -222,7 +222,44 @@ class Cartlum_Phone_Login {
 				),
 			)
 		);
-		return $users ? $users[0] : null;
+		if ( $users ) {
+			return $users[0];
+		}
+		return self::adopt_phone_account( $phone );
+	}
+
+	/**
+	 * A customer account made earlier by another phone-login system, which names the account after
+	 * the number itself (user name 01712345678 or 8801712345678). Customers cannot change their user
+	 * name, so unlike a typed billing phone it really belongs to that number. Used once, then the
+	 * number is recorded as proven, so the customer keeps their account and all its orders.
+	 *
+	 * @param string $phone Normalized digits.
+	 * @return WP_User|null
+	 */
+	private static function adopt_phone_account( $phone ) {
+		/**
+		 * Whether to take over accounts whose user name is the phone number.
+		 *
+		 * @param bool $adopt Adopt.
+		 */
+		if ( ! apply_filters( 'cartlum_adopt_phone_named_accounts', true ) ) {
+			return null;
+		}
+		foreach ( Cartlum_Phone::variants( $phone ) as $variant ) {
+			$user = get_user_by( 'login', ltrim( (string) $variant, '+' ) );
+			if ( ! $user || user_can( $user, 'edit_posts' ) || user_can( $user, 'manage_woocommerce' ) ) {
+				continue;
+			}
+			// The email, if any, must be the same number at some domain (number@customer.example).
+			$email_name = strstr( (string) $user->user_email, '@', true );
+			if ( '' !== (string) $user->user_email && Cartlum_Phone::normalize( (string) $email_name ) !== $phone ) {
+				continue;
+			}
+			update_user_meta( $user->ID, 'cartlum_phone', $phone );
+			return $user;
+		}
+		return null;
 	}
 
 	/**
