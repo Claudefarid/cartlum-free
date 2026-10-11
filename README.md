@@ -22,7 +22,7 @@ Requires WordPress 6.2+, WooCommerce 8.0+ and PHP 7.4+.
 
 - **Saves the cart as the phone number is typed**: classic checkout, block checkout and CartFlows.
 - **Save-cart popup**: asks for the number when a shopper is about to leave, or after "Add to cart".
-- **Phone-first checkout**: mobile number first; Bangla digits accepted.
+- **Phone-first checkout**: mobile number first; Bangla digits accepted; your delivery and refund note above the order button.
 - **Buy now**, plus **WhatsApp** and **Call to order** buttons.
 - **SMS, WhatsApp, email and calls**:
   - one-tap restore links and one-time coupons;
@@ -59,7 +59,7 @@ Cartlum Pro is a paid add-on. It installs next to the free plugin and adds:
 | Fake-order protection: blocklist, limits, SMS code for risky orders | ✅ | ✅ |
 | **Courier check**: each customer's delivered and refused parcels at Steadfast, Pathao, RedX and Paperfly | | ✅ |
 | **Advance payment**: bKash / Nagad Send Money with Transaction ID before cash-on-delivery orders | | ✅ |
-| **Facebook Pixel and Conversions API**: no double counting, customer details hashed | | ✅ |
+| **Facebook Pixel and Conversions API**: no double counting, customer details hashed; for cash on delivery, a purchase counts only if the order isn't cancelled | | ✅ |
 | **Bundle offers** on product pages, and a **customer score** on every cart | | ✅ |
 | Updates and support with a licence key | | ✅ |
 
