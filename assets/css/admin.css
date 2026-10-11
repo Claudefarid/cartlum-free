@@ -305,6 +305,19 @@ h1 .cl-badge { font-size: 13px; margin-left: var(--cl-s2); vertical-align: 4px; 
 .cl-risk--blocked { background: var(--cl-bad-bg); color: #7f1d1d; }
 .cl-risk__counts { color: var(--cl-muted); font-size: 13px; }
 
+/* ---------- Pro ---------- */
+
+.cl-pro-tag { display: inline-block; margin-right: 6px; padding: 1px 7px; border-radius: 999px; background: var(--cl-info-bg); color: var(--cl-info); font-size: 11px; font-weight: 600; line-height: 18px; vertical-align: 1px; }
+.cl-pro-hint { margin: 0 0 var(--cl-s4); padding: var(--cl-s2) var(--cl-s3); border: 1px solid var(--cl-line); border-radius: var(--cl-radius); background: var(--cl-surface); color: var(--cl-ink-2); font-size: 13px; max-width: 90ch; }
+.cl-pro-intro { max-width: 70ch; margin: 0 0 var(--cl-s4); font-size: 15px; color: var(--cl-ink-2); }
+.cl-pro-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--cl-s4); }
+.cl-pro-grid .cl-section { margin: 0; }
+.cl-pro-list { list-style: none; margin: 0; padding: 0; }
+.cl-pro-list li { display: flex; flex-direction: column; gap: 2px; margin: 0; padding: var(--cl-s2) 0; border-top: 1px solid var(--cl-line-soft); }
+.cl-pro-list li:first-child { border-top: 0; padding-top: 0; }
+.cl-pro-list span { color: var(--cl-muted); font-size: 13px; }
+.cl-pro-cta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--cl-s3) var(--cl-s4); margin: var(--cl-s5) 0 0; }
+
 /* ---------- Narrow screens (WordPress admin's own breakpoint) ---------- */
 
 @media (max-width: 782px) {

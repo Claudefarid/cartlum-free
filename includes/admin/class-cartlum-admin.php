@@ -19,6 +19,7 @@ class Cartlum_Admin {
 	 */
 	public static function init() {
 		add_action( 'admin_menu', array( __CLASS__, 'menu' ) );
+		add_action( 'cartlum_settings_before_fields', array( __CLASS__, 'pro_hint' ) );
 		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'assets' ) );
 		add_action( 'admin_notices', array( __CLASS__, 'flash' ) );
 		add_filter( 'plugin_action_links_' . plugin_basename( CARTLUM_FILE ), array( __CLASS__, 'action_links' ) );
@@ -41,6 +42,10 @@ class Cartlum_Admin {
 			} elseif ( 'cartlum-settings' === $slug ) {
 				add_action( 'load-' . $hook, array( 'Cartlum_Admin_Settings', 'redirect_old_links' ) );
 			}
+		}
+		// What Cartlum Pro adds, only while Pro is not installed.
+		if ( ! defined( 'CARTLUM_PRO_VERSION' ) ) {
+			add_submenu_page( 'cartlum', __( 'Cartlum Pro', 'cartlum' ), __( 'Pro', 'cartlum' ), self::CAP, 'cartlum-pro', array( __CLASS__, 'page_pro' ) );
 		}
 	}
 
@@ -249,5 +254,92 @@ class Cartlum_Admin {
 		$table = new Cartlum_Carts_Table();
 		$table->prepare_items();
 		require CARTLUM_DIR . 'includes/admin/views/carts.php';
+	}
+
+	/**
+	 * Where to get Cartlum Pro.
+	 *
+	 * @return string
+	 */
+	public static function pro_url() {
+		/**
+		 * Filters the "Get Cartlum Pro" link.
+		 *
+		 * @param string $url URL.
+		 */
+		return (string) apply_filters( 'cartlum_pro_url', 'https://github.com/Claudefarid/cartlum-free#cartlum-pro' );
+	}
+
+	/**
+	 * One quiet line on the tabs where Pro adds something, while Pro is not installed.
+	 *
+	 * @param string $tab Tab.
+	 */
+	public static function pro_hint( $tab ) {
+		if ( defined( 'CARTLUM_PRO_VERSION' ) ) {
+			return;
+		}
+		$hints = array(
+			'automation' => __( 'With Cartlum Pro: as many reminder steps as you like (SMS, email, automatic WhatsApp, AI call), A/B tests and smart coupons.', 'cartlum' ),
+			'protection' => __( 'With Cartlum Pro: each customer’s courier success rate (Steadfast, Pathao, RedX, Paperfly) and advance payment by bKash or Nagad.', 'cartlum' ),
+			'whatsapp'   => __( 'With Cartlum Pro: WhatsApp messages sent automatically through Meta’s WhatsApp Cloud API.', 'cartlum' ),
+		);
+		if ( isset( $hints[ $tab ] ) ) {
+			printf( '<p class="cl-pro-hint"><span class="cl-pro-tag">Pro</span> %1$s <a href="%2$s">%3$s</a></p>', esc_html( $hints[ $tab ] ), esc_url( self::url( 'cartlum-pro' ) ), esc_html__( 'See what Pro adds', 'cartlum' ) );
+		}
+	}
+
+	/**
+	 * Cartlum → Pro: what the paid add-on adds. No locked features in this plugin: Pro is a
+	 * separate plugin.
+	 */
+	public static function page_pro() {
+		if ( ! current_user_can( self::CAP ) ) {
+			return;
+		}
+		$groups = array(
+			__( 'Reminders that work harder', 'cartlum' ) => array(
+				array( __( 'Multi-step reminders', 'cartlum' ), __( 'As many steps as you like, each with its own timing, channel and message.', 'cartlum' ) ),
+				array( __( 'A/B tests', 'cartlum' ), __( 'Two versions of a message; Cartlum shows which brings more orders back.', 'cartlum' ) ),
+				array( __( 'Smart coupons', 'cartlum' ), __( 'A discount only when it helps — not for loyal or risky customers.', 'cartlum' ) ),
+				array( __( 'Automatic WhatsApp', 'cartlum' ), __( 'Approved WhatsApp templates sent by themselves through Meta’s WhatsApp Cloud API.', 'cartlum' ) ),
+				array( __( 'Win-back SMS', 'cartlum' ), __( 'Brings back customers who bought before but have gone quiet, with a one-time coupon.', 'cartlum' ) ),
+			),
+			__( 'AI', 'cartlum' )                         => array(
+				array( __( 'AI call', 'cartlum' ), __( 'A voice agent phones the customer in Bangla over your own phone line, talks for 1–3 minutes and reports back.', 'cartlum' ) ),
+				array( __( 'AI message writer', 'cartlum' ), __( 'Drafts reminder SMS in English, Bangla or Banglish.', 'cartlum' ) ),
+			),
+			__( 'Fewer fake orders', 'cartlum' )          => array(
+				array( __( 'Courier check', 'cartlum' ), __( 'Each customer’s delivered and refused parcels at Steadfast, Pathao, RedX and Paperfly, on every order.', 'cartlum' ) ),
+				array( __( 'Advance payment', 'cartlum' ), __( 'Risky cash-on-delivery customers send a small advance by bKash or Nagad first.', 'cartlum' ) ),
+			),
+			__( 'Sell more', 'cartlum' )                  => array(
+				array( __( 'Facebook Pixel and Conversions API', 'cartlum' ), __( 'Browser and server events with the same IDs, so Facebook counts each once.', 'cartlum' ) ),
+				array( __( 'Bundle offers and customer score', 'cartlum' ), __( 'Offers on product pages, and a score on every cart showing who is worth a call.', 'cartlum' ) ),
+			),
+		);
+		?>
+		<div class="wrap cartlum">
+			<div class="cl-head"><h1><?php esc_html_e( 'Cartlum Pro', 'cartlum' ); ?></h1></div>
+			<hr class="wp-header-end">
+			<p class="cl-pro-intro"><?php esc_html_e( 'Everything in Cartlum stays free. Cartlum Pro is a separate add-on that installs next to it and adds:', 'cartlum' ); ?></p>
+			<div class="cl-pro-grid">
+				<?php foreach ( $groups as $title => $items ) : ?>
+					<section class="cl-section">
+						<h2><?php echo esc_html( $title ); ?></h2>
+						<ul class="cl-pro-list">
+							<?php foreach ( $items as $item ) : ?>
+								<li><strong><?php echo esc_html( $item[0] ); ?></strong><span><?php echo esc_html( $item[1] ); ?></span></li>
+							<?php endforeach; ?>
+						</ul>
+					</section>
+				<?php endforeach; ?>
+			</div>
+			<p class="cl-pro-cta">
+				<a class="button button-primary button-hero" href="<?php echo esc_url( self::pro_url() ); ?>" target="_blank" rel="noopener"><?php esc_html_e( 'Get Cartlum Pro', 'cartlum' ); ?></a>
+				<span class="cl-muted"><?php esc_html_e( 'Pro uses your own accounts for SMS, AI and courier data; you pay those services directly.', 'cartlum' ); ?></span>
+			</p>
+		</div>
+		<?php
 	}
 }

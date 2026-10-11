@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Cartlum – Abandoned Cart Recovery for WooCommerce 0.19.0\n"
+"Project-Id-Version: Cartlum – Abandoned Cart Recovery for WooCommerce 0.20.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/cartlum\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-11T14:58:24+00:00\n"
+"POT-Creation-Date: 2026-10-11T16:00:57+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: cartlum\n"
@@ -64,14 +64,14 @@ msgstr ""
 #: includes/admin/class-cartlum-admin-actions.php:295
 #: includes/admin/class-cartlum-admin-actions.php:345
 #: includes/admin/class-cartlum-admin-protection.php:223
-#: includes/admin/class-cartlum-admin-settings.php:873
+#: includes/admin/class-cartlum-admin-settings.php:881
 #: includes/class-cartlum-email.php:209
 #: includes/class-cartlum-webhooks.php:307
 msgid "You are not allowed to do that."
 msgstr ""
 
 #: includes/admin/class-cartlum-admin-actions.php:74
-#: includes/admin/class-cartlum-admin.php:241
+#: includes/admin/class-cartlum-admin.php:246
 msgid "Cart not found."
 msgstr ""
 
@@ -307,7 +307,7 @@ msgstr ""
 #. translators: %s: time
 #. translators: %s: human time difference
 #: includes/admin/class-cartlum-admin-fraud.php:149
-#: includes/admin/class-cartlum-admin.php:195
+#: includes/admin/class-cartlum-admin.php:200
 #, php-format
 msgid "%s ago"
 msgstr ""
@@ -539,7 +539,7 @@ msgid "AI Agent"
 msgstr ""
 
 #: includes/admin/class-cartlum-admin-settings.php:92
-#: includes/admin/class-cartlum-admin.php:54
+#: includes/admin/class-cartlum-admin.php:59
 msgid "Settings"
 msgstr ""
 
@@ -811,7 +811,7 @@ msgid "“Call to order”: one tap dials your number on a phone."
 msgstr ""
 
 #: includes/admin/class-cartlum-admin-settings.php:413
-#: includes/admin/class-cartlum-admin-settings.php:817
+#: includes/admin/class-cartlum-admin-settings.php:825
 msgid "Your phone number"
 msgstr ""
 
@@ -1188,82 +1188,226 @@ msgstr ""
 msgid "Delete all data on uninstall"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:803
+#: includes/admin/class-cartlum-admin-settings.php:811
 msgid "Insert into the message you are editing"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:813
+#: includes/admin/class-cartlum-admin-settings.php:821
 msgid "Send a test SMS"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:818
+#: includes/admin/class-cartlum-admin-settings.php:826
 msgid "Send test"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:819
+#: includes/admin/class-cartlum-admin-settings.php:827
 msgid "Save your settings first — the test uses the saved ones."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:858
+#: includes/admin/class-cartlum-admin-settings.php:866
 msgid "Saved — leave empty to keep"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-settings.php:926
+#: includes/admin/class-cartlum-admin-settings.php:934
 msgid "Settings saved."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin.php:32
+#: includes/admin/class-cartlum-admin.php:33
 msgid "Dashboard"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin.php:73
+#: includes/admin/class-cartlum-admin.php:48
+#: includes/admin/class-cartlum-admin.php:323
+msgid "Cartlum Pro"
+msgstr ""
+
+#: includes/admin/class-cartlum-admin.php:48
+msgid "Pro"
+msgstr ""
+
+#: includes/admin/class-cartlum-admin.php:78
 msgid "Copied"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin.php:74
+#: includes/admin/class-cartlum-admin.php:79
 msgid "Sending…"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin.php:75
+#: includes/admin/class-cartlum-admin.php:80
 msgid "characters"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin.php:76
+#: includes/admin/class-cartlum-admin.php:81
 msgid "unicode"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin.php:151
+#: includes/admin/class-cartlum-admin.php:156
 #: includes/admin/class-cartlum-carts-table.php:78
 msgid "Checking out"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin.php:152
+#: includes/admin/class-cartlum-admin.php:157
 #: includes/admin/class-cartlum-carts-table.php:77
 msgid "Abandoned"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin.php:153
+#: includes/admin/class-cartlum-admin.php:158
 #: includes/admin/class-cartlum-carts-table.php:79
 #: includes/admin/views/dashboard.php:41
 #: includes/admin/views/dashboard.php:121
 msgid "Recovered"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin.php:154
+#: includes/admin/class-cartlum-admin.php:159
 #: includes/admin/class-cartlum-carts-table.php:80
 msgid "Ordered"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin.php:155
+#: includes/admin/class-cartlum-admin.php:160
 #: includes/admin/class-cartlum-carts-table.php:81
 msgid "Lost"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin.php:156
+#: includes/admin/class-cartlum-admin.php:161
 #: includes/admin/class-cartlum-carts-table.php:82
 #: includes/admin/views/cart.php:43
 #: includes/class-cartlum-restore.php:172
 msgid "Unsubscribed"
+msgstr ""
+
+#: includes/admin/class-cartlum-admin.php:283
+msgid "With Cartlum Pro: as many reminder steps as you like (SMS, email, automatic WhatsApp, AI call), A/B tests and smart coupons."
+msgstr ""
+
+#: includes/admin/class-cartlum-admin.php:284
+msgid "With Cartlum Pro: each customer’s courier success rate (Steadfast, Pathao, RedX, Paperfly) and advance payment by bKash or Nagad."
+msgstr ""
+
+#: includes/admin/class-cartlum-admin.php:285
+msgid "With Cartlum Pro: WhatsApp messages sent automatically through Meta’s WhatsApp Cloud API."
+msgstr ""
+
+#: includes/admin/class-cartlum-admin.php:288
+msgid "See what Pro adds"
+msgstr ""
+
+#: includes/admin/class-cartlum-admin.php:301
+msgid "Reminders that work harder"
+msgstr ""
+
+#: includes/admin/class-cartlum-admin.php:302
+msgid "Multi-step reminders"
+msgstr ""
+
+#: includes/admin/class-cartlum-admin.php:302
+msgid "As many steps as you like, each with its own timing, channel and message."
+msgstr ""
+
+#: includes/admin/class-cartlum-admin.php:303
+msgid "A/B tests"
+msgstr ""
+
+#: includes/admin/class-cartlum-admin.php:303
+msgid "Two versions of a message; Cartlum shows which brings more orders back."
+msgstr ""
+
+#: includes/admin/class-cartlum-admin.php:304
+msgid "Smart coupons"
+msgstr ""
+
+#: includes/admin/class-cartlum-admin.php:304
+msgid "A discount only when it helps — not for loyal or risky customers."
+msgstr ""
+
+#: includes/admin/class-cartlum-admin.php:305
+msgid "Automatic WhatsApp"
+msgstr ""
+
+#: includes/admin/class-cartlum-admin.php:305
+msgid "Approved WhatsApp templates sent by themselves through Meta’s WhatsApp Cloud API."
+msgstr ""
+
+#: includes/admin/class-cartlum-admin.php:306
+msgid "Win-back SMS"
+msgstr ""
+
+#: includes/admin/class-cartlum-admin.php:306
+msgid "Brings back customers who bought before but have gone quiet, with a one-time coupon."
+msgstr ""
+
+#: includes/admin/class-cartlum-admin.php:308
+msgid "AI"
+msgstr ""
+
+#: includes/admin/class-cartlum-admin.php:309
+#: includes/admin/views/cart.php:34
+#: includes/admin/views/dashboard.php:26
+#: includes/admin/views/dashboard.php:54
+msgid "AI call"
+msgstr ""
+
+#: includes/admin/class-cartlum-admin.php:309
+msgid "A voice agent phones the customer in Bangla over your own phone line, talks for 1–3 minutes and reports back."
+msgstr ""
+
+#: includes/admin/class-cartlum-admin.php:310
+msgid "AI message writer"
+msgstr ""
+
+#: includes/admin/class-cartlum-admin.php:310
+msgid "Drafts reminder SMS in English, Bangla or Banglish."
+msgstr ""
+
+#: includes/admin/class-cartlum-admin.php:312
+msgid "Fewer fake orders"
+msgstr ""
+
+#: includes/admin/class-cartlum-admin.php:313
+msgid "Courier check"
+msgstr ""
+
+#: includes/admin/class-cartlum-admin.php:313
+msgid "Each customer’s delivered and refused parcels at Steadfast, Pathao, RedX and Paperfly, on every order."
+msgstr ""
+
+#: includes/admin/class-cartlum-admin.php:314
+msgid "Advance payment"
+msgstr ""
+
+#: includes/admin/class-cartlum-admin.php:314
+msgid "Risky cash-on-delivery customers send a small advance by bKash or Nagad first."
+msgstr ""
+
+#: includes/admin/class-cartlum-admin.php:316
+msgid "Sell more"
+msgstr ""
+
+#: includes/admin/class-cartlum-admin.php:317
+msgid "Facebook Pixel and Conversions API"
+msgstr ""
+
+#: includes/admin/class-cartlum-admin.php:317
+msgid "Browser and server events with the same IDs, so Facebook counts each once."
+msgstr ""
+
+#: includes/admin/class-cartlum-admin.php:318
+msgid "Bundle offers and customer score"
+msgstr ""
+
+#: includes/admin/class-cartlum-admin.php:318
+msgid "Offers on product pages, and a score on every cart showing who is worth a call."
+msgstr ""
+
+#: includes/admin/class-cartlum-admin.php:325
+msgid "Everything in Cartlum stays free. Cartlum Pro is a separate add-on that installs next to it and adds:"
+msgstr ""
+
+#: includes/admin/class-cartlum-admin.php:339
+msgid "Get Cartlum Pro"
+msgstr ""
+
+#: includes/admin/class-cartlum-admin.php:340
+msgid "Pro uses your own accounts for SMS, AI and courier data; you pay those services directly."
 msgstr ""
 
 #: includes/admin/class-cartlum-carts-table.php:40
@@ -1393,12 +1537,6 @@ msgstr ""
 #: includes/admin/views/cart.php:33
 #: includes/admin/views/dashboard.php:53
 msgid "AI call placed"
-msgstr ""
-
-#: includes/admin/views/cart.php:34
-#: includes/admin/views/dashboard.php:26
-#: includes/admin/views/dashboard.php:54
-msgid "AI call"
 msgstr ""
 
 #: includes/admin/views/cart.php:35

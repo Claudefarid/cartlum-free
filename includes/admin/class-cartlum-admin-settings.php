@@ -775,6 +775,14 @@ class Cartlum_Admin_Settings {
 		<div class="wrap cartlum">
 			<div class="cl-head"><h1><?php echo esc_html( self::sections()[ $slug ]['label'] ); ?></h1></div>
 			<?php self::nav( $slug, $tab ); ?>
+			<?php
+			/**
+			 * Above a settings tab's form (Cartlum Pro: "enter your licence key" on locked tabs).
+			 *
+			 * @param string $tab Tab.
+			 */
+			do_action( 'cartlum_settings_before_fields', $tab );
+			?>
 
 			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
 				<?php wp_nonce_field( 'cartlum_save_settings' ); ?>

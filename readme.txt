@@ -4,7 +4,7 @@ Tags: abandoned cart, cart recovery, sms, whatsapp, woocommerce
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.19.0
+Stable tag: 0.20.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -90,6 +90,9 @@ It can, for stores that only used CartFlows for a shorter checkout. CartFlows' g
 6. Settings: SMS gateways with a test button.
 
 == Changelog ==
+
+= 0.20.0 =
+* New Cartlum → Pro page (only while Cartlum Pro is not installed) listing what the paid add-on adds, and one short line on the Automation, Protection and WhatsApp tabs. No notices elsewhere, and no locked features in this plugin.
 
 = 0.19.0 =
 * New menu, one page per job: Dashboard, Abandoned Carts, Fake Orders, Messages, Checkout and Settings (plus AI Agent and Facebook with Cartlum Pro). Each page has its own settings as tabs. Old links to Settings tabs open the right new page.
