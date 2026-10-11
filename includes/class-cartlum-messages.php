@@ -22,7 +22,9 @@ class Cartlum_Messages {
 			'{name}'        => __( 'Customer first name', 'cartlum' ),
 			'{store}'       => __( 'Store name', 'cartlum' ),
 			'{items}'       => __( 'Items in the cart, e.g. "2 × Leather Tote"', 'cartlum' ),
+			'{items_short}' => __( 'Items, shortened to 60 characters (keeps SMS short)', 'cartlum' ),
 			'{total}'       => __( 'Cart total', 'cartlum' ),
+			'{amount}'      => __( 'Cart total as a plain number, e.g. 6,716 — write “Tk {amount}” to keep the SMS free of Bangla characters (cheaper)', 'cartlum' ),
 			'{cart_link}'   => __( 'Link that refills the cart and opens checkout', 'cartlum' ),
 			'{coupon}'      => __( 'Coupon code (created for this cart if needed)', 'cartlum' ),
 			'{discount}'    => __( 'Coupon value, e.g. 100৳ or 10%', 'cartlum' ),
@@ -67,6 +69,8 @@ class Cartlum_Messages {
 			'{name}'        => '' !== $first ? $first : __( 'there', 'cartlum' ),
 			'{store}'       => wp_specialchars_decode( get_bloginfo( 'name' ), ENT_QUOTES ),
 			'{items}'       => self::items_text( $cart ),
+			'{items_short}' => self::shorten( str_replace( ' × ', ' x ', self::items_text( $cart ) ), 60 ), // Plain "x": × would make the SMS unicode.
+			'{amount}'      => number_format( (float) $cart->cart_total, 0 ),
 			'{total}'       => html_entity_decode( wp_strip_all_tags( wc_price( $cart->cart_total, array( 'currency' => $cart->currency ) ) ), ENT_QUOTES, 'UTF-8' ),
 			'{cart_link}'   => Cartlum_Restore::link( $cart ),
 			'{optout_link}' => Cartlum_Restore::optout_link( $cart ),
@@ -91,6 +95,21 @@ class Cartlum_Messages {
 		$values = apply_filters( 'cartlum_placeholders', $values, $cart );
 
 		return strtr( $template, $values );
+	}
+
+	/**
+	 * Text cut to a length, ending in "..." when cut.
+	 *
+	 * @param string $text Text.
+	 * @param int    $max  Characters.
+	 * @return string
+	 */
+	public static function shorten( $text, $max ) {
+		$len = function_exists( 'mb_strlen' ) ? mb_strlen( $text ) : strlen( $text );
+		if ( $len <= $max ) {
+			return $text;
+		}
+		return rtrim( function_exists( 'mb_substr' ) ? mb_substr( $text, 0, $max - 3 ) : substr( $text, 0, $max - 3 ) ) . '...';
 	}
 
 	/**
