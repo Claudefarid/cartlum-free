@@ -971,12 +971,23 @@ class Cartlum_Admin_Settings {
 		$values = apply_filters( 'cartlum_settings_save', $values, $tab, $input );
 
 		Cartlum_Settings::save( $values );
-		wp_safe_redirect(
-			Cartlum_Admin::url(
-				'cartlum-settings',
-				array_merge( array( 'tab' => $tab ), Cartlum_Admin::notice_args( __( 'Settings saved.', 'cartlum' ) ) )
-			)
-		);
+
+		// Numbers that get SMS: saved as typed, but a mistyped one is pointed out straight away.
+		$bad = array();
+		foreach ( array( 'order_sms_admin_phone', 'flow_test_phone' ) as $key ) {
+			if ( isset( $values[ $key ] ) && '' !== trim( (string) $values[ $key ] ) ) {
+				foreach ( preg_split( '/[,;\s]+/', trim( (string) $values[ $key ] ) ) as $number ) {
+					$reason = Cartlum_Phone::invalid_reason( $number );
+					if ( '' !== $reason ) {
+						$bad[] = $reason;
+					}
+				}
+			}
+		}
+		$notice = $bad
+			? Cartlum_Admin::notice_args( __( 'Settings saved, but please check:', 'cartlum' ) . ' ' . implode( ' ', $bad ), 'error' )
+			: Cartlum_Admin::notice_args( __( 'Settings saved.', 'cartlum' ) );
+		wp_safe_redirect( Cartlum_Admin::url( 'cartlum-settings', array_merge( array( 'tab' => $tab ), $notice ) ) );
 		exit;
 	}
 }

@@ -101,6 +101,11 @@ class Cartlum_SMS {
 		if ( ! $gateway ) {
 			return new WP_Error( 'cartlum_no_gateway', __( 'Choose an SMS gateway in Cartlum → Messages → SMS.', 'cartlum' ) );
 		}
+		// Caught here, so a mistyped number gets a clear message and never reaches the gateway.
+		$invalid = Cartlum_Phone::invalid_reason( $phone );
+		if ( '' !== $invalid ) {
+			return new WP_Error( 'cartlum_bad_phone', $invalid );
+		}
 		return $gateway->send( $phone, $message );
 	}
 }

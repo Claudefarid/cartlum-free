@@ -4,7 +4,7 @@ Tags: abandoned cart, cart recovery, sms, whatsapp, woocommerce
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.22.0
+Stable tag: 0.22.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -90,6 +90,9 @@ It can, for stores that only used CartFlows for a shorter checkout. CartFlows' g
 6. Settings: SMS gateways with a test button.
 
 == Changelog ==
+
+= 0.22.1 =
+* A mistyped number (for example 12 digits for Bangladesh) now gets a clear message — "015702938681 is not a valid mobile number…" — instead of the SMS provider's error, and is never sent to the provider. Saving "Your numbers" or the test number points out a wrong one.
 
 = 0.22.0 =
 * Checkout: a note above the order button, for example your delivery charge and refund policy, with links. Works on the phone-first checkout and WooCommerce’s classic checkout.

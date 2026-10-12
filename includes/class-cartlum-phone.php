@@ -104,6 +104,41 @@ class Cartlum_Phone {
 	}
 
 	/**
+	 * Whether a normalized number can be a mobile number. Bangladesh numbers (880) must be
+	 * 01 + 9 digits; others only need a plausible length.
+	 *
+	 * @param string $normalized Digits.
+	 * @return bool
+	 */
+	public static function is_valid( $normalized ) {
+		if ( '' === $normalized ) {
+			return false;
+		}
+		return 0 === strpos( $normalized, '880' ) ? (bool) preg_match( '/^8801[3-9]\d{8}$/', $normalized ) : true;
+	}
+
+	/**
+	 * Why a typed number cannot get an SMS, or '' when it can.
+	 *
+	 * @param string $raw Number as typed or stored.
+	 * @return string
+	 */
+	public static function invalid_reason( $raw ) {
+		$normalized = self::normalize( $raw );
+		if ( self::is_valid( $normalized ) ) {
+			return '';
+		}
+		// As the store would type it: 015702938681, not 88015702938681.
+		$shown = 0 === strpos( $normalized, '880' ) ? '0' . ltrim( substr( $normalized, 3 ), '0' ) : trim( self::to_ascii_digits( (string) $raw ) );
+		if ( '880' === self::default_calling_code() || 0 === strpos( $normalized, '880' ) ) {
+			/* translators: %s: phone number */
+			return sprintf( __( '%s is not a valid mobile number. A Bangladesh mobile number has 11 digits, e.g. 01712345678.', 'cartlum' ), $shown );
+		}
+		/* translators: %s: phone number */
+		return sprintf( __( '%s is not a valid mobile number.', 'cartlum' ), $shown );
+	}
+
+	/**
 	 * For display and tel: links: "+8801712345678".
 	 *
 	 * @param string $normalized Digits.
