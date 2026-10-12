@@ -51,6 +51,22 @@ class Cartlum_Install {
 		}
 		if ( ! as_has_scheduled_action( 'cartlum_sweep', array(), 'cartlum' ) ) {
 			as_schedule_recurring_action( time() + MINUTE_IN_SECONDS, 5 * MINUTE_IN_SECONDS, 'cartlum_sweep', array(), 'cartlum' );
+		} elseif ( function_exists( 'as_get_scheduled_actions' ) && ! get_transient( 'cartlum_sweep_checked' ) ) {
+			// Two requests can schedule the sweep at the same moment; keep one (checked hourly).
+			set_transient( 'cartlum_sweep_checked', 1, HOUR_IN_SECONDS );
+			$pending = as_get_scheduled_actions(
+				array(
+					'hook'     => 'cartlum_sweep',
+					'group'    => 'cartlum',
+					'status'   => ActionScheduler_Store::STATUS_PENDING,
+					'per_page' => 5,
+				),
+				'ids'
+			);
+			if ( count( $pending ) > 1 ) {
+				as_unschedule_all_actions( 'cartlum_sweep', array(), 'cartlum' );
+				as_schedule_recurring_action( time() + MINUTE_IN_SECONDS, 5 * MINUTE_IN_SECONDS, 'cartlum_sweep', array(), 'cartlum' );
+			}
 		}
 		if ( ! as_has_scheduled_action( 'cartlum_cleanup', array(), 'cartlum' ) ) {
 			as_schedule_recurring_action( time() + HOUR_IN_SECONDS, DAY_IN_SECONDS, 'cartlum_cleanup', array(), 'cartlum' );

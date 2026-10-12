@@ -4,7 +4,7 @@ Tags: abandoned cart, cart recovery, sms, whatsapp, woocommerce
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.24.3
+Stable tag: 0.24.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -90,6 +90,9 @@ It can, for stores that only used CartFlows for a shorter checkout. CartFlows' g
 6. Integrations: every connected service with its status.
 
 == Changelog ==
+
+= 0.24.4 =
+* A cart is marked abandoned, and its reminders started, exactly once even if the background job happens to run twice at the same moment; a doubled schedule of that job is cleaned up by itself.
 
 = 0.24.3 =
 * Product buttons: the quantity box keeps its own width instead of stretching across the row, and its number stays visible when a theme makes the box narrow.

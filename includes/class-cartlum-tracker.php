@@ -133,13 +133,12 @@ class Cartlum_Tracker {
 
 		$ids = $wpdb->get_col( $wpdb->prepare( "SELECT id FROM %i WHERE status = 'active' AND updated_at < %s LIMIT 200", $table, $cutoff ) );
 		foreach ( $ids as $id ) {
-			Cartlum_Carts::update(
-				$id,
-				array(
-					'status'       => 'abandoned',
-					'abandoned_at' => Cartlum_Carts::now(),
-				)
-			);
+			// Only the sweep that actually changes the cart goes on: two sweeps running at once
+			// (a doubled schedule) must not start the reminders twice.
+			$changed = $wpdb->query( $wpdb->prepare( "UPDATE %i SET status = 'abandoned', abandoned_at = %s WHERE id = %d AND status = 'active'", $table, Cartlum_Carts::now(), $id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- one row, by id.
+			if ( 1 !== (int) $changed ) {
+				continue;
+			}
 			Cartlum_Events::add( $id, 'abandoned', array( 'user_id' => 0 ) );
 
 			/**
