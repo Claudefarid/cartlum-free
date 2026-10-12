@@ -305,7 +305,7 @@ class Cartlum_Admin_Actions {
 			add_query_arg(
 				Cartlum_Admin::notice_args(
 					/* translators: %s: error */
-					is_wp_error( $result ) ? sprintf( __( 'Test failed: %s', 'cartlum' ), $result->get_error_message() ) : __( 'Test SMS sent.', 'cartlum' ),
+					is_wp_error( $result ) ? sprintf( __( 'Test failed: %s', 'cartlum' ), $result->get_error_message() ) : ( Cartlum_SMS::$unconfirmed ? __( 'Test SMS sent, but your SMS provider took too long to confirm it. It usually still arrives — check the phone.', 'cartlum' ) : __( 'Test SMS sent.', 'cartlum' ) ),
 					is_wp_error( $result ) ? 'error' : 'success'
 				),
 				$back

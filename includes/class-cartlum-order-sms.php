@@ -236,7 +236,11 @@ class Cartlum_Order_SMS {
 			return;
 		}
 		/* translators: 1: kind of message, 2: phone number */
-		$order->add_order_note( sprintf( __( 'Cartlum: “%1$s” SMS sent to %2$s.', 'cartlum' ), $labels[ $event ], Cartlum_Phone::display( $to ) ) );
+		$note = sprintf( __( 'Cartlum: “%1$s” SMS sent to %2$s.', 'cartlum' ), $labels[ $event ], Cartlum_Phone::display( $to ) );
+		if ( Cartlum_SMS::$unconfirmed ) {
+			$note .= ' ' . __( 'The SMS provider was slow to confirm it; it usually still arrives.', 'cartlum' );
+		}
+		$order->add_order_note( $note );
 	}
 
 	/**

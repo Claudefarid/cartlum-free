@@ -4,7 +4,7 @@ Tags: abandoned cart, cart recovery, sms, whatsapp, woocommerce
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.23.0
+Stable tag: 0.23.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -90,6 +90,9 @@ It can, for stores that only used CartFlows for a shorter checkout. CartFlows' g
 6. Settings: SMS gateways with a test button.
 
 == Changelog ==
+
+= 0.23.1 =
+* SMS: when the SMS provider receives a message but is too slow to answer (seen with eSMS), the SMS now counts as sent instead of failed. Phone-login codes stay valid (before, the customer got the code but it was refused), the test says "sent, but slow to confirm", and order notes mention it. A provider that cannot be reached is still an error.
 
 = 0.23.0 =
 * Cancellation reasons: "Earlier reason field" shows reasons that a snippet or plugin saved before Cartlum (same reason codes).

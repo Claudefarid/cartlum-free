@@ -13,6 +13,13 @@ defined( 'ABSPATH' ) || exit;
 class Cartlum_SMS {
 
 	/**
+	 * Whether the last send_raw() was accepted but not confirmed (the provider answered too slowly).
+	 *
+	 * @var bool
+	 */
+	public static $unconfirmed = false;
+
+	/**
 	 * Available gateways, id => instance.
 	 *
 	 * @return Cartlum_SMS_Gateway[]
@@ -76,9 +83,10 @@ class Cartlum_SMS {
 				'meta'    => array_merge(
 					$meta,
 					array(
-						'context' => $context,
-						'gateway' => (string) Cartlum_Settings::get( 'sms_gateway' ),
-						'error'   => is_wp_error( $result ) ? $result->get_error_message() : '',
+						'context'     => $context,
+						'gateway'     => (string) Cartlum_Settings::get( 'sms_gateway' ),
+						'error'       => is_wp_error( $result ) ? $result->get_error_message() : '',
+						'unconfirmed' => self::$unconfirmed ? 1 : 0,
 					)
 				),
 			)
@@ -106,7 +114,16 @@ class Cartlum_SMS {
 		if ( '' !== $invalid ) {
 			return new WP_Error( 'cartlum_bad_phone', $invalid );
 		}
-		return $gateway->send( $phone, $message );
+		self::$unconfirmed = false;
+		$result            = $gateway->send( $phone, $message );
+		// Connected and sent, but no answer in time: providers such as eSMS are sometimes slow to
+		// reply while the SMS still goes out. Counted as sent (a login code stays valid, nothing is
+		// sent twice); callers can say it was not confirmed. A failed connection is still an error.
+		if ( is_wp_error( $result ) && preg_match( '/Operation timed out after \d+ milliseconds with \d+ (out of \d+ )?bytes received/i', $result->get_error_message() ) ) {
+			self::$unconfirmed = true;
+			return true;
+		}
+		return $result;
 	}
 }
 
