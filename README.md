@@ -59,6 +59,7 @@ Cartlum Pro is a paid add-on. It installs next to the free plugin and adds:
 | Fake-order protection: blocklist, limits, SMS code for risky orders | ✅ | ✅ |
 | **Courier check**: each customer's delivered and refused parcels at Steadfast, Pathao, RedX and Paperfly | | ✅ |
 | **Advance payment**: bKash / Nagad Send Money with Transaction ID before cash-on-delivery orders | | ✅ |
+| **Steadfast Courier**: send parcels from WooCommerce (one, bulk or automatic); delivery status updates by itself | | ✅ |
 | **Facebook Pixel and Conversions API**: no double counting, customer details hashed; for cash on delivery, a purchase counts only if the order isn't cancelled | | ✅ |
 | **Bundle offers** on product pages, and a **customer score** on every cart | | ✅ |
 | Updates and support with a licence key | | ✅ |
