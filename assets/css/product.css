@@ -126,9 +126,9 @@
 }
 
 /* One colour for all four, when the store sets one. */
-.cartlum-actions--uniform .single_add_to_cart_button.single_add_to_cart_button,
-.cartlum-actions--uniform .cartlum-buy-now.cartlum-buy-now,
-.cartlum-actions--uniform .cartlum-contact__btn.cartlum-contact__btn,
+.cartlum-actions.cartlum-actions--uniform .single_add_to_cart_button.single_add_to_cart_button,
+.cartlum-actions.cartlum-actions--uniform .cartlum-buy-now.cartlum-buy-now,
+.cartlum-actions.cartlum-actions--uniform .cartlum-contact__btn.cartlum-contact__btn,
 .cartlum-contact--uniform .cartlum-contact__btn.cartlum-contact__btn {
 	border: 0;
 	border-radius: 4px;
@@ -137,16 +137,16 @@
 	filter: none;
 }
 
-.cartlum-actions--uniform .single_add_to_cart_button.single_add_to_cart_button:hover,
-.cartlum-actions--uniform .cartlum-buy-now.cartlum-buy-now:hover,
-.cartlum-actions--uniform .cartlum-contact__btn.cartlum-contact__btn:hover,
+.cartlum-actions.cartlum-actions--uniform .single_add_to_cart_button.single_add_to_cart_button:hover,
+.cartlum-actions.cartlum-actions--uniform .cartlum-buy-now.cartlum-buy-now:hover,
+.cartlum-actions.cartlum-actions--uniform .cartlum-contact__btn.cartlum-contact__btn:hover,
 .cartlum-contact--uniform .cartlum-contact__btn.cartlum-contact__btn:hover {
 	background: var(--clx-btn);
 	color: var(--clx-on-btn);
 	filter: brightness(1.15);
 }
 
-.cartlum-actions--uniform .cartlum-contact__btn svg,
+.cartlum-actions.cartlum-actions--uniform .cartlum-contact__btn svg,
 .cartlum-contact--uniform .cartlum-contact__btn svg {
 	color: inherit;
 }
