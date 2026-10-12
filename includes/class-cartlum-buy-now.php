@@ -97,8 +97,18 @@ class Cartlum_Buy_Now {
 		if ( ! wp_style_is( 'cartlum-product', 'enqueued' ) && class_exists( 'Cartlum_Product_Buttons' ) ) {
 			Cartlum_Product_Buttons::assets( true );
 		}
+		// Dress it like the Add to cart beside it: the theme's own button classes, minus the ones
+		// that would make it an add-to-cart button.
+		$classes = array( 'button' );
+		if ( preg_match( '/class="([^"]*)"/', $html, $m ) ) {
+			foreach ( preg_split( '/\s+/', $m[1] ) as $class ) {
+				if ( '' !== $class && ! preg_match( '/^(add_to_cart_button|ajax_add_to_cart|product_type_|added|loading)/', $class ) ) {
+					$classes[] = $class;
+				}
+			}
+		}
 		ob_start();
-		self::loop_button( $product );
+		self::loop_button( $product, array_unique( $classes ) );
 		return $html . ob_get_clean();
 	}
 
@@ -106,8 +116,9 @@ class Cartlum_Buy_Now {
 	 * The Buy now link for a shop-page card.
 	 *
 	 * @param WC_Product $product Product.
+	 * @param string[]   $classes Button classes.
 	 */
-	public static function loop_button( $product ) {
+	public static function loop_button( $product, array $classes = array( 'button', 'alt' ) ) {
 		$url = add_query_arg(
 			array(
 				'add-to-cart' => $product->get_id(),
@@ -116,8 +127,9 @@ class Cartlum_Buy_Now {
 			home_url( '/' )
 		);
 		printf(
-			'<a href="%1$s" class="button alt cartlum-buy-now cartlum-buy-now--loop" rel="nofollow">%2$s</a>',
+			'<a href="%1$s" class="%2$s cartlum-buy-now cartlum-buy-now--loop" rel="nofollow">%3$s</a>',
 			esc_url( $url ),
+			esc_attr( implode( ' ', array_map( 'sanitize_html_class', $classes ) ) ),
 			esc_html( self::label() )
 		);
 	}

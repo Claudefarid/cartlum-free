@@ -3,7 +3,7 @@
  * Plugin Name:          Cartlum – Abandoned Cart Recovery for WooCommerce
  * Plugin URI:           https://cartlum.com/
  * Description:          Recover abandoned WooCommerce carts by SMS, phone call, WhatsApp and email. Captures the cart as soon as the customer types a phone number, gives every cart a one-tap restore link, and tracks exactly how much revenue each channel brings back.
- * Version:              0.25.1
+ * Version:              0.25.2
  * Author:               Cartlum
  * License:              GPL-2.0-or-later
  * License URI:          https://www.gnu.org/licenses/gpl-2.0.html
@@ -20,7 +20,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'CARTLUM_VERSION', '0.25.1' );
+define( 'CARTLUM_VERSION', '0.25.2' );
 define( 'CARTLUM_DB_VERSION', '2' );
 define( 'CARTLUM_FILE', __FILE__ );
 define( 'CARTLUM_DIR', plugin_dir_path( __FILE__ ) );
