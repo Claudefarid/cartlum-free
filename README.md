@@ -41,6 +41,26 @@ Requires WordPress 6.2+, WooCommerce 8.0+ and PHP 7.4+.
 
 Want more? See [Cartlum Pro](#cartlum-pro) below.
 
+## Built around your day
+
+Cartlum's admin is organised by a shop's daily work: **Today · Abandoned Carts · Orders · Fake Orders · Checkout & Buttons · AI · Integrations · Settings**.
+
+![Today: what needs you now, and every feature's status](.wordpress-org/screenshot-1.png)
+
+- **Today** opens with what needs you now: carts to call, orders to confirm, parcels to send, risky orders, cancellations without a reason. Below that, **Your features** shows every feature as On, Off or Needs setup.
+- **Integrations** keeps every outside service in one place (SMS, Steadfast, Facebook, FraudBD, WhatsApp, ElevenLabs, AI, webhooks), each with its status, keys and a test button.
+- **Find a setting** (Ctrl K / ⌘ K) on every screen jumps straight to any option.
+- **Simple settings:** switches and plain words, with technical options under **More options**. The **Save** bar saves without reloading, and Cartlum warns before you leave with unsaved changes.
+- **Set up Cartlum in 5 minutes:** a step-by-step first setup.
+- **বাংলা button:** Cartlum's screens in Bangla, for you only.
+- **Works on a phone:** the menu becomes a strip at the top.
+
+| Integrations | Find a setting |
+|---|---|
+| ![Integrations](.wordpress-org/screenshot-6.png) | ![Find a setting](docs/admin-search.png) |
+| **Settings with switches** | **On a phone** |
+| ![Settings](docs/admin-settings.png) | ![Phone](docs/admin-phone.png) |
+
 ## Cartlum Pro
 
 Cartlum Pro is a paid add-on. It installs next to the free plugin and adds:
@@ -71,9 +91,9 @@ Each Pro feature connects with the store's own accounts (SMS gateway, ElevenLabs
 
 ## Screenshots
 
-| Dashboard | A cart |
+| A cart | Integrations |
 |---|---|
-| ![Dashboard](.wordpress-org/screenshot-1.png) | ![Cart](.wordpress-org/screenshot-2.png) |
+| ![Cart](.wordpress-org/screenshot-2.png) | ![Integrations](.wordpress-org/screenshot-6.png) |
 | **Phone-first checkout** | **Reminder email** |
 | ![Checkout](.wordpress-org/screenshot-3.png) | ![Email](.wordpress-org/screenshot-4.png) |
 
