@@ -4,7 +4,7 @@ Tags: abandoned cart, cart recovery, sms, whatsapp, woocommerce
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.24.2
+Stable tag: 0.24.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -90,6 +90,9 @@ It can, for stores that only used CartFlows for a shorter checkout. CartFlows' g
 6. Integrations: every connected service with its status.
 
 == Changelog ==
+
+= 0.24.3 =
+* Product buttons: the quantity box keeps its own width instead of stretching across the row, and its number stays visible when a theme makes the box narrow.
 
 = 0.24.2 =
 * Product button colour now also colours Add to cart and Buy now on stores where WooCommerce's own button style (purple) used to win.

@@ -19,8 +19,16 @@
 
 .cartlum-actions > .quantity {
 	grid-column: 1 / -1;
+	justify-self: start; /* Its own width, not the whole row. */
 	float: none;
 	margin: 0;
+}
+
+/* The number stays visible even when a theme makes the box narrow. */
+.cartlum-actions.cartlum-actions > .quantity input.qty {
+	padding-left: 4px;
+	padding-right: 4px;
+	text-align: center;
 }
 
 /* WhatsApp and Call join the grid as if they were its own items. */
