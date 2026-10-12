@@ -27,7 +27,9 @@ class Cartlum_Buy_Now {
 		}
 		add_action( 'woocommerce_after_add_to_cart_button', array( __CLASS__, 'product_button' ) );
 		if ( 'yes' === Cartlum_Settings::get( 'buy_now_loop' ) ) {
-			add_action( 'woocommerce_after_shop_loop_item', array( __CLASS__, 'loop_button' ), 20 );
+			// Next to WooCommerce's own Add to cart, wherever it is printed. Cards that a theme or
+			// plugin gives its own buttons (e.g. with a colour picker) are left alone.
+			add_filter( 'woocommerce_loop_add_to_cart_link', array( __CLASS__, 'loop_link' ), 20, 2 );
 		}
 		// Runs before the product is added: "only this product" empties the cart first.
 		add_filter( 'woocommerce_add_to_cart_validation', array( __CLASS__, 'maybe_empty_cart' ), 1 );
@@ -79,13 +81,28 @@ class Cartlum_Buy_Now {
 	}
 
 	/**
-	 * Shop pages: a Buy now link under simple products that can be bought as they are.
+	 * Shop pages: a Buy now link after the Add to cart link of simple products that can be bought
+	 * as they are.
+	 *
+	 * @param string     $html    Add to cart link.
+	 * @param WC_Product $product Product.
+	 * @return string
 	 */
-	public static function loop_button() {
-		global $product;
+	public static function loop_link( $html, $product ) {
 		if ( ! $product instanceof WC_Product || ! $product->is_type( 'simple' ) || ! $product->is_purchasable() || ! $product->is_in_stock() ) {
-			return;
+			return $html;
 		}
+		ob_start();
+		self::loop_button( $product );
+		return $html . ob_get_clean();
+	}
+
+	/**
+	 * The Buy now link for a shop-page card.
+	 *
+	 * @param WC_Product $product Product.
+	 */
+	public static function loop_button( $product ) {
 		$url = add_query_arg(
 			array(
 				'add-to-cart' => $product->get_id(),

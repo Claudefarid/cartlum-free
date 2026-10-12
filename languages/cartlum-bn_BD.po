@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Cartlum – Abandoned Cart Recovery for WooCommerce 0.24.0\n"
+"Project-Id-Version: Cartlum – Abandoned Cart Recovery for WooCommerce 0.24.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/cartlum\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Bangla\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-12T10:22:42+00:00\n"
+"POT-Creation-Date: 2026-10-12T12:16:11+00:00\n"
 "PO-Revision-Date: 2026-10-10 12:00+0600
 "
 "X-Generator: WP-CLI 2.12.0\n"
@@ -721,7 +721,6 @@ msgid "A short one-page checkout: mobile number first, then name, address and di
 msgstr "এক পাতার ছোট চেকআউট: প্রথমে মোবাইল নম্বর, তারপর নাম, ঠিকানা ও জেলা।"
 
 #: includes/admin/class-cartlum-admin-settings.php:385
-#: includes/admin/class-cartlum-admin-setup.php:55
 msgid "Buttons under each product: Buy now, Order on WhatsApp and Call to order."
 msgstr "প্রতিটি পণ্যের নিচে বাটন: এখনই কিনুন, WhatsApp-এ অর্ডার ও কল করে অর্ডার।"
 
@@ -1557,6 +1556,10 @@ msgstr "অর্ডার হলে ক্রেতাকে একটি SMS, 
 #: includes/admin/class-cartlum-admin-setup.php:54
 msgid "Buy buttons"
 msgstr "কেনার বাটন"
+
+#: includes/admin/class-cartlum-admin-setup.php:55
+msgid "Buttons under each product: Buy now, Order on WhatsApp and Call to order. If your theme or page builder already shows such buttons, leave these off (or remove those first), or customers see the buttons twice."
+msgstr "প্রতিটি পণ্যের নিচে বাটন: এখনই কিনুন, WhatsApp-এ অর্ডার ও কল করে অর্ডার। আপনার থিম বা পেজ বিল্ডার আগে থেকেই এমন বাটন দেখালে এগুলো বন্ধ রাখুন (বা আগে সেগুলো সরান), নইলে ক্রেতা বাটন দুবার দেখবেন।"
 
 #: includes/admin/class-cartlum-admin-setup.php:60
 msgid "Paste your Steadfast API key and secret key to send parcels from WooCommerce."
@@ -2667,7 +2670,7 @@ msgstr[1] "%1$dটি কার্ট · %2$dটি ফিরেছে (%3$d%%)"
 msgid "left"
 msgstr "পড়ে আছে"
 
-#: includes/class-cartlum-buy-now.php:55
+#: includes/class-cartlum-buy-now.php:57
 msgid "Buy now"
 msgstr "এখনই কিনুন"
 

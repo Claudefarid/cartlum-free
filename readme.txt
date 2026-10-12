@@ -4,7 +4,7 @@ Tags: abandoned cart, cart recovery, sms, whatsapp, woocommerce
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.24.0
+Stable tag: 0.24.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -90,6 +90,11 @@ It can, for stores that only used CartFlows for a shorter checkout. CartFlows' g
 6. Integrations: every connected service with its status.
 
 == Changelog ==
+
+= 0.24.1 =
+* Buy now on shop pages sits right next to each product's Add to cart, and skips cards that a theme or plugin gives its own buttons (for example with a colour picker), so no card shows two Buy now buttons.
+* "Order on WhatsApp" also names a colour chosen with a shop's own colour swatches.
+* Setup: the Buy buttons step warns that a theme's own buttons and Cartlum's would show twice.
 
 = 0.24.0 =
 * New admin, organised by a shop's daily work: Today · Abandoned Carts · Orders · Fake Orders · Checkout & Buttons · AI · Integrations · Settings, with the menu always on the left (a strip on phones).

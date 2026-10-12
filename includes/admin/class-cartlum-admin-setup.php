@@ -52,7 +52,7 @@ class Cartlum_Admin_Setup {
 			),
 			'buttons'  => array(
 				'title' => __( 'Buy buttons', 'cartlum' ),
-				'text'  => __( 'Buttons under each product: Buy now, Order on WhatsApp and Call to order.', 'cartlum' ),
+				'text'  => __( 'Buttons under each product: Buy now, Order on WhatsApp and Call to order. If your theme or page builder already shows such buttons, leave these off (or remove those first), or customers see the buttons twice.', 'cartlum' ),
 				'keys'  => array( 'buy_now_enabled', 'whatsapp_button', 'whatsapp_number', 'call_button', 'call_number' ),
 			),
 			'courier'  => array(

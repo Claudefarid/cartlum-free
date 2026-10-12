@@ -25,6 +25,12 @@
 					options.push( text( select.options[ select.selectedIndex ] ) );
 				}
 			} );
+			// A colour picked with a shop's own swatches (a field named …colour… or …color…).
+			form.querySelectorAll( 'input[type="hidden"], input[type="radio"]:checked, select:not([name^="attribute_"])' ).forEach( function ( field ) {
+				if ( /colou?r/i.test( field.name || '' ) && field.value && options.indexOf( field.value ) === -1 ) {
+					options.push( field.value );
+				}
+			} );
 			var q = form.querySelector( 'input.qty' );
 			if ( q && parseInt( q.value, 10 ) > 0 ) {
 				qty = String( parseInt( q.value, 10 ) );
