@@ -1007,9 +1007,11 @@ class Cartlum_Admin_Settings {
 						'label'   => __( 'Discount type', 'cartlum' ),
 						'type'    => 'select',
 						'options' => array(
-							'fixed_cart' => __( 'Fixed amount', 'cartlum' ),
-							'percent'    => __( 'Percentage', 'cartlum' ),
+							'fixed_cart'    => __( 'Fixed amount', 'cartlum' ),
+							'percent'       => __( 'Percentage', 'cartlum' ),
+							'free_delivery' => __( 'Free delivery', 'cartlum' ),
 						),
+						'help'    => __( 'Free delivery: the code makes the delivery charge 0, whatever delivery methods you use. The amount below is then not used.', 'cartlum' ),
 					),
 					'coupon_amount'      => array(
 						'label' => __( 'Amount', 'cartlum' ),

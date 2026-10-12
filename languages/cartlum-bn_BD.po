@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Cartlum – Abandoned Cart Recovery for WooCommerce 0.24.1\n"
+"Project-Id-Version: Cartlum – Abandoned Cart Recovery for WooCommerce 0.25.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/cartlum\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Bangla\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-12T12:16:11+00:00\n"
+"POT-Creation-Date: 2026-10-12T14:47:26+00:00\n"
 "PO-Revision-Date: 2026-10-10 12:00+0600
 "
 "X-Generator: WP-CLI 2.12.0\n"
@@ -66,7 +66,7 @@ msgstr "ভুল নম্বর"
 #: includes/admin/class-cartlum-admin-actions.php:295
 #: includes/admin/class-cartlum-admin-actions.php:349
 #: includes/admin/class-cartlum-admin-protection.php:223
-#: includes/admin/class-cartlum-admin-settings.php:1292
+#: includes/admin/class-cartlum-admin-settings.php:1294
 #: includes/admin/class-cartlum-admin.php:217
 #: includes/admin/class-cartlum-cancel-reasons.php:280
 #: includes/class-cartlum-email.php:209
@@ -1066,7 +1066,7 @@ msgid "“Call to order”: one tap dials your number on a phone."
 msgstr "“কল করে অর্ডার করুন”: ফোনে এক ট্যাপে আপনার নম্বরে কল যায়।"
 
 #: includes/admin/class-cartlum-admin-settings.php:698
-#: includes/admin/class-cartlum-admin-settings.php:1196
+#: includes/admin/class-cartlum-admin-settings.php:1198
 msgid "Your phone number"
 msgstr "আপনার ফোন নম্বর"
 
@@ -1463,81 +1463,89 @@ msgstr "নির্দিষ্ট পরিমাণ"
 msgid "Percentage"
 msgstr "শতাংশ"
 
-#: includes/admin/class-cartlum-admin-settings.php:1015
+#: includes/admin/class-cartlum-admin-settings.php:1012
+msgid "Free delivery"
+msgstr "ফ্রি ডেলিভারি"
+
+#: includes/admin/class-cartlum-admin-settings.php:1014
+msgid "Free delivery: the code makes the delivery charge 0, whatever delivery methods you use. The amount below is then not used."
+msgstr "ফ্রি ডেলিভারি: কোডটি দিলে ডেলিভারি চার্জ ০ হয়ে যায়, আপনি যে ডেলিভারি পদ্ধতিই ব্যবহার করুন। তখন নিচের পরিমাণ ব্যবহার হয় না।"
+
+#: includes/admin/class-cartlum-admin-settings.php:1017
 msgid "Amount"
 msgstr "পরিমাণ"
 
-#: includes/admin/class-cartlum-admin-settings.php:1021
+#: includes/admin/class-cartlum-admin-settings.php:1023
 msgid "Valid for (days)"
 msgstr "মেয়াদ (দিন)"
 
-#: includes/admin/class-cartlum-admin-settings.php:1027
+#: includes/admin/class-cartlum-admin-settings.php:1029
 msgid "Code prefix"
 msgstr "কোডের শুরু"
 
-#: includes/admin/class-cartlum-admin-settings.php:1029
+#: includes/admin/class-cartlum-admin-settings.php:1031
 msgid "Codes look like PREFIX-7KQ2XP. Each works once, for one cart."
 msgstr "কোড দেখতে PREFIX-7KQ2XP-এর মতো। প্রতিটি একবার, একটি কার্টের জন্য কাজ করে।"
 
-#: includes/admin/class-cartlum-admin-settings.php:1036
+#: includes/admin/class-cartlum-admin-settings.php:1038
 msgid "Delete carts after (days)"
 msgstr "কার্ট মুছে ফেলুন (দিন পর)"
 
-#: includes/admin/class-cartlum-admin-settings.php:1040
+#: includes/admin/class-cartlum-admin-settings.php:1042
 msgid "0 keeps them forever."
 msgstr "0 দিলে চিরকাল থাকবে।"
 
-#: includes/admin/class-cartlum-admin-settings.php:1043
+#: includes/admin/class-cartlum-admin-settings.php:1045
 msgid "Delete all data on uninstall"
 msgstr "আনইনস্টল করলে সব ডেটা মুছে ফেলুন"
 
 #. translators: %d: number of settings
-#: includes/admin/class-cartlum-admin-settings.php:1152
+#: includes/admin/class-cartlum-admin-settings.php:1154
 #, php-format
 msgid "More options (%d)"
 msgstr "আরও অপশন (%d)"
 
-#: includes/admin/class-cartlum-admin-settings.php:1178
+#: includes/admin/class-cartlum-admin-settings.php:1180
 msgid "Insert into the message you are editing"
 msgstr "যে মেসেজ লিখছেন তাতে যোগ করুন"
 
-#: includes/admin/class-cartlum-admin-settings.php:1185
+#: includes/admin/class-cartlum-admin-settings.php:1187
 #: includes/admin/class-cartlum-admin.php:295
 msgid "You have unsaved changes"
 msgstr "পরিবর্তন সেভ করা হয়নি"
 
-#: includes/admin/class-cartlum-admin-settings.php:1186
+#: includes/admin/class-cartlum-admin-settings.php:1188
 #: includes/admin/class-cartlum-cancel-reasons.php:262
 msgid "Save"
 msgstr "সেভ"
 
-#: includes/admin/class-cartlum-admin-settings.php:1192
+#: includes/admin/class-cartlum-admin-settings.php:1194
 #: includes/admin/class-cartlum-admin-setup.php:227
 msgid "Send a test SMS"
 msgstr "একটি টেস্ট SMS পাঠান"
 
-#: includes/admin/class-cartlum-admin-settings.php:1197
+#: includes/admin/class-cartlum-admin-settings.php:1199
 msgid "Send test"
 msgstr "টেস্ট পাঠান"
 
-#: includes/admin/class-cartlum-admin-settings.php:1199
+#: includes/admin/class-cartlum-admin-settings.php:1201
 msgid "Save your settings first — the test uses the saved ones."
 msgstr "আগে সেটিংস সেভ করুন — টেস্ট সেভ করা সেটিংস ব্যবহার করে।"
 
-#: includes/admin/class-cartlum-admin-settings.php:1277
+#: includes/admin/class-cartlum-admin-settings.php:1279
 #: includes/admin/class-cartlum-admin.php:300
 msgid "Saved — leave empty to keep"
 msgstr "সেভ করা আছে — রাখতে খালি রাখুন"
 
-#: includes/admin/class-cartlum-admin-settings.php:1312
+#: includes/admin/class-cartlum-admin-settings.php:1314
 msgid "Your session ran out. Reload the page and save again."
 msgstr "আপনার সেশন শেষ হয়ে গেছে। পেজ রিলোড করে আবার সেভ করুন।"
 
-#: includes/admin/class-cartlum-admin-settings.php:1405
+#: includes/admin/class-cartlum-admin-settings.php:1407
 msgid "Settings saved, but please check:"
 msgstr "সেটিংস সেভ হয়েছে, তবে দেখে নিন:"
 
-#: includes/admin/class-cartlum-admin-settings.php:1409
+#: includes/admin/class-cartlum-admin-settings.php:1411
 msgid "Settings saved."
 msgstr "সেটিংস সেভ হয়েছে।"
 
@@ -2763,15 +2771,19 @@ msgstr "অর্ডার নিশ্চিত করুন"
 msgid "The code could not be checked. Please try again."
 msgstr "কোডটি যাচাই করা যায়নি। আবার চেষ্টা করুন।"
 
-#: includes/class-cartlum-coupons.php:29
-msgid "Set a coupon amount in Cartlum → Messages → Coupons first."
-msgstr "আগে Cartlum → Messages → Coupons-এ কুপনের পরিমাণ দিন।"
+#: includes/class-cartlum-coupons.php:32
+msgid "Set a coupon amount in Cartlum → Abandoned Carts → Coupons first."
+msgstr "আগে Cartlum → পরিত্যক্ত কার্ট → কুপনে কুপনের পরিমাণ দিন।"
 
 #. translators: %d: cart id
-#: includes/class-cartlum-coupons.php:43
+#: includes/class-cartlum-coupons.php:49
 #, php-format
 msgid "Cartlum recovery coupon for cart #%d"
 msgstr "কার্ট #%d-এর জন্য Cartlum রিকভারি কুপন"
+
+#: includes/class-cartlum-coupons.php:117
+msgid "free delivery"
+msgstr "ফ্রি ডেলিভারি"
 
 #: includes/class-cartlum-email.php:48
 msgid "This cart has no email address that can receive mail."
@@ -3334,7 +3346,7 @@ msgstr "সেভ করা URL-এ একটি নমুনা ফেলে �
 msgid "Test event sent. Check your Zapier, Make or Pabbly scenario for it."
 msgstr "টেস্ট ইভেন্ট পাঠানো হয়েছে। আপনার Zapier, Make বা Pabbly-তে দেখে নিন।"
 
-#: includes/class-cartlum.php:153
+#: includes/class-cartlum.php:154
 msgid "Cartlum needs WooCommerce to be installed and active."
 msgstr "Cartlum চালাতে WooCommerce ইনস্টল ও চালু থাকতে হবে।"
 

@@ -116,6 +116,7 @@ final class Cartlum {
 		Cartlum_Popup::init();
 		Cartlum_Webhooks::init();
 		Cartlum_Speed::init();
+		Cartlum_Coupons::init();
 
 		if ( is_admin() ) {
 			require_once CARTLUM_DIR . 'includes/admin/class-cartlum-admin.php';

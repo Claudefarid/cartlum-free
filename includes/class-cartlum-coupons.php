@@ -24,18 +24,24 @@ class Cartlum_Coupons {
 			return $cart->coupon_code;
 		}
 
-		$amount = (float) Cartlum_Settings::get( 'coupon_amount' );
-		if ( $amount <= 0 ) {
-			return new WP_Error( 'cartlum_coupon_amount', __( 'Set a coupon amount in Cartlum → Messages → Coupons first.', 'cartlum' ) );
+		$type = in_array( Cartlum_Settings::get( 'coupon_type' ), array( 'fixed_cart', 'percent', 'free_delivery' ), true ) ? Cartlum_Settings::get( 'coupon_type' ) : 'fixed_cart';
+		$free = 'free_delivery' === $type;
+		// Free delivery: no discount on the products; the delivery charge becomes 0 (see free_delivery()).
+		$amount = $free ? 0 : (float) Cartlum_Settings::get( 'coupon_amount' );
+		if ( ! $free && $amount <= 0 ) {
+			return new WP_Error( 'cartlum_coupon_amount', __( 'Set a coupon amount in Cartlum → Abandoned Carts → Coupons first.', 'cartlum' ) );
 		}
-		$type = in_array( Cartlum_Settings::get( 'coupon_type' ), array( 'fixed_cart', 'percent' ), true ) ? Cartlum_Settings::get( 'coupon_type' ) : 'fixed_cart';
 		$days = max( 1, (int) Cartlum_Settings::get( 'coupon_expiry_days' ) );
 
 		$code = self::unique_code();
 		$coupon = new WC_Coupon();
 		$coupon->set_code( $code );
-		$coupon->set_discount_type( $type );
+		$coupon->set_discount_type( $free ? 'fixed_cart' : $type );
 		$coupon->set_amount( $amount );
+		if ( $free ) {
+			$coupon->set_free_shipping( true );
+			$coupon->update_meta_data( '_cartlum_free_delivery', 'yes' );
+		}
 		$coupon->set_individual_use( true );
 		$coupon->set_usage_limit( 1 );
 		$coupon->set_usage_limit_per_user( 1 );
@@ -107,9 +113,48 @@ class Cartlum_Coupons {
 		if ( ! $coupon->get_id() ) {
 			return '';
 		}
+		if ( 'yes' === $coupon->get_meta( '_cartlum_free_delivery' ) ) {
+			return __( 'free delivery', 'cartlum' );
+		}
 		if ( 'percent' === $coupon->get_discount_type() ) {
 			return wc_format_decimal( $coupon->get_amount(), 0 ) . '%';
 		}
 		return html_entity_decode( wp_strip_all_tags( wc_price( $coupon->get_amount(), array( 'decimals' => 0 ) ) ), ENT_QUOTES, 'UTF-8' );
+	}
+
+	/**
+	 * Hooks.
+	 */
+	public static function init() {
+		add_filter( 'woocommerce_package_rates', array( __CLASS__, 'free_delivery' ), 100 );
+	}
+
+	/**
+	 * A free-delivery code in the cart: every delivery option costs nothing, whatever delivery
+	 * methods the store uses (no special "free shipping" method needed).
+	 *
+	 * @param array $rates Shipping rates.
+	 * @return array
+	 */
+	public static function free_delivery( $rates ) {
+		if ( ! WC()->cart ) {
+			return $rates;
+		}
+		$free = false;
+		foreach ( WC()->cart->get_applied_coupons() as $code ) {
+			$coupon = new WC_Coupon( $code );
+			if ( 'yes' === $coupon->get_meta( '_cartlum_free_delivery' ) ) {
+				$free = true;
+				break;
+			}
+		}
+		if ( ! $free ) {
+			return $rates;
+		}
+		foreach ( $rates as $rate ) {
+			$rate->set_cost( 0 );
+			$rate->set_taxes( array_map( '__return_zero', (array) $rate->get_taxes() ) );
+		}
+		return $rates;
 	}
 }

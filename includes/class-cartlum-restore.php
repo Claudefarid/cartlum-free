@@ -106,7 +106,7 @@ class Cartlum_Restore {
 				++$skipped;
 				continue;
 			}
-			WC()->cart->add_to_cart( $product_id, max( 1, (int) $item['quantity'] ), (int) $item['variation_id'], (array) $item['variation'] );
+			WC()->cart->add_to_cart( $product_id, max( 1, (int) $item['quantity'] ), (int) $item['variation_id'], (array) ( $item['variation'] ?? array() ) );
 		}
 		if ( $skipped ) {
 			wc_add_notice( __( 'Some items in your saved cart are no longer available.', 'cartlum' ), 'notice' );

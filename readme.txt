@@ -4,7 +4,7 @@ Tags: abandoned cart, cart recovery, sms, whatsapp, woocommerce
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.24.4
+Stable tag: 0.25.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -90,6 +90,10 @@ It can, for stores that only used CartFlows for a shorter checkout. CartFlows' g
 6. Integrations: every connected service with its status.
 
 == Changelog ==
+
+= 0.25.0 =
+* Coupons: new type **Free delivery**. The reminder's one-time code makes the delivery charge 0 at checkout, with any delivery methods (no special free-shipping setup). Opening the reminder link applies it.
+* Restoring a saved cart no longer warns when an item has no variation details.
 
 = 0.24.4 =
 * A cart is marked abandoned, and its reminders started, exactly once even if the background job happens to run twice at the same moment; a doubled schedule of that job is cleaned up by itself.
