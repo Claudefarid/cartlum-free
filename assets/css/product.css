@@ -176,6 +176,21 @@
 }
 
 /* Buy now under products on shop pages. */
+/* The product buttons' colour when the store set one, else the checkout colour; stronger than
+   the theme's own "alt" button style, as on the home page's product grids. */
+a.cartlum-buy-now.cartlum-buy-now--loop.cartlum-buy-now--loop {
+	border: 0;
+	border-radius: 4px;
+	background: var(--clx-btn, var(--clx-accent));
+	color: var(--clx-on-btn, var(--clx-on-accent));
+}
+a.cartlum-buy-now.cartlum-buy-now--loop.cartlum-buy-now--loop:hover,
+a.cartlum-buy-now.cartlum-buy-now--loop.cartlum-buy-now--loop:focus {
+	background: var(--clx-btn, var(--clx-accent));
+	color: var(--clx-on-btn, var(--clx-on-accent));
+	filter: brightness(1.15);
+}
+
 .cartlum-buy-now--loop.cartlum-buy-now--loop {
 	display: block;
 	width: 100%;

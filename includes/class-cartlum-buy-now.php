@@ -92,6 +92,11 @@ class Cartlum_Buy_Now {
 		if ( ! $product instanceof WC_Product || ! $product->is_type( 'simple' ) || ! $product->is_purchasable() || ! $product->is_in_stock() ) {
 			return $html;
 		}
+		// Product grids also show up on pages that are not shop pages (home page, landing pages):
+		// bring the button styles along.
+		if ( ! wp_style_is( 'cartlum-product', 'enqueued' ) && class_exists( 'Cartlum_Product_Buttons' ) ) {
+			Cartlum_Product_Buttons::assets( true );
+		}
 		ob_start();
 		self::loop_button( $product );
 		return $html . ob_get_clean();

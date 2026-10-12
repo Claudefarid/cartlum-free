@@ -4,7 +4,7 @@ Tags: abandoned cart, cart recovery, sms, whatsapp, woocommerce
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.25.0
+Stable tag: 0.25.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -90,6 +90,9 @@ It can, for stores that only used CartFlows for a shorter checkout. CartFlows' g
 6. Integrations: every connected service with its status.
 
 == Changelog ==
+
+= 0.25.1 =
+* Buy now in product grids uses your product button colour (or the checkout colour), also on the home page and other pages with product grids, instead of the theme's default button colour.
 
 = 0.25.0 =
 * Coupons: new type **Free delivery**. The reminder's one-time code makes the delivery charge 0 at checkout, with any delivery methods (no special free-shipping setup). Opening the reminder link applies it.
