@@ -37,6 +37,7 @@ require_once CARTLUM_DIR . 'includes/class-cartlum-order-sms.php';
 require_once CARTLUM_DIR . 'includes/class-cartlum-protection.php';
 require_once CARTLUM_DIR . 'includes/class-cartlum-popup.php';
 require_once CARTLUM_DIR . 'includes/class-cartlum-webhooks.php';
+require_once CARTLUM_DIR . 'includes/class-cartlum-speed.php';
 
 /**
  * Cartlum.
@@ -109,6 +110,7 @@ final class Cartlum {
 		Cartlum_Protection::init();
 		Cartlum_Popup::init();
 		Cartlum_Webhooks::init();
+		Cartlum_Speed::init();
 
 		if ( is_admin() ) {
 			require_once CARTLUM_DIR . 'includes/admin/class-cartlum-admin.php';

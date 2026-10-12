@@ -257,6 +257,16 @@ class Cartlum_Admin_Settings {
 						'label' => __( 'Notice text', 'cartlum' ),
 						'type'  => 'text',
 					),
+					'speed_grid_images'   => array(
+						'label' => __( 'Smaller product photos on phones', 'cartlum' ),
+						'type'  => 'checkbox',
+						'help'  => __( 'Speed: phones download a smaller copy of each photo in shop and category grids (made for 2 products per row), and grid photos load only as they scroll into view. The photos themselves are unchanged.', 'cartlum' ),
+					),
+					'speed_no_elementor_icons' => array(
+						'label' => __( 'Skip Elementor’s icon font', 'cartlum' ),
+						'type'  => 'checkbox',
+						'help'  => __( 'Speed: saves about 100 KB on every page. Only for sites whose icons come from Font Awesome or SVG images — if you use Elementor’s own icons (eicons), they disappear. Check your pages after turning it on.', 'cartlum' ),
+					),
 				);
 
 			case 'checkout':
@@ -562,6 +572,11 @@ class Cartlum_Admin_Settings {
 						'label' => __( 'Cancellation reasons', 'cartlum' ),
 						'type'  => 'checkbox',
 						'help'  => __( 'Pick why an order was cancelled on the order screen; see the reasons, and the cancelled orders still missing one, on Fake Orders.', 'cartlum' ),
+					),
+					'cancel_reason_old_key'     => array(
+						'label' => __( 'Earlier reason field', 'cartlum' ),
+						'type'  => 'text',
+						'help'  => __( 'If a snippet or plugin saved cancellation reasons before Cartlum, enter the order meta key it used (e.g. _myshop_cancel_reason) and those reasons show in Cartlum too. They must use the same reason codes (no_answer, declined_on_call …). Several keys: separate with commas. Empty = none.', 'cartlum' ),
 					),
 					'protect_blocklist'         => array(
 						'label' => __( 'Blocked numbers, IP addresses and devices', 'cartlum' ),

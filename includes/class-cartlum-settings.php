@@ -90,6 +90,7 @@ class Cartlum_Settings {
 			'order_sms_status_alert'  => array(), // Statuses that send the store an SMS, e.g. array( 'cancelled' ).
 			'order_sms_status_alert_text' => '',
 			'cancel_reasons'          => 'yes',
+			'cancel_reason_old_key'   => '',
 			'order_sms_admin_phone'   => '',
 			'order_sms_admin_text'    => '',
 			'order_tracking'          => 'no',
@@ -147,6 +148,10 @@ class Cartlum_Settings {
 
 			// Privacy.
 			'delete_on_uninstall'   => 'no',
+
+			// Speed (off unless the store turns them on).
+			'speed_grid_images'        => 'no',
+			'speed_no_elementor_icons' => 'no',
 		);
 
 		/**

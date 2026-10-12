@@ -68,12 +68,14 @@ class Cartlum_Cancel_Reasons {
 	public static function get( $order ) {
 		$reason = (string) $order->get_meta( self::META );
 		if ( '' === $reason ) {
+			$keys = array_filter( array_map( 'trim', explode( ',', (string) Cartlum_Settings::get( 'cancel_reason_old_key' ) ) ) );
 			/**
 			 * Order meta keys an earlier tool saved cancellation reasons under (same slugs).
+			 * Starts with the keys from the "Earlier reason field" setting.
 			 *
 			 * @param string[] $keys Meta keys.
 			 */
-			foreach ( (array) apply_filters( 'cartlum_cancel_reason_legacy_keys', array() ) as $key ) {
+			foreach ( (array) apply_filters( 'cartlum_cancel_reason_legacy_keys', $keys ) as $key ) {
 				$reason = (string) $order->get_meta( (string) $key );
 				if ( '' !== $reason ) {
 					break;
