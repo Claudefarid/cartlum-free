@@ -22,6 +22,9 @@ class Cartlum_Admin {
 		add_action( 'cartlum_settings_before_fields', array( __CLASS__, 'pro_hint' ) );
 		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'assets' ) );
 		add_action( 'admin_notices', array( __CLASS__, 'flash' ) );
+		add_action( 'wp_ajax_cartlum_search_index', array( __CLASS__, 'search_index' ) );
+		add_action( 'admin_post_cartlum_admin_lang', array( __CLASS__, 'switch_language' ) );
+		add_filter( 'admin_body_class', array( __CLASS__, 'body_class' ) );
 		add_filter( 'plugin_action_links_' . plugin_basename( CARTLUM_FILE ), array( __CLASS__, 'action_links' ) );
 	}
 
@@ -29,14 +32,14 @@ class Cartlum_Admin {
 	 * Menu.
 	 */
 	public static function menu() {
-		add_menu_page( 'Cartlum', 'Cartlum', self::CAP, 'cartlum', array( __CLASS__, 'page_dashboard' ), 'dashicons-cart', 56 );
-		add_submenu_page( 'cartlum', __( 'Dashboard', 'cartlum' ), __( 'Dashboard', 'cartlum' ), self::CAP, 'cartlum', array( __CLASS__, 'page_dashboard' ) );
+		add_menu_page( 'Cartlum', 'Cartlum', self::CAP, 'cartlum', array( __CLASS__, 'screen' ), 'dashicons-cart', 56 );
+		add_submenu_page( 'cartlum', __( 'Today', 'cartlum' ), __( 'Today', 'cartlum' ), self::CAP, 'cartlum', array( __CLASS__, 'screen' ) );
 		// One page per job; each owns its settings tabs (Cartlum_Admin_Settings::sections()).
 		foreach ( Cartlum_Admin_Settings::sections() as $slug => $section ) {
 			if ( ! $section['tabs'] && '' === $section['view'] ) {
 				continue; // A Pro page without Pro.
 			}
-			$hook = add_submenu_page( 'cartlum', $section['label'], $section['label'], self::CAP, $slug, array( 'Cartlum_Admin_Settings', 'page' ) );
+			$hook = add_submenu_page( 'cartlum', $section['label'], $section['label'], self::CAP, $slug, array( __CLASS__, 'screen' ) );
 			if ( 'cartlum-carts' === $slug ) {
 				add_action( 'load-' . $hook, array( 'Cartlum_Admin_Actions', 'bulk' ) );
 			} elseif ( 'cartlum-settings' === $slug ) {
@@ -45,8 +48,215 @@ class Cartlum_Admin {
 		}
 		// What Cartlum Pro adds, only while Pro is not installed.
 		if ( ! defined( 'CARTLUM_PRO_VERSION' ) ) {
-			add_submenu_page( 'cartlum', __( 'Cartlum Pro', 'cartlum' ), __( 'Pro', 'cartlum' ), self::CAP, 'cartlum-pro', array( __CLASS__, 'page_pro' ) );
+			add_submenu_page( 'cartlum', __( 'Cartlum Pro', 'cartlum' ), __( 'Pro', 'cartlum' ), self::CAP, 'cartlum-pro', array( __CLASS__, 'screen' ) );
 		}
+		// The first-run setup: reached from Today, not from the menu.
+		add_submenu_page( '', __( 'Set up Cartlum', 'cartlum' ), __( 'Set up Cartlum', 'cartlum' ), self::CAP, 'cartlum-setup', array( __CLASS__, 'screen' ) );
+		// Pages that moved: hidden, they only send bookmarks and old links to the new place.
+		foreach ( array( 'cartlum-messages', 'cartlum-facebook' ) as $old ) {
+			$hook = add_submenu_page( '', 'Cartlum', 'Cartlum', self::CAP, $old, '__return_null' );
+			add_action( 'load-' . $hook, array( __CLASS__, 'old_pages' ) );
+		}
+	}
+
+	/**
+	 * Pages that moved (Messages, Facebook): bookmarks and old links land on the new place.
+	 */
+	public static function old_pages() {
+		// phpcs:disable WordPress.Security.NonceVerification.Recommended -- navigation only.
+		$page = isset( $_GET['page'] ) ? sanitize_key( $_GET['page'] ) : '';
+		if ( ! in_array( $page, array( 'cartlum-messages', 'cartlum-facebook' ), true ) ) {
+			return;
+		}
+		$tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : ( 'cartlum-facebook' === $page ? 'facebook' : 'automation' );
+		// phpcs:enable WordPress.Security.NonceVerification.Recommended
+		wp_safe_redirect( self::url( 'cartlum-settings', array( 'tab' => $tab ) ) );
+		exit;
+	}
+
+	/**
+	 * Our screens get the app look.
+	 *
+	 * @param string $classes Classes.
+	 * @return string
+	 */
+	public static function body_class( $classes ) {
+		$screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
+		if ( $screen && false !== strpos( (string) $screen->id, 'cartlum' ) ) {
+			$classes .= ' cartlum-app-screen';
+		}
+		return $classes;
+	}
+
+	/**
+	 * The menu's items with their icons (simple line drawings).
+	 *
+	 * @return array slug => { label, icon }
+	 */
+	public static function rail_items() {
+		$icons = array(
+			'cartlum'              => '<path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/>',
+			'cartlum-carts'        => '<circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.5 12h12l2-8H6.5"/>',
+			'cartlum-orders'       => '<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/>',
+			'cartlum-fraud'        => '<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/>',
+			'cartlum-checkout'     => '<rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M7 15h4"/>',
+			'cartlum-ai'           => '<path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><circle cx="12" cy="12" r="5"/>',
+			'cartlum-integrations' => '<path d="M9 7V3M15 7V3M7 7h10v5a5 5 0 0 1-10 0zM12 17v4"/>',
+			'cartlum-settings'     => '<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/>',
+			'cartlum-pro'          => '<path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6-5.3-3-5.3 3 1.2-6L3.4 9.3l6-.7z"/>',
+		);
+		$items = array(
+			'cartlum' => array(
+				'label' => __( 'Today', 'cartlum' ),
+				'icon'  => $icons['cartlum'],
+			),
+		);
+		foreach ( Cartlum_Admin_Settings::sections() as $slug => $section ) {
+			if ( ! $section['tabs'] && '' === $section['view'] ) {
+				continue;
+			}
+			$items[ $slug ] = array(
+				'label' => $section['label'],
+				'icon'  => $icons[ $slug ] ?? $icons['cartlum-settings'],
+			);
+		}
+		if ( ! defined( 'CARTLUM_PRO_VERSION' ) ) {
+			$items['cartlum-pro'] = array(
+				'label' => __( 'Get Pro', 'cartlum' ),
+				'icon'  => $icons['cartlum-pro'],
+			);
+		}
+		return $items;
+	}
+
+	/**
+	 * Every Cartlum screen: the app frame (menu on the left, search on top) around the page.
+	 */
+	public static function screen() {
+		if ( ! current_user_can( self::CAP ) ) {
+			return;
+		}
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- navigation only.
+		$page  = isset( $_GET['page'] ) ? sanitize_key( $_GET['page'] ) : 'cartlum';
+		$items = self::rail_items();
+		$crumb = $items[ $page ]['label'] ?? 'Cartlum';
+		$tab   = '';
+		if ( isset( Cartlum_Admin_Settings::sections()[ $page ] ) ) {
+			$current = Cartlum_Admin_Settings::current_tab( $page );
+			$section = Cartlum_Admin_Settings::sections()[ $page ];
+			$tab     = '' !== $current ? ( Cartlum_Admin_Settings::tabs()[ $current ] ?? '' ) : $section['view'];
+		}
+		?>
+		<div class="cl-app">
+			<nav class="cl-rail" aria-label="<?php esc_attr_e( 'Cartlum menu', 'cartlum' ); ?>">
+				<a class="cl-rail__brand" href="<?php echo esc_url( self::url( 'cartlum' ) ); ?>"><span aria-hidden="true">C</span>Cartlum</a>
+				<ul>
+					<?php foreach ( $items as $slug => $item ) : ?>
+						<li>
+							<a href="<?php echo esc_url( self::url( $slug ) ); ?>"<?php echo $slug === $page ? ' aria-current="page"' : ''; ?>>
+								<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><?php echo $item['icon']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- fixed SVG paths defined above. ?></svg>
+								<span><?php echo esc_html( $item['label'] ); ?></span>
+							</a>
+						</li>
+					<?php endforeach; ?>
+				</ul>
+				<p class="cl-rail__foot">
+					<?php
+					echo esc_html( 'Cartlum ' . CARTLUM_VERSION );
+					if ( defined( 'CARTLUM_PRO_VERSION' ) ) {
+						echo esc_html( ' · Pro ' . CARTLUM_PRO_VERSION );
+					}
+					?>
+				</p>
+			</nav>
+			<div class="cl-main">
+				<div class="cl-top">
+					<p class="cl-crumb">Cartlum › <strong><?php echo esc_html( $crumb ); ?></strong><?php echo '' !== $tab ? ' › ' . esc_html( $tab ) : ''; ?></p>
+					<button type="button" class="cl-search-btn" data-cartlum-search>
+						<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+						<span><?php esc_html_e( 'Find a setting…', 'cartlum' ); ?></span>
+						<kbd>Ctrl K</kbd>
+					</button>
+					<?php
+					$bn   = 'bn_BD' === Cartlum_Settings::admin_language();
+					$back = isset( $_SERVER['REQUEST_URI'] ) ? esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
+					$lang = wp_nonce_url( add_query_arg( array( 'action' => 'cartlum_admin_lang', 'to' => $bn ? '' : 'bn_BD', 'back' => rawurlencode( $back ) ), admin_url( 'admin-post.php' ) ), 'cartlum_admin_lang' );
+					?>
+					<a class="cl-lang" href="<?php echo esc_url( $lang ); ?>" lang="<?php echo $bn ? 'en' : 'bn'; ?>" title="<?php esc_attr_e( 'Cartlum screens in another language, for you only', 'cartlum' ); ?>"><?php echo $bn ? 'English' : 'বাংলা'; ?></a>
+				</div>
+				<div class="cl-notices" data-cartlum-notices hidden></div>
+				<?php
+				if ( 'cartlum' === $page ) {
+					self::page_dashboard();
+				} elseif ( 'cartlum-pro' === $page ) {
+					self::page_pro();
+				} elseif ( 'cartlum-setup' === $page ) {
+					Cartlum_Admin_Setup::page();
+				} else {
+					Cartlum_Admin_Settings::page();
+				}
+				?>
+			</div>
+		</div>
+		<div class="cl-palette" data-cartlum-palette hidden>
+			<div class="cl-palette__box" role="dialog" aria-modal="true" aria-label="<?php esc_attr_e( 'Find a setting', 'cartlum' ); ?>">
+				<input type="search" data-cartlum-palette-input placeholder="<?php esc_attr_e( 'Search settings, pages and features…', 'cartlum' ); ?>" aria-label="<?php esc_attr_e( 'Find a setting', 'cartlum' ); ?>" autocomplete="off">
+				<ul role="listbox" data-cartlum-palette-list></ul>
+			</div>
+		</div>
+		<div class="cl-toast" data-cartlum-toast role="status" hidden></div>
+		<?php
+	}
+
+	/**
+	 * The বাংলা / English button: Cartlum's screens in that language, for this user only.
+	 */
+	public static function switch_language() {
+		check_admin_referer( 'cartlum_admin_lang' );
+		if ( ! current_user_can( self::CAP ) ) {
+			wp_die( esc_html__( 'You are not allowed to do that.', 'cartlum' ), 403 );
+		}
+		$to = isset( $_GET['to'] ) && 'bn_BD' === $_GET['to'] ? 'bn_BD' : '';
+		update_user_meta( get_current_user_id(), 'cartlum_admin_lang', $to );
+		$back = isset( $_GET['back'] ) ? rawurldecode( esc_url_raw( wp_unslash( $_GET['back'] ) ) ) : '';
+		wp_safe_redirect( '' !== $back ? $back : self::url( 'cartlum' ) );
+		exit;
+	}
+
+	/**
+	 * Everything the "Find a setting" box can jump to: pages, tabs, settings and features.
+	 */
+	public static function search_index() {
+		check_ajax_referer( 'cartlum_admin', 'nonce' );
+		if ( ! current_user_can( self::CAP ) ) {
+			wp_send_json_error( null, 403 );
+		}
+		$out  = array();
+		$tabs = Cartlum_Admin_Settings::tabs();
+		foreach ( Cartlum_Admin_Settings::sections() as $slug => $section ) {
+			if ( ! $section['tabs'] && '' === $section['view'] ) {
+				continue;
+			}
+			$out[] = array( $section['label'], __( 'Page', 'cartlum' ), self::url( $slug ) );
+			foreach ( $section['tabs'] as $tab ) {
+				$where = $section['label'] . ' › ' . ( $tabs[ $tab ] ?? $tab );
+				$url   = self::url( $slug, array( 'tab' => $tab ) );
+				$out[] = array( $tabs[ $tab ] ?? $tab, $section['label'], $url );
+				foreach ( Cartlum_Admin_Settings::tab_fields( $tab ) as $key => $field ) {
+					if ( 'heading' === $field['type'] || empty( $field['label'] ) ) {
+						continue;
+					}
+					$help  = isset( $field['help'] ) ? wp_html_excerpt( (string) $field['help'], 90 ) : '';
+					$out[] = array( $field['label'], $where, $url . '#cl-row-' . $key, $help . ' ' . $key );
+				}
+			}
+		}
+		foreach ( Cartlum_Admin_Today::features() as $group => $items ) {
+			foreach ( $items as $item ) {
+				$out[] = array( $item[0], $group, $item[2] );
+			}
+		}
+		wp_send_json_success( $out );
 	}
 
 	/**
@@ -75,10 +285,19 @@ class Cartlum_Admin {
 			'cartlum-admin',
 			'cartlumAdmin',
 			array(
-				'copied'  => __( 'Copied', 'cartlum' ),
-				'sending' => __( 'Sending…', 'cartlum' ),
-				'chars'   => __( 'characters', 'cartlum' ),
-				'unicode' => __( 'unicode', 'cartlum' ),
+				'copied'   => __( 'Copied', 'cartlum' ),
+				'sending'  => __( 'Sending…', 'cartlum' ),
+				'chars'    => __( 'characters', 'cartlum' ),
+				'unicode'  => __( 'unicode', 'cartlum' ),
+				'ajax'     => admin_url( 'admin-ajax.php' ),
+				'nonce'    => wp_create_nonce( 'cartlum_admin' ),
+				'saving'   => __( 'Saving…', 'cartlum' ),
+				'unsaved'  => __( 'You have unsaved changes', 'cartlum' ),
+				'leave'    => __( 'You have unsaved changes. Leave without saving?', 'cartlum' ),
+				'failed'   => __( 'Could not save. Check your connection and try again.', 'cartlum' ),
+				'noMatch'  => __( 'No setting matches. Try “sms”, “buy now” or “steadfast”.', 'cartlum' ),
+				'notices'  => __( 'Notices', 'cartlum' ),
+				'saved'    => __( 'Saved — leave empty to keep', 'cartlum' ),
 			)
 		);
 	}
@@ -94,7 +313,8 @@ class Cartlum_Admin {
 		// Settings tabs live on the page for their job (Messages, Fake Orders …): old-style
 		// "cartlum-settings + tab" links go there.
 		if ( 'cartlum-settings' === $page && ! empty( $args['tab'] ) && class_exists( 'Cartlum_Admin_Settings' ) ) {
-			$page = Cartlum_Admin_Settings::page_for_tab( (string) $args['tab'] );
+			$args['tab'] = Cartlum_Admin_Settings::resolve_tab( (string) $args['tab'] );
+			$page        = Cartlum_Admin_Settings::page_for_tab( $args['tab'] );
 		}
 		return add_query_arg( array_merge( array( 'page' => $page ), $args ), admin_url( 'admin.php' ) );
 	}
@@ -142,7 +362,7 @@ class Cartlum_Admin {
 		if ( ! hash_equals( self::notice_sig( $raw, $type ), $sig ) ) {
 			return;
 		}
-		printf( '<div class="notice notice-%1$s is-dismissible"><p>%2$s</p></div>', esc_attr( $type ), esc_html( sanitize_text_field( $raw ) ) );
+		printf( '<div class="notice notice-%1$s is-dismissible cl-flash" data-cartlum-flash="%1$s"><p>%2$s</p></div>', esc_attr( $type ), esc_html( sanitize_text_field( $raw ) ) );
 	}
 
 	/**

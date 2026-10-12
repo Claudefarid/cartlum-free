@@ -66,7 +66,17 @@ $open_value = array_sum( array_map( 'floatval', wp_list_pluck( $open['rows'], 'c
 ?>
 <div class="wrap cartlum cl-dash">
 	<div class="cl-head">
-		<h1><?php esc_html_e( 'Cartlum', 'cartlum' ); ?></h1>
+		<div>
+			<h1><?php esc_html_e( 'Today', 'cartlum' ); ?></h1>
+			<p class="cl-lead"><?php esc_html_e( 'What needs you now, and how your carts are doing.', 'cartlum' ); ?></p>
+		</div>
+	</div>
+	<hr class="wp-header-end">
+
+	<?php Cartlum_Admin_Today::render(); ?>
+
+	<div class="cl-head cl-head--sub">
+		<h2><?php esc_html_e( 'Results', 'cartlum' ); ?></h2>
 		<nav class="cl-segment" aria-label="<?php esc_attr_e( 'Period', 'cartlum' ); ?>">
 			<?php foreach ( array( 7, 30, 90 ) as $d ) : ?>
 				<a <?php echo $d === $days ? 'aria-current="page"' : ''; ?> href="<?php echo esc_url( Cartlum_Admin::url( 'cartlum', array( 'days' => $d ) ) ); ?>">
@@ -78,7 +88,6 @@ $open_value = array_sum( array_map( 'floatval', wp_list_pluck( $open['rows'], 'c
 			<?php endforeach; ?>
 		</nav>
 	</div>
-	<hr class="wp-header-end">
 
 	<ul class="cl-status" aria-label="<?php esc_attr_e( 'Setup', 'cartlum' ); ?>">
 		<li class="cl-status__item cl-status--<?php echo esc_attr( $flow_on ? ( $test_mode ? 'warn' : 'good' ) : 'off' ); ?>">

@@ -13,10 +13,25 @@ defined( 'ABSPATH' ) || exit;
 class Cartlum_Admin_Settings {
 
 	/**
+	 * The admin pages, once worked out in this request.
+	 *
+	 * @var array|null
+	 */
+	private static $sections = null;
+
+	/**
+	 * Fields by tab after moves, once worked out in this request.
+	 *
+	 * @var array|null
+	 */
+	private static $homed = null;
+
+	/**
 	 * Hooks.
 	 */
 	public static function init() {
 		add_action( 'admin_post_cartlum_save_settings', array( __CLASS__, 'save' ) );
+		add_action( 'wp_ajax_cartlum_save_settings', array( __CLASS__, 'ajax_save' ) );
 	}
 
 	/**
@@ -26,20 +41,31 @@ class Cartlum_Admin_Settings {
 	 */
 	public static function tabs() {
 		$tabs = array(
-			'general'    => __( 'General', 'cartlum' ),
-			'checkout'   => __( 'Checkout', 'cartlum' ),
-			'product'    => __( 'Product page', 'cartlum' ),
-			'popup'      => __( 'Popup', 'cartlum' ),
-			'account'    => __( 'Account', 'cartlum' ),
-			'orders'     => __( 'Orders', 'cartlum' ),
-			'protection' => __( 'Protection', 'cartlum' ),
-			'automation' => __( 'Automation', 'cartlum' ),
-			'sms'        => __( 'SMS', 'cartlum' ),
-			'whatsapp' => 'WhatsApp',
-			'email'    => __( 'Email', 'cartlum' ),
-			'coupons'  => __( 'Coupons', 'cartlum' ),
-			'webhooks' => __( 'Webhooks', 'cartlum' ),
-			'privacy'  => __( 'Privacy', 'cartlum' ),
+			'general'        => __( 'General', 'cartlum' ),
+			'checkout'       => __( 'Easy checkout', 'cartlum' ),
+			'product'        => __( 'Buy now & buttons', 'cartlum' ),
+			'popup'          => __( 'Save-cart popup', 'cartlum' ),
+			'account'        => __( 'Customer login', 'cartlum' ),
+			'orders'         => __( 'Order SMS', 'cartlum' ),
+			'protection'     => __( 'Protection', 'cartlum' ),
+			'automation'     => __( 'Reminders', 'cartlum' ),
+			'sms'            => __( 'SMS', 'cartlum' ),
+			'whatsapp'       => 'WhatsApp',
+			'email'          => __( 'Email', 'cartlum' ),
+			'coupons'        => __( 'Coupons', 'cartlum' ),
+			'webhooks'       => __( 'Webhooks', 'cartlum' ),
+			'privacy'        => __( 'Privacy', 'cartlum' ),
+			// Tabs made of fields from other tabs (see field_homes()).
+			'capture'        => __( 'Capture', 'cartlum' ),
+			'texts'          => __( 'Message texts', 'cartlum' ),
+			'tracking'       => __( 'Tracking & cancel reasons', 'cartlum' ),
+			'speed'          => __( 'Speed', 'cartlum' ),
+			'int_sms'        => __( 'SMS', 'cartlum' ),
+			'int_steadfast'  => 'Steadfast',
+			'int_fraudbd'    => 'FraudBD',
+			'int_whatsapp'   => __( 'WhatsApp Cloud API', 'cartlum' ),
+			'int_elevenlabs' => 'ElevenLabs',
+			'int_ai'         => __( 'AI provider', 'cartlum' ),
 		);
 
 		/**
@@ -57,48 +83,46 @@ class Cartlum_Admin_Settings {
 	 * @return array slug => { label, tabs: string[], view: string|'' }
 	 */
 	public static function sections() {
+		if ( null !== self::$sections ) {
+			return self::$sections;
+		}
 		$sections = array(
-			'cartlum-carts'    => array(
+			'cartlum-carts'        => array(
 				'label' => __( 'Abandoned Carts', 'cartlum' ),
-				'tabs'  => array( 'popup' ),
+				'tabs'  => array( 'automation', 'texts', 'coupons', 'popup', 'winback', 'capture' ),
 				'view'  => __( 'Carts', 'cartlum' ),
 			),
-			'cartlum-fraud'    => array(
-				'label' => __( 'Fake Orders', 'cartlum' ),
-				'tabs'  => array( 'protection', 'courier', 'advance' ),
-				'view'  => __( 'Risky orders', 'cartlum' ),
-			),
-			'cartlum-messages' => array(
-				'label' => __( 'Messages', 'cartlum' ),
-				'tabs'  => array( 'automation', 'sms', 'whatsapp', 'email', 'orders', 'coupons', 'winback', 'whatsapp_api' ),
+			'cartlum-orders'       => array(
+				'label' => __( 'Orders', 'cartlum' ),
+				'tabs'  => array( 'orders', 'tracking', 'steadfast', 'advance' ),
 				'view'  => '',
 			),
-			'cartlum-ai'       => array(
-				'label' => __( 'AI Agent', 'cartlum' ),
+			'cartlum-fraud'        => array(
+				'label' => __( 'Fake Orders', 'cartlum' ),
+				'tabs'  => array( 'protection', 'courier' ),
+				'view'  => __( 'Risky orders', 'cartlum' ),
+			),
+			'cartlum-checkout'     => array(
+				'label' => __( 'Checkout & Buttons', 'cartlum' ),
+				'tabs'  => array( 'checkout', 'product', 'bundles', 'account' ),
+				'view'  => '',
+			),
+			'cartlum-ai'           => array(
+				'label' => __( 'AI', 'cartlum' ),
 				'tabs'  => array( 'ai_call', 'ai' ),
 				'view'  => '',
 			),
-			'cartlum-checkout' => array(
-				'label' => __( 'Checkout', 'cartlum' ),
-				'tabs'  => array( 'checkout', 'product', 'account', 'bundles' ),
-				'view'  => '',
+			'cartlum-integrations' => array(
+				'label' => __( 'Integrations', 'cartlum' ),
+				'tabs'  => array( 'int_sms', 'int_steadfast', 'facebook', 'int_fraudbd', 'int_whatsapp', 'int_elevenlabs', 'int_ai', 'webhooks' ),
+				'view'  => __( 'Overview', 'cartlum' ),
 			),
-			'cartlum-facebook' => array(
-				'label' => 'Facebook',
-				'tabs'  => array( 'facebook' ),
-				'view'  => '',
-			),
-			'cartlum-settings' => array(
+			'cartlum-settings'     => array(
 				'label' => __( 'Settings', 'cartlum' ),
-				'tabs'  => array( 'general', 'webhooks', 'privacy', 'licence' ),
+				'tabs'  => array( 'general', 'speed', 'privacy', 'licence' ),
 				'view'  => '',
 			),
 		);
-		// Cartlum Pro before 0.6.1 loads the bundle editor only on the Settings page.
-		if ( defined( 'CARTLUM_PRO_VERSION' ) && version_compare( CARTLUM_PRO_VERSION, '0.6.1', '<' ) ) {
-			$sections['cartlum-checkout']['tabs'] = array_values( array_diff( $sections['cartlum-checkout']['tabs'], array( 'bundles' ) ) );
-			$sections['cartlum-settings']['tabs'][] = 'bundles';
-		}
 
 		/**
 		 * Filters the admin pages and which settings tabs each one shows.
@@ -107,25 +131,27 @@ class Cartlum_Admin_Settings {
 		 */
 		$sections = apply_filters( 'cartlum_admin_sections', $sections );
 
-		// Only tabs that exist; any other tab (from an add-on) goes to Settings.
-		$all    = self::tabs();
-		$placed = array();
+		// Only tabs that exist and have something to show, each on one page only (the first that
+		// lists it); retired tabs live on elsewhere; any other tab (from an add-on) goes to Settings.
+		$all     = self::tabs();
+		$retired = self::retired_tabs();
+		$placed  = array_keys( $retired );
 		foreach ( $sections as $slug => $section ) {
-			$sections[ $slug ]['tabs'] = array_values(
-				array_filter(
-					(array) $section['tabs'],
-					function ( $tab ) use ( $all ) {
-						return isset( $all[ $tab ] );
-					}
-				)
-			);
-			$placed = array_merge( $placed, $sections[ $slug ]['tabs'] );
+			$keep = array();
+			foreach ( (array) $section['tabs'] as $tab ) {
+				if ( isset( $all[ $tab ] ) && ! in_array( $tab, $placed, true ) && self::has_content( $tab ) ) {
+					$keep[] = $tab;
+				}
+				$placed[] = $tab;
+			}
+			$sections[ $slug ]['tabs'] = $keep;
 		}
 		foreach ( array_keys( $all ) as $tab ) {
-			if ( ! in_array( $tab, $placed, true ) ) {
+			if ( ! in_array( $tab, $placed, true ) && self::has_content( $tab ) ) {
 				$sections['cartlum-settings']['tabs'][] = $tab;
 			}
 		}
+		self::$sections = $sections;
 		return $sections;
 	}
 
@@ -136,6 +162,7 @@ class Cartlum_Admin_Settings {
 	 * @return string Page slug.
 	 */
 	public static function page_for_tab( $tab ) {
+		$tab = self::resolve_tab( $tab, false );
 		foreach ( self::sections() as $slug => $section ) {
 			if ( in_array( $tab, $section['tabs'], true ) ) {
 				return $slug;
@@ -145,12 +172,245 @@ class Cartlum_Admin_Settings {
 	}
 
 	/**
+	 * Tabs whose fields all moved elsewhere: old tab => the tab that has them now.
+	 *
+	 * @return array
+	 */
+	public static function retired_tabs() {
+		return array(
+			'sms'          => 'int_sms',
+			'whatsapp'     => 'texts',
+			'email'        => 'texts',
+			'whatsapp_api' => 'int_whatsapp',
+		);
+	}
+
+	/**
+	 * Tabs whose extra boxes (tests, setup steps; drawn by add-ons after the fields) now show on
+	 * another tab: tab => tab showing its boxes.
+	 *
+	 * @return array
+	 */
+	public static function box_homes() {
+		return array(
+			'sms'          => 'int_sms',
+			'whatsapp_api' => 'int_whatsapp',
+			'steadfast'    => 'int_steadfast',
+			'courier'      => 'int_fraudbd',
+			'ai_call'      => 'int_elevenlabs',
+		);
+	}
+
+	/**
+	 * Where an old tab name points now: a retired tab to its new tab, and a tab whose test box
+	 * moved to the tab with that box (old links come from those tests' "done" messages).
+	 *
+	 * @param string $tab   Tab.
+	 * @param bool   $boxes Also follow moved test boxes (for links built the old way).
+	 * @return string
+	 */
+	public static function resolve_tab( $tab, $boxes = true ) {
+		$retired = self::retired_tabs();
+		if ( isset( $retired[ $tab ] ) ) {
+			return $retired[ $tab ];
+		}
+		if ( ! $boxes ) {
+			return $tab;
+		}
+		$boxes = self::box_homes();
+		return isset( $boxes[ $tab ] ) && self::has_content( $boxes[ $tab ] ) ? $boxes[ $tab ] : $tab;
+	}
+
+	/**
+	 * Fields that live on another tab than the one defining them, plus "More options" fields.
+	 * key => array( tab, group heading ) for moves; Cartlum Pro's keys are listed too, so any Pro
+	 * version gets the same layout.
+	 *
+	 * @return array
+	 */
+	public static function field_homes() {
+		$texts = array(
+			'sms'          => __( 'SMS', 'cartlum' ),
+			'whatsapp'     => 'WhatsApp',
+			'email'        => __( 'Email', 'cartlum' ),
+			'whatsapp_api' => __( 'Automatic WhatsApp', 'cartlum' ),
+		);
+		$homes = array(
+			'enabled'             => array( 'capture', '' ),
+			'abandon_after'       => array( 'capture', '' ),
+			'lost_after'          => array( 'capture', '' ),
+			'capture_notice'      => array( 'capture', '' ),
+			'capture_notice_text' => array( 'capture', '' ),
+			'speed_grid_images'        => array( 'speed', '' ),
+			'speed_no_elementor_icons' => array( 'speed', '' ),
+			'order_tracking'        => array( 'tracking', '' ),
+			'courier_tracking_url'  => array( 'tracking', '' ),
+			'cancel_reasons'        => array( 'tracking', '' ),
+			'cancel_reason_old_key' => array( 'tracking', '' ),
+			'sms_template'        => array( 'texts', $texts['sms'] ),
+			'whatsapp_template'   => array( 'texts', $texts['whatsapp'] ),
+			'email_design'        => array( 'texts', $texts['email'] ),
+			'email_subject'       => array( 'texts', $texts['email'] ),
+			'email_template'      => array( 'texts', $texts['email'] ),
+			'pro_wa_template'     => array( 'texts', $texts['whatsapp_api'] ),
+			'pro_wa_lang'         => array( 'texts', $texts['whatsapp_api'] ),
+			'pro_wa_phone_id'     => array( 'int_whatsapp', '' ),
+			'pro_wa_token'        => array( 'int_whatsapp', '' ),
+			'pro_sf_api_key'      => array( 'int_steadfast', '' ),
+			'pro_sf_secret'       => array( 'int_steadfast', '' ),
+			'pro_courier_key'     => array( 'int_fraudbd', '' ),
+			'pro_aicall_api_key'  => array( 'int_elevenlabs', '' ),
+			'pro_aicall_agent_id' => array( 'int_elevenlabs', '' ),
+			'pro_aicall_phone_id' => array( 'int_elevenlabs', '' ),
+			'pro_aicall_format'   => array( 'int_elevenlabs', '' ),
+			'pro_aicall_secret'   => array( 'int_elevenlabs', '' ),
+			'pro_ai_provider'     => array( 'int_ai', '' ),
+			'pro_ai_key'          => array( 'int_ai', '' ),
+			'pro_ai_model'        => array( 'int_ai', '' ),
+			'pro_ai_base'         => array( 'int_ai', '' ),
+		);
+		// Everything else on the SMS tab is the gateway: it moves to Integrations.
+		foreach ( array_keys( self::fields( 'sms' ) ) as $key ) {
+			if ( ! isset( $homes[ $key ] ) ) {
+				$homes[ $key ] = array( 'int_sms', '' );
+			}
+		}
+		/**
+		 * Filters which tab each settings field shows on: key => array( tab, group heading ).
+		 *
+		 * @param array $homes Moves.
+		 */
+		return (array) apply_filters( 'cartlum_field_homes', $homes );
+	}
+
+	/**
+	 * Fields shown under "More options": technical or rarely changed.
+	 *
+	 * @return string[]
+	 */
+	public static function advanced_fields() {
+		return (array) apply_filters(
+			'cartlum_advanced_fields',
+			array( 'cancel_reason_old_key', 'courier_tracking_url', 'checkout_logo', 'checkout_accent', 'product_button_color', 'whatsapp_order_message', 'coupon_prefix', 'protect_block_message', 'protect_otp_message', 'otp_message', 'capture_notice_text', 'country_code', 'pro_fb_test_code', 'pro_fb_reported_key', 'pro_fb_pixel_id', 'pro_ai_model', 'pro_ai_base', 'pro_aicall_format', 'pro_aicall_secret', 'pro_courier_min' )
+		);
+	}
+
+	/**
+	 * The fields a tab shows and saves, after moves: its own fields that stay, then the fields
+	 * moved to it from other tabs (with a heading where a group starts).
+	 *
+	 * @param string $tab Tab.
+	 * @return array
+	 */
+	public static function tab_fields( $tab ) {
+		if ( 0 === strpos( $tab, 'setup_' ) && class_exists( 'Cartlum_Admin_Setup' ) ) {
+			return Cartlum_Admin_Setup::fields( substr( $tab, 6 ) );
+		}
+		if ( null === self::$homed ) {
+			$homes  = self::field_homes();
+			$homed  = array();
+			$groups = array();
+			foreach ( array_keys( self::tabs() ) as $origin ) {
+				foreach ( self::fields( $origin ) as $key => $field ) {
+					$to    = isset( $homes[ $key ] ) ? $homes[ $key ][0] : $origin;
+					$group = isset( $homes[ $key ] ) ? (string) $homes[ $key ][1] : '';
+					if ( '' !== $group && ( $groups[ $to ] ?? '' ) !== $group ) {
+						$homed[ $to ][ '_heading_' . sanitize_key( $group ) ] = array(
+							'label' => $group,
+							'type'  => 'heading',
+						);
+						$groups[ $to ] = $group;
+					}
+					$homed[ $to ][ $key ] = $field;
+				}
+			}
+			self::$homed = $homed;
+		}
+		return self::$homed[ $tab ] ?? array();
+	}
+
+	/**
+	 * Whether a tab has anything to show: fields, or an add-on's own screen (licence, bundles).
+	 *
+	 * @param string $tab Tab.
+	 * @return bool
+	 */
+	public static function has_content( $tab ) {
+		if ( 0 !== strpos( $tab, 'int_' ) && ! in_array( $tab, array( 'capture', 'texts', 'tracking', 'speed' ), true ) ) {
+			return true; // A real tab: it has fields or its own screen.
+		}
+		return (bool) self::tab_fields( $tab );
+	}
+
+	/**
+	 * The tab names whose add-on hooks run on a tab: itself (unless its boxes moved away), plus
+	 * tabs whose boxes moved here and retired tabs that now point here.
+	 *
+	 * @param string $tab Tab.
+	 * @return string[]
+	 */
+	public static function hook_tabs( $tab ) {
+		$boxes = self::box_homes();
+		$list  = isset( $boxes[ $tab ] ) && self::has_content( $boxes[ $tab ] ) ? array() : array( $tab );
+		foreach ( $boxes as $from => $to ) {
+			if ( $to === $tab ) {
+				$list[] = $from;
+			}
+		}
+		foreach ( self::retired_tabs() as $from => $to ) {
+			if ( $to === $tab ) {
+				$list[] = $from;
+			}
+		}
+		return array_values( array_unique( $list ) );
+	}
+
+	/**
+	 * One plain sentence at the top of a tab: what it is for.
+	 *
+	 * @param string $tab Tab.
+	 * @return string
+	 */
+	public static function tab_intro( $tab ) {
+		$intros = array(
+			'automation'     => __( 'Reminders sent by themselves to people who left their cart. They stop as soon as the customer orders.', 'cartlum' ),
+			'texts'          => __( 'What your reminder messages say, by SMS, WhatsApp and email.', 'cartlum' ),
+			'coupons'        => __( 'One-time discount codes you can add to reminders.', 'cartlum' ),
+			'popup'          => __( 'Asks shoppers for their mobile number before they leave, so the cart is saved.', 'cartlum' ),
+			'capture'        => __( 'When a cart counts as abandoned, and how long Cartlum keeps trying.', 'cartlum' ),
+			'orders'         => __( 'Text messages about orders: to your customer, and to your own numbers.', 'cartlum' ),
+			'tracking'       => __( 'What customers see about their order in My Account, and why orders get cancelled.', 'cartlum' ),
+			'protection'     => __( 'Stops fake and repeat orders before they cost you a delivery.', 'cartlum' ),
+			'checkout'       => __( 'A short one-page checkout: mobile number first, then name, address and district.', 'cartlum' ),
+			'product'        => __( 'Buttons under each product: Buy now, Order on WhatsApp and Call to order.', 'cartlum' ),
+			'account'        => __( 'Customers log in to My Account with their mobile number and an SMS code.', 'cartlum' ),
+			'int_sms'        => __( 'Your SMS provider. Every SMS Cartlum sends goes through it.', 'cartlum' ),
+			'int_steadfast'  => __( 'Your Steadfast account: send parcels and get their delivery status.', 'cartlum' ),
+			'int_fraudbd'    => __( 'Courier records for any phone number, through FraudBD.', 'cartlum' ),
+			'int_whatsapp'   => __( 'Meta’s WhatsApp Cloud API, for WhatsApp messages sent by themselves.', 'cartlum' ),
+			'int_elevenlabs' => __( 'ElevenLabs and your phone line, for AI calls.', 'cartlum' ),
+			'int_ai'         => __( 'The AI service that writes message drafts.', 'cartlum' ),
+			'webhooks'       => __( 'Send cart events to Zapier, Make, Pabbly or your own system.', 'cartlum' ),
+			'general'        => __( 'Basics for your store.', 'cartlum' ),
+			'speed'          => __( 'Make shop pages load faster on phones.', 'cartlum' ),
+			'privacy'        => __( 'How long Cartlum keeps cart data.', 'cartlum' ),
+		);
+		/**
+		 * Filters the one-line intro of a settings tab.
+		 *
+		 * @param string $intro Intro.
+		 * @param string $tab   Tab.
+		 */
+		return (string) apply_filters( 'cartlum_tab_intro', $intros[ $tab ] ?? '', $tab );
+	}
+
+	/**
 	 * Old links (Settings → a tab that now lives on another page) go to the new page.
 	 */
 	public static function redirect_old_links() {
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- navigation only.
 		$tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : '';
-		if ( '' !== $tab && 'cartlum-settings' !== self::page_for_tab( $tab ) ) {
+		if ( '' !== $tab && ( 'cartlum-settings' !== self::page_for_tab( $tab ) || self::resolve_tab( $tab ) !== $tab ) ) {
 			wp_safe_redirect( Cartlum_Admin::url( 'cartlum-settings', array( 'tab' => $tab ) ) );
 			exit;
 		}
@@ -238,6 +498,16 @@ class Cartlum_Admin_Settings {
 						'type'  => 'text',
 						/* translators: %s: calling code */
 						'help'  => sprintf( __( 'Used for numbers typed without one, e.g. 01712345678. Empty = your store country (%s).', 'cartlum' ), '+' . Cartlum_Phone::default_calling_code() ),
+					),
+					'cartlum_admin_lang'  => array(
+						'label'     => __( 'Cartlum screens for me', 'cartlum' ),
+						'type'      => 'select',
+						'user_meta' => 'cartlum_admin_lang',
+						'options'   => array(
+							''      => __( 'Site language', 'cartlum' ),
+							'bn_BD' => 'বাংলা (Bangla)',
+						),
+						'help'      => __( 'Only for you, and only Cartlum’s screens: the rest of WordPress keeps its language. Also on the বাংলা button at the top.', 'cartlum' ),
 					),
 					'customer_language'   => array(
 						'label'   => __( 'Language for customers', 'cartlum' ),
@@ -443,7 +713,7 @@ class Cartlum_Admin_Settings {
 			case 'account':
 				$help = __( 'Customers log in to My Account with their mobile number and a 6-digit code sent by SMS — no password. The first login creates their account, and orders placed with that number appear in it. Staff accounts must still use their password.', 'cartlum' );
 				if ( ! Cartlum_SMS::gateway() ) {
-					$help .= ' ' . __( 'Set up an SMS gateway on the SMS tab first; without one no code can be sent.', 'cartlum' );
+					$help .= ' ' . __( 'Set up your SMS provider under Integrations → SMS first; without one no code can be sent.', 'cartlum' );
 				}
 				return array(
 					'phone_login'             => array(
@@ -472,25 +742,28 @@ class Cartlum_Admin_Settings {
 
 			case 'orders':
 				$defaults = Cartlum_Order_SMS::default_texts();
-				$sms_help = __( 'Text messages about orders, each sent once. Use {name}, {customer} (full name), {order}, {total}, {amount} (plain number: write “Tk {amount}” to keep an SMS free of Bangla characters), {items}, {items_detail} (one line per item: SKU or name, quantity, colour), {phone}, {address}, {status}, {store}, {track_link}, {courier} and {consignment}. Leave a text empty to use the default shown.', 'cartlum' );
-				if ( ! Cartlum_SMS::gateway() ) {
-					$sms_help .= ' ' . __( 'Set up an SMS gateway on the SMS tab first.', 'cartlum' );
-				}
+				$sms_help = __( 'Each message is sent once. Use {name}, {customer} (full name), {order}, {total}, {amount} (plain number: write “Tk {amount}” to keep an SMS free of Bangla characters), {items}, {items_detail} (one line per item: SKU or name, quantity, colour), {phone}, {address}, {status}, {store}, {track_link}, {courier} and {consignment}. Leave a text empty to use the default shown.', 'cartlum' );
 				$fields = array(
 					'order_sms_enabled' => array(
 						'label' => __( 'Order SMS', 'cartlum' ),
 						'type'  => 'checkbox',
-						'help'  => $sms_help . ' ' . __( 'If another plugin already texts customers about orders, turn that off, or customers get two messages.', 'cartlum' ),
+						'help'  => trim( __( 'Switch all order messages on or off. If another plugin already texts customers about orders, turn it off, or customers get two messages.', 'cartlum' ) . ( Cartlum_SMS::gateway() ? '' : ' ' . __( 'Set up your SMS provider under Integrations → SMS first.', 'cartlum' ) ) ),
 					),
 				);
 				$events = array(
 					'placed'    => array( __( 'Order received', 'cartlum' ), __( 'When the order goes through.', 'cartlum' ) ),
 					'shipped'   => array( __( 'Handed to the courier', 'cartlum' ), __( 'When a Steadfast parcel is created for the order.', 'cartlum' ) ),
 					'delivered' => array( __( 'Delivered', 'cartlum' ), __( 'When the order is marked completed, or Steadfast reports it delivered.', 'cartlum' ) ),
-					'cancelled' => array( __( 'Cancelled', 'cartlum' ), __( 'When the order is cancelled. Fake orders cost an SMS too.', 'cartlum' ) ),
+					'cancelled' => array( __( 'Cancelled', 'cartlum' ), __( 'SMS to the customer when the order is cancelled. Fake orders cost an SMS too.', 'cartlum' ) ),
 					'admin'     => array( __( 'New order SMS to you', 'cartlum' ), __( 'A message to your own number for every new order.', 'cartlum' ) ),
 				);
 				foreach ( $events as $event => $label ) {
+					if ( 'placed' === $event || 'admin' === $event ) {
+						$fields[ '_heading_' . $event ] = array(
+							'label' => 'placed' === $event ? __( 'To the customer', 'cartlum' ) : __( 'To you', 'cartlum' ),
+							'type'  => 'heading',
+						);
+					}
 					$fields[ 'order_sms_' . $event ] = array(
 						'label' => $label[0],
 						'type'  => 'checkbox',
@@ -508,7 +781,7 @@ class Cartlum_Admin_Settings {
 						'label' => sprintf( __( '“%s” text', 'cartlum' ), $label[0] ),
 						'type'  => 'textarea',
 						/* translators: %s: default message */
-						'help'  => sprintf( __( 'Default: %s', 'cartlum' ), $defaults[ $event ] ),
+						'help'  => sprintf( __( 'Default: %s', 'cartlum' ), $defaults[ $event ] ) . ( 'placed' === $event ? ' ' . $sms_help : '' ),
 					);
 				}
 				$statuses = array();
@@ -517,7 +790,7 @@ class Cartlum_Admin_Settings {
 				}
 				unset( $statuses['checkout-draft'] );
 				$fields['order_sms_status_alert']      = array(
-					'label'   => __( 'Tell the store when an order becomes', 'cartlum' ),
+					'label'   => __( 'SMS to your numbers when an order becomes', 'cartlum' ),
 					'type'    => 'checkboxes',
 					'options' => $statuses,
 					'help'    => __( 'An SMS to your numbers above each time an order changes to one of these statuses, for example Cancelled. Customers get nothing from this.', 'cartlum' ),
@@ -794,7 +1067,7 @@ class Cartlum_Admin_Settings {
 	public static function current_tab( $slug = '' ) {
 		$slug    = '' !== $slug ? $slug : self::current_page();
 		$section = self::sections()[ $slug ];
-		$tab     = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$tab     = isset( $_GET['tab'] ) ? self::resolve_tab( sanitize_key( $_GET['tab'] ), false ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( in_array( $tab, $section['tabs'], true ) ) {
 			return $tab;
 		}
@@ -815,46 +1088,92 @@ class Cartlum_Admin_Settings {
 				Cartlum_Admin::page_carts();
 			} elseif ( 'cartlum-fraud' === $slug ) {
 				Cartlum_Admin_Fraud::page();
+			} elseif ( 'cartlum-integrations' === $slug ) {
+				Cartlum_Admin_Integrations::page();
 			}
 			return;
 		}
-		$values = Cartlum_Settings::all();
+		$values   = Cartlum_Settings::all();
+		$fields   = self::tab_fields( $tab );
+		$advanced = self::advanced_fields();
+		$hooks    = self::hook_tabs( $tab );
+		$intro    = self::tab_intro( $tab );
+		$main     = array();
+		$more     = array();
+		foreach ( $fields as $key => $field ) {
+			if ( in_array( $key, $advanced, true ) || ! empty( $field['advanced'] ) ) {
+				$more[ $key ] = $field;
+			} else {
+				$main[ $key ] = $field;
+			}
+		}
 		?>
 		<div class="wrap cartlum">
-			<div class="cl-head"><h1><?php echo esc_html( self::sections()[ $slug ]['label'] ); ?></h1></div>
+			<div class="cl-head">
+				<div>
+					<h1><?php echo esc_html( self::sections()[ $slug ]['label'] ); ?></h1>
+					<?php if ( '' !== $intro ) : ?>
+						<p class="cl-lead"><?php echo esc_html( $intro ); ?></p>
+					<?php endif; ?>
+				</div>
+			</div>
+			<hr class="wp-header-end">
 			<?php self::nav( $slug, $tab ); ?>
 			<?php
-			/**
-			 * Above a settings tab's form (Cartlum Pro: "enter your licence key" on locked tabs).
-			 *
-			 * @param string $tab Tab.
-			 */
-			do_action( 'cartlum_settings_before_fields', $tab );
+			foreach ( $hooks as $hook_tab ) {
+				/**
+				 * Above a settings tab's form (Cartlum Pro: "enter your licence key" on locked tabs).
+				 *
+				 * @param string $tab Tab.
+				 */
+				do_action( 'cartlum_settings_before_fields', $hook_tab );
+			}
+			if ( class_exists( 'Cartlum_Admin_Integrations' ) ) {
+				Cartlum_Admin_Integrations::uses_line( $tab );
+			}
 			?>
 
-			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
+			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" class="cl-settings" data-cartlum-settings>
 				<?php wp_nonce_field( 'cartlum_save_settings' ); ?>
 				<input type="hidden" name="action" value="cartlum_save_settings">
 				<input type="hidden" name="tab" value="<?php echo esc_attr( $tab ); ?>">
-				<table class="form-table" role="presentation">
-					<?php foreach ( self::fields( $tab ) as $key => $field ) : ?>
-						<tr<?php echo isset( $field['gateway'] ) ? ' data-cartlum-gateway="' . esc_attr( $field['gateway'] ) . '"' : ''; ?>>
-							<th scope="row"><label for="cartlum-<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $field['label'] ); ?></label></th>
-							<td><?php self::render_field( $key, $field, $values[ $key ] ?? '' ); ?></td>
-						</tr>
-					<?php endforeach; ?>
-				</table>
+				<?php if ( $fields ) : ?>
+					<div class="cl-card cl-fields">
+						<?php
+						foreach ( $main as $key => $field ) {
+							self::render_row( $key, $field, isset( $field['user_meta'] ) ? get_user_meta( get_current_user_id(), $field['user_meta'], true ) : ( $values[ $key ] ?? '' ) );
+						}
+						?>
+						<?php if ( $more ) : ?>
+							<details class="cl-more">
+								<summary>
+									<?php
+									/* translators: %d: number of settings */
+									echo esc_html( sprintf( __( 'More options (%d)', 'cartlum' ), count( $more ) ) );
+									?>
+								</summary>
+								<?php
+								foreach ( $more as $key => $field ) {
+									self::render_row( $key, $field, $values[ $key ] ?? '' );
+								}
+								?>
+							</details>
+						<?php endif; ?>
+					</div>
+				<?php endif; ?>
 				<?php
-				/**
-				 * Renders extra settings UI inside the form (Cartlum Pro: the step editor). Save it
-				 * through the cartlum_settings_save filter.
-				 *
-				 * @param string $tab    Tab.
-				 * @param array  $values Current settings.
-				 */
-				do_action( 'cartlum_settings_after_fields', $tab, $values );
+				foreach ( $hooks as $hook_tab ) {
+					/**
+					 * Renders extra settings UI inside the form (Cartlum Pro: the step editor). Save it
+					 * through the cartlum_settings_save filter.
+					 *
+					 * @param string $tab    Tab.
+					 * @param array  $values Current settings.
+					 */
+					do_action( 'cartlum_settings_after_fields', $hook_tab, $values );
+				}
 				?>
-				<?php if ( in_array( $tab, apply_filters( 'cartlum_settings_chip_tabs', array( 'automation', 'sms', 'whatsapp', 'email' ) ), true ) ) : ?>
+				<?php if ( array_intersect( $hooks, apply_filters( 'cartlum_settings_chip_tabs', array( 'automation', 'sms', 'whatsapp', 'email', 'texts' ) ) ) ) : ?>
 					<div class="cl-chips">
 						<span class="cl-chips__label"><?php esc_html_e( 'Insert into the message you are editing', 'cartlum' ); ?></span>
 						<?php foreach ( Cartlum_Messages::placeholders() as $tag => $desc ) : ?>
@@ -862,21 +1181,58 @@ class Cartlum_Admin_Settings {
 						<?php endforeach; ?>
 					</div>
 				<?php endif; ?>
-				<?php submit_button(); ?>
+				<div class="cl-savebar" data-cartlum-savebar>
+					<span class="cl-savebar__text" data-cartlum-savebar-text><?php esc_html_e( 'You have unsaved changes', 'cartlum' ); ?></span>
+					<?php submit_button( __( 'Save', 'cartlum' ), 'primary', 'submit', false ); ?>
+				</div>
 			</form>
 
-			<?php if ( 'sms' === $tab && Cartlum_SMS::gateway() ) : ?>
-				<h2><?php esc_html_e( 'Send a test SMS', 'cartlum' ); ?></h2>
-				<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
-					<?php wp_nonce_field( 'cartlum_test_sms' ); ?>
-					<input type="hidden" name="action" value="cartlum_test_sms">
-					<input type="tel" name="test_phone" placeholder="<?php esc_attr_e( 'Your phone number', 'cartlum' ); ?>" required>
-					<button class="button"><?php esc_html_e( 'Send test', 'cartlum' ); ?></button>
+			<?php if ( 'int_sms' === $tab && Cartlum_SMS::gateway() ) : ?>
+				<div class="cl-card cl-test">
+					<h2><?php esc_html_e( 'Send a test SMS', 'cartlum' ); ?></h2>
+					<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" data-cartlum-busy>
+						<?php wp_nonce_field( 'cartlum_test_sms' ); ?>
+						<input type="hidden" name="action" value="cartlum_test_sms">
+						<input type="tel" name="test_phone" placeholder="01XXXXXXXXX" aria-label="<?php esc_attr_e( 'Your phone number', 'cartlum' ); ?>" required>
+						<button class="button"><?php esc_html_e( 'Send test', 'cartlum' ); ?></button>
+					</form>
 					<p class="cl-muted"><?php esc_html_e( 'Save your settings first — the test uses the saved ones.', 'cartlum' ); ?></p>
-				</form>
+				</div>
 			<?php endif; ?>
 		</div>
 		<?php
+	}
+
+	/**
+	 * One settings row: label, control and help.
+	 *
+	 * @param string $key   Setting key.
+	 * @param array  $field Definition.
+	 * @param mixed  $value Current value.
+	 */
+	public static function render_row( $key, array $field, $value ) {
+		if ( 'heading' === $field['type'] ) {
+			echo '<h3 class="cl-row-head">' . esc_html( $field['label'] ) . '</h3>';
+			return;
+		}
+		$id      = 'cartlum-' . $key;
+		$gateway = isset( $field['gateway'] ) ? ' data-cartlum-gateway="' . esc_attr( $field['gateway'] ) . '"' : '';
+		if ( 'checkbox' === $field['type'] ) {
+			printf( '<div class="cl-row cl-row--switch" id="cl-row-%1$s"%2$s><div class="cl-row__text"><label for="%3$s">%4$s</label>', esc_attr( $key ), $gateway, esc_attr( $id ), esc_html( $field['label'] ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $gateway is escaped above.
+			if ( ! empty( $field['help'] ) ) {
+				echo '<p class="cl-help">' . esc_html( $field['help'] ) . '</p>';
+			}
+			printf( '</div><input type="checkbox" class="cl-switch" role="switch" id="%1$s" name="cartlum[%2$s]" value="yes" %3$s></div>', esc_attr( $id ), esc_attr( $key ), checked( 'yes', $value, false ) );
+			return;
+		}
+		printf( '<div class="cl-row cl-row--%1$s" id="cl-row-%2$s"%3$s>', esc_attr( $field['type'] ), esc_attr( $key ), $gateway ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $gateway is escaped above.
+		if ( 'checkboxes' === $field['type'] ) {
+			echo '<span class="cl-row__label" id="' . esc_attr( $id ) . '-label">' . esc_html( $field['label'] ) . '</span>';
+		} else {
+			echo '<label class="cl-row__label" for="' . esc_attr( $id ) . '">' . esc_html( $field['label'] ) . '</label>';
+		}
+		self::render_field( $key, $field, $value );
+		echo '</div>';
 	}
 
 	/**
@@ -904,7 +1260,7 @@ class Cartlum_Admin_Settings {
 				printf( '<textarea id="%1$s" name="%2$s" rows="5" class="large-text">%3$s</textarea>', esc_attr( $id ), esc_attr( $name ), esc_textarea( $value ) );
 				break;
 			case 'checkboxes':
-				echo '<fieldset id="' . esc_attr( $id ) . '" class="cl-checks">';
+				echo '<fieldset id="' . esc_attr( $id ) . '" class="cl-checks" aria-labelledby="' . esc_attr( $id ) . '-label">';
 				foreach ( $field['options'] as $opt => $label ) {
 					printf( '<label><input type="checkbox" name="%1$s[]" value="%2$s" %3$s> %4$s</label>', esc_attr( $name ), esc_attr( $opt ), checked( in_array( (string) $opt, (array) $value, true ), true, false ), esc_html( $label ) );
 				}
@@ -924,27 +1280,70 @@ class Cartlum_Admin_Settings {
 				printf( '<input type="text" id="%1$s" name="%2$s" value="%3$s" class="regular-text">', esc_attr( $id ), esc_attr( $name ), esc_attr( $value ) );
 		}
 		if ( ! empty( $field['help'] ) ) {
-			echo '<p class="description">' . esc_html( $field['help'] ) . '</p>';
+			echo '<p class="cl-help">' . esc_html( $field['help'] ) . '</p>';
 		}
 	}
 
 	/**
-	 * Saves one tab.
+	 * Saves one tab (form post).
 	 */
 	public static function save() {
 		if ( ! current_user_can( Cartlum_Admin::CAP ) ) {
 			wp_die( esc_html__( 'You are not allowed to do that.', 'cartlum' ), 403 );
 		}
 		check_admin_referer( 'cartlum_save_settings' );
-
 		$tab    = isset( $_POST['tab'] ) ? sanitize_key( $_POST['tab'] ) : 'general';
-		$input  = isset( $_POST['cartlum'] ) && is_array( $_POST['cartlum'] ) ? wp_unslash( $_POST['cartlum'] ) : array(); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- sanitized per field below.
+		$result = self::store( $tab, isset( $_POST['cartlum'] ) && is_array( $_POST['cartlum'] ) ? wp_unslash( $_POST['cartlum'] ) : array() ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- sanitized per field in store().
+		if ( 0 === strpos( $tab, 'setup_' ) && class_exists( 'Cartlum_Admin_Setup' ) ) {
+			$next = Cartlum_Admin_Setup::next_url( substr( $tab, 6 ) );
+			wp_safe_redirect( 'error' === $result['type'] ? add_query_arg( Cartlum_Admin::notice_args( $result['message'], 'error' ), wp_get_referer() ) : $next );
+			exit;
+		}
+		wp_safe_redirect( Cartlum_Admin::url( 'cartlum-settings', array_merge( array( 'tab' => $tab ), Cartlum_Admin::notice_args( $result['message'], $result['type'] ) ) ) );
+		exit;
+	}
+
+	/**
+	 * Saves one tab without leaving the page (the Save bar). Tabs with an add-on editor that
+	 * redraws itself after saving (steps, bundles, licence) ask the page to reload.
+	 */
+	public static function ajax_save() {
+		if ( ! current_user_can( Cartlum_Admin::CAP ) || ! check_ajax_referer( 'cartlum_save_settings', '_wpnonce', false ) ) {
+			wp_send_json_error( array( 'message' => __( 'Your session ran out. Reload the page and save again.', 'cartlum' ) ), 403 );
+		}
+		$tab    = isset( $_POST['tab'] ) ? sanitize_key( $_POST['tab'] ) : 'general';
+		$result = self::store( $tab, isset( $_POST['cartlum'] ) && is_array( $_POST['cartlum'] ) ? wp_unslash( $_POST['cartlum'] ) : array() ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- sanitized per field in store().
+		$reload = (bool) array_intersect( self::hook_tabs( $tab ), array( 'automation', 'bundles', 'licence' ) );
+		wp_send_json_success(
+			array(
+				'message' => $result['message'],
+				'type'    => $result['type'],
+				'reload'  => $reload ? Cartlum_Admin::url( 'cartlum-settings', array_merge( array( 'tab' => $tab ), Cartlum_Admin::notice_args( $result['message'], $result['type'] ) ) ) : '',
+			)
+		);
+	}
+
+	/**
+	 * Sanitizes and stores a tab's posted values.
+	 *
+	 * @param string $tab   Tab.
+	 * @param array  $input Posted cartlum[] values (unslashed, unsanitized).
+	 * @return array { message, type }
+	 */
+	private static function store( $tab, array $input ) {
 		$values = get_option( Cartlum_Settings::OPTION, array() );
 		$values = is_array( $values ) ? $values : array();
 
-		foreach ( self::fields( $tab ) as $key => $field ) {
+		foreach ( self::tab_fields( $tab ) as $key => $field ) {
 			$raw = isset( $input[ $key ] ) ? $input[ $key ] : '';
+			if ( isset( $field['user_meta'] ) ) {
+				// A choice for this user only, kept with the user.
+				update_user_meta( get_current_user_id(), $field['user_meta'], array_key_exists( $raw, (array) ( $field['options'] ?? array() ) ) ? (string) $raw : '' );
+				continue;
+			}
 			switch ( $field['type'] ) {
+				case 'heading':
+					break;
 				case 'checkbox':
 					$values[ $key ] = 'yes' === $raw ? 'yes' : 'no';
 					break;
@@ -976,14 +1375,16 @@ class Cartlum_Admin_Settings {
 			}
 		}
 
-		/**
-		 * Sanitizes and stores extra settings posted from cartlum_settings_after_fields.
-		 *
-		 * @param array  $values Settings about to be saved.
-		 * @param string $tab    Tab.
-		 * @param array  $input  Raw posted cartlum[] values (unslashed, unsanitized).
-		 */
-		$values = apply_filters( 'cartlum_settings_save', $values, $tab, $input );
+		foreach ( self::hook_tabs( $tab ) as $hook_tab ) {
+			/**
+			 * Sanitizes and stores extra settings posted from cartlum_settings_after_fields.
+			 *
+			 * @param array  $values Settings about to be saved.
+			 * @param string $tab    Tab.
+			 * @param array  $input  Raw posted cartlum[] values (unslashed, unsanitized).
+			 */
+			$values = apply_filters( 'cartlum_settings_save', $values, $hook_tab, $input );
+		}
 
 		Cartlum_Settings::save( $values );
 
@@ -999,10 +1400,14 @@ class Cartlum_Admin_Settings {
 				}
 			}
 		}
-		$notice = $bad
-			? Cartlum_Admin::notice_args( __( 'Settings saved, but please check:', 'cartlum' ) . ' ' . implode( ' ', $bad ), 'error' )
-			: Cartlum_Admin::notice_args( __( 'Settings saved.', 'cartlum' ) );
-		wp_safe_redirect( Cartlum_Admin::url( 'cartlum-settings', array_merge( array( 'tab' => $tab ), $notice ) ) );
-		exit;
+		return $bad
+			? array(
+				'message' => __( 'Settings saved, but please check:', 'cartlum' ) . ' ' . implode( ' ', $bad ),
+				'type'    => 'error',
+			)
+			: array(
+				'message' => __( 'Settings saved.', 'cartlum' ),
+				'type'    => 'success',
+			);
 	}
 }

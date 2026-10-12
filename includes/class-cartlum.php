@@ -87,7 +87,12 @@ final class Cartlum {
 		$customer = is_array( $saved ) && isset( $saved['customer_language'] ) ? (string) $saved['customer_language'] : '';
 		$customer = preg_match( '/^[a-z]{2,3}(_[A-Z]{2})?$/', $customer ) ? $customer : '';
 		$mofile   = CARTLUM_DIR . 'languages/cartlum-' . $customer . '.mo';
-		if ( '' !== $customer && ( ! is_admin() || wp_doing_cron() ) && is_readable( $mofile ) ) {
+		// "Cartlum in Bangla for me": Cartlum's own admin screens in the language this user chose.
+		$admin_lang = is_admin() && ! wp_doing_cron() ? Cartlum_Settings::admin_language() : '';
+		$admin_mo   = CARTLUM_DIR . 'languages/cartlum-' . $admin_lang . '.mo';
+		if ( '' !== $admin_lang && is_readable( $admin_mo ) ) {
+			load_textdomain( 'cartlum', $admin_mo, determine_locale() );
+		} elseif ( '' !== $customer && ( ! is_admin() || wp_doing_cron() ) && is_readable( $mofile ) ) {
 			load_textdomain( 'cartlum', $mofile, determine_locale() );
 		} else {
 			// The bundled translations (e.g. Bangla) for the site language. WordPress.org language
@@ -119,8 +124,13 @@ final class Cartlum {
 			require_once CARTLUM_DIR . 'includes/admin/class-cartlum-admin-protection.php';
 			require_once CARTLUM_DIR . 'includes/admin/class-cartlum-admin-fraud.php';
 			require_once CARTLUM_DIR . 'includes/admin/class-cartlum-cancel-reasons.php';
+			require_once CARTLUM_DIR . 'includes/admin/class-cartlum-admin-integrations.php';
+			require_once CARTLUM_DIR . 'includes/admin/class-cartlum-admin-today.php';
+			require_once CARTLUM_DIR . 'includes/admin/class-cartlum-admin-setup.php';
 			Cartlum_Admin::init();
 			Cartlum_Admin_Settings::init();
+			Cartlum_Admin_Today::init();
+			Cartlum_Admin_Setup::init();
 			Cartlum_Admin_Actions::init();
 			Cartlum_Admin_Protection::init();
 			Cartlum_Cancel_Reasons::init();

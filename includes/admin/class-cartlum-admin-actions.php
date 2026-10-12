@@ -296,11 +296,15 @@ class Cartlum_Admin_Actions {
 		}
 		check_admin_referer( 'cartlum_test_sms' );
 		$phone  = Cartlum_Phone::normalize( self::posted( 'test_phone' ) );
-		$back   = Cartlum_Admin::url( 'cartlum-settings', array( 'tab' => 'sms' ) );
+		$back   = Cartlum_Admin::url( 'cartlum-integrations', array( 'tab' => 'int_sms' ) );
 		$result = '' === $phone
 			? new WP_Error( 'cartlum_phone', __( 'Enter a valid phone number.', 'cartlum' ) )
 			/* translators: %s: store name */
 			: Cartlum_SMS::send_raw( $phone, sprintf( __( 'Test message from Cartlum on %s. SMS is working.', 'cartlum' ), wp_specialchars_decode( get_bloginfo( 'name' ), ENT_QUOTES ) ) );
+		// A mistyped number says nothing about the provider; anything else does.
+		if ( '' !== $phone && class_exists( 'Cartlum_Admin_Integrations' ) && ! ( is_wp_error( $result ) && 'cartlum_bad_phone' === $result->get_error_code() ) ) {
+			Cartlum_Admin_Integrations::record_test( 'sms', ! is_wp_error( $result ) );
+		}
 		wp_safe_redirect(
 			add_query_arg(
 				Cartlum_Admin::notice_args(

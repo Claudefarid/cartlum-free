@@ -36,6 +36,7 @@ Requires WordPress 6.2+, WooCommerce 8.0+ and PHP 7.4+.
 - **Order SMS and tracking**, and a phone-number login for My Account.
 - **Honest reports**: money recovered (compared with the period before), what works per channel, and the most-abandoned products.
 - **CSV export**, and **webhooks** for Zapier, Make and Pabbly.
+- **A clean admin built around your day**: Today (what needs you now), every feature's status at a glance, all integrations in one place, Ctrl+K search, a 5-minute setup and a বাংলা button.
 - **Bangla included.**
 
 Want more? See [Cartlum Pro](#cartlum-pro) below.

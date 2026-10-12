@@ -4,7 +4,7 @@ Tags: abandoned cart, cart recovery, sms, whatsapp, woocommerce
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.23.1
+Stable tag: 0.24.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -52,8 +52,8 @@ Cart details are stored in your own WordPress database and are deleted automatic
 
 1. Install and activate WooCommerce.
 2. Install Cartlum from Plugins → Add New, or upload the zip, and activate it.
-3. Go to Cartlum → Settings. Set your country calling code, choose an SMS gateway and send yourself a test SMS.
-4. Optional: turn on the automatic reminder under Settings → Automation. Set a test phone number first, so you receive the reminders yourself before customers do.
+3. Open Cartlum → Today and follow "Set up Cartlum in 5 minutes": choose your SMS provider, send yourself a test SMS, then the checkout, order SMS and buy buttons.
+4. Optional: turn on the automatic reminder under Abandoned Carts → Reminders. Set a test phone number first, so you receive the reminders yourself before customers do.
 
 == Frequently Asked Questions ==
 
@@ -71,7 +71,7 @@ Yes. With the phone-first checkout on, a block checkout page shows Cartlum's che
 
 = Which SMS providers work? =
 
-eSMS (Bangladesh) and Twilio are built in. Any other provider with an HTTP API can be added under Settings → SMS → Custom, without code.
+eSMS (Bangladesh) and Twilio are built in. Any other provider with an HTTP API can be added under Integrations → SMS → Custom HTTP API, without code.
 
 = Will it slow down or block my checkout? =
 
@@ -82,14 +82,24 @@ It can, for stores that only used CartFlows for a shorter checkout. CartFlows' g
 
 == Screenshots ==
 
-1. Dashboard: money recovered, carts to follow up, what works by channel and the most abandoned products.
+1. Today: what needs you now, every feature with its status, money recovered, what works by channel and the most abandoned products.
 2. A cart: the customer, what they left, one-tap call, WhatsApp, SMS and email, and the full history.
 3. Phone-first checkout: mobile number first, then name, address and district.
 4. The designed reminder email, with product photos and a button in your colour.
 5. The save-cart popup on a phone.
-6. Settings: SMS gateways with a test button.
+6. Integrations: every connected service with its status.
 
 == Changelog ==
+
+= 0.24.0 =
+* New admin, organised by a shop's daily work: Today · Abandoned Carts · Orders · Fake Orders · Checkout & Buttons · AI · Integrations · Settings, with the menu always on the left (a strip on phones).
+* Today: what needs you now (carts to call, orders to confirm, parcels to send, risky orders, cancellations without a reason, anything half set up) and "Your features" — every feature with On / Off / Needs setup.
+* Integrations: every outside service (SMS, Steadfast, Facebook, FraudBD, WhatsApp, ElevenLabs, AI, webhooks) in one place, each with its status, keys and test button. Feature tabs say which service they use and whether it is connected.
+* Find a setting (Ctrl K / ⌘ K) on every screen jumps straight to any setting.
+* Settings screens: switches, plain labels, technical options under "More options", a Save bar that saves without reloading, and a warning before leaving with unsaved changes.
+* "Set up Cartlum in 5 minutes": a step-by-step first setup.
+* বাংলা button: Cartlum's screens in Bangla for you only.
+* Old links and bookmarks keep working; no setting changes.
 
 = 0.23.1 =
 * SMS: when the SMS provider receives a message but is too slow to answer (seen with eSMS), the SMS now counts as sent instead of failed. Phone-login codes stay valid (before, the customer got the code but it was refused), the test says "sent, but slow to confirm", and order notes mention it. A provider that cannot be reached is still an error.

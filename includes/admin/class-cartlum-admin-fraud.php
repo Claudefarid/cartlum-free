@@ -22,7 +22,7 @@ class Cartlum_Admin_Fraud {
 	 * @param bool $risky_only Only risky and blocked numbers.
 	 * @return array[] { order, stats }
 	 */
-	private static function orders( $risky_only ) {
+	public static function orders( $risky_only ) {
 		$out = array();
 		foreach ( wc_get_orders(
 			array(

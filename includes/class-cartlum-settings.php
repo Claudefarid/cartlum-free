@@ -177,6 +177,18 @@ class Cartlum_Settings {
 	}
 
 	/**
+	 * The language this user chose for Cartlum's admin screens ('' = the site's).
+	 *
+	 * @param int $user_id User; 0 = current.
+	 * @return string Locale.
+	 */
+	public static function admin_language( $user_id = 0 ) {
+		$user_id = $user_id ? $user_id : get_current_user_id();
+		$lang    = $user_id ? (string) get_user_meta( $user_id, 'cartlum_admin_lang', true ) : '';
+		return preg_match( '/^[a-z]{2,3}(_[A-Z]{2})?$/', $lang ) ? $lang : '';
+	}
+
+	/**
 	 * One setting.
 	 *
 	 * @param string $key Key.
