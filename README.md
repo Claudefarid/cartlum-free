@@ -48,7 +48,7 @@ Cartlum's admin is organised by a shop's daily work: **Today · Abandoned Carts 
 ![Today: what needs you now, and every feature's status](.wordpress-org/screenshot-1.png)
 
 - **Today** opens with what needs you now: carts to call, orders to confirm, parcels to send, risky orders, cancellations without a reason. Below that, **Your features** shows every feature as On, Off or Needs setup.
-- **Integrations** keeps every outside service in one place (SMS, Steadfast, Facebook, FraudBD, WhatsApp, ElevenLabs, AI, webhooks), each with its status, keys and a test button.
+- **Integrations** keeps every outside service in one place (SMS, Steadfast, Pathao, RedX, Paperfly, Facebook, FraudBD, WhatsApp, ElevenLabs, AI, webhooks), each with its status, keys and a test button.
 - **Find a setting** (Ctrl K / ⌘ K) on every screen jumps straight to any option.
 - **Simple settings:** switches and plain words, with technical options under **More options**. The **Save** bar saves without reloading, and Cartlum warns before you leave with unsaved changes.
 - **Set up Cartlum in 5 minutes:** a step-by-step first setup.
@@ -80,7 +80,7 @@ Cartlum Pro is a paid add-on. It installs next to the free plugin and adds:
 | Fake-order protection: blocklist, limits, SMS code for risky orders | ✅ | ✅ |
 | **Courier check**: each customer's delivered and refused parcels at Steadfast, Pathao, RedX and Paperfly | | ✅ |
 | **Advance payment**: bKash / Nagad Send Money with Transaction ID before cash-on-delivery orders | | ✅ |
-| **Steadfast Courier**: send parcels from WooCommerce (one, bulk or automatic); delivery status updates by itself | | ✅ |
+| **Couriers: Steadfast, Pathao, RedX, Paperfly**: send parcels from WooCommerce (one, bulk or automatic); delivery status updates by itself | | ✅ |
 | **Facebook Pixel and Conversions API**: no double counting, customer details hashed; for cash on delivery, a purchase counts only if the order isn't cancelled | | ✅ |
 | **Bundle offers** on product pages, and a **customer score** on every cart | | ✅ |
 | Updates and support with a licence key | | ✅ |
