@@ -4,7 +4,7 @@ Tags: abandoned cart, cart recovery, sms, whatsapp, woocommerce
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.25.3
+Stable tag: 0.26.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -90,6 +90,11 @@ It can, for stores that only used CartFlows for a shorter checkout. CartFlows' g
 6. Integrations: every connected service with its status.
 
 == Changelog ==
+
+= 0.26.0 =
+* Ready for Cartlum Pro 0.12's couriers: Pathao, RedX and Paperfly get their own Integrations cards and tabs, and Orders gets a Parcels tab.
+* The "delivered" SMS and the customer's order tracking now work with any courier, not only Steadfast. Tracking shows "picked up", "on the way", "out for delivery" and "returned" too.
+* Today's "Parcels to send" counts orders not sent to any courier.
 
 = 0.25.3 =
 * The plugin's website link now points to the Cartlum page on GitHub.

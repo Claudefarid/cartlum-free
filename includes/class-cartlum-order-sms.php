@@ -37,6 +37,8 @@ class Cartlum_Order_SMS {
 		add_action( 'added_post_meta', array( __CLASS__, 'on_meta' ), 10, 4 );
 		add_action( 'cartlum_order_shipped', array( __CLASS__, 'on_shipped' ) );
 		add_action( 'stdf_webhook_delivery_status_updated', array( __CLASS__, 'on_courier_status' ), 10, 2 );
+		// Any courier in Cartlum Pro 0.12+, with its status in shared words.
+		add_action( 'cartlum_order_courier_status', array( __CLASS__, 'on_courier_status' ), 10, 2 );
 	}
 
 	/**
@@ -91,7 +93,7 @@ class Cartlum_Order_SMS {
 	}
 
 	/**
-	 * Steadfast's delivery status webhook: "delivered" counts as delivered.
+	 * A courier's status update: "delivered" counts as delivered.
 	 *
 	 * @param int    $order_id Order.
 	 * @param string $status   Courier status.

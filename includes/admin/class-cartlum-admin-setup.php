@@ -56,9 +56,9 @@ class Cartlum_Admin_Setup {
 				'keys'  => array( 'buy_now_enabled', 'whatsapp_button', 'whatsapp_number', 'call_button', 'call_number' ),
 			),
 			'courier'  => array(
-				'title' => 'Steadfast',
-				'text'  => __( 'Paste your Steadfast API key and secret key to send parcels from WooCommerce.', 'cartlum' ),
-				'keys'  => array( 'pro_sf_api_key', 'pro_sf_secret' ),
+				'title' => __( 'Courier', 'cartlum' ),
+				'text'  => __( 'Pick the courier your parcels go to. For Steadfast, paste its API key and secret key here; Pathao, RedX and Paperfly connect under Integrations.', 'cartlum' ),
+				'keys'  => array( 'pro_parcel_courier', 'pro_sf_api_key', 'pro_sf_secret' ),
 			),
 			'facebook' => array(
 				'title' => 'Facebook',

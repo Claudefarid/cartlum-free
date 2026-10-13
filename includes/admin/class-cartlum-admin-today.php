@@ -25,6 +25,21 @@ class Cartlum_Admin_Today {
 	}
 
 	/**
+	 * Whether any courier account is connected.
+	 *
+	 * @param array $ints Cartlum_Admin_Integrations::all().
+	 * @return bool
+	 */
+	public static function courier_connected( array $ints ) {
+		foreach ( array( 'steadfast', 'pathao', 'redx', 'paperfly' ) as $id ) {
+			if ( isset( $ints[ $id ] ) && in_array( $ints[ $id ]['status'], array( 'on', 'err' ), true ) ) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
 	 * Every feature, grouped by menu page: { label, status (on|off|setup|pro), url }.
 	 *
 	 * @return array page label => item[]
@@ -52,6 +67,8 @@ class Cartlum_Admin_Today {
 		$pro_one = function ( $tab, $status ) use ( $tabs ) {
 			return isset( $tabs[ $tab ] ) ? $status : 'pro';
 		};
+		// Pro 0.12+ has Orders → Parcels for every courier; older Pro a Steadfast tab.
+		$parcels = isset( $tabs['parcels'] ) ? 'parcels' : 'steadfast';
 		$groups  = array(
 			__( 'Abandoned Carts', 'cartlum' )    => array(
 				array( __( 'Save carts as numbers are typed', 'cartlum' ), $state( $on( 'enabled' ) ), $link( 'capture' ) ),
@@ -63,7 +80,7 @@ class Cartlum_Admin_Today {
 				array( __( 'Order SMS', 'cartlum' ), $state( $on( 'order_sms_enabled' ), $sms ), $link( 'orders' ) ),
 				array( __( 'Order tracking', 'cartlum' ), $state( $on( 'order_tracking' ) ), $link( 'tracking' ) ),
 				array( __( 'Cancellation reasons', 'cartlum' ), $state( $on( 'cancel_reasons' ) ), $link( 'tracking' ) ),
-				array( __( 'Steadfast parcels', 'cartlum' ), $pro_one( 'steadfast', 'on' === $ints['steadfast']['status'] ? 'on' : 'off' ), $link( 'steadfast' ) ),
+				array( __( 'Courier parcels', 'cartlum' ), $pro_one( $parcels, self::courier_connected( $ints ) ? 'on' : 'off' ), $link( $parcels ) ),
 				array( __( 'Advance payment', 'cartlum' ), $pro_one( 'advance', $state( $on( 'pro_adv_enabled' ) ) ), $link( 'advance' ) ),
 			),
 			__( 'Fake Orders', 'cartlum' )        => array(
@@ -136,7 +153,7 @@ class Cartlum_Admin_Today {
 
 		$parcels = null;
 		$ints    = Cartlum_Admin_Integrations::all();
-		if ( 'on' === $ints['steadfast']['status'] ) {
+		if ( self::courier_connected( $ints ) ) {
 			$parcels = 0;
 			foreach ( wc_get_orders(
 				array(
@@ -147,7 +164,8 @@ class Cartlum_Admin_Today {
 					'return'       => 'ids',
 				)
 			) as $id ) {
-				if ( '' === (string) get_post_meta( $id, 'steadfast_consignment_id', true ) ) {
+				// Steadfast keeps its parcel in post meta (as its own plugin does); other couriers in order meta.
+				if ( '' === (string) get_post_meta( $id, 'steadfast_consignment_id', true ) && '' === (string) wc_get_order( $id )->get_meta( '_cartlum_parcel_id' ) ) {
 					++$parcels;
 				}
 			}
@@ -214,7 +232,7 @@ class Cartlum_Admin_Today {
 			$cards[] = array( 'info', $c['confirm'], __( 'Orders to confirm', 'cartlum' ), __( 'Placed today, not shipped yet', 'cartlum' ), self::orders_url( 'processing' ) );
 		}
 		if ( $c['parcels'] ) {
-			$cards[] = array( 'warn', $c['parcels'], __( 'Parcels to send', 'cartlum' ), __( 'Processing, not sent to Steadfast', 'cartlum' ), self::orders_url( 'processing' ) );
+			$cards[] = array( 'warn', $c['parcels'], __( 'Parcels to send', 'cartlum' ), __( 'Processing, not sent to a courier', 'cartlum' ), self::orders_url( 'processing' ) );
 		}
 		if ( $c['risky'] ) {
 			$cards[] = array( 'bad', $c['risky'], __( 'Risky orders', 'cartlum' ), __( 'Often cancel · still to ship', 'cartlum' ), Cartlum_Admin::url( 'cartlum-fraud' ) );

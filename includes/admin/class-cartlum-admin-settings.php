@@ -62,6 +62,9 @@ class Cartlum_Admin_Settings {
 			'speed'          => __( 'Speed', 'cartlum' ),
 			'int_sms'        => __( 'SMS', 'cartlum' ),
 			'int_steadfast'  => 'Steadfast',
+			'int_pathao'     => 'Pathao',
+			'int_redx'       => 'RedX',
+			'int_paperfly'   => 'Paperfly',
 			'int_fraudbd'    => 'FraudBD',
 			'int_whatsapp'   => __( 'WhatsApp Cloud API', 'cartlum' ),
 			'int_elevenlabs' => 'ElevenLabs',
@@ -94,7 +97,8 @@ class Cartlum_Admin_Settings {
 			),
 			'cartlum-orders'       => array(
 				'label' => __( 'Orders', 'cartlum' ),
-				'tabs'  => array( 'orders', 'tracking', 'steadfast', 'advance' ),
+				// 'parcels': Pro 0.12+; 'steadfast': older Pro, which kept the courier settings there.
+				'tabs'  => array( 'orders', 'tracking', 'parcels', 'steadfast', 'advance' ),
 				'view'  => '',
 			),
 			'cartlum-fraud'        => array(
@@ -114,7 +118,7 @@ class Cartlum_Admin_Settings {
 			),
 			'cartlum-integrations' => array(
 				'label' => __( 'Integrations', 'cartlum' ),
-				'tabs'  => array( 'int_sms', 'int_steadfast', 'facebook', 'int_fraudbd', 'int_whatsapp', 'int_elevenlabs', 'int_ai', 'webhooks' ),
+				'tabs'  => array( 'int_sms', 'int_steadfast', 'int_pathao', 'int_redx', 'int_paperfly', 'facebook', 'int_fraudbd', 'int_whatsapp', 'int_elevenlabs', 'int_ai', 'webhooks' ),
 				'view'  => __( 'Overview', 'cartlum' ),
 			),
 			'cartlum-settings'     => array(
@@ -386,6 +390,10 @@ class Cartlum_Admin_Settings {
 			'account'        => __( 'Customers log in to My Account with their mobile number and an SMS code.', 'cartlum' ),
 			'int_sms'        => __( 'Your SMS provider. Every SMS Cartlum sends goes through it.', 'cartlum' ),
 			'int_steadfast'  => __( 'Your Steadfast account: send parcels and get their delivery status.', 'cartlum' ),
+			'int_pathao'     => __( 'Your Pathao account: send parcels and get their delivery status.', 'cartlum' ),
+			'int_redx'       => __( 'Your RedX account: send parcels and get their delivery status.', 'cartlum' ),
+			'int_paperfly'   => __( 'Your Paperfly account: send parcels and get their delivery status.', 'cartlum' ),
+			'parcels'        => __( 'Which courier your parcels go to, and when they are sent.', 'cartlum' ),
 			'int_fraudbd'    => __( 'Courier records for any phone number, through FraudBD.', 'cartlum' ),
 			'int_whatsapp'   => __( 'Meta’s WhatsApp Cloud API, for WhatsApp messages sent by themselves.', 'cartlum' ),
 			'int_elevenlabs' => __( 'ElevenLabs and your phone line, for AI calls.', 'cartlum' ),

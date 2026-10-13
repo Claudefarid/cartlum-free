@@ -60,7 +60,7 @@ class Cartlum_Order_Tracking {
 		$courier['status']       = isset( $courier['status'] ) ? (string) $courier['status'] : '';
 		$courier['status_label'] = self::courier_status_label( $courier['status'] );
 		$pattern                 = trim( (string) Cartlum_Settings::get( 'courier_tracking_url' ) );
-		$courier['url']          = '' !== $pattern ? str_replace( '{consignment}', rawurlencode( $courier['id'] ), $pattern ) : '';
+		$courier['url']          = '' !== $pattern ? str_replace( '{consignment}', rawurlencode( $courier['id'] ), $pattern ) : (string) ( $courier['url'] ?? '' );
 		return $courier;
 	}
 
@@ -81,6 +81,13 @@ class Cartlum_Order_Tracking {
 			'partial_delivered'                 => __( 'Partly delivered', 'cartlum' ),
 			'cancelled_approval_pending'        => __( 'Cancelled', 'cartlum' ),
 			'cancelled'                         => __( 'Cancelled', 'cartlum' ),
+			// Shared words for every courier (Cartlum Pro 0.12+).
+			'created'                           => __( 'Handed to the courier', 'cartlum' ),
+			'picked'                            => __( 'Picked up by the courier', 'cartlum' ),
+			'in_transit'                        => __( 'On the way', 'cartlum' ),
+			'out_for_delivery'                  => __( 'Out for delivery', 'cartlum' ),
+			'returning'                         => __( 'Being returned', 'cartlum' ),
+			'returned'                          => __( 'Returned', 'cartlum' ),
 		);
 		if ( isset( $labels[ $status ] ) ) {
 			return $labels[ $status ];
@@ -106,6 +113,8 @@ class Cartlum_Order_Tracking {
 			$stopped = wc_get_order_status_name( $status );
 		} elseif ( $courier && 0 === strpos( $courier['status'], 'cancelled' ) ) {
 			$stopped = __( 'Cancelled by the courier', 'cartlum' );
+		} elseif ( $courier && in_array( $courier['status'], array( 'returning', 'returned' ), true ) ) {
+			$stopped = __( 'Returned by the courier', 'cartlum' );
 		}
 
 		return array(
