@@ -34,6 +34,7 @@ require_once CARTLUM_DIR . 'includes/class-cartlum-product-buttons.php';
 require_once CARTLUM_DIR . 'includes/class-cartlum-phone-login.php';
 require_once CARTLUM_DIR . 'includes/class-cartlum-order-tracking.php';
 require_once CARTLUM_DIR . 'includes/class-cartlum-order-sms.php';
+require_once CARTLUM_DIR . 'includes/class-cartlum-reviews.php';
 require_once CARTLUM_DIR . 'includes/class-cartlum-protection.php';
 require_once CARTLUM_DIR . 'includes/class-cartlum-popup.php';
 require_once CARTLUM_DIR . 'includes/class-cartlum-webhooks.php';
@@ -112,6 +113,7 @@ final class Cartlum {
 		Cartlum_Phone_Login::init();
 		Cartlum_Order_Tracking::init();
 		Cartlum_Order_SMS::init();
+		Cartlum_Reviews::init();
 		Cartlum_Protection::init();
 		Cartlum_Popup::init();
 		Cartlum_Webhooks::init();

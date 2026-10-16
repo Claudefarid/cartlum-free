@@ -290,6 +290,8 @@ class Cartlum_Order_SMS {
 				'{track_link}'  => 'yes' === Cartlum_Settings::get( 'phone_login' ) || $order->get_customer_id() ? $order->get_view_order_url() : $order->get_checkout_order_received_url(),
 				'{courier}'     => $courier ? $courier['name'] : '',
 				'{consignment}' => $courier ? $courier['id'] : '',
+				// Made only when a text uses it, so orders without one get no review token.
+				'{review_link}' => false !== strpos( $template, '{review_link}' ) ? Cartlum_Reviews::link( $order ) : '',
 			)
 		);
 	}

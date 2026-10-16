@@ -94,6 +94,13 @@ class Cartlum_Settings {
 			'order_sms_admin_phone'   => '',
 			'order_sms_admin_text'    => '',
 			'order_tracking'          => 'no',
+
+			// Review requests.
+			'review_enabled'          => 'no',
+			'review_trigger'          => 'placed', // placed|delivered: days counted from the order, or from delivery.
+			'review_delay_days'       => 5,
+			'review_sms_text'         => '',      // Empty = the default text, translated.
+			'review_auto_approve'     => 'no',    // No = new reviews wait in Products → Reviews.
 			'courier_tracking_url'    => '',    // e.g. a courier's tracking page with {consignment}.
 
 			// Fake-order protection.

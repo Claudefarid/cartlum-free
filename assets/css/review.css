@@ -1,0 +1,29 @@
+/* Cartlum review form. Colours come from --clx-accent / --clx-on-accent (the store's checkout colour). */
+.clr-page{--clr-ink:#1f2937;--clr-muted:#5b6472;--clr-line:#e3e5e8;--clr-star:#d1d5db;--clr-gold:#e6a700;background:#fff;color:var(--clr-ink);padding:28px 16px 56px}
+.clr-page *{box-sizing:border-box}
+.clr-wrap{max-width:560px;margin:0 auto}
+.clr-title{font-size:clamp(24px,6vw,32px);line-height:1.25;margin:0 0 8px;color:var(--clr-ink)}
+.clr-lede{color:var(--clr-muted);line-height:1.7;margin:0 0 20px}
+.clr-mark{font-size:44px;line-height:1;color:var(--clr-gold);margin:0 0 8px}
+.clr-error{background:#fdf2f2;border-left:3px solid #b42318;color:#7a1a12;padding:10px 12px;border-radius:4px;margin:0 0 16px}
+.clr-form{display:grid;gap:14px}
+.clr-item{border:1px solid var(--clr-line);border-radius:10px;padding:14px;margin:0;min-width:0}
+.clr-product{float:left;display:flex;align-items:center;gap:12px;font-weight:600;line-height:1.4;padding:0;margin:0 0 6px;width:100%}
+.clr-product+*{clear:both}
+.clr-thumb{width:56px;height:56px;object-fit:cover;border-radius:6px;flex:0 0 auto}
+.clr-stars{display:flex;flex-direction:row-reverse;justify-content:flex-end;gap:2px;margin:4px 0 8px}
+.clr-stars input{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none}
+.clr-stars label{-webkit-tap-highlight-color:transparent;display:inline-flex;align-items:center;justify-content:center;width:46px;height:46px;font-size:34px;line-height:1;color:var(--clr-star);cursor:pointer;border-radius:8px}
+.clr-stars input:checked~label,.clr-stars label:hover,.clr-stars label:hover~label{color:var(--clr-gold)}
+.clr-stars input:focus-visible+label{outline:2px solid var(--clx-accent,#1f2937);outline-offset:2px}
+.clr-sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.clr-label{display:block;font-size:14px;font-weight:600;margin:4px 0 6px}
+.clr-page textarea,.clr-page input[type=text]{width:100%;min-height:46px;border:1px solid #cfd4da;border-radius:8px;padding:10px 12px;font:inherit;font-size:16px;line-height:1.6;color:var(--clr-ink);background:#fff}
+.clr-page textarea{min-height:84px;resize:vertical}
+.clr-page textarea:focus,.clr-page input[type=text]:focus{outline:none;border-color:var(--clx-accent,#1f2937);box-shadow:0 0 0 1px var(--clx-accent,#1f2937)}
+.clr-btn{display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:0 24px;border-radius:999px;border:0;background:var(--clx-accent,#1f2937);color:var(--clx-on-accent,#fff)!important;font:inherit;font-size:16px;font-weight:600;text-decoration:none!important;cursor:pointer}
+.clr-btn:hover,.clr-btn:focus{background:var(--clx-accent,#1f2937);color:var(--clx-on-accent,#fff)!important;filter:brightness(.92)}
+.clr-submit{width:100%;margin-top:4px}
+.clr-fine{font-size:13px;color:var(--clr-muted);text-align:center;margin:0}
+.clr-hp{position:absolute!important;left:-9999px!important;width:1px;height:1px;overflow:hidden}
+@media (prefers-reduced-motion:reduce){.clr-page *{transition:none!important}}

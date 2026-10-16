@@ -47,6 +47,7 @@ class Cartlum_Admin_Settings {
 			'popup'          => __( 'Save-cart popup', 'cartlum' ),
 			'account'        => __( 'Customer login', 'cartlum' ),
 			'orders'         => __( 'Order SMS', 'cartlum' ),
+			'reviews'        => __( 'Review requests', 'cartlum' ),
 			'protection'     => __( 'Protection', 'cartlum' ),
 			'automation'     => __( 'Reminders', 'cartlum' ),
 			'sms'            => __( 'SMS', 'cartlum' ),
@@ -98,7 +99,7 @@ class Cartlum_Admin_Settings {
 			'cartlum-orders'       => array(
 				'label' => __( 'Orders', 'cartlum' ),
 				// 'parcels': Pro 0.12+; 'steadfast': older Pro, which kept the courier settings there.
-				'tabs'  => array( 'orders', 'tracking', 'parcels', 'steadfast', 'advance' ),
+				'tabs'  => array( 'orders', 'tracking', 'reviews', 'parcels', 'steadfast', 'advance' ),
 				'view'  => '',
 			),
 			'cartlum-fraud'        => array(
@@ -383,6 +384,7 @@ class Cartlum_Admin_Settings {
 			'popup'          => __( 'Asks shoppers for their mobile number before they leave, so the cart is saved.', 'cartlum' ),
 			'capture'        => __( 'When a cart counts as abandoned, and how long Cartlum keeps trying.', 'cartlum' ),
 			'orders'         => __( 'Text messages about orders: to your customer, and to your own numbers.', 'cartlum' ),
+			'reviews'        => __( 'One SMS some days after an order, asking the customer to rate what they bought. Answers become product reviews.', 'cartlum' ),
 			'tracking'       => __( 'What customers see about their order in My Account, and why orders get cancelled.', 'cartlum' ),
 			'protection'     => __( 'Stops fake and repeat orders before they cost you a delivery.', 'cartlum' ),
 			'checkout'       => __( 'A short one-page checkout: mobile number first, then name, address and district.', 'cartlum' ),
@@ -750,7 +752,7 @@ class Cartlum_Admin_Settings {
 
 			case 'orders':
 				$defaults = Cartlum_Order_SMS::default_texts();
-				$sms_help = __( 'Each message is sent once. Use {name}, {customer} (full name), {order}, {total}, {amount} (plain number: write “Tk {amount}” to keep an SMS free of Bangla characters), {items}, {items_detail} (one line per item: SKU or name, quantity, colour), {phone}, {address}, {status}, {store}, {track_link}, {courier} and {consignment}. Leave a text empty to use the default shown.', 'cartlum' );
+				$sms_help = __( 'Each message is sent once. Use {name}, {customer} (full name), {order}, {total}, {amount} (plain number: write “Tk {amount}” to keep an SMS free of Bangla characters), {items}, {items_detail} (one line per item: SKU or name, quantity, colour), {phone}, {address}, {status}, {store}, {track_link}, {review_link} (a private link to rate the order, see Review requests), {courier} and {consignment}. Leave a text empty to use the default shown.', 'cartlum' );
 				$fields = array(
 					'order_sms_enabled' => array(
 						'label' => __( 'Order SMS', 'cartlum' ),
@@ -820,6 +822,47 @@ class Cartlum_Admin_Settings {
 					'help'  => __( 'Optional: your courier’s tracking page address with {consignment} where the consignment number goes. With it, customers get a “Track parcel” button.', 'cartlum' ),
 				);
 				return $fields;
+
+			case 'reviews':
+				$reviews_on = 'yes' === get_option( 'woocommerce_enable_reviews', 'yes' );
+				return array(
+					'review_enabled'      => array(
+						'label' => __( 'Ask for reviews', 'cartlum' ),
+						'type'  => 'checkbox',
+						'help'  => trim(
+							__( 'Sends the customer one SMS with a private link to a short form: stars and a few words for each product, no login. Answers are saved as WooCommerce product reviews marked “verified owner”. This is one more SMS per order, so leave it off if each customer should only get the “order received” SMS.', 'cartlum' )
+							. ( Cartlum_SMS::gateway() ? '' : ' ' . __( 'Set up your SMS provider under Integrations → SMS first.', 'cartlum' ) )
+							. ( $reviews_on ? '' : ' ' . __( 'Product reviews are switched off in WooCommerce → Settings → Products; turn them on, or the form has nothing to rate.', 'cartlum' ) )
+						),
+					),
+					'review_trigger'      => array(
+						'label'   => __( 'Count the days from', 'cartlum' ),
+						'type'    => 'select',
+						'options' => array(
+							'placed'    => __( 'The order (skipped if it is cancelled by then)', 'cartlum' ),
+							'delivered' => __( 'Delivery (order marked Completed, or the courier reports it delivered)', 'cartlum' ),
+						),
+						'help'    => __( 'Use “the order” if you do not mark orders Completed and no courier reports delivery to Cartlum.', 'cartlum' ),
+					),
+					'review_delay_days'   => array(
+						'label' => __( 'Days to wait', 'cartlum' ),
+						'type'  => 'number',
+						'min'   => 0,
+						'max'   => 60,
+						'help'  => __( 'Give the parcel time to arrive and be used, e.g. 5 days after the order or 2 days after delivery. No SMS goes out during quiet hours; it waits until they end.', 'cartlum' ),
+					),
+					'review_sms_text'     => array(
+						'label' => __( 'Request text', 'cartlum' ),
+						'type'  => 'textarea',
+						/* translators: %s: default message */
+						'help'  => sprintf( __( 'Default: %s', 'cartlum' ), Cartlum_Reviews::default_text() ) . ' ' . __( 'Must contain {review_link}. You can also use {name}, {order}, {items}, {store} and the other order SMS placeholders.', 'cartlum' ),
+					),
+					'review_auto_approve' => array(
+						'label' => __( 'Publish reviews straight away', 'cartlum' ),
+						'type'  => 'checkbox',
+						'help'  => __( 'Off: new reviews wait in Products → Reviews until you approve them. Each review also shows as a note on its order.', 'cartlum' ),
+					),
+				);
 
 			case 'protection':
 				return array(

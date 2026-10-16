@@ -4,7 +4,7 @@ Tags: abandoned cart, cart recovery, sms, whatsapp, woocommerce
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.26.0
+Stable tag: 0.27.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,6 +21,7 @@ Most abandoned-cart plugins send an email. In many markets customers check out w
 * **Order on WhatsApp and Call to order buttons** (optional) on product pages.
 * **Fake-order protection** (optional): block numbers, IP addresses (and ranges) and devices, repeat-order and daily limits, bot trap, and each number's order history for staff.
 * **Order SMS and tracking** (optional): texts at each step of the order, and a progress bar with the courier's status in My Account.
+* **Review requests by SMS** (optional): some days after an order or after delivery, the customer gets a private link to rate each product with stars and a few words, no login. Answers become WooCommerce product reviews marked "verified owner", held for your approval if you like. Or put {review_link} in your "delivered" SMS instead of sending one more message.
 * **Log in with phone number** (optional): customers sign in to My Account with an SMS code and see every order placed with their number.
 * **One-tap cart link** in every message: refills the cart, applies the coupon and opens checkout.
 * **SMS** through eSMS (Bangladesh), Twilio, or any HTTP SMS API — no code needed.
@@ -90,6 +91,10 @@ It can, for stores that only used CartFlows for a shorter checkout. CartFlows' g
 6. Integrations: every connected service with its status.
 
 == Changelog ==
+
+= 0.27.0 =
+* New: review requests (Orders → Review requests). One SMS, a set number of days after the order or after delivery, with a private link to a short review form: stars and an optional comment for each product, no login, works at 360px and in block themes. Answers are saved as WooCommerce product reviews marked "verified owner" (held for approval by default) and noted on the order. Respects quiet hours, skips cancelled orders, never asks twice. Off by default.
+* New placeholder {review_link} for order SMS texts, e.g. to add the review link to the "delivered" SMS instead of sending a separate one.
 
 = 0.26.0 =
 * Ready for Cartlum Pro 0.12's couriers: Pathao, RedX and Paperfly get their own Integrations cards and tabs, and Orders gets a Parcels tab.
