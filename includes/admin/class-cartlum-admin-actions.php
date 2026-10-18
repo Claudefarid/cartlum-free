@@ -28,14 +28,7 @@ class Cartlum_Admin_Actions {
 	 * @return array
 	 */
 	public static function call_outcomes() {
-		return array(
-			'no_answer'      => __( 'No answer', 'cartlum' ),
-			'call_back'      => __( 'Asked to call back', 'cartlum' ),
-			'will_order'     => __( 'Will order', 'cartlum' ),
-			'ordered_phone'  => __( 'Ordered on the phone', 'cartlum' ),
-			'not_interested' => __( 'Not interested', 'cartlum' ),
-			'wrong_number'   => __( 'Wrong number', 'cartlum' ),
-		);
+		return Cartlum_Contact::call_outcomes();
 	}
 
 	/**
@@ -143,34 +136,9 @@ class Cartlum_Admin_Actions {
 	 * Log a phone call.
 	 */
 	public static function log_call() {
-		$cart     = self::guard( 'cartlum_log_call' );
-		$outcomes = self::call_outcomes();
-		$outcome  = sanitize_key( self::posted( 'outcome' ) );
-		if ( ! isset( $outcomes[ $outcome ] ) ) {
+		$cart = self::guard( 'cartlum_log_call' );
+		if ( ! Cartlum_Contact::log_call( $cart, sanitize_key( self::posted( 'outcome' ) ), self::posted( 'note' ) ) ) {
 			self::back( $cart->id, __( 'Choose how the call went.', 'cartlum' ), 'error' );
-		}
-		Cartlum_Events::add(
-			$cart->id,
-			'call_logged',
-			array(
-				'channel' => 'call',
-				'message' => self::posted( 'note' ),
-				'meta'    => array( 'outcome' => $outcome ),
-			)
-		);
-		Cartlum_Carts::update( $cart->id, array( 'call_outcome' => $outcome ) );
-		// A call that reached nobody is not contact.
-		if ( ! in_array( $outcome, array( 'no_answer', 'wrong_number' ), true ) ) {
-			Cartlum_Contact::mark_contacted( $cart );
-		}
-		if ( in_array( $outcome, array( 'not_interested', 'wrong_number' ), true ) && in_array( $cart->status, Cartlum_Carts::OPEN, true ) ) {
-			Cartlum_Carts::update(
-				$cart->id,
-				array(
-					'status'    => 'lost',
-					'closed_at' => Cartlum_Carts::now(),
-				)
-			);
 		}
 		self::back( $cart->id, __( 'Call logged.', 'cartlum' ) );
 	}

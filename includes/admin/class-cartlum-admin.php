@@ -534,6 +534,7 @@ class Cartlum_Admin {
 			__( 'Fewer fake orders', 'cartlum' )          => array(
 				array( __( 'Courier check', 'cartlum' ), __( 'Each customer’s delivered and refused parcels at Steadfast, Pathao, RedX and Paperfly, on every order.', 'cartlum' ) ),
 				array( __( 'Advance payment', 'cartlum' ), __( 'Risky cash-on-delivery customers send a small advance by bKash or Nagad first.', 'cartlum' ) ),
+				array( __( 'Phone app for staff', 'cartlum' ), __( 'Orders to confirm and carts to call on a phone, with a notification for each new order.', 'cartlum' ) ),
 				array( __( 'Customers confirm their own order', 'cartlum' ), __( 'A link in the “order received” SMS: one tap confirms, and the parcel can go to the courier straight away.', 'cartlum' ) ),
 			),
 			__( 'Sell more', 'cartlum' )                  => array(

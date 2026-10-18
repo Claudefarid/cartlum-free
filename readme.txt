@@ -4,7 +4,7 @@ Tags: abandoned cart, fake order, cash on delivery, order sms, automation
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.28.0
+Stable tag: 0.29.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -108,6 +108,10 @@ It can, for stores that only used CartFlows for a shorter checkout. CartFlows' g
 6. Integrations: every connected service with its status.
 
 == Changelog ==
+
+= 0.29.0 =
+* Ready for Cartlum Pro 0.14: Orders gets a Phone app tab and Fake Orders a Fraud network tab, and calls logged on a cart work from outside wp-admin too.
+* For developers: Cartlum_Contact::log_call() and Cartlum_Contact::call_outcomes().
 
 = 0.28.0 =
 * New: Orders → To confirm. Every new Processing and On hold order in one list, oldest first, with the customer's history, call and WhatsApp buttons, and one-tap answers: Confirmed, No answer (counted), Call back, Cancel with a reason, Fake order (with "Also block this number"). Confirming keeps the order status as it is and adds a note; WooCommerce → Orders gets a Confirmed column. Today's "Orders to confirm" card counts this list.

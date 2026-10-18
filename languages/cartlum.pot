@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Cartlum – Cart Recovery, Fake Order Protection & Automation for WooCommerce 0.28.0\n"
+"Project-Id-Version: Cartlum – Cart Recovery, Fake Order Protection & Automation for WooCommerce 0.29.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/cartlum\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-18T14:52:38+00:00\n"
+"POT-Creation-Date: 2026-10-18T18:34:05+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: cartlum\n"
@@ -34,36 +34,10 @@ msgstr ""
 msgid "Cartlum"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-actions.php:32
-#: includes/class-cartlum-confirm.php:32
-msgid "No answer"
-msgstr ""
-
-#: includes/admin/class-cartlum-admin-actions.php:33
-#: includes/admin/class-cartlum-admin-confirm.php:114
-msgid "Asked to call back"
-msgstr ""
-
-#: includes/admin/class-cartlum-admin-actions.php:34
-msgid "Will order"
-msgstr ""
-
-#: includes/admin/class-cartlum-admin-actions.php:35
-msgid "Ordered on the phone"
-msgstr ""
-
-#: includes/admin/class-cartlum-admin-actions.php:36
-msgid "Not interested"
-msgstr ""
-
-#: includes/admin/class-cartlum-admin-actions.php:37
-msgid "Wrong number"
-msgstr ""
-
-#: includes/admin/class-cartlum-admin-actions.php:68
+#: includes/admin/class-cartlum-admin-actions.php:61
+#: includes/admin/class-cartlum-admin-actions.php:231
 #: includes/admin/class-cartlum-admin-actions.php:263
-#: includes/admin/class-cartlum-admin-actions.php:295
-#: includes/admin/class-cartlum-admin-actions.php:349
+#: includes/admin/class-cartlum-admin-actions.php:317
 #: includes/admin/class-cartlum-admin-protection.php:223
 #: includes/admin/class-cartlum-admin-settings.php:1354
 #: includes/admin/class-cartlum-admin.php:219
@@ -73,118 +47,118 @@ msgstr ""
 msgid "You are not allowed to do that."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-actions.php:74
+#: includes/admin/class-cartlum-admin-actions.php:67
 #: includes/admin/class-cartlum-admin.php:468
 msgid "Cart not found."
 msgstr ""
 
 #. translators: %s: error
-#: includes/admin/class-cartlum-admin-actions.php:118
+#: includes/admin/class-cartlum-admin-actions.php:111
 #, php-format
 msgid "SMS not sent: %s"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-actions.php:120
+#: includes/admin/class-cartlum-admin-actions.php:113
 msgid "SMS sent."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-actions.php:139
+#: includes/admin/class-cartlum-admin-actions.php:132
 msgid "Email sent."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-actions.php:150
+#: includes/admin/class-cartlum-admin-actions.php:141
 msgid "Choose how the call went."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-actions.php:175
+#: includes/admin/class-cartlum-admin-actions.php:143
 msgid "Call logged."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-actions.php:184
+#: includes/admin/class-cartlum-admin-actions.php:152
 #: includes/class-cartlum-sms.php:70
 msgid "This cart has no phone number."
 msgstr ""
 
 #. translators: %s: coupon code
-#: includes/admin/class-cartlum-admin-actions.php:215
+#: includes/admin/class-cartlum-admin-actions.php:183
 #, php-format
 msgid "Coupon %s is ready. The restore link applies it automatically."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-actions.php:224
+#: includes/admin/class-cartlum-admin-actions.php:192
 msgid "Automatic messages stopped for this cart."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-actions.php:234
+#: includes/admin/class-cartlum-admin-actions.php:202
 msgid "Unknown status."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-actions.php:244
+#: includes/admin/class-cartlum-admin-actions.php:212
 msgid "Status updated."
 msgstr ""
 
 #. translators: %d: number of carts
-#: includes/admin/class-cartlum-admin-actions.php:284
+#: includes/admin/class-cartlum-admin-actions.php:252
 #, php-format
 msgid "%d cart updated."
 msgid_plural "%d carts updated."
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/admin/class-cartlum-admin-actions.php:301
+#: includes/admin/class-cartlum-admin-actions.php:269
 msgid "Enter a valid phone number."
 msgstr ""
 
 #. translators: %s: store name
-#: includes/admin/class-cartlum-admin-actions.php:303
+#: includes/admin/class-cartlum-admin-actions.php:271
 #, php-format
 msgid "Test message from Cartlum on %s. SMS is working."
 msgstr ""
 
 #. translators: %s: error
-#: includes/admin/class-cartlum-admin-actions.php:312
+#: includes/admin/class-cartlum-admin-actions.php:280
 #, php-format
 msgid "Test failed: %s"
 msgstr ""
 
 #. translators: %s: error
-#: includes/admin/class-cartlum-admin-actions.php:312
+#: includes/admin/class-cartlum-admin-actions.php:280
 msgid "Test SMS sent, but your SMS provider took too long to confirm it. It usually still arrives — check the phone."
 msgstr ""
 
 #. translators: %s: error
-#: includes/admin/class-cartlum-admin-actions.php:312
+#: includes/admin/class-cartlum-admin-actions.php:280
 msgid "Test SMS sent."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-actions.php:363
+#: includes/admin/class-cartlum-admin-actions.php:331
 #: includes/admin/views/cart.php:226
 #: includes/class-cartlum-phone-login.php:406
 #: includes/class-cartlum-phone-login.php:410
 msgid "Cart"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-actions.php:364
+#: includes/admin/class-cartlum-admin-actions.php:332
 msgid "Created"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-actions.php:365
+#: includes/admin/class-cartlum-admin-actions.php:333
 #: includes/admin/class-cartlum-carts-table.php:43
 msgid "Status"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-actions.php:366
+#: includes/admin/class-cartlum-admin-actions.php:334
 #: includes/admin/views/cart.php:64
 #: includes/class-cartlum-privacy.php:88
 msgid "Name"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-actions.php:367
+#: includes/admin/class-cartlum-admin-actions.php:335
 #: includes/class-cartlum-privacy.php:84
 msgid "Phone"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-actions.php:368
+#: includes/admin/class-cartlum-admin-actions.php:336
 #: includes/admin/class-cartlum-admin-settings.php:55
 #: includes/admin/class-cartlum-admin-settings.php:245
 #: includes/admin/views/cart.php:130
@@ -193,42 +167,42 @@ msgstr ""
 msgid "Email"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-actions.php:369
+#: includes/admin/class-cartlum-admin-actions.php:337
 msgid "Products"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-actions.php:370
+#: includes/admin/class-cartlum-admin-actions.php:338
 #: includes/class-cartlum-messages.php:26
 msgid "Cart total"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-actions.php:371
+#: includes/admin/class-cartlum-admin-actions.php:339
 msgid "Currency"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-actions.php:372
+#: includes/admin/class-cartlum-admin-actions.php:340
 msgid "Source"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-actions.php:373
+#: includes/admin/class-cartlum-admin-actions.php:341
 msgid "Times contacted"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-actions.php:374
+#: includes/admin/class-cartlum-admin-actions.php:342
 msgid "Call outcome"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-actions.php:375
+#: includes/admin/class-cartlum-admin-actions.php:343
 #: includes/admin/views/cart.php:68
 #: includes/admin/views/cart.php:256
 msgid "Coupon"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-actions.php:376
+#: includes/admin/class-cartlum-admin-actions.php:344
 msgid "Order"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin-actions.php:377
+#: includes/admin/class-cartlum-admin-actions.php:345
 msgid "Order total"
 msgstr ""
 
@@ -257,6 +231,11 @@ msgstr ""
 #: includes/admin/class-cartlum-admin-confirm.php:112
 #, php-format
 msgid "No answer ×%d"
+msgstr ""
+
+#: includes/admin/class-cartlum-admin-confirm.php:114
+#: includes/class-cartlum-sms.php:159
+msgid "Asked to call back"
 msgstr ""
 
 #: includes/admin/class-cartlum-admin-confirm.php:164
@@ -2104,7 +2083,7 @@ msgid "Today"
 msgstr ""
 
 #: includes/admin/class-cartlum-admin.php:51
-#: includes/admin/class-cartlum-admin.php:546
+#: includes/admin/class-cartlum-admin.php:547
 msgid "Cartlum Pro"
 msgstr ""
 
@@ -2284,42 +2263,50 @@ msgid "Risky cash-on-delivery customers send a small advance by bKash or Nagad f
 msgstr ""
 
 #: includes/admin/class-cartlum-admin.php:537
-msgid "Customers confirm their own order"
+msgid "Phone app for staff"
 msgstr ""
 
 #: includes/admin/class-cartlum-admin.php:537
+msgid "Orders to confirm and carts to call on a phone, with a notification for each new order."
+msgstr ""
+
+#: includes/admin/class-cartlum-admin.php:538
+msgid "Customers confirm their own order"
+msgstr ""
+
+#: includes/admin/class-cartlum-admin.php:538
 msgid "A link in the “order received” SMS: one tap confirms, and the parcel can go to the courier straight away."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin.php:539
+#: includes/admin/class-cartlum-admin.php:540
 msgid "Sell more"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin.php:540
+#: includes/admin/class-cartlum-admin.php:541
 msgid "Facebook Pixel and Conversions API"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin.php:540
+#: includes/admin/class-cartlum-admin.php:541
 msgid "Browser and server events with the same IDs, so Facebook counts each once."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin.php:541
+#: includes/admin/class-cartlum-admin.php:542
 msgid "Bundle offers and customer score"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin.php:541
+#: includes/admin/class-cartlum-admin.php:542
 msgid "Offers on product pages, and a score on every cart showing who is worth a call."
 msgstr ""
 
-#: includes/admin/class-cartlum-admin.php:548
+#: includes/admin/class-cartlum-admin.php:549
 msgid "Everything in Cartlum stays free. Cartlum Pro is a separate add-on that installs next to it and adds:"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin.php:562
+#: includes/admin/class-cartlum-admin.php:563
 msgid "Get Cartlum Pro"
 msgstr ""
 
-#: includes/admin/class-cartlum-admin.php:563
+#: includes/admin/class-cartlum-admin.php:564
 msgid "Pro uses your own accounts for SMS, AI and courier data; you pay those services directly."
 msgstr ""
 
@@ -3073,6 +3060,11 @@ msgstr ""
 msgid "The code could not be checked. Please try again."
 msgstr ""
 
+#: includes/class-cartlum-confirm.php:32
+#: includes/class-cartlum-sms.php:158
+msgid "No answer"
+msgstr ""
+
 #: includes/class-cartlum-confirm.php:33
 msgid "Call back"
 msgstr ""
@@ -3702,6 +3694,22 @@ msgstr ""
 
 #: includes/class-cartlum-sms.php:110
 msgid "Choose an SMS gateway in Cartlum → Messages → SMS."
+msgstr ""
+
+#: includes/class-cartlum-sms.php:160
+msgid "Will order"
+msgstr ""
+
+#: includes/class-cartlum-sms.php:161
+msgid "Ordered on the phone"
+msgstr ""
+
+#: includes/class-cartlum-sms.php:162
+msgid "Not interested"
+msgstr ""
+
+#: includes/class-cartlum-sms.php:163
+msgid "Wrong number"
 msgstr ""
 
 #: includes/class-cartlum-webhooks.php:39

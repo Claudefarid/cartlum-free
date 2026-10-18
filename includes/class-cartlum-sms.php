@@ -147,4 +147,60 @@ class Cartlum_Contact {
 		);
 		$cart->contact_count = (int) $cart->contact_count + 1;
 	}
+
+	/**
+	 * Call outcomes staff can log.
+	 *
+	 * @return array
+	 */
+	public static function call_outcomes() {
+		return array(
+			'no_answer'      => __( 'No answer', 'cartlum' ),
+			'call_back'      => __( 'Asked to call back', 'cartlum' ),
+			'will_order'     => __( 'Will order', 'cartlum' ),
+			'ordered_phone'  => __( 'Ordered on the phone', 'cartlum' ),
+			'not_interested' => __( 'Not interested', 'cartlum' ),
+			'wrong_number'   => __( 'Wrong number', 'cartlum' ),
+		);
+	}
+
+	/**
+	 * Logs a phone call on a cart: the timeline, the cart's last outcome, contact (unless nobody
+	 * was reached), and closes the cart as lost when the customer is not interested or the number
+	 * is wrong.
+	 *
+	 * @param object $cart    Row.
+	 * @param string $outcome One of call_outcomes().
+	 * @param string $note    Staff note.
+	 * @return bool
+	 */
+	public static function log_call( $cart, $outcome, $note = '' ) {
+		if ( ! isset( self::call_outcomes()[ $outcome ] ) ) {
+			return false;
+		}
+		Cartlum_Events::add(
+			$cart->id,
+			'call_logged',
+			array(
+				'channel' => 'call',
+				'message' => $note,
+				'meta'    => array( 'outcome' => $outcome ),
+			)
+		);
+		Cartlum_Carts::update( $cart->id, array( 'call_outcome' => $outcome ) );
+		// A call that reached nobody is not contact.
+		if ( ! in_array( $outcome, array( 'no_answer', 'wrong_number' ), true ) ) {
+			self::mark_contacted( $cart );
+		}
+		if ( in_array( $outcome, array( 'not_interested', 'wrong_number' ), true ) && in_array( $cart->status, Cartlum_Carts::OPEN, true ) ) {
+			Cartlum_Carts::update(
+				$cart->id,
+				array(
+					'status'    => 'lost',
+					'closed_at' => Cartlum_Carts::now(),
+				)
+			);
+		}
+		return true;
+	}
 }
