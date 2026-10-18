@@ -1,38 +1,49 @@
-=== Cartlum – Abandoned Cart Recovery for WooCommerce ===
+=== Cartlum – Cart Recovery, Fake Order Protection & Automation for WooCommerce ===
 Contributors: swadhinai
-Tags: abandoned cart, cart recovery, sms, whatsapp, woocommerce
+Tags: abandoned cart, fake order, cash on delivery, order sms, automation
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.27.0
+Stable tag: 0.27.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Recover abandoned WooCommerce carts by SMS, phone call, WhatsApp and email — and see exactly how much revenue each one brings back.
+Win back abandoned carts by SMS, call and WhatsApp, stop fake orders before they ship, and automate order SMS. Phone-first, Bangla included.
 
 == Description ==
 
-Most abandoned-cart plugins send an email. In many markets customers check out with a phone number and never read email, so the cart is lost. Cartlum is built phone-first.
+Cartlum is for WooCommerce stores that sell cash on delivery, where customers check out with a phone number and rarely read email. It does three jobs in one plugin:
+
+= 1. Cart recovery =
 
 * **Captures the cart the moment a phone number is typed** at checkout — before "Place order" — on the classic checkout, the block checkout, and CartFlows.
 * **Save-cart popup** (optional): asks shoppers with something in the cart for their number when they are about to leave or right after "Add to cart", so carts are saved even before checkout.
-* **Phone-first checkout** (optional): mobile number first, then name, address and district. Accepts numbers typed in Bangla digits, checks Bangladeshi mobile numbers, and keeps WooCommerce's payments, delivery charges and coupons.
-* **Buy now button** (optional): straight from the product page to checkout, with the chosen colour or size.
-* **Order on WhatsApp and Call to order buttons** (optional) on product pages.
-* **Fake-order protection** (optional): block numbers, IP addresses (and ranges) and devices, repeat-order and daily limits, bot trap, and each number's order history for staff.
-* **Order SMS and tracking** (optional): texts at each step of the order, and a progress bar with the courier's status in My Account.
-* **Review requests by SMS** (optional): some days after an order or after delivery, the customer gets a private link to rate each product with stars and a few words, no login. Answers become WooCommerce product reviews marked "verified owner", held for your approval if you like. Or put {review_link} in your "delivered" SMS instead of sending one more message.
-* **Log in with phone number** (optional): customers sign in to My Account with an SMS code and see every order placed with their number.
 * **One-tap cart link** in every message: refills the cart, applies the coupon and opens checkout.
 * **SMS** through eSMS (Bangladesh), Twilio, or any HTTP SMS API — no code needed.
 * **Phone call list** for your team: call with one tap, log how it went.
 * **WhatsApp**: opens a chat with the customer's number and a ready-written message.
 * **Designed reminder emails**: your logo, the cart's products with photos, and a "Complete your order" button in your colour — or your WooCommerce email style.
 * **One-time coupons** per cart, created only when you offer one.
-* **Automatic reminder**: one SMS or email after a cart is abandoned, with quiet hours, a daily SMS limit and a test mode that sends to your own number first.
 * **Honest numbers**: an order only counts as *recovered* if you contacted the customer first. Customers who came back on their own are shown separately.
 * **Most abandoned products** report, and **CSV export** of your carts.
+
+= 2. Fake customer protection =
+
+* **Fake-order protection** (optional): block numbers, IP addresses (and ranges) and devices, repeat-order and daily limits, bot trap, an SMS code for risky orders, and each number's order history for staff.
+* **Phone-first checkout** (optional): mobile number first, then name, address and district. Accepts numbers typed in Bangla digits, checks Bangladeshi mobile numbers, and keeps WooCommerce's payments, delivery charges and coupons.
+* **Log in with phone number** (optional): customers sign in to My Account with an SMS code and see every order placed with their number.
+
+= 3. Easy automation =
+
+* **Automatic reminder**: one SMS or email after a cart is abandoned, with quiet hours, a daily SMS limit and a test mode that sends to your own number first.
+* **Order SMS and tracking** (optional): texts at each step of the order, and a progress bar with the courier's status in My Account.
+* **Review requests by SMS** (optional): some days after an order or after delivery, the customer gets a private link to rate each product with stars and a few words, no login. Answers become WooCommerce product reviews marked "verified owner", held for your approval if you like. Or put {review_link} in your "delivered" SMS instead of sending one more message.
 * **Webhooks** to Zapier, Make, Pabbly or your own system: cart saved, abandoned and recovered, signed and retried.
+
+= Also included =
+
+* **Buy now button** (optional): straight from the product page to checkout, with the chosen colour or size.
+* **Order on WhatsApp and Call to order buttons** (optional) on product pages.
 * **Bangla included**, and a "Language for customers" setting to show shoppers Bangla while your admin stays in English.
 * Unsubscribe link in every message, automatic data deletion, and WordPress privacy export/erase support.
 
@@ -91,6 +102,10 @@ It can, for stores that only used CartFlows for a shorter checkout. CartFlows' g
 6. Integrations: every connected service with its status.
 
 == Changelog ==
+
+= 0.27.1 =
+* New name: "Cartlum – Cart Recovery, Fake Order Protection & Automation for WooCommerce", with the description and features grouped under those three jobs.
+* Calmer Today screen: "Your features" moved to the bottom and starts closed with an On / Off / Needs setup count; "All caught up" is one line; customers not yet contacted are no longer shown in bold orange; empty sections are plain text.
 
 = 0.27.0 =
 * New: review requests (Orders → Review requests). One SMS, a set number of days after the order or after delivery, with a private link to a short review form: stars and an optional comment for each product, no login, works at 360px and in block themes. Answers are saved as WooCommerce product reviews marked "verified owner" (held for approval by default) and noted on the order. Respects quiet hours, skips cancelled orders, never asks twice. Off by default.

@@ -257,47 +257,74 @@ class Cartlum_Admin_Today {
 				esc_html__( 'Set up', 'cartlum' )
 			);
 		}
-		if ( ! $cards ) {
-			echo '<div class="cl-card cl-allclear"><strong>' . esc_html__( 'All caught up.', 'cartlum' ) . '</strong> ' . esc_html__( 'No carts to call, orders to confirm or risky orders right now.', 'cartlum' ) . '</div>';
-		} else {
-			echo '<div class="cl-act-grid">';
-			foreach ( $cards as $card ) {
-				printf(
-					'<a class="cl-act cl-act--%1$s" href="%2$s"><span class="cl-act__n">%3$s</span><span class="cl-act__t">%4$s</span><span class="cl-act__s">%5$s</span></a>',
-					esc_attr( $card[0] ),
-					esc_url( $card[4] ),
-					esc_html( number_format_i18n( $card[1] ) ),
-					esc_html( $card[2] ),
-					esc_html( $card[3] )
-				);
-			}
-			echo '</div>';
-		}
-		printf(
-			'<p class="cl-muted cl-updated">%1$s · <button type="button" class="button-link" data-cartlum-today-refresh>%2$s</button></p>',
+		$updated = sprintf(
+			'<span class="cl-updated">%1$s · <button type="button" class="button-link" data-cartlum-today-refresh>%2$s</button></span>',
 			/* translators: %s: time ago */
 			esc_html( sprintf( __( 'Updated %s ago', 'cartlum' ), human_time_diff( (int) $c['at'] ) ) ),
 			esc_html__( 'Refresh', 'cartlum' )
 		);
+		if ( ! $cards ) {
+			// Nothing to do is one quiet line, not a card.
+			echo '<p class="cl-allclear"><span class="cl-dot" aria-hidden="true"></span><span><strong>' . esc_html__( 'All caught up.', 'cartlum' ) . '</strong> ' . esc_html__( 'No carts to call, orders to confirm or risky orders right now.', 'cartlum' ) . '</span>' . $updated . '</p>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped above.
+			return;
+		}
+		echo '<div class="cl-act-grid">';
+		foreach ( $cards as $card ) {
+			printf(
+				'<a class="cl-act cl-act--%1$s" href="%2$s"><span class="cl-act__n">%3$s</span><span class="cl-act__t">%4$s</span><span class="cl-act__s">%5$s</span></a>',
+				esc_attr( $card[0] ),
+				esc_url( $card[4] ),
+				esc_html( number_format_i18n( $card[1] ) ),
+				esc_html( $card[2] ),
+				esc_html( $card[3] )
+			);
+		}
+		echo '</div>';
+		echo '<p class="cl-muted">' . $updated . '</p>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped above.
 	}
 
 	/**
-	 * The Today block at the top of the home screen: cards (loaded after the page) and the
-	 * feature board.
+	 * The Today block at the top of the home screen: cards, loaded after the page.
 	 */
 	public static function render() {
-		$labels = self::status_labels();
 		Cartlum_Admin_Setup::banner();
 		?>
 		<section class="cl-today" aria-label="<?php esc_attr_e( 'Needs you now', 'cartlum' ); ?>" data-cartlum-today data-nonce="<?php echo esc_attr( wp_create_nonce( 'cartlum_today' ) ); ?>">
 			<div class="cl-act-grid" aria-busy="true">
-				<span class="cl-act cl-skel"></span><span class="cl-act cl-skel"></span><span class="cl-act cl-skel"></span><span class="cl-act cl-skel"></span>
+				<span class="cl-act cl-skel"></span><span class="cl-act cl-skel"></span><span class="cl-act cl-skel"></span>
 			</div>
 		</section>
-		<details class="cl-card cl-features" open>
-			<summary><h2><?php esc_html_e( 'Your features', 'cartlum' ); ?></h2><span class="cl-muted"><?php esc_html_e( 'Everything Cartlum can do, and whether it is on', 'cartlum' ); ?></span></summary>
+		<?php
+	}
+
+	/**
+	 * The feature board at the foot of the home screen: closed, with how many features are in
+	 * each state, since it is for looking things up rather than for today.
+	 */
+	public static function features_board() {
+		$labels   = self::status_labels();
+		$features = self::features();
+		$tally    = array_fill_keys( array_keys( $labels ), 0 );
+		foreach ( $features as $items ) {
+			foreach ( $items as $item ) {
+				if ( isset( $tally[ $item[1] ] ) ) {
+					++$tally[ $item[1] ];
+				}
+			}
+		}
+		?>
+		<details class="cl-card cl-features">
+			<summary>
+				<h2><?php esc_html_e( 'Your features', 'cartlum' ); ?></h2>
+				<span class="cl-features__tally">
+					<?php foreach ( array_filter( $tally ) as $status => $n ) : ?>
+						<span class="cl-pill cl-pill--<?php echo esc_attr( $status ); ?>"><?php echo esc_html( $labels[ $status ] . ' ' . number_format_i18n( $n ) ); ?></span>
+					<?php endforeach; ?>
+				</span>
+			</summary>
+			<p class="cl-muted cl-features__lead"><?php esc_html_e( 'Everything Cartlum can do, and whether it is on', 'cartlum' ); ?></p>
 			<div class="cl-features__grid">
-				<?php foreach ( self::features() as $group => $items ) : ?>
+				<?php foreach ( $features as $group => $items ) : ?>
 					<div class="cl-features__group">
 						<h3><?php echo esc_html( $group ); ?></h3>
 						<ul>

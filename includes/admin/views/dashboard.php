@@ -331,4 +331,6 @@ $open_value = array_sum( array_map( 'floatval', wp_list_pluck( $open['rows'], 'c
 			</section>
 		</div>
 	</div>
+
+	<?php Cartlum_Admin_Today::features_board(); ?>
 </div>
