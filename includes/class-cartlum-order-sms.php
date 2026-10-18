@@ -272,27 +272,32 @@ class Cartlum_Order_SMS {
 		}
 		$states  = WC()->countries ? WC()->countries->get_states( $order->get_billing_country() ) : array();
 		$state   = is_array( $states ) && isset( $states[ $order->get_billing_state() ] ) ? $states[ $order->get_billing_state() ] : $order->get_billing_state();
-		return strtr(
-			$template,
-			array(
-				'{name}'        => Cartlum_Messages::safe_name( $order->get_billing_first_name() ),
-				'{order}'       => $order->get_order_number(),
-				'{total}'       => trim( str_replace( "\xc2\xa0", ' ', $total ) ),
-				'{amount}'      => number_format( (float) $order->get_total(), 0 ),
-				'{customer}'    => trim( $order->get_billing_first_name() . ' ' . $order->get_billing_last_name() ),
-				'{items_detail}' => implode( "\n", $detail ),
-				'{address}'     => trim( implode( ', ', array_filter( array( $order->get_billing_address_1(), $state ) ) ) ),
-				'{status}'      => wc_get_order_status_name( $order->get_status() ),
-				'{items}'       => implode( ', ', $items ),
-				'{phone}'       => $order->get_billing_phone(),
-				'{store}'       => wp_specialchars_decode( get_bloginfo( 'name' ), ENT_QUOTES ),
-				// Guests can only open My Account with phone login; otherwise their order's own page.
-				'{track_link}'  => 'yes' === Cartlum_Settings::get( 'phone_login' ) || $order->get_customer_id() ? $order->get_view_order_url() : $order->get_checkout_order_received_url(),
-				'{courier}'     => $courier ? $courier['name'] : '',
-				'{consignment}' => $courier ? $courier['id'] : '',
-				// Made only when a text uses it, so orders without one get no review token.
-				'{review_link}' => false !== strpos( $template, '{review_link}' ) ? Cartlum_Reviews::link( $order ) : '',
-			)
+		$values  = array(
+			'{name}'        => Cartlum_Messages::safe_name( $order->get_billing_first_name() ),
+			'{order}'       => $order->get_order_number(),
+			'{total}'       => trim( str_replace( "\xc2\xa0", ' ', $total ) ),
+			'{amount}'      => number_format( (float) $order->get_total(), 0 ),
+			'{customer}'    => trim( $order->get_billing_first_name() . ' ' . $order->get_billing_last_name() ),
+			'{items_detail}' => implode( "\n", $detail ),
+			'{address}'     => trim( implode( ', ', array_filter( array( $order->get_billing_address_1(), $state ) ) ) ),
+			'{status}'      => wc_get_order_status_name( $order->get_status() ),
+			'{items}'       => implode( ', ', $items ),
+			'{phone}'       => $order->get_billing_phone(),
+			'{store}'       => wp_specialchars_decode( get_bloginfo( 'name' ), ENT_QUOTES ),
+			// Guests can only open My Account with phone login; otherwise their order's own page.
+			'{track_link}'  => 'yes' === Cartlum_Settings::get( 'phone_login' ) || $order->get_customer_id() ? $order->get_view_order_url() : $order->get_checkout_order_received_url(),
+			'{courier}'     => $courier ? $courier['name'] : '',
+			'{consignment}' => $courier ? $courier['id'] : '',
+			// Made only when a text uses it, so orders without one get no review token.
+			'{review_link}' => false !== strpos( $template, '{review_link}' ) ? Cartlum_Reviews::link( $order ) : '',
 		);
+		/**
+		 * Filters the order SMS placeholders, e.g. to add one: '{tag}' => value.
+		 *
+		 * @param array    $values   Placeholder => value.
+		 * @param WC_Order $order    Order.
+		 * @param string   $template The text being filled in.
+		 */
+		return strtr( $template, (array) apply_filters( 'cartlum_order_sms_placeholders', $values, $order, $template ) );
 	}
 }

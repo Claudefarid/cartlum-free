@@ -53,6 +53,8 @@ class Cartlum_Cancel_Reasons {
 				'refused_product_doubt' => __( 'Refused at delivery — doubts about the product', 'cartlum' ),
 				'price_concern'         => __( 'Price or delivery charge', 'cartlum' ),
 				'duplicate_or_wrong'    => __( 'Duplicate or wrong order', 'cartlum' ),
+				'customer_cancelled'    => __( 'Cancelled by the customer', 'cartlum' ),
+				'fake_order'            => __( 'Fake order or wrong number', 'cartlum' ),
 				'other'                 => __( 'Other', 'cartlum' ),
 			)
 		);

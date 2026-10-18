@@ -100,12 +100,17 @@ class Cartlum_Admin_Settings {
 				'label' => __( 'Orders', 'cartlum' ),
 				// 'parcels': Pro 0.12+; 'steadfast': older Pro, which kept the courier settings there.
 				'tabs'  => array( 'orders', 'tracking', 'reviews', 'parcels', 'steadfast', 'advance' ),
-				'view'  => '',
+				'view'  => __( 'To confirm', 'cartlum' ),
 			),
 			'cartlum-fraud'        => array(
 				'label' => __( 'Fake Orders', 'cartlum' ),
 				'tabs'  => array( 'protection', 'courier' ),
 				'view'  => __( 'Risky orders', 'cartlum' ),
+			),
+			'cartlum-reports'      => array(
+				'label' => __( 'Reports', 'cartlum' ),
+				'tabs'  => array(),
+				'view'  => __( 'Reports', 'cartlum' ),
 			),
 			'cartlum-checkout'     => array(
 				'label' => __( 'Checkout & Buttons', 'cartlum' ),
@@ -1139,8 +1144,12 @@ class Cartlum_Admin_Settings {
 		if ( '' === $tab ) {
 			if ( 'cartlum-carts' === $slug ) {
 				Cartlum_Admin::page_carts();
+			} elseif ( 'cartlum-orders' === $slug ) {
+				Cartlum_Admin_Confirm::page();
 			} elseif ( 'cartlum-fraud' === $slug ) {
 				Cartlum_Admin_Fraud::page();
+			} elseif ( 'cartlum-reports' === $slug ) {
+				Cartlum_Admin_Reports::page();
 			} elseif ( 'cartlum-integrations' === $slug ) {
 				Cartlum_Admin_Integrations::page();
 			}

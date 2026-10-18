@@ -71,6 +71,16 @@ abstract class Cartlum_SMS_Gateway {
 		if ( call_user_func( $is_success, $code, $body, is_array( $json ) ? $json : null ) ) {
 			return true;
 		}
-		return new WP_Error( 'cartlum_sms_failed', sprintf( 'HTTP %d: %s', $code, wp_strip_all_tags( substr( $body, 0, 300 ) ) ) );
+		// The provider's own words when its answer has them (error_message, msg, ...), else the raw answer.
+		$words = '';
+		if ( is_array( $json ) ) {
+			foreach ( array( 'error_message', 'responseResult', 'msg', 'message', 'error' ) as $key ) {
+				if ( isset( $json[ $key ] ) && is_string( $json[ $key ] ) && '' !== trim( $json[ $key ] ) ) {
+					$words = $json[ $key ];
+					break;
+				}
+			}
+		}
+		return new WP_Error( 'cartlum_sms_failed', sprintf( 'HTTP %d: %s', $code, wp_strip_all_tags( substr( '' !== $words ? $words : $body, 0, 300 ) ) ) );
 	}
 }

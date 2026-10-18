@@ -27,7 +27,7 @@ class Cartlum_SMS {
 	public static function gateways() {
 		static $gateways = null;
 		if ( null === $gateways ) {
-			$list = array( new Cartlum_SMS_ESMS(), new Cartlum_SMS_Twilio(), new Cartlum_SMS_Custom() );
+			$list = array( new Cartlum_SMS_ESMS(), new Cartlum_SMS_BulkSMSBD(), new Cartlum_SMS_SSLWireless(), new Cartlum_SMS_Alpha(), new Cartlum_SMS_MiMSMS(), new Cartlum_SMS_Twilio(), new Cartlum_SMS_Custom() );
 
 			/**
 			 * Adds SMS gateways. Each must extend Cartlum_SMS_Gateway.

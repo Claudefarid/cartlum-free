@@ -139,17 +139,7 @@ class Cartlum_Admin_Today {
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- cached above.
 		$row = $wpdb->get_row( $wpdb->prepare( 'SELECT COUNT(*) AS n, COALESCE(SUM(cart_total),0) AS total FROM %i WHERE status = %s AND contact_count = 0', $table, 'abandoned' ) );
 
-		$today   = new DateTime( 'today', wp_timezone() );
-		$confirm = wc_get_orders(
-			array(
-				'type'         => 'shop_order',
-				'status'       => array( 'processing', 'on-hold' ),
-				'date_created' => '>=' . $today->getTimestamp(),
-				'limit'        => 1,
-				'paginate'     => true,
-				'return'       => 'ids',
-			)
-		);
+		$confirm = count( Cartlum_Confirm::queue() );
 
 		$parcels = null;
 		$ints    = Cartlum_Admin_Integrations::all();
@@ -177,7 +167,7 @@ class Cartlum_Admin_Today {
 		$out = array(
 			'carts'       => (int) ( $row->n ?? 0 ),
 			'carts_value' => (float) ( $row->total ?? 0 ),
-			'confirm'     => (int) $confirm->total,
+			'confirm'     => $confirm,
 			'parcels'     => $parcels,
 			'risky'       => $risky,
 			'reasons'     => $reasons,
@@ -229,7 +219,7 @@ class Cartlum_Admin_Today {
 			);
 		}
 		if ( $c['confirm'] ) {
-			$cards[] = array( 'info', $c['confirm'], __( 'Orders to confirm', 'cartlum' ), __( 'Placed today, not shipped yet', 'cartlum' ), self::orders_url( 'processing' ) );
+			$cards[] = array( 'info', $c['confirm'], __( 'Orders to confirm', 'cartlum' ), __( 'New orders not confirmed yet', 'cartlum' ), Cartlum_Admin::url( 'cartlum-orders' ) );
 		}
 		if ( $c['parcels'] ) {
 			$cards[] = array( 'warn', $c['parcels'], __( 'Parcels to send', 'cartlum' ), __( 'Processing, not sent to a courier', 'cartlum' ), self::orders_url( 'processing' ) );

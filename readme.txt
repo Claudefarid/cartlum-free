@@ -4,7 +4,7 @@ Tags: abandoned cart, fake order, cash on delivery, order sms, automation
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.27.1
+Stable tag: 0.28.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -19,16 +19,18 @@ Cartlum is for WooCommerce stores that sell cash on delivery, where customers ch
 * **Captures the cart the moment a phone number is typed** at checkout — before "Place order" — on the classic checkout, the block checkout, and CartFlows.
 * **Save-cart popup** (optional): asks shoppers with something in the cart for their number when they are about to leave or right after "Add to cart", so carts are saved even before checkout.
 * **One-tap cart link** in every message: refills the cart, applies the coupon and opens checkout.
-* **SMS** through eSMS (Bangladesh), Twilio, or any HTTP SMS API — no code needed.
+* **SMS** through eSMS, BulkSMSBD, SSL Wireless, Alpha SMS or MiMSMS (Bangladesh), Twilio, or any HTTP SMS API — no code needed.
 * **Phone call list** for your team: call with one tap, log how it went.
 * **WhatsApp**: opens a chat with the customer's number and a ready-written message.
 * **Designed reminder emails**: your logo, the cart's products with photos, and a "Complete your order" button in your colour — or your WooCommerce email style.
 * **One-time coupons** per cart, created only when you offer one.
 * **Honest numbers**: an order only counts as *recovered* if you contacted the customer first. Customers who came back on their own are shown separately.
 * **Most abandoned products** report, and **CSV export** of your carts.
+* **Reports**: where each period's orders ended up (delivered, with the courier, not sent yet, cancelled before shipping, returned or refused), delivery success, fake orders stopped, confirmations, and why orders did not arrive.
 
 = 2. Fake customer protection =
 
+* **Orders to confirm**: every new order in one list, oldest first, with the customer's history and one tap to call or WhatsApp. Record the answer in one more tap: confirmed, no answer, call back, cancel with a reason, or fake (and block the number). Confirming never changes the order status, so courier plugins and order SMS work as before.
 * **Fake-order protection** (optional): block numbers, IP addresses (and ranges) and devices, repeat-order and daily limits, bot trap, an SMS code for risky orders, and each number's order history for staff.
 * **Phone-first checkout** (optional): mobile number first, then name, address and district. Accepts numbers typed in Bangla digits, checks Bangladeshi mobile numbers, and keeps WooCommerce's payments, delivery charges and coupons.
 * **Log in with phone number** (optional): customers sign in to My Account with an SMS code and see every order placed with their number.
@@ -52,6 +54,10 @@ Cartlum is for WooCommerce stores that sell cash on delivery, where customers ch
 Cartlum sends messages only through services you choose and configure. Nothing is sent until you set one up, and nothing is sent anywhere else.
 
 * **eSMS (Bangladesh)** — when you choose it as your SMS gateway, the customer's phone number and the message text are sent to https://login.esms.com.bd/ each time an SMS is sent. Terms: https://esms.com.bd/terms-and-conditions/ · Privacy: https://esms.com.bd/privacy-policy/
+* **BulkSMSBD (Bangladesh)** — when you choose it as your SMS gateway, the customer's phone number and the message text are sent to https://bulksmsbd.net/ each time an SMS is sent. BulkSMSBD publishes no terms or privacy pages; your account with them sets the terms: https://bulksmsbd.net/
+* **SSL Wireless (Bangladesh)** — when you choose it as your SMS gateway, the customer's phone number and the message text are sent to https://smsplus.sslwireless.com/ each time an SMS is sent. Terms and privacy: as agreed in your SSL Wireless contract, https://www.sslwireless.com/
+* **Alpha SMS (Bangladesh)** — when you choose it as your SMS gateway, the customer's phone number and the message text are sent to https://api.sms.net.bd/ each time an SMS is sent. Terms: https://sms.bd/Terms_Condition/
+* **MiMSMS (Bangladesh)** — when you choose it as your SMS gateway, the customer's phone number and the message text are sent to https://api.mimsms.com/ each time an SMS is sent. Terms: https://www.mimsms.com/terms-of-service · Privacy: https://www.mimsms.com/privacy-policy
 * **Twilio** — when you choose it as your SMS gateway, the customer's phone number and the message text are sent to https://api.twilio.com/ each time an SMS is sent. Terms: https://www.twilio.com/legal/tos · Privacy: https://www.twilio.com/legal/privacy
 * **Custom HTTP API** — when you configure it, the phone number and message are sent to the address you enter, under that provider's terms.
 * **WhatsApp** — WhatsApp buttons open https://wa.me/ in the person's own browser or app: for staff, with the customer's number and a message filled in; for shoppers (the optional product page button), with the store's number and the product they are looking at. The site itself sends nothing to WhatsApp. Terms: https://www.whatsapp.com/legal/terms-of-service · Privacy: https://www.whatsapp.com/legal/privacy-policy
@@ -102,6 +108,14 @@ It can, for stores that only used CartFlows for a shorter checkout. CartFlows' g
 6. Integrations: every connected service with its status.
 
 == Changelog ==
+
+= 0.28.0 =
+* New: Orders → To confirm. Every new Processing and On hold order in one list, oldest first, with the customer's history, call and WhatsApp buttons, and one-tap answers: Confirmed, No answer (counted), Call back, Cancel with a reason, Fake order (with "Also block this number"). Confirming keeps the order status as it is and adds a note; WooCommerce → Orders gets a Confirmed column. Today's "Orders to confirm" card counts this list.
+* New: Reports (Cartlum → Reports). For the last 7, 30 or 90 days: delivery success (delivered out of delivered + returned), money delivered, fake orders stopped, where every order went, confirmations on the phone and by the customer's link, and why orders did not arrive.
+* New SMS gateways for Bangladesh: BulkSMSBD, SSL Wireless, Alpha SMS and MiMSMS (Integrations → SMS).
+* A failed SMS now shows the provider's own reason ("Insufficient balance", "Invalid UserName & Password") instead of its raw answer.
+* New cancellation reasons: "Cancelled by the customer" and "Fake order or wrong number".
+* For developers: the cartlum_order_confirmed and cartlum_reports_after actions, and the cartlum_order_sms_placeholders filter to add order SMS placeholders.
 
 = 0.27.1 =
 * New name: "Cartlum – Cart Recovery, Fake Order Protection & Automation for WooCommerce", with the description and features grouped under those three jobs.

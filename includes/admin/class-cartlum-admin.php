@@ -99,6 +99,7 @@ class Cartlum_Admin {
 			'cartlum-carts'        => '<circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.5 12h12l2-8H6.5"/>',
 			'cartlum-orders'       => '<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/>',
 			'cartlum-fraud'        => '<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/>',
+			'cartlum-reports'      => '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
 			'cartlum-checkout'     => '<rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M7 15h4"/>',
 			'cartlum-ai'           => '<path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><circle cx="12" cy="12" r="5"/>',
 			'cartlum-integrations' => '<path d="M9 7V3M15 7V3M7 7h10v5a5 5 0 0 1-10 0zM12 17v4"/>',
@@ -145,6 +146,7 @@ class Cartlum_Admin {
 			$current = Cartlum_Admin_Settings::current_tab( $page );
 			$section = Cartlum_Admin_Settings::sections()[ $page ];
 			$tab     = '' !== $current ? ( Cartlum_Admin_Settings::tabs()[ $current ] ?? '' ) : $section['view'];
+			$tab     = $tab === $section['label'] ? '' : $tab; // A page that is only its list.
 		}
 		?>
 		<div class="cl-app">
@@ -532,6 +534,7 @@ class Cartlum_Admin {
 			__( 'Fewer fake orders', 'cartlum' )          => array(
 				array( __( 'Courier check', 'cartlum' ), __( 'Each customer’s delivered and refused parcels at Steadfast, Pathao, RedX and Paperfly, on every order.', 'cartlum' ) ),
 				array( __( 'Advance payment', 'cartlum' ), __( 'Risky cash-on-delivery customers send a small advance by bKash or Nagad first.', 'cartlum' ) ),
+				array( __( 'Customers confirm their own order', 'cartlum' ), __( 'A link in the “order received” SMS: one tap confirms, and the parcel can go to the courier straight away.', 'cartlum' ) ),
 			),
 			__( 'Sell more', 'cartlum' )                  => array(
 				array( __( 'Facebook Pixel and Conversions API', 'cartlum' ), __( 'Browser and server events with the same IDs, so Facebook counts each once.', 'cartlum' ) ),
