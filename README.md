@@ -12,7 +12,7 @@ Most abandoned-cart plugins send an email. In many markets customers check out w
 
 1. In WordPress, go to **Plugins → Add New → Upload Plugin**.
 2. Choose the `cartlum-x.y.z.zip` file you downloaded and click **Install Now**, then **Activate**.
-3. Open **Cartlum** in the admin menu. Under **Messages → SMS**, choose your SMS gateway (eSMS, Twilio or any HTTP SMS API) and send yourself a test SMS.
+3. Open **Cartlum** in the admin menu and follow **Set up Cartlum** (5 minutes). Under **Integrations → SMS**, choose your SMS gateway (eSMS, BulkSMSBD, SSL Wireless, Alpha SMS, MiMSMS, Twilio or any HTTP SMS API) and send yourself a test SMS.
 
 To update, upload the new zip the same way and choose **Replace current with uploaded**. Your settings and carts are kept.
 
@@ -24,6 +24,8 @@ Requires WordPress 6.2+, WooCommerce 8.0+ and PHP 7.4+.
 - **Save-cart popup**: asks for the number when a shopper is about to leave, or after "Add to cart".
 - **Phone-first checkout**: mobile number first; Bangla digits accepted; your delivery and refund note above the order button.
 - **Buy now**, plus **WhatsApp** and **Call to order** buttons.
+- **Option buttons**: colours and sizes as buttons instead of drop-down lists, with sold-out choices crossed out.
+- **Order again**: one tap puts an earlier order back in the cart with the checkout already filled in, from My Account or from `{reorder_link}` in an SMS.
 - **SMS, WhatsApp, email and calls**:
   - one-tap restore links and one-time coupons;
   - designed reminder emails;
@@ -33,8 +35,9 @@ Requires WordPress 6.2+, WooCommerce 8.0+ and PHP 7.4+.
   - repeat-order limits;
   - an SMS code for risky cash-on-delivery orders;
   - a Fake Orders page.
-- **Order SMS and tracking**, and a phone-number login for My Account.
-- **Honest reports**: money recovered (compared with the period before), what works per channel, and the most-abandoned products.
+- **Orders to confirm**: every new order in one list with call and WhatsApp buttons and one-tap answers (confirmed, no answer, call back, cancel, fake).
+- **Order SMS and tracking**, **review requests by SMS** (answers become verified-owner reviews), and a phone-number login for My Account.
+- **Honest reports**: money recovered (compared with the period before), what works per channel, the most-abandoned products, and where every order ended up (delivered, returned, cancelled, fake).
 - **CSV export**, and **webhooks** for Zapier, Make and Pabbly.
 - **A clean admin built around your day**: Today (what needs you now), every feature's status at a glance, all integrations in one place, Ctrl+K search, a 5-minute setup and a বাংলা button.
 - **Bangla included.**
@@ -43,7 +46,7 @@ Want more? See [Cartlum Pro](#cartlum-pro) below.
 
 ## Built around your day
 
-Cartlum's admin is organised by a shop's daily work: **Today · Abandoned Carts · Orders · Fake Orders · Checkout & Buttons · AI · Integrations · Settings**.
+Cartlum's admin is organised by a shop's daily work: **Today · Abandoned Carts · Orders · Fake Orders · Reports · Checkout & Buttons · Integrations · Settings**, plus **Offers**, **Landing pages** and **AI** with Pro.
 
 ![Today: what needs you now, and every feature's status](.wordpress-org/screenshot-1.png)
 
@@ -60,6 +63,12 @@ Cartlum's admin is organised by a shop's daily work: **Today · Abandoned Carts 
 | ![Integrations](.wordpress-org/screenshot-6.png) | ![Find a setting](docs/admin-search.png) |
 | **Settings with switches** | **On a phone** |
 | ![Settings](docs/admin-settings.png) | ![Phone](docs/admin-phone.png) |
+
+## On the product page and in My Account
+
+| Option buttons | Order again |
+|---|---|
+| ![Colours as buttons, with a quantity offer above](docs/option-buttons.png) | ![Order again in My Account](docs/order-again.png) |
 
 ## Cartlum Pro
 
@@ -83,9 +92,31 @@ Cartlum Pro is a paid add-on. It installs next to the free plugin and adds:
 | **Couriers: Steadfast, Pathao, RedX, Paperfly**: send parcels from WooCommerce (one, bulk or automatic); delivery status updates by itself | | ✅ |
 | **Facebook Pixel and Conversions API**: no double counting, customer details hashed; for cash on delivery, a purchase counts only if the order isn't cancelled | | ✅ |
 | **Bundle offers** on product pages, and a **customer score** on every cart | | ✅ |
+| **Quantity offers**: "Buy 2, save ৳100" and "Buy 1, get 1 free", applied in the cart by themselves | | ✅ |
+| **Upsell after the order**: one tap adds a product to the same cash-on-delivery order and parcel; a second offer if they say no | | ✅ |
+| **Loyalty points**: earned when an order is delivered, spent at checkout after phone login | | ✅ |
+| **Gift cards**: sold as a product or given by hand, code by SMS, balance kept on the card | | ✅ |
+| **Product landing pages**: a one-product page for your ads with the checkout on the same page | | ✅ |
+| **Customers confirm their own order** from a link in the "order received" SMS | | ✅ |
+| **Staff phone app**: orders to confirm and carts to call, with new-order notifications | | ✅ |
+| **Cartlum fraud network**: how a number did at other shops (hashed, opt-in) | | ✅ |
+| **Reports by district and by product** | | ✅ |
 | Updates and support with a licence key | | ✅ |
 
 Each Pro feature connects with the store's own accounts (SMS gateway, ElevenLabs, FraudBD, Meta). You pay those services directly; Cartlum adds nothing on top.
+
+### Sell more on every order
+
+| Landing page for your ads | Its order form | Offer after the order |
+|---|---|---|
+| ![Landing page](docs/landing-page.png) | ![Order form with colour and quantity](docs/landing-order.png) | ![One-tap upsell on the thank-you page](docs/upsell.png) |
+
+- **Landing pages** (`/lp/<name>/`): headline, photos, video, benefits, reviews and questions, then your real checkout on the same page. Cart capture and fake-order protection work there too. Colour and quantity are buttons, and quantity offers show in the total.
+- **Upsell after the order**: "Wait! Add this to your order?" One tap adds it to the same cash-on-delivery order, so nothing is charged twice and it ships in the same parcel.
+
+| Loyalty points at checkout | Offers in the admin |
+|---|---|
+| ![Loyalty points](docs/loyalty-points.png) | ![Offers → Upsells](docs/offers-upsells.png) |
 
 **Cartlum Pro is coming soon.** To be told when it launches, click **Watch → Custom → Releases** at the top of this page.
 
