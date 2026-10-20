@@ -69,12 +69,14 @@ class Cartlum_Settings {
 			'call_number'           => '',
 			'call_button_text'      => '',      // Empty = "Call to order", translated.
 			'product_button_color'  => '',      // Empty = the theme's Add to cart style.
+			'swatches'              => 'no',    // Option buttons instead of drop-downs.
 
 			// Phone login (My Account).
 			'phone_login'             => 'no',
 			'otp_message'             => '',    // Empty = the default text, translated. {code} {store}.
 			'phone_login_daily_limit' => 300,   // Login codes per day, all numbers together.
 			'account_cart_link'       => 'no',
+			'reorder_enabled'         => 'no',  // Order again + checkout filled in from the last order.
 
 			// Order SMS and tracking.
 			'order_sms_enabled'       => 'no',

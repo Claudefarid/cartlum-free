@@ -42,8 +42,11 @@ class Cartlum_Admin {
 			$hook = add_submenu_page( 'cartlum', $section['label'], $section['label'], self::CAP, $slug, array( __CLASS__, 'screen' ) );
 			if ( 'cartlum-carts' === $slug ) {
 				add_action( 'load-' . $hook, array( 'Cartlum_Admin_Actions', 'bulk' ) );
-			} elseif ( 'cartlum-settings' === $slug ) {
+			}
+			if ( 'cartlum-settings' === $slug ) {
 				add_action( 'load-' . $hook, array( 'Cartlum_Admin_Settings', 'redirect_old_links' ) );
+			} else {
+				add_action( 'load-' . $hook, array( 'Cartlum_Admin_Settings', 'redirect_moved_tab' ) );
 			}
 		}
 		// What Cartlum Pro adds, only while Pro is not installed.

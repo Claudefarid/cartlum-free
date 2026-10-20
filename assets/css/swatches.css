@@ -1,0 +1,55 @@
+/* Cartlum option buttons: colours and sizes as buttons instead of drop-down lists. */
+select[data-cartlum-swatches] {
+	position: absolute !important;
+	width: 1px !important;
+	min-width: 0 !important; /* WooCommerce gives variation selects a min-width of 70%. */
+	height: 1px !important;
+	padding: 0 !important;
+	border: 0 !important;
+	overflow: hidden !important;
+	clip-path: inset(50%) !important;
+	opacity: 0 !important;
+	pointer-events: none !important;
+}
+.cartlum-swatches {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin: 0 0 8px;
+}
+.cartlum-swatch {
+	min-width: 44px;
+	min-height: 40px;
+	margin: 0;
+	padding: 6px 14px;
+	border: 1px solid rgba(0, 0, 0, 0.25);
+	border-radius: 6px;
+	background: #fff;
+	color: #222;
+	font: inherit;
+	line-height: 1.2;
+	cursor: pointer;
+	transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.cartlum-swatch:hover {
+	border-color: currentColor;
+}
+.cartlum-swatch:focus-visible {
+	outline: 2px solid currentColor;
+	outline-offset: 2px;
+}
+.cartlum-swatch[aria-pressed="true"] {
+	border-color: #222;
+	box-shadow: inset 0 0 0 1px #222;
+	font-weight: 600;
+}
+.cartlum-swatch:disabled {
+	opacity: 0.4;
+	text-decoration: line-through;
+	cursor: not-allowed;
+}
+@media (prefers-reduced-motion: reduce) {
+	.cartlum-swatch {
+		transition: none;
+	}
+}

@@ -114,7 +114,14 @@ class Cartlum_Admin_Settings {
 			),
 			'cartlum-checkout'     => array(
 				'label' => __( 'Checkout & Buttons', 'cartlum' ),
-				'tabs'  => array( 'checkout', 'product', 'bundles', 'account' ),
+				'tabs'  => array( 'checkout', 'product', 'account' ),
+				'view'  => '',
+			),
+			// Pro's tools for bigger orders and returning customers; without Pro the page has no tabs
+			// and stays out of the menu.
+			'cartlum-offers'       => array(
+				'label' => __( 'Offers', 'cartlum' ),
+				'tabs'  => array( 'bundles', 'qty_offers', 'upsells', 'loyalty', 'gift_cards' ),
 				'view'  => '',
 			),
 			'cartlum-ai'           => array(
@@ -393,7 +400,7 @@ class Cartlum_Admin_Settings {
 			'tracking'       => __( 'What customers see about their order in My Account, and why orders get cancelled.', 'cartlum' ),
 			'protection'     => __( 'Stops fake and repeat orders before they cost you a delivery.', 'cartlum' ),
 			'checkout'       => __( 'A short one-page checkout: mobile number first, then name, address and district.', 'cartlum' ),
-			'product'        => __( 'Buttons under each product: Buy now, Order on WhatsApp and Call to order.', 'cartlum' ),
+			'product'        => __( 'Buttons on each product: Buy now, Order on WhatsApp, Call to order, and colours and sizes as buttons.', 'cartlum' ),
 			'account'        => __( 'Customers log in to My Account with their mobile number and an SMS code.', 'cartlum' ),
 			'int_sms'        => __( 'Your SMS provider. Every SMS Cartlum sends goes through it.', 'cartlum' ),
 			'int_steadfast'  => __( 'Your Steadfast account: send parcels and get their delivery status.', 'cartlum' ),
@@ -426,6 +433,20 @@ class Cartlum_Admin_Settings {
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- navigation only.
 		$tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : '';
 		if ( '' !== $tab && ( 'cartlum-settings' !== self::page_for_tab( $tab ) || self::resolve_tab( $tab ) !== $tab ) ) {
+			wp_safe_redirect( Cartlum_Admin::url( 'cartlum-settings', array( 'tab' => $tab ) ) );
+			exit;
+		}
+	}
+
+	/**
+	 * A tab opened on a page it no longer lives on (Bundles moved from Checkout & Buttons to Offers)
+	 * goes to its page. Only known tabs: anything else is left to the page.
+	 */
+	public static function redirect_moved_tab() {
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- navigation only.
+		$tab  = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : '';
+		$page = self::current_page();
+		if ( '' !== $tab && isset( self::tabs()[ $tab ] ) && self::page_for_tab( $tab ) !== $page ) {
 			wp_safe_redirect( Cartlum_Admin::url( 'cartlum-settings', array( 'tab' => $tab ) ) );
 			exit;
 		}
@@ -723,6 +744,11 @@ class Cartlum_Admin_Settings {
 						'type'  => 'text',
 						'help'  => __( 'Add to cart, Buy now, WhatsApp and Call sit together as a 2 × 2 group. Enter a colour code, e.g. #2B2620, to give all four that colour; leave empty to keep your theme’s Add to cart style.', 'cartlum' ),
 					),
+					'swatches'             => array(
+						'label' => __( 'Option buttons', 'cartlum' ),
+						'type'  => 'checkbox',
+						'help'  => __( 'Colours, sizes and other options of a product as buttons instead of drop-down lists, so customers see every choice at once. Choices that are not available are crossed out. Leave this off if your theme already shows its own swatches.', 'cartlum' ),
+					),
 				);
 
 			case 'account':
@@ -753,11 +779,16 @@ class Cartlum_Admin_Settings {
 						'type'  => 'checkbox',
 						'help'  => __( 'Adds “Cart” to the My Account menu, after Orders. Works with or without phone login.', 'cartlum' ),
 					),
+					'reorder_enabled'         => array(
+						'label' => __( 'Order again', 'cartlum' ),
+						'type'  => 'checkbox',
+						'help'  => __( '“Order again” next to each order in My Account puts that order back in the cart and opens the checkout already filled in. Customers who are not logged in also find the checkout filled in from their last order on the same phone or computer (remembered for 180 days). The {reorder_link} in order SMS works either way.', 'cartlum' ),
+					),
 				);
 
 			case 'orders':
 				$defaults = Cartlum_Order_SMS::default_texts();
-				$sms_help = __( 'Each message is sent once. Use {name}, {customer} (full name), {order}, {total}, {amount} (plain number: write “Tk {amount}” to keep an SMS free of Bangla characters), {items}, {items_detail} (one line per item: SKU or name, quantity, colour), {phone}, {address}, {status}, {store}, {track_link}, {review_link} (a private link to rate the order, see Review requests), {courier} and {consignment}. Leave a text empty to use the default shown.', 'cartlum' );
+				$sms_help = __( 'Each message is sent once. Use {name}, {customer} (full name), {order}, {total}, {amount} (plain number: write “Tk {amount}” to keep an SMS free of Bangla characters), {items}, {items_detail} (one line per item: SKU or name, quantity, colour), {phone}, {address}, {status}, {store}, {track_link}, {review_link} (a private link to rate the order, see Review requests), {reorder_link} (a private link that puts this order back in the cart and opens a filled-in checkout), {courier} and {consignment}. Leave a text empty to use the default shown.', 'cartlum' );
 				$fields = array(
 					'order_sms_enabled' => array(
 						'label' => __( 'Order SMS', 'cartlum' ),
@@ -1249,6 +1280,19 @@ class Cartlum_Admin_Settings {
 				</div>
 			</form>
 
+			<?php
+			foreach ( $hooks as $hook_tab ) {
+				/**
+				 * Renders extra UI after the settings form, for screens with forms of their own
+				 * (Cartlum Pro: the gift card list). Forms cannot sit inside the settings form.
+				 *
+				 * @param string $tab    Tab.
+				 * @param array  $values Current settings.
+				 */
+				do_action( 'cartlum_settings_after_form', $hook_tab, $values );
+			}
+			?>
+
 			<?php if ( 'int_sms' === $tab && Cartlum_SMS::gateway() ) : ?>
 				<div class="cl-card cl-test">
 					<h2><?php esc_html_e( 'Send a test SMS', 'cartlum' ); ?></h2>
@@ -1375,7 +1419,7 @@ class Cartlum_Admin_Settings {
 		}
 		$tab    = isset( $_POST['tab'] ) ? sanitize_key( $_POST['tab'] ) : 'general';
 		$result = self::store( $tab, isset( $_POST['cartlum'] ) && is_array( $_POST['cartlum'] ) ? wp_unslash( $_POST['cartlum'] ) : array() ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- sanitized per field in store().
-		$reload = (bool) array_intersect( self::hook_tabs( $tab ), array( 'automation', 'bundles', 'licence' ) );
+		$reload = (bool) array_intersect( self::hook_tabs( $tab ), array( 'automation', 'bundles', 'qty_offers', 'upsells', 'gift_cards', 'licence' ) );
 		wp_send_json_success(
 			array(
 				'message' => $result['message'],

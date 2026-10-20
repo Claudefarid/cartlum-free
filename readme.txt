@@ -4,7 +4,7 @@ Tags: abandoned cart, fake order, cash on delivery, order sms, automation
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.29.0
+Stable tag: 0.30.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -46,6 +46,8 @@ Cartlum is for WooCommerce stores that sell cash on delivery, where customers ch
 
 * **Buy now button** (optional): straight from the product page to checkout, with the chosen colour or size.
 * **Order on WhatsApp and Call to order buttons** (optional) on product pages.
+* **Order again** (optional): one tap puts an earlier order back in the cart and opens a filled-in checkout, from My Account or from {reorder_link} in an order SMS; returning guests find the checkout filled in from their last order.
+* **Option buttons** (optional): colours and sizes as buttons instead of drop-down lists, with unavailable choices crossed out.
 * **Bangla included**, and a "Language for customers" setting to show shoppers Bangla while your admin stays in English.
 * Unsubscribe link in every message, automatic data deletion, and WordPress privacy export/erase support.
 
@@ -108,6 +110,13 @@ It can, for stores that only used CartFlows for a shorter checkout. CartFlows' g
 6. Integrations: every connected service with its status.
 
 == Changelog ==
+
+= 0.30.0 =
+* New: Option buttons (Checkout & Buttons → Buy now & buttons, off by default). A product's colours, sizes and other options as buttons instead of drop-down lists; choices with no variation or out of stock are crossed out, and a second tap clears a choice. Price, stock, picture, Add to cart and Buy now work as with the drop-down.
+* New: Order again (Checkout & Buttons → Customer login, off by default). "Order again" next to each order in My Account puts that order back in the cart, with its colours and sizes, and opens the checkout already filled in. Customers who are not logged in find the checkout filled in from their last order on the same phone or computer (180 days); nothing they type is overwritten.
+* New order SMS placeholder {reorder_link}: a private link that does the same from a message. It works with the setting off, link previews in WhatsApp or Messenger do not touch the cart, and sold-out products are left out with a note.
+* Ready for Cartlum Pro 0.15: a new Offers page (Bundles, Quantity offers, Upsells, Loyalty points, Gift cards), shown only with Pro. Old links to Bundles on Checkout & Buttons land on the new page, and any settings tab opened on the wrong page goes to its own.
+* For developers: the cartlum_settings_after_form action, for screens with forms of their own under a settings tab.
 
 = 0.29.0 =
 * Ready for Cartlum Pro 0.14: Orders gets a Phone app tab and Fake Orders a Fraud network tab, and calls logged on a cart work from outside wp-admin too.

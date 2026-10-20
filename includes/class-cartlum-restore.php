@@ -64,7 +64,7 @@ class Cartlum_Restore {
 	 *
 	 * @return bool
 	 */
-	private static function is_preview_bot() {
+	public static function is_preview_bot() {
 		$agent = isset( $_SERVER['HTTP_USER_AGENT'] ) ? strtolower( sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) ) : '';
 		foreach ( array( 'whatsapp/', 'facebookexternalhit', 'facebot', 'telegrambot', 'twitterbot', 'slackbot', 'discordbot', 'linkedinbot', 'skypeuripreview', 'googlebot', 'bingbot', 'applebot' ) as $bot ) {
 			if ( false !== strpos( $agent, $bot ) ) {
