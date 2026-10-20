@@ -1,8 +1,14 @@
-# Cartlum – Abandoned Cart Recovery for WooCommerce
+# Cartlum – Cart Recovery, Fake Order Protection & Automation for WooCommerce
 
-![Cartlum](.wordpress-org/banner-1544x500.png)
+![Cartlum: cart recovery, fake order protection and automation for WooCommerce](.wordpress-org/banner-1544x500.png)
 
-Most abandoned-cart plugins send an email. In many markets customers check out with a phone number and never read email, so the cart is lost. **Cartlum is built phone-first**: it saves the cart the moment a phone number is typed at checkout, then helps you win it back by SMS, phone call, WhatsApp and email.
+For WooCommerce stores where customers check out with a **phone number** and pay **cash on delivery**. Most of these customers never read email, many carts are left half-way, and some orders are fake. Cartlum does three jobs:
+
+1. **Cart recovery**: saves the cart the moment a phone number is typed, then helps you win it back by SMS, call, WhatsApp and email.
+2. **Fake order protection**: confirm every new order in a tap, block numbers that keep cancelling, ask risky buyers for an SMS code.
+3. **Easy automation**: order SMS, tracking, review requests and reminders that run by themselves, and a store ChatGPT and Gemini can sell from.
+
+Free and open source. Bangla included. A paid **Pro** add-on adds couriers, offers, landing pages and AI ([see below](#cartlum-pro)).
 
 ## Download
 
@@ -18,62 +24,75 @@ To update, upload the new zip the same way and choose **Replace current with upl
 
 Requires WordPress 6.2+, WooCommerce 8.0+ and PHP 7.4+.
 
-## Features
+## Today: what needs you, on one screen
 
-- **Saves the cart as the phone number is typed**: classic checkout, block checkout and CartFlows.
-- **Save-cart popup**: asks for the number when a shopper is about to leave, or after "Add to cart".
-- **Phone-first checkout**: mobile number first; Bangla digits accepted; your delivery and refund note above the order button.
-- **Buy now**, plus **WhatsApp** and **Call to order** buttons.
-- **Option buttons**: colours and sizes as buttons instead of drop-down lists, with sold-out choices crossed out.
-- **Sell through AI assistants**: ChatGPT, Gemini, Claude, Grok, Perplexity and Kimi can read your shop (`/llms.txt`, a product feed, delivery and return times in each product's data) and send buyers straight to your checkout with an order link. Orders from AI assistants are counted in Reports.
-- **Order again**: one tap puts an earlier order back in the cart with the checkout already filled in, from My Account or from `{reorder_link}` in an SMS.
-- **SMS, WhatsApp, email and calls**:
-  - one-tap restore links and one-time coupons;
-  - designed reminder emails;
-  - an automatic reminder with quiet hours and a test mode.
-- **Fake-order protection**:
-  - blocks numbers, IP addresses (and ranges) and devices;
-  - repeat-order limits;
-  - an SMS code for risky cash-on-delivery orders;
-  - a Fake Orders page.
-- **Orders to confirm**: every new order in one list with call and WhatsApp buttons and one-tap answers (confirmed, no answer, call back, cancel, fake).
-- **Order SMS and tracking**, **review requests by SMS** (answers become verified-owner reviews), and a phone-number login for My Account.
-- **Honest reports**: money recovered (compared with the period before), what works per channel, the most-abandoned products, and where every order ended up (delivered, returned, cancelled, fake).
-- **CSV export**, and **webhooks** for Zapier, Make and Pabbly.
-- **A clean admin built around your day**: Today (what needs you now), every feature's status at a glance, all integrations in one place, Ctrl+K search, a 5-minute setup and a বাংলা button.
-- **Bangla included.**
+![Today: Needs you now, results with trends, money recovered per day, who to contact](docs/screens/01-today.png)
 
-Want more? See [Cartlum Pro](#cartlum-pro) below.
+- **Needs you now**: carts to call, orders to confirm, parcels to send, risky orders and cancellations without a reason, each with the button that starts the job.
+- **Results** for 7, 30 or 90 days: money recovered, recovery rate, money still waiting and carts saved, each with its change and trend; money recovered per day as a chart (hover a day, or show it as a table); where every abandoned cart went.
+- **Waiting for you**: the people to contact now, with call and WhatsApp one tap away. **What works**: which channel brings carts back.
+
+## 1. Cart recovery
+
+| Every saved cart | One cart: contact and history |
+|---|---|
+| ![Abandoned carts](docs/screens/02-abandoned-carts.png) | ![A cart](docs/screens/03-cart.png) |
+
+| Save-cart popup | Reminder email | Phone-first checkout |
+|---|---|---|
+| ![Save your cart?](docs/screens/43-save-cart-popup.png) | ![Reminder email](docs/screens/35-reminder-email.png) | ![Phone-first checkout](docs/screens/44-phone-first-checkout.png) |
+
+- **Saves the cart as the phone number is typed**, on the classic checkout, the block checkout and CartFlows, before "Place order".
+- **Save-cart popup**: asks for the number when a shopper is about to leave, or right after "Add to cart".
+- **SMS through eSMS, BulkSMSBD, SSL Wireless, Alpha SMS, MiMSMS, Twilio** or any HTTP SMS API; **WhatsApp** with the message written; **designed reminder emails**; a **call list** for staff.
+- **One-tap cart link** that refills the cart and opens checkout; **one-time coupons** only when you offer one.
+- **An automatic reminder** with quiet hours, a daily SMS limit and a test mode.
+- **Honest numbers**: an order counts as recovered only if you contacted the customer first.
+
+## 2. Fake order protection
+
+| Orders to confirm | Risky orders |
+|---|---|
+| ![Orders to confirm](docs/screens/08-orders-to-confirm.png) | ![Fake orders](docs/screens/14-fake-orders.png) |
+
+- **Orders to confirm**: every new order in one list, oldest first, with the customer's history. Call or WhatsApp, then one tap: Confirmed, No answer, Call back, Cancel with a reason, or Fake (and block the number).
+- **Protection**: block numbers, IP addresses (and ranges) and devices; repeat-order and daily limits; a bot trap; an **SMS code for risky orders**.
+- **Phone-first checkout**: mobile number first, then name, address and district. Bangla digits are accepted and Bangladeshi numbers checked.
+- **Cancellation reasons** and a **Reports** page that shows delivery success, returns and fake orders stopped.
+
+## 3. Easy automation
+
+| Order tracking | Review request | Log in with a phone number |
+|---|---|---|
+| ![Order tracking](docs/screens/54-order-tracking.png) | ![Rate your order](docs/screens/49-review-request-page.png) | ![Phone login](docs/screens/52-phone-login.png) |
+
+- **Order SMS** at each step of the order, and a **tracking** bar in My Account with the courier's status.
+- **Review requests by SMS**: a private link to rate each product, no login; answers become "verified owner" reviews.
+- **Log in with a phone number** and an SMS code; every order placed with that number appears in My Account.
+- **Order again**: one tap puts an earlier order back in the cart with the checkout filled in, from My Account or from `{reorder_link}` in an SMS.
+- **Sell through AI assistants**: ChatGPT, Gemini, Claude, Grok, Perplexity and Kimi can read your shop (`/llms.txt`, a product feed, delivery and return times in each product's data) and send buyers to your checkout with an order link. Orders from AI assistants are counted in Reports.
+- **Webhooks** for Zapier, Make and Pabbly, and **CSV export**.
+
+## On the product page
+
+| Buy now, WhatsApp and Call to order | Colours and sizes as buttons | Order again |
+|---|---|---|
+| ![Product buttons](docs/screens/40-product-buttons-bundle.png) | ![Option buttons](docs/screens/42-product-option-buttons.png) | ![Order again](docs/screens/53-my-account-order-again.png) |
 
 ## Built around your day
 
-Cartlum's admin is organised by a shop's daily work: **Today · Abandoned Carts · Orders · Fake Orders · Reports · Checkout & Buttons · Integrations · Settings**, plus **Offers**, **Landing pages** and **AI** with Pro.
+Cartlum's admin is organised by a shop's daily work: **Daily work** (Today, Abandoned Carts, Orders, Fake Orders, Reports), **Sell more** (Offers and Landing pages, with Pro) and **Setup** (Checkout & Buttons, AI, Integrations, Settings). The menu shows how many carts to call, orders to confirm and risky orders are waiting.
 
-![Today: what needs you now, results with trends, and who to contact](docs/screens/01-today.png)
+- **Integrations** keeps every outside service in one place, each with its status, keys and a test button.
+- **Find a setting** (Ctrl K / ⌘ K) jumps straight to any option. Switches and plain words, with technical options under **More options**.
+- **Set up Cartlum in 5 minutes**, and a **বাংলা** button for Cartlum's screens in Bangla.
+- **Works on a phone**: every screen at 360px, with the menu as a strip at the top.
 
-- **Today** opens with what needs you now, each job with its button: carts to call, orders to confirm, parcels to send, risky orders, cancellations without a reason. Then the period's results as cards with trends, money recovered per day, who to contact, what works and the most-abandoned products. **Your features** shows every feature as On, Off or Needs setup.
-- **Integrations** keeps every outside service in one place (SMS, Steadfast, Pathao, RedX, Paperfly, Facebook, FraudBD, WhatsApp, ElevenLabs, AI, webhooks), each with its status, keys and a test button.
-- **Find a setting** (Ctrl K / ⌘ K) on every screen jumps straight to any option.
-- **Simple settings:** switches and plain words, with technical options under **More options**. The **Save** bar saves without reloading, and Cartlum warns before you leave with unsaved changes.
-- **Set up Cartlum in 5 minutes:** a step-by-step first setup.
-- **বাংলা button:** Cartlum's screens in Bangla, for you only.
-- **Works on a phone:** the menu becomes a strip at the top.
-
-| Integrations | Find a setting |
+| Integrations | Reports |
 |---|---|
-| ![Integrations](docs/screens/32-integrations.png) | ![Find a setting](docs/admin-search.png) |
-| **Settings with switches** | **Today on a phone** |
-| ![Settings](docs/screens/33-settings.png) | <img src="docs/screens/01-today-phone.png" alt="Today on a phone" width="300"> |
-
-## What your customers see
-
-| Product page buttons | Colours as buttons | Save-cart popup |
-|---|---|---|
-| ![Buy now, WhatsApp and Call to order](docs/screens/40-product-buttons-bundle.png) | ![Option buttons](docs/screens/42-product-option-buttons.png) | ![Save your cart?](docs/screens/43-save-cart-popup.png) |
-| **Phone-first checkout** | **Log in with a phone number** | **Order again** |
-| ![Phone-first checkout](docs/screens/44-phone-first-checkout.png) | ![Phone login](docs/screens/52-phone-login.png) | ![Order again in My Account](docs/screens/53-my-account-order-again.png) |
-| **Order tracking** | **Review request** | **Reminder email** |
-| ![Order tracking in My Account](docs/screens/54-order-tracking.png) | ![Rate your order](docs/screens/49-review-request-page.png) | ![Reminder email](docs/screens/35-reminder-email.png) |
+| ![Integrations](docs/screens/32-integrations.png) | ![Reports](docs/screens/18-reports.png) |
+| **Find a setting** | **Today on a phone** |
+| ![Find a setting](docs/admin-search.png) | <img src="docs/screens/01-today-phone.png" alt="Today on a phone" width="300"> |
 
 ## Cartlum Pro
 
@@ -126,7 +145,7 @@ Each Pro feature connects with the store's own accounts (SMS gateway, ElevenLabs
 
 **Cartlum Pro is coming soon.** To be told when it launches, click **Watch → Custom → Releases** at the top of this page.
 
-## Screenshots
+## Every screen
 
 Every screen, by area. Features marked *Pro* need Cartlum Pro.
 
