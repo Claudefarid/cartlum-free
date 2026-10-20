@@ -78,6 +78,13 @@ class Cartlum_Settings {
 			'account_cart_link'       => 'no',
 			'reorder_enabled'         => 'no',  // Order again + checkout filled in from the last order.
 
+			// Selling through AI assistants.
+			'ai_shop_enabled'         => 'no',
+			'ai_shop_about'           => '',    // Empty = the site's tagline.
+			'ai_delivery_inside'      => '1-2',
+			'ai_delivery_outside'     => '3-5',
+			'ai_returns_days'         => 7,
+
 			// Order SMS and tracking.
 			'order_sms_enabled'       => 'no',
 			'order_sms_placed'        => 'yes',

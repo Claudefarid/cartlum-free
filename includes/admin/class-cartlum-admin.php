@@ -92,6 +92,83 @@ class Cartlum_Admin {
 	}
 
 	/**
+	 * The menu in its groups (Daily work, Sell more, Setup), with how many jobs wait behind the
+	 * daily pages. Counts come from Today's cache only, so the menu never adds a query.
+	 *
+	 * @param array $items Menu items.
+	 * @return array group id => { label, items }
+	 */
+	private static function rail_groups( array $items ) {
+		$home   = array(
+			'cartlum'              => 'daily',
+			'cartlum-carts'        => 'daily',
+			'cartlum-orders'       => 'daily',
+			'cartlum-fraud'        => 'daily',
+			'cartlum-reports'      => 'daily',
+			'cartlum-offers'       => 'sell',
+			'cartlum-landing'      => 'sell',
+		);
+		$groups = array(
+			'daily' => array(
+				'label' => __( 'Daily work', 'cartlum' ),
+				'items' => array(),
+			),
+			'sell'  => array(
+				'label' => __( 'Sell more', 'cartlum' ),
+				'items' => array(),
+			),
+			'setup' => array(
+				'label' => __( 'Setup', 'cartlum' ),
+				'items' => array(),
+			),
+		);
+		$counts = get_transient( Cartlum_Admin_Today::CACHE );
+		$jobs   = is_array( $counts ) ? array(
+			'cartlum-carts'  => array( (int) $counts['carts'], 'bad', __( 'carts to call', 'cartlum' ) ),
+			'cartlum-orders' => array( (int) $counts['confirm'], 'info', __( 'orders to confirm', 'cartlum' ) ),
+			'cartlum-fraud'  => array( (int) $counts['risky'], 'bad', __( 'risky orders', 'cartlum' ) ),
+		) : array();
+		foreach ( $items as $slug => $item ) {
+			if ( ! empty( $jobs[ $slug ][0] ) ) {
+				$item['count']       = $jobs[ $slug ][0];
+				$item['tone']        = $jobs[ $slug ][1];
+				$item['count_label'] = $jobs[ $slug ][2];
+			}
+			$group = isset( $item['group'] ) && isset( $groups[ $item['group'] ] ) ? $item['group'] : ( $home[ $slug ] ?? 'setup' );
+			$groups[ $group ]['items'][ $slug ] = $item;
+		}
+		return array_filter(
+			$groups,
+			function ( $g ) {
+				return (bool) $g['items'];
+			}
+		);
+	}
+
+	/**
+	 * The SVG shapes a menu icon may use.
+	 *
+	 * @return array
+	 */
+	private static function svg_tags() {
+		return array(
+			'path'   => array( 'd' => true ),
+			'circle' => array(
+				'cx' => true,
+				'cy' => true,
+				'r'  => true,
+			),
+			'rect'   => array(
+				'x'      => true,
+				'y'      => true,
+				'width'  => true,
+				'height' => true,
+				'rx'     => true,
+			),
+		);
+	}
+
+	/**
 	 * The menu's items with their icons (simple line drawings).
 	 *
 	 * @return array slug => { label, icon }
@@ -104,6 +181,7 @@ class Cartlum_Admin {
 			'cartlum-fraud'        => '<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/>',
 			'cartlum-reports'      => '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
 			'cartlum-checkout'     => '<rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M7 15h4"/>',
+			'cartlum-offers'       => '<path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="7.5" r="1.5"/>',
 			'cartlum-ai'           => '<path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><circle cx="12" cy="12" r="5"/>',
 			'cartlum-integrations' => '<path d="M9 7V3M15 7V3M7 7h10v5a5 5 0 0 1-10 0zM12 17v4"/>',
 			'cartlum-settings'     => '<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/>',
@@ -124,6 +202,13 @@ class Cartlum_Admin {
 				'icon'  => $icons[ $slug ] ?? $icons['cartlum-settings'],
 			);
 		}
+		/**
+		 * Filters the Cartlum menu. Each item: slug => { label, icon (SVG paths), url (optional, for
+		 * screens outside Cartlum's pages, e.g. Cartlum Pro's landing pages) }.
+		 *
+		 * @param array $items Items, in menu order.
+		 */
+		$items = (array) apply_filters( 'cartlum_rail_items', $items );
 		if ( ! defined( 'CARTLUM_PRO_VERSION' ) ) {
 			$items['cartlum-pro'] = array(
 				'label' => __( 'Get Pro', 'cartlum' ),
@@ -155,16 +240,26 @@ class Cartlum_Admin {
 		<div class="cl-app">
 			<nav class="cl-rail" aria-label="<?php esc_attr_e( 'Cartlum menu', 'cartlum' ); ?>">
 				<a class="cl-rail__brand" href="<?php echo esc_url( self::url( 'cartlum' ) ); ?>"><span aria-hidden="true">C</span>Cartlum</a>
-				<ul>
-					<?php foreach ( $items as $slug => $item ) : ?>
-						<li>
-							<a href="<?php echo esc_url( self::url( $slug ) ); ?>"<?php echo $slug === $page ? ' aria-current="page"' : ''; ?>>
-								<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><?php echo $item['icon']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- fixed SVG paths defined above. ?></svg>
-								<span><?php echo esc_html( $item['label'] ); ?></span>
-							</a>
-						</li>
+				<div class="cl-rail__groups">
+					<?php foreach ( self::rail_groups( $items ) as $gid => $group ) : ?>
+						<div class="cl-rail__group">
+							<p class="cl-rail__label" id="cl-rail-<?php echo esc_attr( $gid ); ?>"><?php echo esc_html( $group['label'] ); ?></p>
+							<ul aria-labelledby="cl-rail-<?php echo esc_attr( $gid ); ?>">
+								<?php foreach ( $group['items'] as $slug => $item ) : ?>
+									<li>
+										<a href="<?php echo esc_url( isset( $item['url'] ) ? $item['url'] : self::url( $slug ) ); ?>"<?php echo $slug === $page ? ' aria-current="page"' : ''; ?>>
+											<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><?php echo wp_kses( $item['icon'], self::svg_tags() ); ?></svg>
+											<span><?php echo esc_html( $item['label'] ); ?></span>
+											<?php if ( ! empty( $item['count'] ) ) : ?>
+												<span class="cl-rail__count<?php echo 'info' === ( $item['tone'] ?? '' ) ? ' cl-rail__count--info' : ''; ?>"><?php echo esc_html( number_format_i18n( $item['count'] ) ); ?><span class="screen-reader-text"> <?php echo esc_html( $item['count_label'] ?? '' ); ?></span></span>
+											<?php endif; ?>
+										</a>
+									</li>
+								<?php endforeach; ?>
+							</ul>
+						</div>
 					<?php endforeach; ?>
-				</ul>
+				</div>
 				<p class="cl-rail__foot">
 					<?php
 					echo esc_html( 'Cartlum ' . CARTLUM_VERSION );
@@ -438,6 +533,7 @@ class Cartlum_Admin {
 		$stats    = Cartlum_Carts::stats( $days );
 		$previous = Cartlum_Carts::stats( $days, $days );
 		$channels = Cartlum_Events::channel_stats( $days );
+		$series   = Cartlum_Carts::daily( $days );
 		$products = Cartlum_Carts::top_products( $days, 6 );
 		$open     = Cartlum_Carts::query(
 			array(

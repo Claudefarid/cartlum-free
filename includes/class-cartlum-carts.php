@@ -275,6 +275,60 @@ class Cartlum_Carts {
 	}
 
 	/**
+	 * The period's carts per day in the store's time zone (per week for 90 days), for the dashboard's
+	 * charts: captured, abandoned, recovered and the money recovered, counted by the day the cart
+	 * was saved, as stats() counts them.
+	 *
+	 * @param int $days Look-back window.
+	 * @return array[] { start (Y-m-d), label, captured, abandoned, recovered, revenue }, oldest first.
+	 */
+	public static function daily( $days = 30 ) {
+		global $wpdb;
+		$rows = $wpdb->get_results(
+			$wpdb->prepare(
+				'SELECT created_at, status, order_total FROM %i WHERE created_at >= %s ORDER BY id DESC LIMIT 20000',
+				Cartlum_Install::table( 'carts' ),
+				gmdate( 'Y-m-d H:i:s', time() - $days * DAY_IN_SECONDS )
+			)
+		);
+		$step    = $days > 31 ? 7 : 1;
+		$today   = new DateTimeImmutable( 'today', wp_timezone() );
+		$first   = $today->modify( '-' . ( $days - 1 ) . ' days' );
+		$buckets = array();
+		for ( $d = 0; $d < $days; $d += $step ) {
+			$start            = $first->modify( '+' . $d . ' days' );
+			$buckets[ $d ]    = array(
+				'start'     => $start->format( 'Y-m-d' ),
+				'label'     => 7 === $step
+					/* translators: %s: first day of the week, e.g. 12 Oct */
+					? sprintf( __( 'Week of %s', 'cartlum' ), wp_date( 'j M', $start->getTimestamp() ) )
+					: wp_date( 'j M', $start->getTimestamp() ),
+				'captured'  => 0,
+				'abandoned' => 0,
+				'recovered' => 0,
+				'revenue'   => 0.0,
+			);
+		}
+		foreach ( (array) $rows as $row ) {
+			$local = ( new DateTimeImmutable( $row->created_at, new DateTimeZone( 'UTC' ) ) )->setTimezone( wp_timezone() );
+			$index = (int) floor( ( $local->setTime( 0, 0 )->getTimestamp() - $first->getTimestamp() ) / DAY_IN_SECONDS );
+			if ( $index < 0 || $index >= $days ) {
+				continue;
+			}
+			$key = $index - ( $index % $step );
+			++$buckets[ $key ]['captured'];
+			if ( in_array( $row->status, array( 'abandoned', 'recovered', 'lost', 'optout' ), true ) ) {
+				++$buckets[ $key ]['abandoned'];
+			}
+			if ( 'recovered' === $row->status ) {
+				++$buckets[ $key ]['recovered'];
+				$buckets[ $key ]['revenue'] += (float) $row->order_total;
+			}
+		}
+		return array_values( $buckets );
+	}
+
+	/**
 	 * Products most often left in abandoned carts: how many carts, how many of those came back, and
 	 * the value left behind. Counts every cart that reached abandonment, whatever happened next.
 	 *

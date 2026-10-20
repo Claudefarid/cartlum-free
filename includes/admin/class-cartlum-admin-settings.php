@@ -46,6 +46,7 @@ class Cartlum_Admin_Settings {
 			'product'        => __( 'Buy now & buttons', 'cartlum' ),
 			'popup'          => __( 'Save-cart popup', 'cartlum' ),
 			'account'        => __( 'Customer login', 'cartlum' ),
+			'ai_shop'        => __( 'AI assistants', 'cartlum' ),
 			'orders'         => __( 'Order SMS', 'cartlum' ),
 			'reviews'        => __( 'Review requests', 'cartlum' ),
 			'protection'     => __( 'Protection', 'cartlum' ),
@@ -114,14 +115,14 @@ class Cartlum_Admin_Settings {
 			),
 			'cartlum-checkout'     => array(
 				'label' => __( 'Checkout & Buttons', 'cartlum' ),
-				'tabs'  => array( 'checkout', 'product', 'account' ),
+				'tabs'  => array( 'checkout', 'product', 'account', 'ai_shop' ),
 				'view'  => '',
 			),
 			// Pro's tools for bigger orders and returning customers; without Pro the page has no tabs
 			// and stays out of the menu.
 			'cartlum-offers'       => array(
 				'label' => __( 'Offers', 'cartlum' ),
-				'tabs'  => array( 'bundles', 'qty_offers', 'upsells', 'loyalty', 'gift_cards' ),
+				'tabs'  => array( 'bundles', 'qty_offers', 'upsells', 'reco', 'loyalty', 'gift_cards' ),
 				'view'  => '',
 			),
 			'cartlum-ai'           => array(
@@ -402,6 +403,7 @@ class Cartlum_Admin_Settings {
 			'checkout'       => __( 'A short one-page checkout: mobile number first, then name, address and district.', 'cartlum' ),
 			'product'        => __( 'Buttons on each product: Buy now, Order on WhatsApp, Call to order, and colours and sizes as buttons.', 'cartlum' ),
 			'account'        => __( 'Customers log in to My Account with their mobile number and an SMS code.', 'cartlum' ),
+			'ai_shop'        => __( 'Help ChatGPT, Gemini, Claude, Grok, Perplexity and Kimi recommend your products and send buyers to your checkout.', 'cartlum' ),
 			'int_sms'        => __( 'Your SMS provider. Every SMS Cartlum sends goes through it.', 'cartlum' ),
 			'int_steadfast'  => __( 'Your Steadfast account: send parcels and get their delivery status.', 'cartlum' ),
 			'int_pathao'     => __( 'Your Pathao account: send parcels and get their delivery status.', 'cartlum' ),
@@ -783,6 +785,37 @@ class Cartlum_Admin_Settings {
 						'label' => __( 'Order again', 'cartlum' ),
 						'type'  => 'checkbox',
 						'help'  => __( '“Order again” next to each order in My Account puts that order back in the cart and opens the checkout already filled in. Customers who are not logged in also find the checkout filled in from their last order on the same phone or computer (remembered for 180 days). The {reorder_link} in order SMS works either way.', 'cartlum' ),
+					),
+				);
+
+			case 'ai_shop':
+				return array(
+					'ai_shop_enabled'     => array(
+						'label' => __( 'Sell through AI assistants', 'cartlum' ),
+						'type'  => 'checkbox',
+						'help'  => __( 'People ask ChatGPT, Gemini, Claude, Grok, Perplexity or Kimi what to buy. This adds your shop in plain words at /llms.txt, a product feed with prices, stock and order links, delivery and return times in each product page’s data, and order links that open your checkout with the product in the cart. Orders from AI assistants are marked and counted in Reports. Checkout stays your own, with cash on delivery. Do not block AI crawlers (GPTBot, Google-Extended, ClaudeBot, PerplexityBot) in robots.txt or a security plugin.', 'cartlum' ),
+					),
+					'ai_shop_about'       => array(
+						'label' => __( 'About your shop', 'cartlum' ),
+						'type'  => 'textarea',
+						'help'  => __( 'Two or three sentences for AI assistants: what you sell, for whom, what makes it good. Empty = your site’s tagline.', 'cartlum' ),
+					),
+					'ai_delivery_inside'  => array(
+						'label' => __( 'Delivery inside Dhaka (days)', 'cartlum' ),
+						'type'  => 'text',
+						'help'  => __( 'e.g. 1-2', 'cartlum' ),
+					),
+					'ai_delivery_outside' => array(
+						'label' => __( 'Delivery outside Dhaka (days)', 'cartlum' ),
+						'type'  => 'text',
+						'help'  => __( 'e.g. 3-5', 'cartlum' ),
+					),
+					'ai_returns_days'     => array(
+						'label' => __( 'Exchange or return within (days)', 'cartlum' ),
+						'type'  => 'number',
+						'min'   => 0,
+						'max'   => 365,
+						'help'  => __( '0 = say nothing about returns.', 'cartlum' ),
 					),
 				);
 

@@ -451,4 +451,41 @@
 			}
 		} );
 	}
+
+	/* ---------- Charts: the value of a column on hover and keyboard focus ---------- */
+
+	document.querySelectorAll( '[data-cartlum-chart]' ).forEach( function ( chart ) {
+		var plot = chart.querySelector( '.cl-chart__plot' );
+		var tip = chart.querySelector( '.cl-chart__tip' );
+		if ( ! plot || ! tip ) {
+			return;
+		}
+		function show( col ) {
+			var p = plot.getBoundingClientRect();
+			var c = col.getBoundingClientRect();
+			tip.textContent = col.getAttribute( 'data-tip' );
+			tip.hidden = false;
+			// Centred on the column, kept inside the plot at both ends.
+			var half = tip.offsetWidth / 2;
+			var x = c.left - p.left + c.width / 2;
+			tip.style.left = Math.max( half, Math.min( p.width - half, x ) ) + 'px';
+		}
+		function hide() {
+			tip.hidden = true;
+		}
+		plot.addEventListener( 'pointerover', function ( e ) {
+			var col = e.target.closest( '.cl-chart__col' );
+			if ( col ) {
+				show( col );
+			}
+		} );
+		plot.addEventListener( 'pointerleave', hide );
+		plot.addEventListener( 'focusin', function ( e ) {
+			var col = e.target.closest( '.cl-chart__col' );
+			if ( col ) {
+				show( col );
+			}
+		} );
+		plot.addEventListener( 'focusout', hide );
+	} );
 }() );

@@ -37,6 +37,7 @@ require_once CARTLUM_DIR . 'includes/class-cartlum-buy-now.php';
 require_once CARTLUM_DIR . 'includes/class-cartlum-product-buttons.php';
 require_once CARTLUM_DIR . 'includes/class-cartlum-swatches.php';
 require_once CARTLUM_DIR . 'includes/class-cartlum-reorder.php';
+require_once CARTLUM_DIR . 'includes/class-cartlum-ai-shop.php';
 require_once CARTLUM_DIR . 'includes/class-cartlum-phone-login.php';
 require_once CARTLUM_DIR . 'includes/class-cartlum-order-tracking.php';
 require_once CARTLUM_DIR . 'includes/class-cartlum-order-sms.php';
@@ -119,6 +120,7 @@ final class Cartlum {
 		Cartlum_Product_Buttons::init();
 		Cartlum_Swatches::init();
 		Cartlum_Reorder::init();
+		Cartlum_AI_Shop::init();
 		Cartlum_Phone_Login::init();
 		Cartlum_Order_Tracking::init();
 		Cartlum_Order_SMS::init();
@@ -140,6 +142,7 @@ final class Cartlum {
 			require_once CARTLUM_DIR . 'includes/admin/class-cartlum-cancel-reasons.php';
 			require_once CARTLUM_DIR . 'includes/admin/class-cartlum-admin-integrations.php';
 			require_once CARTLUM_DIR . 'includes/admin/class-cartlum-admin-today.php';
+			require_once CARTLUM_DIR . 'includes/admin/class-cartlum-admin-charts.php';
 			require_once CARTLUM_DIR . 'includes/admin/class-cartlum-admin-setup.php';
 			Cartlum_Admin::init();
 			Cartlum_Admin_Settings::init();

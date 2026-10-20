@@ -132,6 +132,15 @@ $message   = '' !== $message ? $message : __( 'We have received your order and w
 						<h2 class="clx-card__title"><?php esc_html_e( 'Your order is confirmed', 'cartlum' ); ?></h2>
 						<p><?php echo esc_html( str_replace( '{phone}', $phone, $message ) ); ?></p>
 					</section>
+					<?php
+					/**
+					 * Fires under "Your order is confirmed" on Cartlum's thank-you page, high enough to
+					 * be seen (Cartlum Pro: the offer after the order).
+					 *
+					 * @param WC_Order $order Order.
+					 */
+					do_action( 'cartlum_thankyou_after_confirmation', $order );
+					?>
 				<?php endif; ?>
 
 				<?php

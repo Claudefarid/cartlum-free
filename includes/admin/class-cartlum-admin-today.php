@@ -92,9 +92,12 @@ class Cartlum_Admin_Today {
 				array( __( 'Easy checkout', 'cartlum' ), $state( $on( 'checkout_enabled' ) ), $link( 'checkout' ) ),
 				array( __( 'Buy now button', 'cartlum' ), $state( $on( 'buy_now_enabled' ) ), $link( 'product' ) ),
 				array( __( 'WhatsApp & call buttons', 'cartlum' ), $state( $on( 'whatsapp_button' ) || $on( 'call_button' ) ), $link( 'product' ) ),
+				array( __( 'Option buttons', 'cartlum' ), $state( $on( 'swatches' ) ), $link( 'product' ) ),
 				array( __( 'Phone login', 'cartlum' ), $state( $on( 'phone_login' ), $sms ), $link( 'account' ) ),
+				array( __( 'Order again', 'cartlum' ), $state( $on( 'reorder_enabled' ) ), $link( 'account' ) ),
 			),
 			__( 'AI & marketing', 'cartlum' )     => array(
+				array( __( 'Sell through AI assistants', 'cartlum' ), $state( $on( 'ai_shop_enabled' ) ), $link( 'ai_shop' ) ),
 				array( __( 'AI call', 'cartlum' ), $pro_one( 'ai_call', 'on' === $ints['elevenlabs']['status'] ? 'on' : 'off' ), $link( 'ai_call' ) ),
 				array( __( 'AI writer', 'cartlum' ), $pro_one( 'ai', 'on' === $ints['ai']['status'] ? 'on' : 'off' ), $link( 'ai' ) ),
 				array( __( 'Facebook purchases', 'cartlum' ), $pro_one( 'facebook', 'on' === $ints['facebook']['status'] ? 'on' : 'off' ), $link( 'facebook' ) ),
@@ -202,87 +205,91 @@ class Cartlum_Admin_Today {
 	}
 
 	/**
-	 * "Needs you now" cards and setup problems.
+	 * "Needs you now": one row per job waiting, each with the button that starts it, then anything
+	 * switched on that still needs setting up. Nothing to do is one quiet line.
 	 *
 	 * @param array $c Counts.
 	 */
 	public static function cards( array $c ) {
-		$cards = array();
+		// tone, count, what, detail, url, button, icon.
+		$rows = array();
 		if ( $c['carts'] ) {
-			$cards[] = array(
+			$rows[] = array(
 				'bad',
-				$c['carts'],
+				number_format_i18n( $c['carts'] ),
 				__( 'Carts to call', 'cartlum' ),
 				/* translators: %s: money waiting in carts */
 				sprintf( __( 'No contact yet · %s waiting', 'cartlum' ), wp_strip_all_tags( wc_price( $c['carts_value'] ) ) ),
 				Cartlum_Admin::url( 'cartlum-carts', array( 'status' => 'abandoned' ) ),
+				__( 'Call', 'cartlum' ),
+				'phone',
 			);
 		}
 		if ( $c['confirm'] ) {
-			$cards[] = array( 'info', $c['confirm'], __( 'Orders to confirm', 'cartlum' ), __( 'New orders not confirmed yet', 'cartlum' ), Cartlum_Admin::url( 'cartlum-orders' ) );
+			$rows[] = array( 'info', number_format_i18n( $c['confirm'] ), __( 'Orders to confirm', 'cartlum' ), __( 'New orders not confirmed yet', 'cartlum' ), Cartlum_Admin::url( 'cartlum-orders' ), __( 'Confirm', 'cartlum' ), 'check' );
 		}
 		if ( $c['parcels'] ) {
-			$cards[] = array( 'warn', $c['parcels'], __( 'Parcels to send', 'cartlum' ), __( 'Processing, not sent to a courier', 'cartlum' ), self::orders_url( 'processing' ) );
+			$rows[] = array( 'warn', number_format_i18n( $c['parcels'] ), __( 'Parcels to send', 'cartlum' ), __( 'Processing, not sent to a courier', 'cartlum' ), self::orders_url( 'processing' ), __( 'Send', 'cartlum' ), 'parcel' );
 		}
 		if ( $c['risky'] ) {
-			$cards[] = array( 'bad', $c['risky'], __( 'Risky orders', 'cartlum' ), __( 'Often cancel · still to ship', 'cartlum' ), Cartlum_Admin::url( 'cartlum-fraud' ) );
+			$rows[] = array( 'bad', number_format_i18n( $c['risky'] ), __( 'Risky orders', 'cartlum' ), __( 'Often cancel · still to ship', 'cartlum' ), Cartlum_Admin::url( 'cartlum-fraud' ), __( 'Check', 'cartlum' ), 'shield' );
 		}
 		if ( $c['reasons'] ) {
-			$cards[] = array( 'warn', $c['reasons'], __( 'Cancelled without a reason', 'cartlum' ), __( 'Tag them in two clicks', 'cartlum' ), Cartlum_Admin::url( 'cartlum-fraud' ) . '#cancel-reasons' );
+			$rows[] = array( 'warn', number_format_i18n( $c['reasons'] ), __( 'Cancelled without a reason', 'cartlum' ), __( 'Tag them in two clicks', 'cartlum' ), Cartlum_Admin::url( 'cartlum-fraud' ) . '#cancel-reasons', __( 'Tag', 'cartlum' ), 'tag' );
 		}
-		$problems = array();
 		foreach ( self::features() as $items ) {
 			foreach ( $items as $item ) {
 				if ( 'setup' === $item[1] ) {
-					$problems[] = $item;
+					$rows[] = array( 'setup', '!', $item[0], __( 'On, but needs setting up to work', 'cartlum' ), $item[2], __( 'Set up', 'cartlum' ), 'setup' );
 				}
 			}
 		}
-		foreach ( $problems as $item ) {
-			printf(
-				'<div class="cl-alert"><span>%1$s</span> <a class="button" href="%2$s">%3$s</a></div>',
-				/* translators: %s: feature */
-				esc_html( sprintf( __( '%s is on, but needs setting up to work.', 'cartlum' ), $item[0] ) ),
-				esc_url( $item[2] ),
-				esc_html__( 'Set up', 'cartlum' )
-			);
-		}
-		$updated = sprintf(
-			'<span class="cl-updated">%1$s · <button type="button" class="button-link" data-cartlum-today-refresh>%2$s</button></span>',
-			/* translators: %s: time ago */
-			esc_html( sprintf( __( 'Updated %s ago', 'cartlum' ), human_time_diff( (int) $c['at'] ) ) ),
-			esc_html__( 'Refresh', 'cartlum' )
-		);
-		if ( ! $cards ) {
-			// Nothing to do is one quiet line, not a card.
-			echo '<p class="cl-allclear"><span class="cl-dot" aria-hidden="true"></span><span><strong>' . esc_html__( 'All caught up.', 'cartlum' ) . '</strong> ' . esc_html__( 'No carts to call, orders to confirm or risky orders right now.', 'cartlum' ) . '</span>' . $updated . '</p>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped above.
+		?>
+		<div class="cl-now__head">
+			<h2><?php esc_html_e( 'Needs you now', 'cartlum' ); ?></h2>
+			<span class="cl-updated">
+				<?php
+				/* translators: %s: time ago */
+				echo esc_html( sprintf( __( 'Updated %s ago', 'cartlum' ), human_time_diff( (int) $c['at'] ) ) );
+				?>
+				· <button type="button" class="button-link" data-cartlum-today-refresh><?php esc_html_e( 'Refresh', 'cartlum' ); ?></button>
+			</span>
+		</div>
+		<?php if ( ! $rows ) : ?>
+			<p class="cl-allclear"><span class="cl-dot" aria-hidden="true"></span><span><strong><?php esc_html_e( 'All caught up.', 'cartlum' ); ?></strong> <?php esc_html_e( 'No carts to call, orders to confirm or risky orders right now.', 'cartlum' ); ?></span></p>
+			<?php
 			return;
-		}
-		echo '<div class="cl-act-grid">';
-		foreach ( $cards as $card ) {
-			printf(
-				'<a class="cl-act cl-act--%1$s" href="%2$s"><span class="cl-act__n">%3$s</span><span class="cl-act__t">%4$s</span><span class="cl-act__s">%5$s</span></a>',
-				esc_attr( $card[0] ),
-				esc_url( $card[4] ),
-				esc_html( number_format_i18n( $card[1] ) ),
-				esc_html( $card[2] ),
-				esc_html( $card[3] )
-			);
-		}
-		echo '</div>';
-		echo '<p class="cl-muted">' . $updated . '</p>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped above.
+		endif;
+		?>
+		<ul class="cl-now__list">
+			<?php foreach ( $rows as $row ) : ?>
+				<li class="cl-now__row cl-now__row--<?php echo esc_attr( $row[0] ); ?>">
+					<span class="cl-now__icon"><?php echo Cartlum_Admin_Charts::icon( $row[6] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- fixed SVG shapes. ?></span>
+					<span class="cl-now__text">
+						<a class="cl-now__what" href="<?php echo esc_url( $row[4] ); ?>"><?php echo esc_html( $row[2] ); ?></a>
+						<span class="cl-now__detail"><?php echo esc_html( $row[3] ); ?></span>
+					</span>
+					<?php if ( 'setup' !== $row[0] ) : ?>
+						<span class="cl-now__n"><?php echo esc_html( $row[1] ); ?></span>
+					<?php endif; ?>
+					<a class="button cl-now__go" href="<?php echo esc_url( $row[4] ); ?>"><?php echo esc_html( $row[5] ); ?></a>
+				</li>
+			<?php endforeach; ?>
+		</ul>
+		<?php
 	}
 
 	/**
-	 * The Today block at the top of the home screen: cards, loaded after the page.
+	 * The Today block at the top of the home screen, filled after the page shows.
 	 */
 	public static function render() {
 		Cartlum_Admin_Setup::banner();
 		?>
-		<section class="cl-today" aria-label="<?php esc_attr_e( 'Needs you now', 'cartlum' ); ?>" data-cartlum-today data-nonce="<?php echo esc_attr( wp_create_nonce( 'cartlum_today' ) ); ?>">
-			<div class="cl-act-grid" aria-busy="true">
-				<span class="cl-act cl-skel"></span><span class="cl-act cl-skel"></span><span class="cl-act cl-skel"></span>
-			</div>
+		<section class="cl-now" aria-label="<?php esc_attr_e( 'Needs you now', 'cartlum' ); ?>" data-cartlum-today data-nonce="<?php echo esc_attr( wp_create_nonce( 'cartlum_today' ) ); ?>">
+			<div class="cl-now__head"><h2><?php esc_html_e( 'Needs you now', 'cartlum' ); ?></h2></div>
+			<ul class="cl-now__list" aria-busy="true">
+				<li class="cl-now__row cl-skel"></li><li class="cl-now__row cl-skel"></li>
+			</ul>
 		</section>
 		<?php
 	}

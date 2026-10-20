@@ -4,7 +4,7 @@ Tags: abandoned cart, fake order, cash on delivery, order sms, automation
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.30.0
+Stable tag: 0.31.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -46,6 +46,7 @@ Cartlum is for WooCommerce stores that sell cash on delivery, where customers ch
 
 * **Buy now button** (optional): straight from the product page to checkout, with the chosen colour or size.
 * **Order on WhatsApp and Call to order buttons** (optional) on product pages.
+* **Sell through AI assistants** (optional): /llms.txt, a product feed with prices and order links, delivery and return times in each product's data, order links that open your checkout, and orders from ChatGPT, Gemini, Claude, Grok, Perplexity or Kimi counted in Reports.
 * **Order again** (optional): one tap puts an earlier order back in the cart and opens a filled-in checkout, from My Account or from {reorder_link} in an order SMS; returning guests find the checkout filled in from their last order.
 * **Option buttons** (optional): colours and sizes as buttons instead of drop-down lists, with unavailable choices crossed out.
 * **Bangla included**, and a "Language for customers" setting to show shoppers Bangla while your admin stays in English.
@@ -110,6 +111,15 @@ It can, for stores that only used CartFlows for a shorter checkout. CartFlows' g
 6. Integrations: every connected service with its status.
 
 == Changelog ==
+
+= 0.31.0 =
+* New: Sell through AI assistants (Checkout & Buttons → AI assistants, off by default). For people who ask ChatGPT, Gemini, Claude, Grok, Perplexity or Kimi what to buy: /llms.txt describes the shop in plain words (what it sells, how to order, payment, delivery times, returns, phone) with every product's price and order link; a JSON product feed (?cartlum_feed=json) lists every product and colour with price, stock and order link; each product page's data gains delivery time, return window and the payment methods; order links (?cartlum_order=ID) open the checkout with that product in the cart. Orders whose visit came from an AI assistant get a note and are counted in Reports → Orders from AI assistants. Checkout stays the store's own, with cash on delivery.
+* Redesigned Today: one "Needs you now" list, each job with its button (Call, Confirm, Send, Check, Tag) and anything switched on that still needs setting up; "Updated · Refresh" sits in its header. No more coloured side stripes. "Too early to judge" is said once under What works.
+* Today's results as cards and a chart: Recovered, Recovery rate, Still waiting and Carts saved, each with its change against the period before and a trend line; "Recovered per day" (per week for 90 days) as columns with the value on hover or keyboard focus and a "Show as table" view; icons for each job in Needs you now and each channel in What works.
+* Cartlum's menu is grouped into Daily work, Sell more and Setup, and shows how many carts to call, orders to confirm and risky orders wait. On Cartlum's screens WordPress's copy of the menu stays folded.
+* Today's feature board lists Option buttons, Order again and Sell through AI assistants.
+* Ready for Cartlum Pro 0.16: Offers gets a Recommendations tab; the offer after the order shows right under "Your order is confirmed" on Cartlum's thank-you page; Landing pages sits after Offers in the Cartlum menu, and Offers has its own icon.
+* For developers: the cartlum_thankyou_after_confirmation action and the cartlum_rail_items filter (menu items may link outside Cartlum's pages).
 
 = 0.30.0 =
 * New: Option buttons (Checkout & Buttons → Buy now & buttons, off by default). A product's colours, sizes and other options as buttons instead of drop-down lists; choices with no variation or out of stock are crossed out, and a second tap clears a choice. Price, stock, picture, Add to cart and Buy now work as with the drop-down.

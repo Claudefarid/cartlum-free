@@ -12,6 +12,7 @@
  * @var array $open
  * @var array $contacts
  * @var array $next
+ * @var array $series
  * @var int   $days
  */
 
@@ -32,9 +33,6 @@ $flow_on   = Cartlum_Flow::enabled();
 $test_mode = $flow_on && '' !== trim( (string) Cartlum_Settings::get( 'flow_test_phone' ) );
 $quiet_a   = (int) Cartlum_Settings::get( 'quiet_start' );
 $quiet_b   = (int) Cartlum_Settings::get( 'quiet_end' );
-
-// Recovered revenue against the period before.
-$change = $stats['recovered_revenue'] - $previous['recovered_revenue'];
 
 // Where the abandoned carts of this period ended up.
 $went = array(
@@ -125,53 +123,76 @@ $open_value = array_sum( array_map( 'floatval', wp_list_pluck( $open['rows'], 'c
 		<?php endif; ?>
 	</ul>
 
-	<section class="cl-ledger" aria-label="<?php esc_attr_e( 'Summary', 'cartlum' ); ?>">
-		<div class="cl-ledger__lead">
-			<span class="cl-ledger__label"><?php esc_html_e( 'Recovered', 'cartlum' ); ?></span>
-			<span class="cl-ledger__value cl-good"><?php echo wp_kses_post( Cartlum_Admin::money( $stats['recovered_revenue'] ) ); ?></span>
-			<span class="cl-ledger__sub">
+	<?php
+	$money_change = $stats['recovered_revenue'] - $previous['recovered_revenue'];
+	$rate_before  = (float) $previous['recovery_rate'];
+	$trend_rate   = array_map(
+		function ( $b ) {
+			return $b['abandoned'] ? 100 * $b['recovered'] / $b['abandoned'] : 0;
+		},
+		$series
+	);
+	$has_before   = $previous['captured'] > 0;
+	echo '<div class="cl-stats">';
+	Cartlum_Admin_Charts::stat(
+		array(
+			'icon'  => 'money',
+			'label' => __( 'Recovered', 'cartlum' ),
+			'value' => Cartlum_Admin::money( $stats['recovered_revenue'] ),
+			/* translators: %d: number of orders */
+			'sub'   => sprintf( _n( '%d order', '%d orders', $stats['recovered'], 'cartlum' ), $stats['recovered'] ),
+			'delta' => $has_before ? Cartlum_Admin_Charts::delta( $stats['recovered_revenue'], $previous['recovered_revenue'], ( $money_change >= 0 ? '+' : '−' ) . Cartlum_Admin_Charts::short_money( abs( $money_change ) ) ) : null,
+			'trend' => wp_list_pluck( $series, 'revenue' ),
+			'tone'  => 'good',
+		)
+	);
+	Cartlum_Admin_Charts::stat(
+		array(
+			'icon'  => 'percent',
+			'label' => __( 'Recovery rate', 'cartlum' ),
+			'value' => esc_html( number_format_i18n( $stats['recovery_rate'], 0 ) . '%' ),
+			/* translators: %d: abandoned carts */
+			'sub'   => sprintf( _n( 'of %d abandoned cart', 'of %d abandoned carts', $stats['abandoned'], 'cartlum' ), $stats['abandoned'] ),
+			/* translators: %s: percentage points */
+			'delta' => $has_before ? Cartlum_Admin_Charts::delta( $stats['recovery_rate'], $rate_before, sprintf( __( '%s pts', 'cartlum' ), number_format_i18n( abs( $stats['recovery_rate'] - $rate_before ), 0 ) ) ) : null,
+			'trend' => $trend_rate,
+		)
+	);
+	Cartlum_Admin_Charts::stat(
+		array(
+			'icon'  => 'clock',
+			'label' => __( 'Still waiting', 'cartlum' ),
+			'value' => Cartlum_Admin::money( $stats['open_value'] ),
+			/* translators: %d: number of carts */
+			'sub'   => sprintf( _n( '%d cart to follow up', '%d carts to follow up', $stats['open'], 'cartlum' ), $stats['open'] ),
+			'tone'  => 'warn',
+		)
+	);
+	Cartlum_Admin_Charts::stat(
+		array(
+			'icon'  => 'cart',
+			'label' => __( 'Carts saved', 'cartlum' ),
+			'value' => esc_html( number_format_i18n( $stats['captured'] ) ),
+			/* translators: %d: number of carts */
+			'sub'   => sprintf( __( '%d ordered without help', 'cartlum' ), $stats['converted'] ),
+			'delta' => $has_before ? Cartlum_Admin_Charts::delta( $stats['captured'], $previous['captured'], ( $stats['captured'] >= $previous['captured'] ? '+' : '−' ) . number_format_i18n( abs( $stats['captured'] - $previous['captured'] ) ) ) : null,
+			'trend' => wp_list_pluck( $series, 'captured' ),
+		)
+	);
+	echo '</div>';
+	?>
+
+	<section class="cl-section cl-chartcard">
+		<div class="cl-section__head">
+			<h2><?php echo esc_html( $days > 31 ? __( 'Recovered per week', 'cartlum' ) : __( 'Recovered per day', 'cartlum' ) ); ?></h2>
+			<span class="cl-muted">
 				<?php
-				/* translators: 1: number of orders, 2: recovery rate, 3: abandoned carts */
-				echo esc_html( sprintf( _n( '%1$d order · %2$s%% of %3$d abandoned carts', '%1$d orders · %2$s%% of %3$d abandoned carts', $stats['recovered'], 'cartlum' ), $stats['recovered'], number_format_i18n( $stats['recovery_rate'], 0 ), $stats['abandoned'] ) );
+				/* translators: 1: money, 2: number of days */
+				echo wp_kses_post( sprintf( __( '%1$s in the last %2$d days', 'cartlum' ), Cartlum_Admin::money( $stats['recovered_revenue'] ), $days ) );
 				?>
 			</span>
-			<?php if ( $previous['captured'] > 0 ) : ?>
-				<span class="cl-delta cl-delta--<?php echo esc_attr( $change > 0 ? 'up' : ( $change < 0 ? 'down' : 'flat' ) ); ?>">
-					<?php
-					if ( $change > 0 ) {
-						/* translators: 1: amount, 2: number of days */
-						echo wp_kses_post( sprintf( __( '▲ %1$s more than the %2$d days before', 'cartlum' ), Cartlum_Admin::money( $change ), $days ) );
-					} elseif ( $change < 0 ) {
-						/* translators: 1: amount, 2: number of days */
-						echo wp_kses_post( sprintf( __( '▼ %1$s less than the %2$d days before', 'cartlum' ), Cartlum_Admin::money( abs( $change ) ), $days ) );
-					} else {
-						/* translators: %d: number of days */
-						echo esc_html( sprintf( __( 'Same as the %d days before', 'cartlum' ), $days ) );
-					}
-					?>
-				</span>
-			<?php endif; ?>
 		</div>
-		<div class="cl-ledger__item">
-			<span class="cl-ledger__label"><?php esc_html_e( 'Still waiting', 'cartlum' ); ?></span>
-			<span class="cl-ledger__value cl-warn"><?php echo wp_kses_post( Cartlum_Admin::money( $stats['open_value'] ) ); ?></span>
-			<span class="cl-ledger__sub">
-				<?php
-				/* translators: %d: number of carts */
-				echo esc_html( sprintf( _n( '%d cart to follow up', '%d carts to follow up', $stats['open'], 'cartlum' ), $stats['open'] ) );
-				?>
-			</span>
-		</div>
-		<div class="cl-ledger__item">
-			<span class="cl-ledger__label"><?php esc_html_e( 'Captured', 'cartlum' ); ?></span>
-			<span class="cl-ledger__value"><?php echo esc_html( number_format_i18n( $stats['captured'] ) ); ?></span>
-			<span class="cl-ledger__sub">
-				<?php
-				/* translators: %d: number of carts */
-				echo esc_html( sprintf( __( '%d ordered without help', 'cartlum' ), $stats['converted'] ) );
-				?>
-			</span>
-		</div>
+		<?php Cartlum_Admin_Charts::columns( $series, $days > 31 ? __( 'Recovered per week', 'cartlum' ) : __( 'Recovered per day', 'cartlum' ) ); ?>
 		<?php if ( $stats['abandoned'] > 0 ) : ?>
 			<div class="cl-went">
 				<span class="cl-went__label">
@@ -256,15 +277,17 @@ $open_value = array_sum( array_map( 'floatval', wp_list_pluck( $open['rows'], 'c
 						<p><?php esc_html_e( 'Once you contact customers, this shows which channel brings carts back.', 'cartlum' ); ?></p>
 					</div>
 				<?php else : ?>
+					<?php $any_few = false; ?>
 					<ul class="cl-rates">
 						<?php foreach ( $channels as $channel => $row ) : ?>
 							<?php
-							$rate = $row->contacted ? round( 100 * $row->recovered / $row->contacted ) : 0;
-							$few  = (int) $row->contacted < 5;
+							$rate    = $row->contacted ? round( 100 * $row->recovered / $row->contacted ) : 0;
+							$few     = (int) $row->contacted < 5;
+							$any_few = $any_few || $few;
 							?>
 							<li class="cl-rate">
 								<span class="cl-rate__line">
-									<span class="cl-rate__name"><?php echo esc_html( $channel_names[ $channel ] ?? $channel ); ?></span>
+									<span class="cl-rate__name"><?php echo Cartlum_Admin_Charts::icon( $channel ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- fixed SVG shapes. ?><?php echo esc_html( $channel_names[ $channel ] ?? $channel ); ?></span>
 									<span class="cl-rate__money"><?php echo wp_kses_post( Cartlum_Admin::money( $row->revenue ) ); ?></span>
 								</span>
 								<span class="cl-meter<?php echo $few ? ' cl-meter--few' : ''; ?>" aria-hidden="true"><span style="width:<?php echo esc_attr( (string) $rate ); ?>%"></span></span>
@@ -272,15 +295,19 @@ $open_value = array_sum( array_map( 'floatval', wp_list_pluck( $open['rows'], 'c
 									<?php
 									/* translators: 1: carts recovered, 2: carts contacted, 3: rate */
 									echo esc_html( sprintf( __( '%1$d of %2$d recovered · %3$d%%', 'cartlum' ), $row->recovered, $row->contacted, $rate ) );
-									if ( $few ) {
-										echo ' · ' . esc_html__( 'too few carts to judge yet', 'cartlum' );
-									}
 									?>
 								</span>
 							</li>
 						<?php endforeach; ?>
 					</ul>
-					<p class="cl-note"><?php esc_html_e( 'A cart contacted on two channels counts under both.', 'cartlum' ); ?></p>
+					<p class="cl-note">
+						<?php
+						esc_html_e( 'A cart contacted on two channels counts under both.', 'cartlum' );
+						if ( $any_few ) {
+							echo ' ' . esc_html__( 'Lighter bars: fewer than 5 carts, too early to judge.', 'cartlum' );
+						}
+						?>
+					</p>
 				<?php endif; ?>
 			</section>
 
