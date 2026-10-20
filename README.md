@@ -25,6 +25,7 @@ Requires WordPress 6.2+, WooCommerce 8.0+ and PHP 7.4+.
 - **Phone-first checkout**: mobile number first; Bangla digits accepted; your delivery and refund note above the order button.
 - **Buy now**, plus **WhatsApp** and **Call to order** buttons.
 - **Option buttons**: colours and sizes as buttons instead of drop-down lists, with sold-out choices crossed out.
+- **Sell through AI assistants**: ChatGPT, Gemini, Claude, Grok, Perplexity and Kimi can read your shop (`/llms.txt`, a product feed, delivery and return times in each product's data) and send buyers straight to your checkout with an order link. Orders from AI assistants are counted in Reports.
 - **Order again**: one tap puts an earlier order back in the cart with the checkout already filled in, from My Account or from `{reorder_link}` in an SMS.
 - **SMS, WhatsApp, email and calls**:
   - one-tap restore links and one-time coupons;
@@ -48,9 +49,9 @@ Want more? See [Cartlum Pro](#cartlum-pro) below.
 
 Cartlum's admin is organised by a shop's daily work: **Today · Abandoned Carts · Orders · Fake Orders · Reports · Checkout & Buttons · Integrations · Settings**, plus **Offers**, **Landing pages** and **AI** with Pro.
 
-![Today: what needs you now, and every feature's status](.wordpress-org/screenshot-1.png)
+![Today: what needs you now, results with trends, and who to contact](docs/screens/01-today.png)
 
-- **Today** opens with what needs you now: carts to call, orders to confirm, parcels to send, risky orders, cancellations without a reason. Below that, **Your features** shows every feature as On, Off or Needs setup.
+- **Today** opens with what needs you now, each job with its button: carts to call, orders to confirm, parcels to send, risky orders, cancellations without a reason. Then the period's results as cards with trends, money recovered per day, who to contact, what works and the most-abandoned products. **Your features** shows every feature as On, Off or Needs setup.
 - **Integrations** keeps every outside service in one place (SMS, Steadfast, Pathao, RedX, Paperfly, Facebook, FraudBD, WhatsApp, ElevenLabs, AI, webhooks), each with its status, keys and a test button.
 - **Find a setting** (Ctrl K / ⌘ K) on every screen jumps straight to any option.
 - **Simple settings:** switches and plain words, with technical options under **More options**. The **Save** bar saves without reloading, and Cartlum warns before you leave with unsaved changes.
@@ -60,15 +61,19 @@ Cartlum's admin is organised by a shop's daily work: **Today · Abandoned Carts 
 
 | Integrations | Find a setting |
 |---|---|
-| ![Integrations](.wordpress-org/screenshot-6.png) | ![Find a setting](docs/admin-search.png) |
-| **Settings with switches** | **On a phone** |
-| ![Settings](docs/admin-settings.png) | ![Phone](docs/admin-phone.png) |
+| ![Integrations](docs/screens/32-integrations.png) | ![Find a setting](docs/admin-search.png) |
+| **Settings with switches** | **Today on a phone** |
+| ![Settings](docs/screens/33-settings.png) | <img src="docs/screens/01-today-phone.png" alt="Today on a phone" width="300"> |
 
-## On the product page and in My Account
+## What your customers see
 
-| Option buttons | Order again |
-|---|---|
-| ![Colours as buttons, with a quantity offer above](docs/option-buttons.png) | ![Order again in My Account](docs/order-again.png) |
+| Product page buttons | Colours as buttons | Save-cart popup |
+|---|---|---|
+| ![Buy now, WhatsApp and Call to order](docs/screens/40-product-buttons-bundle.png) | ![Option buttons](docs/screens/42-product-option-buttons.png) | ![Save your cart?](docs/screens/43-save-cart-popup.png) |
+| **Phone-first checkout** | **Log in with a phone number** | **Order again** |
+| ![Phone-first checkout](docs/screens/44-phone-first-checkout.png) | ![Phone login](docs/screens/52-phone-login.png) | ![Order again in My Account](docs/screens/53-my-account-order-again.png) |
+| **Order tracking** | **Review request** | **Reminder email** |
+| ![Order tracking in My Account](docs/screens/54-order-tracking.png) | ![Rate your order](docs/screens/49-review-request-page.png) | ![Reminder email](docs/screens/35-reminder-email.png) |
 
 ## Cartlum Pro
 
@@ -93,6 +98,7 @@ Cartlum Pro is a paid add-on. It installs next to the free plugin and adds:
 | **Facebook Pixel and Conversions API**: no double counting, customer details hashed; for cash on delivery, a purchase counts only if the order isn't cancelled | | ✅ |
 | **Bundle offers** on product pages, and a **customer score** on every cart | | ✅ |
 | **Quantity offers**: "Buy 2, save ৳100" and "Buy 1, get 1 free", applied in the cart by themselves | | ✅ |
+| **Recommendations**: "Customers also bought" under each product, learned from your own orders; the upsell can pick its product from them | | ✅ |
 | **Upsell after the order**: one tap adds a product to the same cash-on-delivery order and parcel; a second offer if they say no | | ✅ |
 | **Loyalty points**: earned when an order is delivered, spent at checkout after phone login | | ✅ |
 | **Gift cards**: sold as a product or given by hand, code by SMS, balance kept on the card | | ✅ |
@@ -109,24 +115,104 @@ Each Pro feature connects with the store's own accounts (SMS gateway, ElevenLabs
 
 | Landing page for your ads | Its order form | Offer after the order |
 |---|---|---|
-| ![Landing page](docs/landing-page.png) | ![Order form with colour and quantity](docs/landing-order.png) | ![One-tap upsell on the thank-you page](docs/upsell.png) |
+| ![Landing page](docs/screens/45-landing-page.png) | ![Order form with colour and quantity](docs/screens/46-landing-order-form.png) | ![One-tap upsell on the thank-you page](docs/screens/47-upsell-after-order.png) |
 
 - **Landing pages** (`/lp/<name>/`): headline, photos, video, benefits, reviews and questions, then your real checkout on the same page. Cart capture and fake-order protection work there too. Colour and quantity are buttons, and quantity offers show in the total.
 - **Upsell after the order**: "Wait! Add this to your order?" One tap adds it to the same cash-on-delivery order, so nothing is charged twice and it ships in the same parcel.
 
-| Loyalty points at checkout | Offers in the admin |
-|---|---|
-| ![Loyalty points](docs/loyalty-points.png) | ![Offers → Upsells](docs/offers-upsells.png) |
+| Customers also bought | Loyalty points at checkout | Staff phone app |
+|---|---|---|
+| ![Recommendations](docs/screens/41-product-recommendations.png) | ![Loyalty points](docs/screens/55-loyalty-points-checkout.png) | ![Orders to confirm on a phone](docs/screens/50-staff-app-to-confirm.png) |
 
 **Cartlum Pro is coming soon.** To be told when it launches, click **Watch → Custom → Releases** at the top of this page.
 
 ## Screenshots
 
-| A cart | Integrations |
+Every screen, by area. Features marked *Pro* need Cartlum Pro.
+
+<details open>
+<summary><b>Abandoned carts</b></summary>
+
+| | |
 |---|---|
-| ![Cart](.wordpress-org/screenshot-2.png) | ![Integrations](.wordpress-org/screenshot-6.png) |
-| **Phone-first checkout** | **Reminder email** |
-| ![Checkout](.wordpress-org/screenshot-3.png) | ![Email](.wordpress-org/screenshot-4.png) |
+| **Every saved cart** | **One cart: call, WhatsApp, SMS, history** |
+| ![Every saved cart](docs/screens/02-abandoned-carts.png) | ![One cart: call, WhatsApp, SMS, history](docs/screens/03-cart.png) |
+| **Automatic reminders (multi-step: Pro)** | **Message texts** |
+| ![Automatic reminders (multi-step: Pro)](docs/screens/04-reminders.png) | ![Message texts](docs/screens/05-message-texts.png) |
+| **Save-cart popup** | **Win-back SMS (Pro)** |
+| ![Save-cart popup](docs/screens/06-save-cart-popup-settings.png) | ![Win-back SMS (Pro)](docs/screens/07-win-back.png) |
+
+</details>
+<details>
+<summary><b>Orders</b></summary>
+
+| | |
+|---|---|
+| **Orders to confirm** | **Order SMS** |
+| ![Orders to confirm](docs/screens/08-orders-to-confirm.png) | ![Order SMS](docs/screens/09-order-sms.png) |
+| **Review requests** | **Parcels to couriers (Pro)** |
+| ![Review requests](docs/screens/10-review-requests.png) | ![Parcels to couriers (Pro)](docs/screens/11-parcels.png) |
+| **bKash / Nagad advance (Pro)** | **Staff phone app (Pro)** |
+| ![bKash / Nagad advance (Pro)](docs/screens/12-advance-payment.png) | ![Staff phone app (Pro)](docs/screens/13-phone-app-settings.png) |
+| **Customer confirms their order (Pro)** | **Carts to call in the phone app (Pro)** |
+| ![Customer confirms their order (Pro)](docs/screens/48-customer-confirms-order.png) | ![Carts to call in the phone app (Pro)](docs/screens/51-staff-app-carts.png) |
+
+</details>
+<details>
+<summary><b>Fake orders</b></summary>
+
+| | |
+|---|---|
+| **Risky orders and cancel reasons** | **Protection: blocklist, limits, SMS code** |
+| ![Risky orders and cancel reasons](docs/screens/14-fake-orders.png) | ![Protection: blocklist, limits, SMS code](docs/screens/15-protection.png) |
+| **Courier check (Pro)** | **Cartlum fraud network (Pro)** |
+| ![Courier check (Pro)](docs/screens/16-courier-check.png) | ![Cartlum fraud network (Pro)](docs/screens/17-fraud-network.png) |
+
+</details>
+<details>
+<summary><b>Reports</b></summary>
+
+| | |
+|---|---|
+| **Delivery success, money, where orders went (district and product: Pro)** | |
+| ![Delivery success, money, where orders went (district and product: Pro)](docs/screens/18-reports.png) | |
+
+</details>
+<details>
+<summary><b>Checkout & buttons</b></summary>
+
+| | |
+|---|---|
+| **Phone-first checkout** | **Buy now, WhatsApp, Call, option buttons** |
+| ![Phone-first checkout](docs/screens/19-easy-checkout.png) | ![Buy now, WhatsApp, Call, option buttons](docs/screens/20-buttons.png) |
+| **Phone login and Order again** | **Sell through AI assistants** |
+| ![Phone login and Order again](docs/screens/21-customer-login.png) | ![Sell through AI assistants](docs/screens/22-ai-assistants.png) |
+
+</details>
+<details>
+<summary><b>Offers (Pro)</b></summary>
+
+| | |
+|---|---|
+| **Bundles** | **Quantity offers** |
+| ![Bundles](docs/screens/23-bundles.png) | ![Quantity offers](docs/screens/24-quantity-offers.png) |
+| **Upsells after the order** | **Recommendations** |
+| ![Upsells after the order](docs/screens/25-upsells.png) | ![Recommendations](docs/screens/26-recommendations.png) |
+| **Loyalty points** | **Gift cards** |
+| ![Loyalty points](docs/screens/27-loyalty-points.png) | ![Gift cards](docs/screens/28-gift-cards.png) |
+
+</details>
+<details>
+<summary><b>Landing pages, AI and setup</b></summary>
+
+| | |
+|---|---|
+| **Landing pages (Pro)** | **AI call (Pro)** |
+| ![Landing pages (Pro)](docs/screens/29-landing-pages.png) | ![AI call (Pro)](docs/screens/30-ai-call.png) |
+| **AI writer (Pro)** | **5-minute setup** |
+| ![AI writer (Pro)](docs/screens/31-ai-writer.png) | ![5-minute setup](docs/screens/34-setup-wizard.png) |
+
+</details>
 
 ## Licence
 
