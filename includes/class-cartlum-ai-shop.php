@@ -338,11 +338,11 @@ class Cartlum_AI_Shop {
 	}
 
 	/**
-	 * How ordering works, in a few sentences.
+	 * How ordering works, in a few sentences (also Pro's shopping chat).
 	 *
 	 * @return string
 	 */
-	private static function how_to_order() {
+	public static function how_to_order() {
 		$lines = array( __( 'Use the order link of a product: it opens the checkout with the product in the cart. The buyer types their mobile number, name, address and district, and places the order.', 'cartlum' ) );
 		$pay   = self::payments();
 		if ( '' !== $pay ) {

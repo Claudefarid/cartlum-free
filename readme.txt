@@ -4,7 +4,7 @@ Tags: abandoned cart, fake order, cash on delivery, order sms, automation
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.31.0
+Stable tag: 0.32.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -56,6 +56,8 @@ Cartlum is for WooCommerce stores that sell cash on delivery, where customers ch
 
 Cartlum sends messages only through services you choose and configure. Nothing is sent until you set one up, and nothing is sent anywhere else.
 
+* **cartlum.com (usage sharing, only if you agree)** — Cartlum asks once, on its Today screen. Only if you press "Yes, share" (or tick Settings → Privacy → Share usage with Cartlum), once a week your site address, store name, admin email, your WordPress, WooCommerce, PHP and Cartlum versions, theme, language, SMS gateway name and which Cartlum settings are switched on are sent to https://cartlum.com/. Never customers, orders, carts, messages or keys. When you deactivate Cartlum, an optional box asks why; only if you press "Send and deactivate" are your answer and versions sent (with your site address, name and email only if you agreed to share). Untick the setting to stop. Privacy: https://cartlum.com/privacy-policy/
+
 * **eSMS (Bangladesh)** — when you choose it as your SMS gateway, the customer's phone number and the message text are sent to https://login.esms.com.bd/ each time an SMS is sent. Terms: https://esms.com.bd/terms-and-conditions/ · Privacy: https://esms.com.bd/privacy-policy/
 * **BulkSMSBD (Bangladesh)** — when you choose it as your SMS gateway, the customer's phone number and the message text are sent to https://bulksmsbd.net/ each time an SMS is sent. BulkSMSBD publishes no terms or privacy pages; your account with them sets the terms: https://bulksmsbd.net/
 * **SSL Wireless (Bangladesh)** — when you choose it as your SMS gateway, the customer's phone number and the message text are sent to https://smsplus.sslwireless.com/ each time an SMS is sent. Terms and privacy: as agreed in your SSL Wireless contract, https://www.sslwireless.com/
@@ -103,14 +105,22 @@ It can, for stores that only used CartFlows for a shorter checkout. CartFlows' g
 
 == Screenshots ==
 
-1. Today: what needs you now, every feature with its status, money recovered, what works by channel and the most abandoned products.
+1. Today: what needs you now (each job with its button), results with trends, money recovered per day, who to contact and what works.
 2. A cart: the customer, what they left, one-tap call, WhatsApp, SMS and email, and the full history.
 3. Phone-first checkout: mobile number first, then name, address and district.
 4. The designed reminder email, with product photos and a button in your colour.
-5. The save-cart popup on a phone.
+5. The save-cart popup on a phone, right after "Add to cart".
 6. Integrations: every connected service with its status.
 
 == Changelog ==
+
+= 0.32.0 =
+* New: Share usage with Cartlum, only if you agree (asked once on Today; Settings → Privacy). Once a week: your site address, store name, admin email, versions and which Cartlum settings are on — never customers, orders, carts, messages or keys. Nothing is sent before you answer, or if you say no.
+* When you deactivate Cartlum, an optional box asks why. Skip sends nothing.
+* For developers: the cartlum_cancel_reason_set action, when a cancellation reason is saved on an order.
+* Reports counts orders confirmed by an AI call on their own line, and an order confirmed that way is noted as "confirmed by the AI call".
+* Ready for Cartlum Pro 0.17: Offers gets an Order bump tab, and the AI page gets Shopping chat and Photo search tabs.
+* Bangla for every new text.
 
 = 0.31.0 =
 * New: Sell through AI assistants (Checkout & Buttons → AI assistants, off by default). For people who ask ChatGPT, Gemini, Claude, Grok, Perplexity or Kimi what to buy: /llms.txt describes the shop in plain words (what it sells, how to order, payment, delivery times, returns, phone) with every product's price and order link; a JSON product feed (?cartlum_feed=json) lists every product and colour with price, stock and order link; each product page's data gains delivery time, return window and the payment methods; order links (?cartlum_order=ID) open the checkout with that product in the cart. Orders whose visit came from an AI assistant get a note and are counted in Reports → Orders from AI assistants. Checkout stays the store's own, with cash on delivery.

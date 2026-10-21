@@ -152,6 +152,11 @@ h1 .cl-badge { font-size: 13px; margin-left: var(--cl-s2); vertical-align: 4px; 
 .cl-banner { padding: var(--cl-s3) var(--cl-s4); border-radius: var(--cl-radius); background: var(--cl-sunken); margin: 0 0 var(--cl-s4); }
 .cl-banner--good { background: var(--cl-good-bg); color: var(--cl-good); }
 .cl-banner--good a { color: var(--cl-good); font-weight: 600; }
+.cl-banner--warn { background: var(--cl-warn-bg); color: var(--cl-warn); }
+.cl-banner--bad { background: var(--cl-bad-bg); color: var(--cl-bad); }
+.cl-banner--info { background: var(--cl-info-bg); }
+.cl-banner p { margin: 0; }
+.cl-banner p + p { margin-top: 4px; }
 
 .cl-cart__grid { display: grid; grid-template-columns: minmax(0, 1fr) 340px; grid-template-rows: auto 1fr; grid-template-areas: "compose aside" "history aside"; gap: 0 var(--cl-s4); align-items: start; }
 .cl-cart__compose { grid-area: compose; }
@@ -643,13 +648,13 @@ h1 .cl-badge { font-size: 13px; margin-left: var(--cl-s2); vertical-align: 4px; 
 .cartlum .cl-setup-banner > div { flex: 1; min-width: 220px; }
 .cartlum .cl-setup-banner h2 { margin: 0 0 2px; }
 .cartlum .cl-setup-banner p { margin: 0; }
-.cartlum .cl-steps { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 18px; padding: 0; list-style: none; counter-reset: cl-step; }
-.cartlum .cl-steps li { margin: 0; counter-increment: cl-step; }
-.cartlum .cl-steps a { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px 6px 8px; border: 1px solid #dfe5e3; border-radius: 99px; background: #fff; color: #4b5a55; text-decoration: none; font-weight: 600; font-size: 13px; }
-.cartlum .cl-steps a::before { content: counter(cl-step); display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: #eef2f1; font-size: 12px; }
-.cartlum .cl-steps .is-done a::before { content: "✓"; background: var(--cl-good-bg); color: var(--cl-good); }
-.cartlum .cl-steps .is-current a { background: #15211d; border-color: #15211d; color: #fff; }
-.cartlum .cl-steps .is-current a::before { background: var(--cl-accent); color: #fff; }
+.cartlum ol.cl-steps { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 18px; padding: 0; list-style: none; counter-reset: cl-step; }
+.cartlum ol.cl-steps li { margin: 0; counter-increment: cl-step; }
+.cartlum ol.cl-steps a { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px 6px 8px; border: 1px solid #dfe5e3; border-radius: 99px; background: #fff; color: #4b5a55; text-decoration: none; font-weight: 600; font-size: 13px; }
+.cartlum ol.cl-steps a::before { content: counter(cl-step); display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: #eef2f1; font-size: 12px; }
+.cartlum ol.cl-steps .is-done a::before { content: "✓"; background: var(--cl-good-bg); color: var(--cl-good); }
+.cartlum ol.cl-steps .is-current a { background: #15211d; border-color: #15211d; color: #fff; }
+.cartlum ol.cl-steps .is-current a::before { background: var(--cl-accent); color: #fff; }
 .cartlum .cl-setup .cl-fields > h2 { margin-top: 14px; }
 .cartlum .cl-setup__nav { display: flex; align-items: center; gap: 12px; margin: 4px 0 24px; }
 .cartlum .cl-setup__nav .button-primary { margin-left: auto; min-height: 38px; padding: 0 20px; }
@@ -702,3 +707,11 @@ h1 .cl-badge { font-size: 13px; margin-left: var(--cl-s2); vertical-align: 4px; 
 	.cartlum .cl-chart__x { margin-left: 44px; }
 	.cartlum .cl-chartcard .cl-went { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* Usage sharing question on Today: the setup banner's layout, a longer text. */
+.cartlum .cl-usage > div { min-width: min(100%, 420px); }
+/* A form on one line that wraps on phones (Pro: photo search, gift cards). */
+.cartlum .cl-inline-form { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 12px; margin: 0 0 16px; }
+.cartlum .cl-inline-form label { display: grid; gap: 4px; }
+/* A tab with nothing to save (Pro: photo search) shows no Save bar. */
+.cartlum form.cl-settings:not(:has(:is(input:not([type=hidden]):not([type=submit]), select, textarea))) { display: none; }

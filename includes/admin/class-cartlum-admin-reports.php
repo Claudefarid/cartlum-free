@@ -162,7 +162,8 @@ class Cartlum_Admin_Reports {
 				++$fake;
 			}
 			if ( 'confirmed' === $row['confirm'] ) {
-				++$by[ 'customer' === $row['by'] ? 'customer' : 'staff' ];
+				$who        = in_array( $row['by'], array( 'customer', 'ai' ), true ) ? $row['by'] : 'staff';
+				$by[ $who ] = ( $by[ $who ] ?? 0 ) + 1;
 			}
 		}
 		arsort( $tally );
@@ -290,6 +291,9 @@ class Cartlum_Admin_Reports {
 						<tbody>
 							<tr><th scope="row"><?php esc_html_e( 'Confirmed on the phone', 'cartlum' ); ?></th><td class="cl-num"><?php echo esc_html( number_format_i18n( $by['staff'] ) ); ?></td></tr>
 							<tr><th scope="row"><?php esc_html_e( 'Confirmed by the customer’s link', 'cartlum' ); ?></th><td class="cl-num"><?php echo esc_html( number_format_i18n( $by['customer'] ) ); ?></td></tr>
+							<?php if ( ! empty( $by['ai'] ) ) : ?>
+								<tr><th scope="row"><?php esc_html_e( 'Confirmed by an AI call', 'cartlum' ); ?></th><td class="cl-num"><?php echo esc_html( number_format_i18n( $by['ai'] ) ); ?></td></tr>
+							<?php endif; ?>
 							<tr><th scope="row"><?php esc_html_e( 'Cancelled before shipping', 'cartlum' ); ?></th><td class="cl-num"><?php echo esc_html( number_format_i18n( $count['cancelled'] ) ); ?></td></tr>
 							<tr><th scope="row"><?php esc_html_e( 'Not sent yet', 'cartlum' ); ?></th><td class="cl-num"><a href="<?php echo esc_url( Cartlum_Admin::url( 'cartlum-orders' ) ); ?>"><?php echo esc_html( number_format_i18n( $count['waiting'] ) ); ?></a></td></tr>
 						</tbody>

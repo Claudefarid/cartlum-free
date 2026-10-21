@@ -33,6 +33,7 @@ class Cartlum_Settings {
 			'abandon_after'         => 30,  // Minutes without activity before a cart counts as abandoned.
 			'lost_after'            => 14,  // Days after which an unrecovered cart is closed as lost.
 			'retention_days'        => 90,  // Days before cart data is deleted.
+			'usage_share'           => '',  // Share usage with cartlum.com: '' not asked yet, yes, no.
 			'capture_notice'        => 'yes',
 			'capture_notice_text'   => __( 'We save your details so we can help if your order does not go through.', 'cartlum' ),
 			'country_code'          => '',  // Calling code for local numbers; empty = store base country.

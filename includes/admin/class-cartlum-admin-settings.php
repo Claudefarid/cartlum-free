@@ -122,12 +122,12 @@ class Cartlum_Admin_Settings {
 			// and stays out of the menu.
 			'cartlum-offers'       => array(
 				'label' => __( 'Offers', 'cartlum' ),
-				'tabs'  => array( 'bundles', 'qty_offers', 'upsells', 'reco', 'loyalty', 'gift_cards' ),
+				'tabs'  => array( 'bundles', 'qty_offers', 'bump', 'upsells', 'reco', 'loyalty', 'gift_cards' ),
 				'view'  => '',
 			),
 			'cartlum-ai'           => array(
 				'label' => __( 'AI', 'cartlum' ),
-				'tabs'  => array( 'ai_call', 'ai' ),
+				'tabs'  => array( 'ai_call', 'ai', 'ai_chat', 'photo_search' ),
 				'view'  => '',
 			),
 			'cartlum-integrations' => array(
@@ -309,7 +309,7 @@ class Cartlum_Admin_Settings {
 	public static function advanced_fields() {
 		return (array) apply_filters(
 			'cartlum_advanced_fields',
-			array( 'cancel_reason_old_key', 'courier_tracking_url', 'checkout_logo', 'checkout_accent', 'product_button_color', 'whatsapp_order_message', 'coupon_prefix', 'protect_block_message', 'protect_otp_message', 'otp_message', 'capture_notice_text', 'country_code', 'pro_fb_test_code', 'pro_fb_reported_key', 'pro_fb_pixel_id', 'pro_ai_model', 'pro_ai_base', 'pro_aicall_format', 'pro_aicall_secret', 'pro_courier_min' )
+			array( 'cancel_reason_old_key', 'courier_tracking_url', 'checkout_logo', 'checkout_accent', 'product_button_color', 'whatsapp_order_message', 'coupon_prefix', 'protect_block_message', 'protect_otp_message', 'otp_message', 'capture_notice_text', 'country_code', 'pro_fb_test_code', 'pro_fb_reported_key', 'pro_ai_model', 'pro_ai_base', 'pro_aicall_format', 'pro_aicall_secret', 'pro_courier_min' )
 		);
 	}
 
@@ -1165,6 +1165,11 @@ class Cartlum_Admin_Settings {
 						'label' => __( 'Delete all data on uninstall', 'cartlum' ),
 						'type'  => 'checkbox',
 					),
+					'usage_share'         => array(
+						'label' => __( 'Share usage with Cartlum', 'cartlum' ),
+						'type'  => 'checkbox',
+						'help'  => __( 'Once a week, sends cartlum.com your site address, store name, admin email, your WordPress, WooCommerce, PHP and Cartlum versions, and which Cartlum features are switched on. Never customers, orders, carts, messages or keys.', 'cartlum' ),
+					),
 				);
 		}
 		return array();
@@ -1452,7 +1457,7 @@ class Cartlum_Admin_Settings {
 		}
 		$tab    = isset( $_POST['tab'] ) ? sanitize_key( $_POST['tab'] ) : 'general';
 		$result = self::store( $tab, isset( $_POST['cartlum'] ) && is_array( $_POST['cartlum'] ) ? wp_unslash( $_POST['cartlum'] ) : array() ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- sanitized per field in store().
-		$reload = (bool) array_intersect( self::hook_tabs( $tab ), array( 'automation', 'bundles', 'qty_offers', 'upsells', 'gift_cards', 'licence' ) );
+		$reload = (bool) array_intersect( self::hook_tabs( $tab ), array( 'automation', 'bundles', 'qty_offers', 'bump', 'upsells', 'gift_cards', 'licence' ) );
 		wp_send_json_success(
 			array(
 				'message' => $result['message'],

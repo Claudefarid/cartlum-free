@@ -123,7 +123,7 @@ class Cartlum_Confirm {
 	 *
 	 * @param WC_Order $order   Order.
 	 * @param string   $outcome One of outcomes().
-	 * @param array    $args    { by: staff|customer, reason: cancel reason slug, block: bool }.
+	 * @param array    $args    { by: staff|customer|ai, reason: cancel reason slug, block: bool }.
 	 * @return bool
 	 */
 	public static function record( $order, $outcome, array $args = array() ) {
@@ -131,9 +131,15 @@ class Cartlum_Confirm {
 			return false;
 		}
 		delete_transient( 'cartlum_today' ); // Today's "Orders to confirm" count.
-		$by   = 'customer' === ( $args['by'] ?? 'staff' ) ? 'customer' : 'staff';
+		$by   = in_array( $args['by'] ?? 'staff', array( 'customer', 'ai' ), true ) ? $args['by'] : 'staff';
 		$user = wp_get_current_user();
-		$who  = 'customer' === $by ? __( 'the customer, from their confirmation link', 'cartlum' ) : ( $user->exists() ? $user->display_name : __( 'staff', 'cartlum' ) );
+		if ( 'customer' === $by ) {
+			$who = __( 'the customer, from their confirmation link', 'cartlum' );
+		} elseif ( 'ai' === $by ) {
+			$who = __( 'the AI call', 'cartlum' );
+		} else {
+			$who = $user->exists() ? $user->display_name : __( 'staff', 'cartlum' );
+		}
 
 		if ( 'confirmed' === $outcome ) {
 			if ( self::is_confirmed( $order ) ) {
@@ -149,7 +155,7 @@ class Cartlum_Confirm {
 			 * An order was confirmed, by staff or by the customer.
 			 *
 			 * @param int    $order_id Order.
-			 * @param string $by       staff|customer.
+			 * @param string $by       staff|customer|ai.
 			 */
 			do_action( 'cartlum_order_confirmed', $order->get_id(), $by );
 			return true;

@@ -110,6 +110,13 @@ class Cartlum_Cancel_Reasons {
 			$order->add_order_note( sprintf( __( 'Cancellation reason: %s', 'cartlum' ), $reasons[ $reason ] ) );
 		}
 		$order->save();
+		/**
+		 * A cancellation reason was saved on an order (Cartlum Pro: reports fake orders to Facebook).
+		 *
+		 * @param WC_Order $order  Order.
+		 * @param string   $reason Slug, '' when cleared.
+		 */
+		do_action( 'cartlum_cancel_reason_set', $order, $reason );
 		return true;
 	}
 

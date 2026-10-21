@@ -29,6 +29,7 @@ class Cartlum_Install {
 			as_unschedule_all_actions( 'cartlum_sweep' );
 			as_unschedule_all_actions( 'cartlum_cleanup' );
 		}
+		wp_clear_scheduled_hook( 'cartlum_usage_report' );
 	}
 
 	/**

@@ -284,6 +284,7 @@ class Cartlum_Admin_Today {
 	 */
 	public static function render() {
 		Cartlum_Admin_Setup::banner();
+		Cartlum_Usage::ask();
 		?>
 		<section class="cl-now" aria-label="<?php esc_attr_e( 'Needs you now', 'cartlum' ); ?>" data-cartlum-today data-nonce="<?php echo esc_attr( wp_create_nonce( 'cartlum_today' ) ); ?>">
 			<div class="cl-now__head"><h2><?php esc_html_e( 'Needs you now', 'cartlum' ); ?></h2></div>
