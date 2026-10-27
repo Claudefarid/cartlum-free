@@ -4,7 +4,7 @@ Tags: abandoned cart, fake order, cash on delivery, order sms, automation
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.34.2
+Stable tag: 0.35.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -113,6 +113,11 @@ It can, for stores that only used CartFlows for a shorter checkout. CartFlows' g
 6. Integrations: every connected service with its status.
 
 == Changelog ==
+
+= 0.35.0 =
+* Orders → To confirm, faster and cleaner: a line with orders new today, waiting (and their value) and confirmed today; filters for New, No answer, Call back and Risky orders; each order as a card with product photos, the customer's history and earlier tries.
+* Answers are saved without reloading the page: the card slides away and the next is ready (the buttons still work without JavaScript).
+* Select several orders (or all) and confirm them at once. For developers: the cartlum_confirm_bulk_actions and cartlum_confirm_bulk_run filters.
 
 = 0.34.2 =
 * Readme: eSMS's terms and privacy link corrected.

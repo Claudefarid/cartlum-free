@@ -488,4 +488,111 @@
 		} );
 		plot.addEventListener( 'focusout', hide );
 	} );
+
+	/* ---------- Orders → To confirm: answers in place, several at once ---------- */
+
+	var confirmList = document.querySelector( '[data-cartlum-confirm]' );
+	function bump( selector, by ) {
+		var el = document.querySelector( selector );
+		if ( el ) {
+			el.textContent = String( Math.max( 0, ( parseInt( el.textContent.replace( /\D/g, '' ), 10 ) || 0 ) + by ) );
+		}
+	}
+	if ( confirmList && window.fetch && window.FormData ) {
+		confirmList.addEventListener( 'submit', function ( e ) {
+			var f = e.target.closest( '.cl-confirm__form' );
+			if ( ! f ) {
+				return;
+			}
+			e.preventDefault();
+			var card = f.closest( '[data-cartlum-order]' );
+			var buttons = card.querySelectorAll( 'button, select, input' );
+			var enable = function ( on ) {
+				buttons.forEach( function ( b ) {
+					b.disabled = ! on;
+				} );
+			};
+			var body = new FormData( f );
+			body.set( 'action', 'cartlum_confirm_answer' );
+			var outcome = body.get( 'outcome' );
+			enable( false );
+			fetch( i18n.ajax, { method: 'POST', body: body, credentials: 'same-origin' } )
+				.then( function ( r ) {
+					return r.json();
+				} )
+				.then( function ( res ) {
+					if ( ! res || ! res.success ) {
+						toast( ( res && res.data && res.data.message ) || i18n.failed, true );
+						enable( true );
+						return;
+					}
+					toast( res.data.message );
+					if ( res.data.gone ) {
+						bump( '[data-cartlum-waiting]', -1 );
+						if ( 'confirmed' === outcome ) {
+							bump( '[data-cartlum-today]', 1 );
+						}
+						card.classList.add( 'is-leaving' );
+						setTimeout( function () {
+							var next = card.nextElementSibling;
+							card.remove();
+							var focus = next ? next.querySelector( '.cl-confirm__form button' ) : null;
+							if ( focus ) {
+								focus.focus();
+							}
+						}, 220 );
+					} else {
+						var tried = card.querySelector( '[data-cartlum-tried]' );
+						if ( tried ) {
+							tried.lastElementChild.textContent = res.data.tried;
+							tried.hidden = '' === res.data.tried;
+						}
+						var more = card.querySelector( 'details[open]' );
+						if ( more ) {
+							more.open = false;
+						}
+						enable( true );
+					}
+				} )
+				.catch( function () {
+					toast( i18n.failed, true );
+					enable( true );
+				} );
+		} );
+	}
+
+	var bulkForm = document.querySelector( '[data-cartlum-bulk]' );
+	if ( bulkForm ) {
+		var selectAll = bulkForm.querySelector( '[data-cartlum-selectall]' );
+		var selected = bulkForm.querySelector( '[data-cartlum-selected]' );
+		var picks = function () {
+			return Array.prototype.slice.call( document.querySelectorAll( '.cl-ocf__pick' ) );
+		};
+		var syncPicks = function () {
+			var all = picks();
+			var n = all.filter( function ( p ) {
+				return p.checked;
+			} ).length;
+			selected.textContent = n ? ( i18n.selected || '%d selected' ).replace( '%d', n ) : '';
+			selectAll.checked = n > 0 && n === all.length;
+			bulkForm.classList.toggle( 'has-picks', n > 0 );
+		};
+		selectAll.addEventListener( 'change', function () {
+			picks().forEach( function ( p ) {
+				p.checked = selectAll.checked;
+			} );
+			syncPicks();
+		} );
+		document.addEventListener( 'change', function ( e ) {
+			if ( e.target.classList && e.target.classList.contains( 'cl-ocf__pick' ) ) {
+				syncPicks();
+			}
+		} );
+		bulkForm.addEventListener( 'submit', function ( e ) {
+			if ( ! document.querySelector( '.cl-ocf__pick:checked' ) ) {
+				e.preventDefault();
+				toast( i18n.pickFirst || 'Select one or more orders first.', true );
+			}
+		} );
+	}
 }() );

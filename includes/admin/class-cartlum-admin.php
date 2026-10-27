@@ -398,6 +398,9 @@ class Cartlum_Admin {
 				'noMatch'  => __( 'No setting matches. Try “sms”, “buy now” or “steadfast”.', 'cartlum' ),
 				'notices'  => __( 'Notices', 'cartlum' ),
 				'saved'    => __( 'Saved — leave empty to keep', 'cartlum' ),
+				/* translators: %d: number of orders */
+				'selected' => __( '%d selected', 'cartlum' ),
+				'pickFirst' => __( 'Select one or more orders first.', 'cartlum' ),
 			)
 		);
 	}
