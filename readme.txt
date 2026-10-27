@@ -4,7 +4,7 @@ Tags: abandoned cart, fake order, cash on delivery, order sms, automation
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.35.0
+Stable tag: 0.35.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -113,6 +113,9 @@ It can, for stores that only used CartFlows for a shorter checkout. CartFlows' g
 6. Integrations: every connected service with its status.
 
 == Changelog ==
+
+= 0.35.1 =
+* Ready for Cartlum Pro 0.20: Orders gets a Deliveries tab, with its styles.
 
 = 0.35.0 =
 * Orders → To confirm, faster and cleaner: a line with orders new today, waiting (and their value) and confirmed today; filters for New, No answer, Call back and Risky orders; each order as a card with product photos, the customer's history and earlier tries.

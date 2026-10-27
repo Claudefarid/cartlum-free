@@ -792,3 +792,23 @@ h1 .cl-badge { font-size: 13px; margin-left: var(--cl-s2); vertical-align: 4px; 
 	.cartlum .cl-obulk select { margin-left: 0; }
 }
 @media (prefers-reduced-motion: reduce) { .cartlum .cl-ocf { transition: none; } }
+/* Pro: Orders → Deliveries. */
+.cartlum .cl-dl__period { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 14px; }
+.cartlum .cl-dl__period .cl-chip { display: inline-flex; align-items: center; min-height: 32px; padding: 0 12px; border: 1px solid var(--cl-line, #dfe5e3); border-radius: 99px; background: #fff; color: #3d4a46; text-decoration: none; font-weight: 600; }
+.cartlum .cl-dl__period .cl-chip.is-active { background: #15211d; border-color: #15211d; color: #fff; }
+.cartlum .cl-dl__wrap { overflow-x: auto; margin: 0 0 16px; border: 1px solid var(--cl-line, #dfe5e3); border-radius: 12px; background: #fff; }
+.cartlum .cl-dl { border: 0; box-shadow: none; }
+.cartlum .cl-dl th { font-weight: 600; color: #3d4a46; }
+.cartlum .cl-dl td { vertical-align: top; padding-top: 10px; padding-bottom: 10px; }
+.cartlum .cl-dl__sub { display: block; color: #5b6965; font-size: 12px; margin-top: 2px; }
+.cartlum .cl-dl__num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.cartlum .cl-dl tr.is-stuck td { background: var(--cl-warn-bg, #fcf3e6); }
+.cartlum .cl-dl__lookup { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; }
+.cartlum .cl-dl__lookup p { flex: 1 1 320px; }
+@media (max-width: 600px) {
+	.cartlum .cl-dl thead { display: none; }
+	.cartlum .cl-dl, .cartlum .cl-dl tbody, .cartlum .cl-dl tr, .cartlum .cl-dl td { display: block; width: 100%; box-sizing: border-box; }
+	.cartlum .cl-dl tr { padding: 10px 12px; border-top: 1px solid var(--cl-line, #dfe5e3); }
+	.cartlum .cl-dl td { padding: 2px 0; }
+	.cartlum .cl-dl__num { text-align: left; }
+}

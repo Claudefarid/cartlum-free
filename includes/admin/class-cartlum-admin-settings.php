@@ -100,7 +100,7 @@ class Cartlum_Admin_Settings {
 			'cartlum-orders'       => array(
 				'label' => __( 'Orders', 'cartlum' ),
 				// 'parcels': Pro 0.12+; 'steadfast': older Pro, which kept the courier settings there.
-				'tabs'  => array( 'orders', 'tracking', 'reviews', 'parcels', 'steadfast', 'advance', 'app' ),
+				'tabs'  => array( 'deliveries', 'orders', 'tracking', 'reviews', 'parcels', 'steadfast', 'advance', 'app' ),
 				'view'  => __( 'To confirm', 'cartlum' ),
 			),
 			'cartlum-fraud'        => array(
