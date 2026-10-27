@@ -4,7 +4,7 @@ Tags: abandoned cart, fake order, cash on delivery, order sms, automation
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.34.0
+Stable tag: 0.34.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -113,6 +113,9 @@ It can, for stores that only used CartFlows for a shorter checkout. CartFlows' g
 6. Integrations: every connected service with its status.
 
 == Changelog ==
+
+= 0.34.1 =
+* Ready for Cartlum Pro 0.18.3: styles for the new Bundles and Upsells editors.
 
 = 0.34.0 =
 * Ready for Cartlum Pro 0.18.2: Offers opens on an Overview, one card per kind of offer (order bump, upsells, quantity offers, bundles, recommendations, loyalty points, gift cards) with whether it is on, what is live and what it added to orders, and a button to set it up. For developers: the cartlum_offers_overview filter.

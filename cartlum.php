@@ -3,7 +3,7 @@
  * Plugin Name:          Cartlum – Cart Recovery, Fake Order Protection & Automation for WooCommerce
  * Plugin URI:           https://github.com/Claudefarid/cartlum-free
  * Description:          Win back abandoned carts by SMS, phone call, WhatsApp and email, stop fake customers before you ship, and put reminders, order SMS and review requests on autopilot. Phone-first, for cash-on-delivery stores.
- * Version:              0.34.0
+ * Version:              0.34.1
  * Author:               Cartlum
  * License:              GPL-2.0-or-later
  * License URI:          https://www.gnu.org/licenses/gpl-2.0.html
@@ -20,7 +20,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'CARTLUM_VERSION', '0.34.0' );
+define( 'CARTLUM_VERSION', '0.34.1' );
 define( 'CARTLUM_DB_VERSION', '2' );
 define( 'CARTLUM_FILE', __FILE__ );
 define( 'CARTLUM_DIR', plugin_dir_path( __FILE__ ) );

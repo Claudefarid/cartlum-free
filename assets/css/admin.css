@@ -718,3 +718,36 @@ h1 .cl-badge { font-size: 13px; margin-left: var(--cl-s2); vertical-align: 4px; 
 /* Offers → Overview: the cards reuse the integrations grid. */
 .cartlum .cl-offers__sum { margin: 0 0 14px; color: #3d4a46; font-weight: 600; }
 .cartlum .cl-offer__stat { margin: 0; color: var(--cl-ink, #15211d); font-size: 13px; font-variant-numeric: tabular-nums; }
+/* Offer editors (Pro: Bundles, Upsells): each offer a card that opens into its form. */
+.cartlum .cl-ocards { display: grid; gap: 10px; margin: 12px 0 16px; padding: 0; list-style: none; }
+.cartlum .cl-ocards > li { margin: 0; }
+.cartlum .cl-ocard { border: 1px solid var(--cl-line, #dfe5e3); border-radius: 12px; background: #fff; }
+.cartlum .cl-ocard > summary { display: grid; grid-template-columns: auto minmax(0, 1fr) auto auto auto; align-items: center; gap: 8px 16px; padding: 12px 16px; cursor: pointer; list-style: none; }
+.cartlum .cl-ocard > summary::-webkit-details-marker { display: none; }
+.cartlum .cl-ocard > summary:focus-visible { outline: 2px solid var(--cl-accent, #0f6b5c); outline-offset: 2px; border-radius: 12px; }
+.cartlum .cl-ocard[open] > summary { border-bottom: 1px solid var(--cl-line, #dfe5e3); }
+.cartlum .cl-ocard--new { border-style: dashed; background: transparent; }
+.cartlum .cl-ocard--new > summary { grid-template-columns: auto minmax(0, 1fr); }
+.cartlum .cl-ocard__pics { display: inline-flex; align-items: center; gap: 4px; }
+.cartlum .cl-ocard__pics img, .cartlum .cl-ocard__nopic { display: block; width: 44px; height: 44px; border-radius: 8px; object-fit: cover; background: #eef2f1; }
+.cartlum .cl-ocard__plus { color: #66746f; font-weight: 600; }
+.cartlum .cl-ocard__add { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 8px; background: #eef2f1; color: var(--cl-accent, #0f6b5c); font-size: 22px; font-weight: 600; }
+.cartlum .cl-ocard__text { display: grid; gap: 2px; min-width: 0; }
+.cartlum .cl-ocard__text strong { font-size: 14px; }
+.cartlum .cl-ocard__meta, .cartlum .cl-ocard__stats { color: #5b6965; font-size: 13px; overflow-wrap: anywhere; }
+.cartlum .cl-ocard__stats { color: var(--cl-ink, #15211d); font-variant-numeric: tabular-nums; }
+.cartlum .cl-ocard__price { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.cartlum .cl-ocard__price s { color: #66746f; }
+.cartlum .cl-ocard__edit { color: var(--cl-accent, #0f6b5c); font-weight: 600; }
+.cartlum .cl-ocard[open] .cl-ocard__edit { visibility: hidden; }
+.cartlum .cl-ocard__body { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px 20px; padding: 16px; }
+.cartlum .cl-ofield { display: grid; gap: 6px; align-content: start; margin: 0; }
+.cartlum .cl-ofield--wide { grid-column: 1 / -1; }
+.cartlum .cl-ofield__check { display: block; color: #3d4a46; }
+.cartlum .cl-ocard__foot { grid-column: 1 / -1; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 16px; padding-top: 12px; border-top: 1px solid #eef2f1; }
+@media (max-width: 700px) {
+	.cartlum .cl-ocard > summary { grid-template-columns: auto minmax(0, 1fr) auto; }
+	.cartlum .cl-ocard > summary .cl-ocard__price { grid-column: 2; }
+	.cartlum .cl-ocard > summary .cl-ocard__edit { display: none; }
+}
+.cartlum .cl-ofield input[type="text"], .cartlum .cl-ofield .select2-container { width: 100% !important; max-width: 100%; box-sizing: border-box; }
