@@ -40,6 +40,7 @@ class Cartlum_AI_Shop {
 		add_action( 'woocommerce_checkout_order_processed', array( __CLASS__, 'mark_order' ) );
 		add_action( 'woocommerce_store_api_checkout_order_processed', array( __CLASS__, 'mark_order' ) );
 		add_filter( 'woocommerce_structured_data_product', array( __CLASS__, 'structured_data' ), 10, 2 );
+		add_filter( 'rank_math/json_ld', array( __CLASS__, 'rank_math' ), 99 );
 		add_action( 'wp_head', array( __CLASS__, 'llms_link' ) );
 		add_action( 'cartlum_reports_after', array( __CLASS__, 'report' ), 5, 2 );
 	}
@@ -144,18 +145,22 @@ class Cartlum_AI_Shop {
 	}
 
 	/**
-	 * ?cartlum_order=ID[&qty=N] and ?cartlum_feed=json.
+	 * ?cartlum_order=ID[&qty=N], ?cartlum_feed=json and ?cartlum_feed=openai.
 	 */
 	public static function requests() {
 		// phpcs:disable WordPress.Security.NonceVerification.Recommended -- public links: a product into one's own cart, a public feed.
 		if ( isset( $_GET['cartlum_feed'] ) && ! is_admin() ) {
+			if ( 'openai' === $_GET['cartlum_feed'] ) {
+				self::openai_feed();
+			}
 			self::feed();
 		}
 		if ( empty( $_GET['cartlum_order'] ) || is_admin() || ! WC()->cart || Cartlum_Restore::is_preview_bot() ) {
 			return;
 		}
-		$product = wc_get_product( absint( $_GET['cartlum_order'] ) );
-		$qty     = isset( $_GET['qty'] ) ? max( 1, min( 99, absint( $_GET['qty'] ) ) ) : 1;
+		$product     = wc_get_product( absint( $_GET['cartlum_order'] ) );
+		$qty         = isset( $_GET['qty'] ) ? max( 1, min( 99, absint( $_GET['qty'] ) ) ) : 1;
+		$at_checkout = isset( $_GET['cartlum_at'] );
 		// phpcs:enable WordPress.Security.NonceVerification.Recommended
 		if ( ! $product || ! $product->is_purchasable() || ! $product->is_in_stock() || $product->is_type( array( 'variable', 'grouped', 'external' ) ) ) {
 			// A product with options, or one that cannot be bought: its page, to choose there.
@@ -165,14 +170,48 @@ class Cartlum_AI_Shop {
 		if ( ! WC()->session->has_session() ) {
 			WC()->session->set_customer_session_cookie( true );
 		}
+		// Arrived at the checkout with the product still in the cart: leave it (a refresh, or a
+		// quantity changed there). An empty cart means the cookie did not come along (AI agents and
+		// other tools that keep no cookies): fill it here, before WooCommerce sends an empty
+		// checkout to the cart page.
+		if ( $at_checkout && self::in_cart( $product ) ) {
+			return;
+		}
 		WC()->cart->empty_cart();
 		if ( $product->is_type( 'variation' ) ) {
 			WC()->cart->add_to_cart( $product->get_parent_id(), $qty, $product->get_id(), $product->get_variation_attributes() );
 		} else {
 			WC()->cart->add_to_cart( $product->get_id(), $qty );
 		}
-		wp_safe_redirect( wc_get_checkout_url() );
+		if ( $at_checkout ) {
+			return;
+		}
+		wp_safe_redirect(
+			add_query_arg(
+				array(
+					'cartlum_order' => $product->get_id(),
+					'qty'           => $qty,
+					'cartlum_at'    => 'checkout',
+				),
+				wc_get_checkout_url()
+			)
+		);
 		exit;
+	}
+
+	/**
+	 * Whether the cart holds this product (or this variation).
+	 *
+	 * @param WC_Product $product Product.
+	 * @return bool
+	 */
+	private static function in_cart( $product ) {
+		foreach ( WC()->cart->get_cart() as $item ) {
+			if ( (int) $item['product_id'] === $product->get_id() || (int) $item['variation_id'] === $product->get_id() ) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
@@ -394,7 +433,9 @@ class Cartlum_AI_Shop {
 		}
 		$out .= '## ' . __( 'How to order', 'cartlum' ) . "\n\n" . self::how_to_order() . "\n\n";
 		/* translators: %s: feed address */
-		$out .= sprintf( __( 'All products as JSON, with prices, stock and order links: %s', 'cartlum' ), add_query_arg( 'cartlum_feed', 'json', home_url( '/' ) ) ) . "\n\n";
+		$out .= sprintf( __( 'All products as JSON, with prices, stock and order links: %s', 'cartlum' ), add_query_arg( 'cartlum_feed', 'json', home_url( '/' ) ) ) . "\n";
+		/* translators: %s: feed URL */
+		$out .= sprintf( __( 'The same in OpenAI’s product feed format (JSON Lines): %s', 'cartlum' ), add_query_arg( 'cartlum_feed', 'openai', home_url( '/' ) ) ) . "\n\n";
 		$out .= '## ' . __( 'Products', 'cartlum' ) . "\n\n";
 		foreach ( self::products() as $product ) {
 			$line = '- [' . self::md( $product->get_name() ) . '](' . $product->get_permalink() . '): ' . html_entity_decode( wp_strip_all_tags( $product->get_price_html() ), ENT_QUOTES, 'UTF-8' );
@@ -432,6 +473,15 @@ class Cartlum_AI_Shop {
 	public static function structured_data( $markup, $product ) {
 		if ( empty( $markup['offers'] ) || ! is_array( $markup['offers'] ) ) {
 			return $markup;
+		}
+		if ( empty( $markup['brand'] ) ) {
+			$markup['brand'] = array(
+				'@type' => 'Brand',
+				'name'  => self::brand( $product ),
+			);
+		}
+		if ( empty( $markup['sku'] ) && '' !== (string) $product->get_sku() ) {
+			$markup['sku'] = (string) $product->get_sku();
 		}
 		$country = WC()->countries ? WC()->countries->get_base_country() : 'BD';
 		$days    = function ( $text ) {
@@ -482,6 +532,176 @@ class Cartlum_AI_Shop {
 			}
 		}
 		return $markup;
+	}
+
+	/**
+	 * The same delivery, returns, payment and brand in Rank Math's product data: on stores where Rank
+	 * Math writes the page's product data, WooCommerce's (and the filter above) is not used.
+	 *
+	 * @param array $data Rank Math's JSON-LD entities.
+	 * @return array
+	 */
+	public static function rank_math( $data ) {
+		if ( ! is_array( $data ) || ! function_exists( 'is_product' ) || ! is_product() ) {
+			return $data;
+		}
+		$product = wc_get_product( get_queried_object_id() );
+		if ( ! $product ) {
+			return $data;
+		}
+		foreach ( $data as $key => $entity ) {
+			if ( ! is_array( $entity ) || ! in_array( 'Product', (array) ( $entity['@type'] ?? '' ), true ) || empty( $entity['offers'] ) || ! is_array( $entity['offers'] ) ) {
+				continue;
+			}
+			// Rank Math gives one offer as an object, several as a list.
+			$single           = isset( $entity['offers']['@type'] );
+			$entity['offers'] = $single ? array( $entity['offers'] ) : $entity['offers'];
+			$entity           = self::structured_data( $entity, $product );
+			$entity['offers'] = $single ? $entity['offers'][0] : $entity['offers'];
+			$data[ $key ]     = $entity;
+		}
+		return $data;
+	}
+
+	/**
+	 * A product's brand: its WooCommerce brand, or the store's name.
+	 *
+	 * @param WC_Product $product Product.
+	 * @return string
+	 */
+	private static function brand( $product ) {
+		$id    = $product->get_parent_id() ? $product->get_parent_id() : $product->get_id();
+		$terms = taxonomy_exists( 'product_brand' ) ? wc_get_product_terms( $id, 'product_brand' ) : array();
+		return $terms ? $terms[0]->name : wp_specialchars_decode( get_bloginfo( 'name' ), ENT_QUOTES );
+	}
+
+	/**
+	 * An amount in OpenAI's money format, e.g. "950.00 BDT": the currency's own decimal places.
+	 *
+	 * @param float $amount Amount.
+	 * @return string
+	 */
+	private static function money( $amount ) {
+		$currency = get_woocommerce_currency();
+		$places   = in_array( $currency, array( 'JPY', 'KRW', 'VND', 'CLP', 'ISK', 'UGX', 'XAF', 'XOF', 'PYG', 'RWF' ), true ) ? 0 : ( in_array( $currency, array( 'KWD', 'BHD', 'JOD', 'OMR', 'TND', 'IQD', 'LYD' ), true ) ? 3 : 2 );
+		return number_format( (float) $amount, $places, '.', '' ) . ' ' . $currency;
+	}
+
+	/**
+	 * One row of the OpenAI product feed.
+	 *
+	 * @param WC_Product      $item   The product, or a variation.
+	 * @param WC_Product|null $parent The variable product a variation belongs to.
+	 * @return array
+	 */
+	private static function openai_row( $item, $parent = null ) {
+		$main    = $parent ? $parent : $item;
+		$image   = $item->get_image_id() ? $item->get_image_id() : $main->get_image_id();
+		$gallery = array_filter( array_map( 'wp_get_attachment_url', $main->get_gallery_image_ids() ) );
+		$regular = (float) wc_get_price_to_display( $item, array( 'price' => $item->get_regular_price() ) );
+		$current = (float) wc_get_price_to_display( $item );
+		$stock   = $item->get_stock_status();
+		$row     = array(
+			'item_id'      => (string) $item->get_id(),
+			'title'        => mb_substr( $parent ? $main->get_name() . ' – ' . wc_get_formatted_variation( $item, true, false, false ) : $item->get_name(), 0, 150 ),
+			'description'  => mb_substr( self::text( $main->get_description() ? $main->get_description() : ( $main->get_short_description() ? $main->get_short_description() : $main->get_name() ), 900 ), 0, 5000 ),
+			'url'          => $item->get_permalink(),
+			'brand'        => self::brand( $item ),
+			'seller_name'  => wp_specialchars_decode( get_bloginfo( 'name' ), ENT_QUOTES ),
+			'image_url'    => (string) wp_get_attachment_url( $image ),
+			'availability' => 'onbackorder' === $stock ? 'backorder' : ( $item->is_in_stock() ? 'in_stock' : 'out_of_stock' ),
+			'price'        => self::money( $regular > 0 ? $regular : $current ),
+			'condition'    => 'new',
+		);
+		if ( $regular > 0 && $current > 0 && $current < $regular ) {
+			$row['sale_price'] = self::money( $current );
+		}
+		if ( $gallery ) {
+			$row['additional_image_urls'] = array_values( $gallery );
+		}
+		$category = implode( ' > ', wp_list_pluck( wc_get_product_terms( $main->get_id(), 'product_cat' ), 'name' ) );
+		if ( '' !== $category ) {
+			$row['product_category'] = $category;
+		}
+		if ( $parent ) {
+			$row['group_id']               = 'g' . $parent->get_id();
+			$row['listing_has_variations'] = true;
+			$options                       = array();
+			foreach ( $item->get_variation_attributes() as $attr => $value ) {
+				$name  = str_replace( 'attribute_', '', $attr );
+				$term  = taxonomy_exists( $name ) ? get_term_by( 'slug', $value, $name ) : null;
+				$label = wc_attribute_label( $name, $parent );
+				if ( '' !== (string) $value && '' !== $label ) {
+					$options[ $label ] = $term ? $term->name : (string) $value;
+				}
+			}
+			if ( $options ) {
+				$row['variant_dict'] = $options;
+			}
+		}
+		$gtin = method_exists( $item, 'get_global_unique_id' ) ? preg_replace( '/\D/', '', (string) $item->get_global_unique_id() ) : '';
+		if ( in_array( strlen( $gtin ), array( 8, 12, 13, 14 ), true ) ) {
+			$row['gtin'] = $gtin;
+		}
+		$weight = (float) $item->get_weight();
+		$unit   = array(
+			'kg'  => 'kg',
+			'g'   => 'g',
+			'lbs' => 'lb',
+			'oz'  => 'oz',
+		)[ get_option( 'woocommerce_weight_unit' ) ] ?? '';
+		if ( $weight > 0 && '' !== $unit ) {
+			$row['weight']           = $weight;
+			$row['item_weight_unit'] = $unit;
+		}
+		$returns = absint( Cartlum_Settings::get( 'ai_returns_days' ) );
+		if ( $returns ) {
+			$row['accepts_returns']         = true;
+			$row['return_deadline_in_days'] = $returns;
+		}
+		$terms = wc_terms_and_conditions_page_id() ? get_permalink( wc_terms_and_conditions_page_id() ) : '';
+		if ( $terms ) {
+			$row['return_policy'] = $terms;
+			$row['seller_tos']    = $terms;
+		}
+		if ( get_privacy_policy_url() ) {
+			$row['seller_privacy_policy'] = get_privacy_policy_url();
+		}
+		if ( $main->get_review_count() > 0 ) {
+			$row['review_count'] = (int) $main->get_review_count();
+			$row['star_rating']  = round( (float) $main->get_average_rating(), 2 );
+		}
+		return $row;
+	}
+
+	/**
+	 * The product feed in OpenAI's format (JSON Lines, one product or colour per line), ?cartlum_feed=openai.
+	 * For merchants who upload a feed to OpenAI; which countries it accepts is up to OpenAI.
+	 */
+	private static function openai_feed() {
+		nocache_headers();
+		header( 'Content-Type: application/jsonl; charset=utf-8' );
+		header( 'Content-Disposition: inline; filename="products.jsonl"' );
+		foreach ( self::products() as $product ) {
+			$rows = array();
+			if ( $product->is_type( 'variable' ) ) {
+				foreach ( $product->get_children() as $child_id ) {
+					$v = wc_get_product( $child_id );
+					if ( $v && $v->is_purchasable() ) {
+						$rows[] = self::openai_row( $v, $product );
+					}
+				}
+			} elseif ( $product->is_purchasable() ) {
+				$rows[] = self::openai_row( $product );
+			}
+			foreach ( $rows as $row ) {
+				if ( '' === $row['image_url'] ) {
+					continue; // OpenAI rejects a row without an image; one cannot be made up.
+				}
+				echo wp_json_encode( $row, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES ) . "\n"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- JSON Lines, not HTML.
+			}
+		}
+		exit;
 	}
 
 	/* ---------------------------------------------------------------------

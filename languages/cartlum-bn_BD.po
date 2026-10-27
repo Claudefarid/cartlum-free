@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Cartlum – Cart Recovery, Fake Order Protection & Automation for WooCommerce 0.32.0\n"
+"Project-Id-Version: Cartlum – Cart Recovery, Fake Order Protection & Automation for WooCommerce 0.33.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/cartlum\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Bangla\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-21T07:23:04+00:00\n"
+"POT-Creation-Date: 2026-10-27T08:43:48+00:00\n"
 "PO-Revision-Date: 2026-10-10 12:00+0600
 "
 "X-Generator: WP-CLI 2.12.0\n"
@@ -43,16 +43,16 @@ msgstr "Cartlum"
 #: includes/admin/class-cartlum-admin-actions.php:317
 #: includes/admin/class-cartlum-admin-protection.php:223
 #: includes/admin/class-cartlum-admin-settings.php:1436
-#: includes/admin/class-cartlum-admin.php:318
+#: includes/admin/class-cartlum-admin.php:317
 #: includes/admin/class-cartlum-cancel-reasons.php:289
 #: includes/class-cartlum-email.php:209
-#: includes/class-cartlum-usage.php:179
+#: includes/class-cartlum-usage.php:183
 #: includes/class-cartlum-webhooks.php:307
 msgid "You are not allowed to do that."
 msgstr "আপনার এটি করার অনুমতি নেই।"
 
 #: includes/admin/class-cartlum-admin-actions.php:67
-#: includes/admin/class-cartlum-admin.php:568
+#: includes/admin/class-cartlum-admin.php:567
 msgid "Cart not found."
 msgstr "কার্ট পাওয়া যায়নি।"
 
@@ -172,7 +172,7 @@ msgid "Email"
 msgstr "ইমেইল"
 
 #: includes/admin/class-cartlum-admin-actions.php:337
-#: includes/class-cartlum-ai-shop.php:398
+#: includes/class-cartlum-ai-shop.php:439
 msgid "Products"
 msgstr "পণ্য"
 
@@ -237,7 +237,7 @@ msgid "Recovered orders"
 msgstr "ফিরে পাওয়া অর্ডার"
 
 #: includes/admin/class-cartlum-admin-charts.php:218
-#: includes/admin/class-cartlum-admin.php:479
+#: includes/admin/class-cartlum-admin.php:478
 #: includes/admin/class-cartlum-carts-table.php:79
 #: includes/admin/views/dashboard.php:39
 #: includes/admin/views/dashboard.php:140
@@ -313,7 +313,7 @@ msgstr "#%1$s · %2$s"
 #. translators: %s: human time difference
 #: includes/admin/class-cartlum-admin-confirm.php:219
 #: includes/admin/class-cartlum-admin-fraud.php:150
-#: includes/admin/class-cartlum-admin.php:521
+#: includes/admin/class-cartlum-admin.php:520
 #, php-format
 msgid "%s ago"
 msgstr "%s আগে"
@@ -682,7 +682,7 @@ msgstr "নম্বর আনব্লক হয়েছে।"
 #: includes/admin/class-cartlum-admin-reports.php:121
 #: includes/admin/class-cartlum-admin-reports.php:220
 #: includes/admin/class-cartlum-admin-settings.php:835
-#: includes/class-cartlum-ai-shop.php:523
+#: includes/class-cartlum-ai-shop.php:743
 #: includes/class-cartlum-order-tracking.php:78
 #: includes/class-cartlum-order-tracking.php:79
 #: includes/class-cartlum-order-tracking.php:125
@@ -816,7 +816,7 @@ msgid "With Cartlum Pro: delivery success and returns by district and by product
 msgstr "Cartlum Pro দিয়ে: জেলা ও প্রোডাক্ট অনুযায়ী ডেলিভারি সফলতা ও রিটার্ন, যাতে বুঝতে পারেন কোথায় অগ্রিম নেবেন।"
 
 #: includes/admin/class-cartlum-admin-reports.php:314
-#: includes/admin/class-cartlum-admin.php:610
+#: includes/admin/class-cartlum-admin.php:609
 msgid "See what Pro adds"
 msgstr "Pro-তে কী আছে দেখুন"
 
@@ -919,7 +919,7 @@ msgstr "কার্ট"
 
 #: includes/admin/class-cartlum-admin-settings.php:101
 #: includes/admin/class-cartlum-admin-today.php:79
-#: includes/class-cartlum-ai-shop.php:523
+#: includes/class-cartlum-ai-shop.php:743
 msgid "Orders"
 msgstr "অর্ডার"
 
@@ -947,7 +947,7 @@ msgid "Offers"
 msgstr "অফার"
 
 #: includes/admin/class-cartlum-admin-settings.php:129
-#: includes/admin/class-cartlum-admin.php:630
+#: includes/admin/class-cartlum-admin.php:629
 msgid "AI"
 msgstr "AI"
 
@@ -956,12 +956,12 @@ msgid "Overview"
 msgstr "সারসংক্ষেপ"
 
 #: includes/admin/class-cartlum-admin-settings.php:139
-#: includes/admin/class-cartlum-admin.php:370
+#: includes/admin/class-cartlum-admin.php:369
 msgid "Settings"
 msgstr "সেটিংস"
 
 #: includes/admin/class-cartlum-admin-settings.php:254
-#: includes/admin/class-cartlum-admin.php:627
+#: includes/admin/class-cartlum-admin.php:626
 msgid "Automatic WhatsApp"
 msgstr "স্বয়ংক্রিয় WhatsApp"
 
@@ -1931,7 +1931,7 @@ msgid "Insert into the message you are editing"
 msgstr "যে মেসেজ লিখছেন তাতে যোগ করুন"
 
 #: includes/admin/class-cartlum-admin-settings.php:1316
-#: includes/admin/class-cartlum-admin.php:396
+#: includes/admin/class-cartlum-admin.php:395
 msgid "You have unsaved changes"
 msgstr "পরিবর্তন সেভ করা হয়নি"
 
@@ -1954,7 +1954,7 @@ msgid "Save your settings first — the test uses the saved ones."
 msgstr "আগে সেটিংস সেভ করুন — টেস্ট সেভ করা সেটিংস ব্যবহার করে।"
 
 #: includes/admin/class-cartlum-admin-settings.php:1421
-#: includes/admin/class-cartlum-admin.php:401
+#: includes/admin/class-cartlum-admin.php:400
 msgid "Saved — leave empty to keep"
 msgstr "সেভ করা আছে — রাখতে খালি রাখুন"
 
@@ -2066,7 +2066,7 @@ msgid "Automatic reminders"
 msgstr "স্বয়ংক্রিয় রিমাইন্ডার"
 
 #: includes/admin/class-cartlum-admin-today.php:77
-#: includes/admin/class-cartlum-admin.php:628
+#: includes/admin/class-cartlum-admin.php:627
 msgid "Win-back SMS"
 msgstr "উইন-ব্যাক SMS"
 
@@ -2080,12 +2080,12 @@ msgid "Courier parcels"
 msgstr "কুরিয়ার পার্সেল"
 
 #: includes/admin/class-cartlum-admin-today.php:84
-#: includes/admin/class-cartlum-admin.php:636
+#: includes/admin/class-cartlum-admin.php:635
 msgid "Advance payment"
 msgstr "অগ্রিম পেমেন্ট"
 
 #: includes/admin/class-cartlum-admin-today.php:89
-#: includes/admin/class-cartlum-admin.php:635
+#: includes/admin/class-cartlum-admin.php:634
 msgid "Courier check"
 msgstr "কুরিয়ার চেক"
 
@@ -2102,7 +2102,7 @@ msgid "AI & marketing"
 msgstr "AI ও মার্কেটিং"
 
 #: includes/admin/class-cartlum-admin-today.php:101
-#: includes/admin/class-cartlum-admin.php:631
+#: includes/admin/class-cartlum-admin.php:630
 #: includes/admin/views/cart.php:34
 #: includes/admin/views/dashboard.php:27
 #: includes/admin/views/dashboard.php:52
@@ -2195,8 +2195,8 @@ msgid "On, but needs setting up to work"
 msgstr "চালু, কিন্তু কাজ করতে সেটআপ দরকার"
 
 #: includes/admin/class-cartlum-admin-today.php:249
-#: includes/admin/class-cartlum-admin-today.php:288
 #: includes/admin/class-cartlum-admin-today.php:289
+#: includes/admin/class-cartlum-admin-today.php:290
 msgid "Needs you now"
 msgstr "এখনই আপনার কাজ"
 
@@ -2214,11 +2214,11 @@ msgstr "সব কাজ শেষ।"
 msgid "No carts to call, orders to confirm or risky orders right now."
 msgstr "এখন কল করার কার্ট, কনফার্ম করার অর্ডার বা ঝুঁকিপূর্ণ অর্ডার নেই।"
 
-#: includes/admin/class-cartlum-admin-today.php:315
+#: includes/admin/class-cartlum-admin-today.php:316
 msgid "Your features"
 msgstr "আপনার ফিচার"
 
-#: includes/admin/class-cartlum-admin-today.php:322
+#: includes/admin/class-cartlum-admin-today.php:323
 msgid "Everything Cartlum can do, and whether it is on"
 msgstr "Cartlum যা যা পারে, আর সেটি চালু কিনা"
 
@@ -2229,7 +2229,7 @@ msgid "Today"
 msgstr "আজ"
 
 #: includes/admin/class-cartlum-admin.php:54
-#: includes/admin/class-cartlum-admin.php:647
+#: includes/admin/class-cartlum-admin.php:646
 msgid "Cartlum Pro"
 msgstr "Cartlum Pro"
 
@@ -2242,7 +2242,7 @@ msgid "Daily work"
 msgstr "প্রতিদিনের কাজ"
 
 #: includes/admin/class-cartlum-admin.php:117
-#: includes/admin/class-cartlum-admin.php:640
+#: includes/admin/class-cartlum-admin.php:639
 msgid "Sell more"
 msgstr "বেশি বিক্রি"
 
@@ -2279,195 +2279,195 @@ msgstr "সেটিং খুঁজুন…"
 msgid "Cartlum screens in another language, for you only"
 msgstr "শুধু আপনার জন্য Cartlum অন্য ভাষায়"
 
+#: includes/admin/class-cartlum-admin.php:302
 #: includes/admin/class-cartlum-admin.php:303
-#: includes/admin/class-cartlum-admin.php:304
 msgid "Find a setting"
 msgstr "সেটিং খুঁজুন"
 
-#: includes/admin/class-cartlum-admin.php:304
+#: includes/admin/class-cartlum-admin.php:303
 msgid "Search settings, pages and features…"
 msgstr "সেটিং, পেজ ও ফিচার খুঁজুন…"
 
-#: includes/admin/class-cartlum-admin.php:341
+#: includes/admin/class-cartlum-admin.php:340
 msgid "Page"
 msgstr "পেজ"
 
-#: includes/admin/class-cartlum-admin.php:389
+#: includes/admin/class-cartlum-admin.php:388
 msgid "Copied"
 msgstr "কপি হয়েছে"
 
-#: includes/admin/class-cartlum-admin.php:390
+#: includes/admin/class-cartlum-admin.php:389
 msgid "Sending…"
 msgstr "পাঠানো হচ্ছে…"
 
-#: includes/admin/class-cartlum-admin.php:391
+#: includes/admin/class-cartlum-admin.php:390
 msgid "characters"
 msgstr "অক্ষর"
 
-#: includes/admin/class-cartlum-admin.php:392
+#: includes/admin/class-cartlum-admin.php:391
 msgid "unicode"
 msgstr "ইউনিকোড"
 
-#: includes/admin/class-cartlum-admin.php:395
+#: includes/admin/class-cartlum-admin.php:394
 msgid "Saving…"
 msgstr "সেভ হচ্ছে…"
 
-#: includes/admin/class-cartlum-admin.php:397
+#: includes/admin/class-cartlum-admin.php:396
 msgid "You have unsaved changes. Leave without saving?"
 msgstr "পরিবর্তন সেভ করা হয়নি। সেভ না করেই চলে যাবেন?"
 
-#: includes/admin/class-cartlum-admin.php:398
+#: includes/admin/class-cartlum-admin.php:397
 msgid "Could not save. Check your connection and try again."
 msgstr "সেভ করা গেল না। ইন্টারনেট দেখে আবার চেষ্টা করুন।"
 
-#: includes/admin/class-cartlum-admin.php:399
+#: includes/admin/class-cartlum-admin.php:398
 msgid "No setting matches. Try “sms”, “buy now” or “steadfast”."
 msgstr "মিলে এমন সেটিং নেই। “sms”, “buy now” বা “steadfast” লিখে দেখুন।"
 
-#: includes/admin/class-cartlum-admin.php:400
+#: includes/admin/class-cartlum-admin.php:399
 msgid "Notices"
 msgstr "নোটিশ"
 
-#: includes/admin/class-cartlum-admin.php:477
+#: includes/admin/class-cartlum-admin.php:476
 #: includes/admin/class-cartlum-carts-table.php:78
 msgid "Checking out"
 msgstr "চেকআউট করছেন"
 
-#: includes/admin/class-cartlum-admin.php:478
+#: includes/admin/class-cartlum-admin.php:477
 #: includes/admin/class-cartlum-carts-table.php:77
 msgid "Abandoned"
 msgstr "অসম্পূর্ণ"
 
-#: includes/admin/class-cartlum-admin.php:480
+#: includes/admin/class-cartlum-admin.php:479
 #: includes/admin/class-cartlum-carts-table.php:80
 msgid "Ordered"
 msgstr "অর্ডার করেছেন"
 
-#: includes/admin/class-cartlum-admin.php:481
+#: includes/admin/class-cartlum-admin.php:480
 #: includes/admin/class-cartlum-carts-table.php:81
 msgid "Lost"
 msgstr "হারানো"
 
-#: includes/admin/class-cartlum-admin.php:482
+#: includes/admin/class-cartlum-admin.php:481
 #: includes/admin/class-cartlum-carts-table.php:82
 #: includes/admin/views/cart.php:43
 #: includes/class-cartlum-restore.php:172
 msgid "Unsubscribed"
 msgstr "আনসাবস্ক্রাইব করেছেন"
 
-#: includes/admin/class-cartlum-admin.php:605
+#: includes/admin/class-cartlum-admin.php:604
 msgid "With Cartlum Pro: as many reminder steps as you like (SMS, email, automatic WhatsApp, AI call), A/B tests and smart coupons."
 msgstr "Cartlum Pro-তে: যত খুশি রিমাইন্ডার ধাপ (SMS, ইমেইল, স্বয়ংক্রিয় WhatsApp, AI কল), A/B টেস্ট ও স্মার্ট কুপন।"
 
-#: includes/admin/class-cartlum-admin.php:606
+#: includes/admin/class-cartlum-admin.php:605
 msgid "With Cartlum Pro: each customer’s courier success rate (Steadfast, Pathao, RedX, Paperfly) and advance payment by bKash or Nagad."
 msgstr "Cartlum Pro-তে: প্রত্যেক ক্রেতার কুরিয়ার সফলতার হার (Steadfast, Pathao, RedX, Paperfly) এবং bKash বা Nagad-এ অগ্রিম পেমেন্ট।"
 
-#: includes/admin/class-cartlum-admin.php:607
+#: includes/admin/class-cartlum-admin.php:606
 msgid "With Cartlum Pro: WhatsApp messages sent automatically through Meta’s WhatsApp Cloud API."
 msgstr "Cartlum Pro-তে: Meta-র WhatsApp Cloud API দিয়ে স্বয়ংক্রিয়ভাবে WhatsApp মেসেজ।"
 
-#: includes/admin/class-cartlum-admin.php:623
+#: includes/admin/class-cartlum-admin.php:622
 msgid "Reminders that work harder"
 msgstr "আরও কার্যকর রিমাইন্ডার"
 
-#: includes/admin/class-cartlum-admin.php:624
+#: includes/admin/class-cartlum-admin.php:623
 msgid "Multi-step reminders"
 msgstr "একাধিক ধাপের রিমাইন্ডার"
 
-#: includes/admin/class-cartlum-admin.php:624
+#: includes/admin/class-cartlum-admin.php:623
 msgid "As many steps as you like, each with its own timing, channel and message."
 msgstr "যত খুশি ধাপ, প্রতিটির নিজস্ব সময়, মাধ্যম ও মেসেজ।"
 
-#: includes/admin/class-cartlum-admin.php:625
+#: includes/admin/class-cartlum-admin.php:624
 msgid "A/B tests"
 msgstr "A/B টেস্ট"
 
-#: includes/admin/class-cartlum-admin.php:625
+#: includes/admin/class-cartlum-admin.php:624
 msgid "Two versions of a message; Cartlum shows which brings more orders back."
 msgstr "একটি মেসেজের দুটি সংস্করণ; কোনটি বেশি অর্ডার ফেরায় Cartlum দেখায়।"
 
-#: includes/admin/class-cartlum-admin.php:626
+#: includes/admin/class-cartlum-admin.php:625
 msgid "Smart coupons"
 msgstr "স্মার্ট কুপন"
 
-#: includes/admin/class-cartlum-admin.php:626
+#: includes/admin/class-cartlum-admin.php:625
 msgid "A discount only when it helps — not for loyal or risky customers."
 msgstr "ছাড় শুধু যখন কাজে লাগে — নিয়মিত বা ঝুঁকিপূর্ণ ক্রেতাদের নয়।"
 
-#: includes/admin/class-cartlum-admin.php:627
+#: includes/admin/class-cartlum-admin.php:626
 msgid "Approved WhatsApp templates sent by themselves through Meta’s WhatsApp Cloud API."
 msgstr "Meta-র WhatsApp Cloud API দিয়ে অনুমোদিত WhatsApp টেমপ্লেট নিজে থেকেই যায়।"
 
-#: includes/admin/class-cartlum-admin.php:628
+#: includes/admin/class-cartlum-admin.php:627
 msgid "Brings back customers who bought before but have gone quiet, with a one-time coupon."
 msgstr "যারা আগে কিনেছেন কিন্তু অনেকদিন কেনেননি, একবার ব্যবহারের কুপন দিয়ে তাদের ফিরিয়ে আনে।"
 
-#: includes/admin/class-cartlum-admin.php:631
+#: includes/admin/class-cartlum-admin.php:630
 msgid "A voice agent phones the customer in Bangla over your own phone line, talks for 1–3 minutes and reports back."
 msgstr "একটি ভয়েস এজেন্ট আপনার নিজের ফোন লাইনে বাংলায় ক্রেতাকে কল করে, ১–৩ মিনিট কথা বলে এবং ফলাফল জানায়।"
 
-#: includes/admin/class-cartlum-admin.php:632
+#: includes/admin/class-cartlum-admin.php:631
 msgid "AI message writer"
 msgstr "AI মেসেজ লেখক"
 
-#: includes/admin/class-cartlum-admin.php:632
+#: includes/admin/class-cartlum-admin.php:631
 msgid "Drafts reminder SMS in English, Bangla or Banglish."
 msgstr "ইংরেজি, বাংলা বা বাংলিশে রিমাইন্ডার SMS লিখে দেয়।"
 
-#: includes/admin/class-cartlum-admin.php:634
+#: includes/admin/class-cartlum-admin.php:633
 msgid "Fewer fake orders"
 msgstr "ভুয়া অর্ডার কম"
 
-#: includes/admin/class-cartlum-admin.php:635
+#: includes/admin/class-cartlum-admin.php:634
 msgid "Each customer’s delivered and refused parcels at Steadfast, Pathao, RedX and Paperfly, on every order."
 msgstr "প্রতিটি অর্ডারে ক্রেতার Steadfast, Pathao, RedX ও Paperfly-তে ডেলিভারি ও ফেরত পার্সেলের হিসাব।"
 
-#: includes/admin/class-cartlum-admin.php:636
+#: includes/admin/class-cartlum-admin.php:635
 msgid "Risky cash-on-delivery customers send a small advance by bKash or Nagad first."
 msgstr "ঝুঁকিপূর্ণ ক্যাশ অন ডেলিভারি ক্রেতা আগে bKash বা Nagad-এ অল্প অগ্রিম পাঠান।"
 
-#: includes/admin/class-cartlum-admin.php:637
+#: includes/admin/class-cartlum-admin.php:636
 msgid "Phone app for staff"
 msgstr "স্টাফদের জন্য ফোন অ্যাপ"
 
-#: includes/admin/class-cartlum-admin.php:637
+#: includes/admin/class-cartlum-admin.php:636
 msgid "Orders to confirm and carts to call on a phone, with a notification for each new order."
 msgstr "ফোনেই কনফার্ম বাকি অর্ডার আর কল করার কার্ট, প্রতিটি নতুন অর্ডারে নোটিফিকেশন।"
 
-#: includes/admin/class-cartlum-admin.php:638
+#: includes/admin/class-cartlum-admin.php:637
 msgid "Customers confirm their own order"
 msgstr "ক্রেতা নিজেই অর্ডার কনফার্ম করেন"
 
-#: includes/admin/class-cartlum-admin.php:638
+#: includes/admin/class-cartlum-admin.php:637
 msgid "A link in the “order received” SMS: one tap confirms, and the parcel can go to the courier straight away."
 msgstr "“অর্ডার পেয়েছি” SMS-এ একটি লিংক: এক ট্যাপে কনফার্ম, আর পার্সেল সাথে সাথে কুরিয়ারে যেতে পারে।"
 
-#: includes/admin/class-cartlum-admin.php:641
+#: includes/admin/class-cartlum-admin.php:640
 msgid "Facebook Pixel and Conversions API"
 msgstr "Facebook Pixel ও Conversions API"
 
-#: includes/admin/class-cartlum-admin.php:641
+#: includes/admin/class-cartlum-admin.php:640
 msgid "Browser and server events with the same IDs, so Facebook counts each once."
 msgstr "একই ID-তে ব্রাউজার ও সার্ভার ইভেন্ট, তাই Facebook প্রতিটি একবারই গোনে।"
 
-#: includes/admin/class-cartlum-admin.php:642
+#: includes/admin/class-cartlum-admin.php:641
 msgid "Bundle offers and customer score"
 msgstr "বান্ডেল অফার ও ক্রেতার স্কোর"
 
-#: includes/admin/class-cartlum-admin.php:642
+#: includes/admin/class-cartlum-admin.php:641
 msgid "Offers on product pages, and a score on every cart showing who is worth a call."
 msgstr "পণ্যের পেজে অফার, আর প্রতিটি কার্টে স্কোর — কাকে কল করা উচিত দেখায়।"
 
-#: includes/admin/class-cartlum-admin.php:649
+#: includes/admin/class-cartlum-admin.php:648
 msgid "Everything in Cartlum stays free. Cartlum Pro is a separate add-on that installs next to it and adds:"
 msgstr "Cartlum-এর সবকিছু ফ্রি থাকবে। Cartlum Pro আলাদা একটি অ্যাড-অন, যা পাশে ইনস্টল হয় এবং যোগ করে:"
 
-#: includes/admin/class-cartlum-admin.php:663
+#: includes/admin/class-cartlum-admin.php:662
 msgid "Get Cartlum Pro"
 msgstr "Cartlum Pro নিন"
 
-#: includes/admin/class-cartlum-admin.php:664
+#: includes/admin/class-cartlum-admin.php:663
 msgid "Pro uses your own accounts for SMS, AI and courier data; you pay those services directly."
 msgstr "Pro আপনার নিজের SMS, AI ও কুরিয়ার ডেটার অ্যাকাউন্ট ব্যবহার করে; সেসব সার্ভিসের খরচ আপনি সরাসরি দেন।"
 
@@ -2568,7 +2568,7 @@ msgid "Items"
 msgstr "প্রোডাক্ট"
 
 #: includes/admin/class-cartlum-carts-table.php:42
-#: includes/class-cartlum-ai-shop.php:523
+#: includes/class-cartlum-ai-shop.php:743
 msgid "Value"
 msgstr "মূল্য"
 
@@ -3132,82 +3132,88 @@ msgid "left"
 msgstr "পড়ে আছে"
 
 #. translators: %s: ChatGPT, Gemini …
-#: includes/class-cartlum-ai-shop.php:129
+#: includes/class-cartlum-ai-shop.php:130
 #, php-format
 msgid "Cartlum: the customer came from %s."
 msgstr "Cartlum: ক্রেতা %s থেকে এসেছেন।"
 
 #. translators: %s: days, e.g. 1-2
-#: includes/class-cartlum-ai-shop.php:320
+#: includes/class-cartlum-ai-shop.php:359
 #, php-format
 msgid "Inside Dhaka: %s days"
 msgstr "ঢাকার ভেতরে: %s দিন"
 
 #. translators: %s: days, e.g. 3-5
-#: includes/class-cartlum-ai-shop.php:324
+#: includes/class-cartlum-ai-shop.php:363
 #, php-format
 msgid "Outside Dhaka: %s days"
 msgstr "ঢাকার বাইরে: %s দিন"
 
 #. translators: %d: days
-#: includes/class-cartlum-ai-shop.php:337
+#: includes/class-cartlum-ai-shop.php:376
 #, php-format
 msgid "Exchange or return within %d day."
 msgid_plural "Exchange or return within %d days."
 msgstr[0] "%d দিনের মধ্যে এক্সচেঞ্জ বা রিটার্ন।"
 msgstr[1] "%d দিনের মধ্যে এক্সচেঞ্জ বা রিটার্ন।"
 
-#: includes/class-cartlum-ai-shop.php:346
+#: includes/class-cartlum-ai-shop.php:385
 msgid "Use the order link of a product: it opens the checkout with the product in the cart. The buyer types their mobile number, name, address and district, and places the order."
 msgstr "পণ্যের অর্ডার লিংক ব্যবহার করুন: এটি পণ্যসহ চেকআউট খোলে। ক্রেতা মোবাইল নম্বর, নাম, ঠিকানা ও জেলা লিখে অর্ডার করেন।"
 
 #. translators: %s: payment methods
-#: includes/class-cartlum-ai-shop.php:350
+#: includes/class-cartlum-ai-shop.php:389
 #, php-format
 msgid "Payment: %s."
 msgstr "পেমেন্ট: %s।"
 
 #. translators: %s: delivery times
-#: includes/class-cartlum-ai-shop.php:354
+#: includes/class-cartlum-ai-shop.php:393
 #, php-format
 msgid "Delivery: %s."
 msgstr "ডেলিভারি: %s।"
 
 #. translators: %s: phone number
-#: includes/class-cartlum-ai-shop.php:362
+#: includes/class-cartlum-ai-shop.php:401
 #, php-format
 msgid "Phone: %s."
 msgstr "ফোন: %s।"
 
-#: includes/class-cartlum-ai-shop.php:395
+#: includes/class-cartlum-ai-shop.php:434
 msgid "How to order"
 msgstr "যেভাবে অর্ডার করবেন"
 
 #. translators: %s: feed address
-#: includes/class-cartlum-ai-shop.php:397
+#: includes/class-cartlum-ai-shop.php:436
 #, php-format
 msgid "All products as JSON, with prices, stock and order links: %s"
 msgstr "সব পণ্য JSON-এ, দাম, স্টক ও অর্ডার লিংকসহ: %s"
 
-#: includes/class-cartlum-ai-shop.php:401
+#. translators: %s: feed URL
+#: includes/class-cartlum-ai-shop.php:438
+#, php-format
+msgid "The same in OpenAI’s product feed format (JSON Lines): %s"
+msgstr "একই ফিড OpenAI-এর পণ্য ফিড ফরম্যাটে (JSON Lines): %s"
+
+#: includes/class-cartlum-ai-shop.php:442
 msgid "out of stock"
 msgstr "স্টকে নেই"
 
 #. translators: %s: order link
-#: includes/class-cartlum-ai-shop.php:406
+#: includes/class-cartlum-ai-shop.php:447
 #, php-format
 msgid "Order: %s"
 msgstr "অর্ডার: %s"
 
-#: includes/class-cartlum-ai-shop.php:518
+#: includes/class-cartlum-ai-shop.php:738
 msgid "Orders from AI assistants"
 msgstr "AI অ্যাসিস্ট্যান্ট থেকে আসা অর্ডার"
 
-#: includes/class-cartlum-ai-shop.php:520
+#: includes/class-cartlum-ai-shop.php:740
 msgid "No orders from ChatGPT, Gemini, Claude, Grok, Perplexity or Kimi in this period yet."
 msgstr "এই সময়ে এখনো ChatGPT, Gemini, Claude, Grok, Perplexity বা Kimi থেকে কোনো অর্ডার আসেনি।"
 
-#: includes/class-cartlum-ai-shop.php:523
+#: includes/class-cartlum-ai-shop.php:743
 msgid "Assistant"
 msgstr "অ্যাসিস্ট্যান্ট"
 
@@ -3974,71 +3980,71 @@ msgstr "আগ্রহী নন"
 msgid "Wrong number"
 msgstr "ভুল নম্বর"
 
-#: includes/class-cartlum-usage.php:164
+#: includes/class-cartlum-usage.php:169
 msgid "Help make Cartlum better?"
 msgstr "Cartlum-কে আরও ভালো করতে সাহায্য করবেন?"
 
-#: includes/class-cartlum-usage.php:165
+#: includes/class-cartlum-usage.php:170
 msgid "Once a week, Cartlum would send cartlum.com your site address, store name and admin email, your WordPress, WooCommerce, PHP and Cartlum versions, and which Cartlum features are switched on. Never your customers, orders, carts, messages or keys. We use it to see which features stores use, fix what breaks with your setup, and sometimes email you about Cartlum. You can stop any time in Settings → Privacy."
 msgstr "সপ্তাহে একবার Cartlum cartlum.com-এ পাঠাবে আপনার সাইটের ঠিকানা, দোকানের নাম ও অ্যাডমিন ইমেইল, WordPress, WooCommerce, PHP ও Cartlum-এর ভার্সন, এবং Cartlum-এর কোন ফিচার চালু আছে। আপনার ক্রেতা, অর্ডার, কার্ট, মেসেজ বা কী কখনো নয়। এ দিয়ে আমরা দেখি দোকানগুলো কোন ফিচার ব্যবহার করে, আপনার সেটআপে যা ভাঙে তা ঠিক করি, আর মাঝে মাঝে Cartlum নিয়ে আপনাকে ইমেইল করি। সেটিংস → প্রাইভেসি থেকে যেকোনো সময় বন্ধ করতে পারবেন।"
 
-#: includes/class-cartlum-usage.php:167
+#: includes/class-cartlum-usage.php:172
 msgid "Yes, share"
 msgstr "হ্যাঁ, শেয়ার করুন"
 
-#: includes/class-cartlum-usage.php:168
+#: includes/class-cartlum-usage.php:173
 msgid "No, thanks"
 msgstr "না, ধন্যবাদ"
 
-#: includes/class-cartlum-usage.php:191
+#: includes/class-cartlum-usage.php:195
 msgid "Thank you! Cartlum will share usage once a week."
 msgstr "ধন্যবাদ! Cartlum সপ্তাহে একবার ব্যবহারের তথ্য শেয়ার করবে।"
 
-#: includes/class-cartlum-usage.php:191
+#: includes/class-cartlum-usage.php:195
 msgid "OK, nothing will be shared."
 msgstr "ঠিক আছে, কিছুই শেয়ার করা হবে না।"
 
-#: includes/class-cartlum-usage.php:214
+#: includes/class-cartlum-usage.php:218
 msgid "Why are you leaving Cartlum?"
 msgstr "Cartlum কেন বন্ধ করছেন?"
 
-#: includes/class-cartlum-usage.php:216
+#: includes/class-cartlum-usage.php:220
 msgid "Optional. Your answer is sent to cartlum.com with your site address, as you agreed to share."
 msgstr "ঐচ্ছিক। আপনি শেয়ার করতে রাজি হয়েছেন, তাই আপনার উত্তর সাইটের ঠিকানাসহ cartlum.com-এ যাবে।"
 
-#: includes/class-cartlum-usage.php:217
+#: includes/class-cartlum-usage.php:221
 msgid "Optional. Only your answer and your WordPress, WooCommerce, PHP and Cartlum versions are sent to cartlum.com, not your site address."
 msgstr "ঐচ্ছিক। শুধু আপনার উত্তর এবং WordPress, WooCommerce, PHP ও Cartlum-এর ভার্সন cartlum.com-এ যাবে, সাইটের ঠিকানা নয়।"
 
-#: includes/class-cartlum-usage.php:219
+#: includes/class-cartlum-usage.php:223
 msgid "I only need it for a while"
 msgstr "অল্প কিছুদিনের জন্য দরকার ছিল"
 
-#: includes/class-cartlum-usage.php:220
+#: includes/class-cartlum-usage.php:224
 msgid "It doesn’t work with my theme or checkout"
 msgstr "আমার থিম বা চেকআউটের সাথে কাজ করে না"
 
-#: includes/class-cartlum-usage.php:221
+#: includes/class-cartlum-usage.php:225
 msgid "It was hard to set up"
 msgstr "সেট আপ করা কঠিন ছিল"
 
-#: includes/class-cartlum-usage.php:222
+#: includes/class-cartlum-usage.php:226
 msgid "It’s missing something I need"
 msgstr "আমার দরকারি কিছু নেই"
 
-#: includes/class-cartlum-usage.php:223
+#: includes/class-cartlum-usage.php:227
 msgid "I found something better"
 msgstr "আরও ভালো কিছু পেয়েছি"
 
-#: includes/class-cartlum-usage.php:225
+#: includes/class-cartlum-usage.php:229
 msgid "Anything you want to tell us? (optional)"
 msgstr "আমাদের কিছু বলতে চান? (ঐচ্ছিক)"
 
-#: includes/class-cartlum-usage.php:226
+#: includes/class-cartlum-usage.php:230
 msgid "Send and deactivate"
 msgstr "পাঠান ও বন্ধ করুন"
 
-#: includes/class-cartlum-usage.php:227
+#: includes/class-cartlum-usage.php:231
 msgid "Skip and deactivate"
 msgstr "বাদ দিন ও বন্ধ করুন"
 

@@ -4,7 +4,7 @@ Tags: abandoned cart, fake order, cash on delivery, order sms, automation
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.32.0
+Stable tag: 0.33.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -46,7 +46,7 @@ Cartlum is for WooCommerce stores that sell cash on delivery, where customers ch
 
 * **Buy now button** (optional): straight from the product page to checkout, with the chosen colour or size.
 * **Order on WhatsApp and Call to order buttons** (optional) on product pages.
-* **Sell through AI assistants** (optional): /llms.txt, a product feed with prices and order links, delivery and return times in each product's data, order links that open your checkout, and orders from ChatGPT, Gemini, Claude, Grok, Perplexity or Kimi counted in Reports.
+* **Sell through AI assistants** (optional): /llms.txt, a product feed with prices and order links (also in OpenAI's product feed format), delivery and return times in each product's data, order links that open your checkout, and orders from ChatGPT, Gemini, Claude, Grok, Perplexity or Kimi counted in Reports.
 * **Order again** (optional): one tap puts an earlier order back in the cart and opens a filled-in checkout, from My Account or from {reorder_link} in an order SMS; returning guests find the checkout filled in from their last order.
 * **Option buttons** (optional): colours and sizes as buttons instead of drop-down lists, with unavailable choices crossed out.
 * **Bangla included**, and a "Language for customers" setting to show shoppers Bangla while your admin stays in English.
@@ -113,6 +113,11 @@ It can, for stores that only used CartFlows for a shorter checkout. CartFlows' g
 6. Integrations: every connected service with its status.
 
 == Changelog ==
+
+= 0.33.0 =
+* Fix: order links (?cartlum_order=ID) now work for AI agents and other tools that keep no cookies. They landed on an empty cart page; the checkout now puts the product in the cart itself. Browsers are not affected, a refresh does not add the product twice, and a quantity changed at checkout is kept.
+* New: the product feed in OpenAI's format at ?cartlum_feed=openai (JSON Lines with OpenAI's field names: item_id, price as "950.00 BDT", availability, group_id and variant_dict for colours, images, returns, reviews), linked from llms.txt. Products without a photo are left out, as OpenAI requires one. OpenAI decides which countries it accepts.
+* Product data now includes the brand (WooCommerce brand, or the store's name) and SKU, and also on stores where Rank Math writes the product data: delivery time, return window, payment and brand are added to Rank Math's product too.
 
 = 0.32.0 =
 * New: Share usage with Cartlum, only if you agree (asked once on Today; Settings → Privacy). Once a week: your site address, store name, admin email, versions and which Cartlum settings are on — never customers, orders, carts, messages or keys. Nothing is sent before you answer, or if you say no.
