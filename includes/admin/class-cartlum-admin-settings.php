@@ -169,6 +169,10 @@ class Cartlum_Admin_Settings {
 				$sections['cartlum-settings']['tabs'][] = $tab;
 			}
 		}
+		// Offers opens on an overview of its tabs, when an add-on fills it (Cartlum Pro).
+		if ( ! empty( $sections['cartlum-offers']['tabs'] ) && has_filter( 'cartlum_offers_overview' ) ) {
+			$sections['cartlum-offers']['view'] = __( 'Overview', 'cartlum' );
+		}
 		self::$sections = $sections;
 		return $sections;
 	}
@@ -1221,6 +1225,8 @@ class Cartlum_Admin_Settings {
 				Cartlum_Admin_Reports::page();
 			} elseif ( 'cartlum-integrations' === $slug ) {
 				Cartlum_Admin_Integrations::page();
+			} elseif ( 'cartlum-offers' === $slug ) {
+				Cartlum_Admin_Offers::page();
 			}
 			return;
 		}

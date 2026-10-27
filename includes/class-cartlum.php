@@ -143,6 +143,7 @@ final class Cartlum {
 			require_once CARTLUM_DIR . 'includes/admin/class-cartlum-admin-reports.php';
 			require_once CARTLUM_DIR . 'includes/admin/class-cartlum-cancel-reasons.php';
 			require_once CARTLUM_DIR . 'includes/admin/class-cartlum-admin-integrations.php';
+			require_once CARTLUM_DIR . 'includes/admin/class-cartlum-admin-offers.php';
 			require_once CARTLUM_DIR . 'includes/admin/class-cartlum-admin-today.php';
 			require_once CARTLUM_DIR . 'includes/admin/class-cartlum-admin-charts.php';
 			require_once CARTLUM_DIR . 'includes/admin/class-cartlum-admin-setup.php';
