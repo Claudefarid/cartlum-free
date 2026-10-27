@@ -4,7 +4,7 @@ Tags: abandoned cart, fake order, cash on delivery, order sms, automation
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.34.1
+Stable tag: 0.34.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -58,7 +58,7 @@ Cartlum sends messages only through services you choose and configure. Nothing i
 
 * **cartlum.com (usage sharing, only if you agree)** — Cartlum asks once, on its Today screen. Only if you press "Yes, share" (or tick Settings → Privacy → Share usage with Cartlum), once a week your site address, store name, admin email, your WordPress, WooCommerce, PHP and Cartlum versions, theme, language, SMS gateway name and which Cartlum settings are switched on are sent to https://cartlum.com/. Never customers, orders, carts, messages or keys. When you deactivate Cartlum, an optional box asks why; only if you press "Send and deactivate" are your answer and versions sent (with your site address, name and email only if you agreed to share). Untick the setting to stop. Privacy: https://cartlum.com/privacy-policy/
 
-* **eSMS (Bangladesh)** — when you choose it as your SMS gateway, the customer's phone number and the message text are sent to https://login.esms.com.bd/ each time an SMS is sent. Terms: https://esms.com.bd/terms-and-conditions/ · Privacy: https://esms.com.bd/privacy-policy/
+* **eSMS (Bangladesh)** — when you choose it as your SMS gateway, the customer's phone number and the message text are sent to https://login.esms.com.bd/ each time an SMS is sent. Terms and privacy: https://esms.com.bd/tos/
 * **BulkSMSBD (Bangladesh)** — when you choose it as your SMS gateway, the customer's phone number and the message text are sent to https://bulksmsbd.net/ each time an SMS is sent. BulkSMSBD publishes no terms or privacy pages; your account with them sets the terms: https://bulksmsbd.net/
 * **SSL Wireless (Bangladesh)** — when you choose it as your SMS gateway, the customer's phone number and the message text are sent to https://smsplus.sslwireless.com/ each time an SMS is sent. Terms and privacy: as agreed in your SSL Wireless contract, https://www.sslwireless.com/
 * **Alpha SMS (Bangladesh)** — when you choose it as your SMS gateway, the customer's phone number and the message text are sent to https://api.sms.net.bd/ each time an SMS is sent. Terms: https://sms.bd/Terms_Condition/
@@ -113,6 +113,9 @@ It can, for stores that only used CartFlows for a shorter checkout. CartFlows' g
 6. Integrations: every connected service with its status.
 
 == Changelog ==
+
+= 0.34.2 =
+* Readme: eSMS's terms and privacy link corrected.
 
 = 0.34.1 =
 * Ready for Cartlum Pro 0.18.3: styles for the new Bundles and Upsells editors.
