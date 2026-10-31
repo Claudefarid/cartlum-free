@@ -1,0 +1,73 @@
+/*
+ * Cart page extras: the free-delivery bar (cart and checkout) and the mobile number field on the
+ * cart. --clx-accent (the store's button colour) is printed inline.
+ */
+.cartlum-free-bar[hidden] {
+	display: none !important;
+}
+
+.cartlum-free-bar {
+	box-sizing: border-box;
+	width: 100%;
+	margin: 0 0 16px;
+	padding: 12px 14px;
+	border: 1px solid rgba(17, 24, 39, 0.12);
+	border-radius: 8px;
+	font-size: 15px;
+	line-height: 1.4;
+}
+
+.cartlum-free-bar__text {
+	margin: 0 0 8px;
+}
+
+.cartlum-free-bar__track {
+	display: block;
+	height: 8px;
+	overflow: hidden;
+	border-radius: 999px;
+	background: rgba(17, 24, 39, 0.1);
+}
+
+.cartlum-free-bar__fill {
+	display: block;
+	height: 100%;
+	border-radius: inherit;
+	background: var(--clx-accent, #1f2937);
+	transition: width 0.3s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.cartlum-free-bar__fill {
+		transition: none;
+	}
+}
+
+.cartlum-cart-phone {
+	max-width: 480px; /* Above the block cart it would otherwise span the page. */
+	margin: 0 0 14px;
+}
+
+.cartlum-cart-phone label {
+	display: block;
+	margin: 0 0 4px;
+	font-weight: 600;
+}
+
+.cartlum-cart-phone input {
+	box-sizing: border-box;
+	width: 100%;
+	min-height: 44px;
+	font-size: 16px; /* No zoom on iPhones. */
+}
+
+.cartlum-cart-phone__note {
+	margin: 6px 0 0;
+	font-size: 13px;
+	opacity: 0.8;
+}
+
+.cartlum-cart-phone.is-error .cartlum-cart-phone__note {
+	color: #b91c1c;
+	opacity: 1;
+}

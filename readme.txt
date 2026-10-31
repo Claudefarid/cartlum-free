@@ -4,7 +4,7 @@ Tags: abandoned cart, fake order, cash on delivery, order sms, automation
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.35.1
+Stable tag: 0.36.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -49,6 +49,7 @@ Cartlum is for WooCommerce stores that sell cash on delivery, where customers ch
 * **Sell through AI assistants** (optional): /llms.txt, a product feed with prices and order links (also in OpenAI's product feed format), delivery and return times in each product's data, order links that open your checkout, and orders from ChatGPT, Gemini, Claude, Grok, Perplexity or Kimi counted in Reports.
 * **Order again** (optional): one tap puts an earlier order back in the cart and opens a filled-in checkout, from My Account or from {reorder_link} in an order SMS; returning guests find the checkout filled in from their last order.
 * **Option buttons** (optional): colours and sizes as buttons instead of drop-down lists, with unavailable choices crossed out.
+* **Cart page settings** (optional): choose where Add to cart leads (stay, cart or checkout), skip the cart page, ask for the mobile number on the cart page, and give free delivery from an amount with a "how much more" bar on the cart and checkout.
 * **Bangla included**, and a "Language for customers" setting to show shoppers Bangla while your admin stays in English.
 * Unsubscribe link in every message, automatic data deletion, and WordPress privacy export/erase support.
 
@@ -113,6 +114,14 @@ It can, for stores that only used CartFlows for a shorter checkout. CartFlows' g
 6. Integrations: every connected service with its status.
 
 == Changelog ==
+
+= 0.36.0 =
+* New: Checkout & Buttons → Cart page (each setting off by default).
+* After "Add to cart": stay on the page, open the cart, or go straight to checkout. Works on product pages and on shop pages that add without reloading; Buy now still goes to checkout.
+* Skip the cart page: a cart with products goes straight to the checkout (an empty cart still shows the cart page). The easy checkout's cart icon then leads to the shop.
+* Mobile number on the cart page (classic and block cart): the cart is saved as soon as a number is typed, and the checkout has it filled in.
+* Free delivery from an amount: every delivery option becomes free once the products reach it (after discounts), with a bar on the cart and checkout ("Add ৳300 more for free delivery") that updates as the cart changes.
+* Menu: a Customer Loyalty page for Cartlum Pro's loyalty points, gift cards and win-back SMS (moved from Offers and Abandoned Carts; old links still open them). Offers keeps the tools that make each order bigger.
 
 = 0.35.1 =
 * Ready for Cartlum Pro 0.20: Orders gets a Deliveries tab, with its styles.

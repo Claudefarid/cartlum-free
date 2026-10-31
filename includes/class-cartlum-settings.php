@@ -72,6 +72,12 @@ class Cartlum_Settings {
 			'product_button_color'  => '',      // Empty = the theme's Add to cart style.
 			'swatches'              => 'no',    // Option buttons instead of drop-downs.
 
+			// Cart page.
+			'cart_after_add'        => '',      // ''= as WooCommerce is set|stay|cart|checkout.
+			'cart_skip'             => 'no',    // The cart page goes to the checkout.
+			'cart_phone'            => 'no',    // Mobile number field on the cart page.
+			'cart_free_amount'      => 0,       // Free delivery from this amount; 0 = off.
+
 			// Phone login (My Account).
 			'phone_login'             => 'no',
 			'otp_message'             => '',    // Empty = the default text, translated. {code} {store}.

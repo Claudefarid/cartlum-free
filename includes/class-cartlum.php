@@ -34,6 +34,7 @@ require_once CARTLUM_DIR . 'includes/class-cartlum-privacy.php';
 require_once CARTLUM_DIR . 'includes/class-cartlum-flow.php';
 require_once CARTLUM_DIR . 'includes/class-cartlum-checkout.php';
 require_once CARTLUM_DIR . 'includes/class-cartlum-buy-now.php';
+require_once CARTLUM_DIR . 'includes/class-cartlum-cart-page.php';
 require_once CARTLUM_DIR . 'includes/class-cartlum-product-buttons.php';
 require_once CARTLUM_DIR . 'includes/class-cartlum-swatches.php';
 require_once CARTLUM_DIR . 'includes/class-cartlum-reorder.php';
@@ -118,6 +119,7 @@ final class Cartlum {
 		Cartlum_Flow::init();
 		Cartlum_Checkout::init();
 		Cartlum_Buy_Now::init();
+		Cartlum_Cart_Page::init();
 		Cartlum_Product_Buttons::init();
 		Cartlum_Swatches::init();
 		Cartlum_Reorder::init();

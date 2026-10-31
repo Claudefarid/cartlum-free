@@ -43,6 +43,7 @@ class Cartlum_Admin_Settings {
 		$tabs = array(
 			'general'        => __( 'General', 'cartlum' ),
 			'checkout'       => __( 'Easy checkout', 'cartlum' ),
+			'cart'           => __( 'Cart page', 'cartlum' ),
 			'product'        => __( 'Buy now & buttons', 'cartlum' ),
 			'popup'          => __( 'Save-cart popup', 'cartlum' ),
 			'account'        => __( 'Customer login', 'cartlum' ),
@@ -94,7 +95,7 @@ class Cartlum_Admin_Settings {
 		$sections = array(
 			'cartlum-carts'        => array(
 				'label' => __( 'Abandoned Carts', 'cartlum' ),
-				'tabs'  => array( 'automation', 'texts', 'coupons', 'popup', 'winback', 'capture' ),
+				'tabs'  => array( 'automation', 'texts', 'coupons', 'popup', 'capture' ),
 				'view'  => __( 'Carts', 'cartlum' ),
 			),
 			'cartlum-orders'       => array(
@@ -115,14 +116,19 @@ class Cartlum_Admin_Settings {
 			),
 			'cartlum-checkout'     => array(
 				'label' => __( 'Checkout & Buttons', 'cartlum' ),
-				'tabs'  => array( 'checkout', 'product', 'account', 'ai_shop' ),
+				'tabs'  => array( 'checkout', 'cart', 'product', 'account', 'ai_shop' ),
 				'view'  => '',
 			),
-			// Pro's tools for bigger orders and returning customers; without Pro the page has no tabs
-			// and stays out of the menu.
+			// Pro's tools for bigger orders, and for bringing customers back; without Pro these pages
+			// have no tabs and stay out of the menu.
 			'cartlum-offers'       => array(
 				'label' => __( 'Offers', 'cartlum' ),
-				'tabs'  => array( 'bundles', 'qty_offers', 'bump', 'upsells', 'reco', 'loyalty', 'gift_cards' ),
+				'tabs'  => array( 'bundles', 'qty_offers', 'bump', 'upsells', 'reco' ),
+				'view'  => '',
+			),
+			'cartlum-loyalty'      => array(
+				'label' => __( 'Customer Loyalty', 'cartlum' ),
+				'tabs'  => array( 'loyalty', 'gift_cards', 'winback' ),
 				'view'  => '',
 			),
 			'cartlum-ai'           => array(
@@ -405,6 +411,7 @@ class Cartlum_Admin_Settings {
 			'tracking'       => __( 'What customers see about their order in My Account, and why orders get cancelled.', 'cartlum' ),
 			'protection'     => __( 'Stops fake and repeat orders before they cost you a delivery.', 'cartlum' ),
 			'checkout'       => __( 'A short one-page checkout: mobile number first, then name, address and district.', 'cartlum' ),
+			'cart'           => __( 'Where “Add to cart” leads, and what shoppers see on the cart page.', 'cartlum' ),
 			'product'        => __( 'Buttons on each product: Buy now, Order on WhatsApp, Call to order, and colours and sizes as buttons.', 'cartlum' ),
 			'account'        => __( 'Customers log in to My Account with their mobile number and an SMS code.', 'cartlum' ),
 			'ai_shop'        => __( 'Help ChatGPT, Gemini, Claude, Grok, Perplexity and Kimi recommend your products and send buyers to your checkout.', 'cartlum' ),
@@ -686,6 +693,43 @@ class Cartlum_Admin_Settings {
 						'help'  => __( 'Empty = “Save my cart”', 'cartlum' ),
 					),
 				);
+			case 'cart':
+				$phone_help = __( 'A mobile number field above “Proceed to checkout”. The cart is saved as soon as a number is typed, as on the checkout, and the checkout has the number filled in. Not needed with “Skip the cart page”.', 'cartlum' );
+				if ( 'yes' !== Cartlum_Settings::get( 'enabled' ) ) {
+					$phone_help .= ' ' . __( 'Turn on “Capture carts” (Abandoned Carts → Capture) first; without it nothing is saved.', 'cartlum' );
+				}
+				return array(
+					'cart_after_add'   => array(
+						'label'   => __( 'After “Add to cart”', 'cartlum' ),
+						'type'    => 'select',
+						'options' => array(
+							''         => __( 'As set in WooCommerce', 'cartlum' ),
+							'stay'     => __( 'Stay on the same page', 'cartlum' ),
+							'cart'     => __( 'Open the cart page', 'cartlum' ),
+							'checkout' => __( 'Go straight to checkout', 'cartlum' ),
+						),
+						'help'    => __( 'Where shoppers go after tapping “Add to cart” on a product or in the shop. “Buy now” always goes to checkout.', 'cartlum' ),
+					),
+					'cart_skip'        => array(
+						'label' => __( 'Skip the cart page', 'cartlum' ),
+						'type'  => 'checkbox',
+						'help'  => __( 'Anyone who opens the cart page with products in it goes to the checkout instead, so ordering takes one step less. The checkout lists the products, but on Cartlum’s easy checkout and WooCommerce’s classic checkout customers cannot change quantities or remove products there. An empty cart still shows the cart page.', 'cartlum' ),
+					),
+					'cart_phone'       => array(
+						'label' => __( 'Mobile number on the cart page', 'cartlum' ),
+						'type'  => 'checkbox',
+						'help'  => $phone_help,
+					),
+					'cart_free_amount' => array(
+						'label' => __( 'Free delivery from', 'cartlum' ),
+						'type'  => 'number',
+						'min'   => 0,
+						'max'   => 10000000,
+						/* translators: %s: example amount, e.g. ৳300 */
+						'help'  => sprintf( __( 'When the products in the cart add up to this amount (after discounts), every delivery option becomes free, and the cart and checkout show how much more is needed — “Add %s more for free delivery” — with a bar. If WooCommerce’s own free shipping already does this, enter the same amount. 0 = off.', 'cartlum' ), html_entity_decode( get_woocommerce_currency_symbol(), ENT_QUOTES, 'UTF-8' ) . '300' ),
+					),
+				);
+
 			case 'product':
 				return array(
 					'buy_now_enabled'      => array(

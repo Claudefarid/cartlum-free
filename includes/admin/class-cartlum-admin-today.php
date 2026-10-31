@@ -74,7 +74,6 @@ class Cartlum_Admin_Today {
 				array( __( 'Save carts as numbers are typed', 'cartlum' ), $state( $on( 'enabled' ) ), $link( 'capture' ) ),
 				array( __( 'Automatic reminders', 'cartlum' ), $state( $on( 'flow_enabled' ), 'email' === ( $s['flow_channel'] ?? 'sms' ) || $sms ), $link( 'automation' ) ),
 				array( __( 'Save-cart popup', 'cartlum' ), $state( $on( 'popup_enabled' ) ), $link( 'popup' ) ),
-				array( __( 'Win-back SMS', 'cartlum' ), $pro_one( 'winback', $state( $on( 'pro_winback_enabled' ), $sms ) ), $link( 'winback' ) ),
 			),
 			__( 'Orders', 'cartlum' )             => array(
 				array( __( 'Order SMS', 'cartlum' ), $state( $on( 'order_sms_enabled' ), $sms ), $link( 'orders' ) ),
@@ -90,11 +89,17 @@ class Cartlum_Admin_Today {
 			),
 			__( 'Checkout & Buttons', 'cartlum' ) => array(
 				array( __( 'Easy checkout', 'cartlum' ), $state( $on( 'checkout_enabled' ) ), $link( 'checkout' ) ),
+				array( __( 'Cart page', 'cartlum' ), $state( '' !== ( $s['cart_after_add'] ?? '' ) || $on( 'cart_skip' ) || $on( 'cart_phone' ) || (float) ( $s['cart_free_amount'] ?? 0 ) > 0 ), $link( 'cart' ) ),
 				array( __( 'Buy now button', 'cartlum' ), $state( $on( 'buy_now_enabled' ) ), $link( 'product' ) ),
 				array( __( 'WhatsApp & call buttons', 'cartlum' ), $state( $on( 'whatsapp_button' ) || $on( 'call_button' ) ), $link( 'product' ) ),
 				array( __( 'Option buttons', 'cartlum' ), $state( $on( 'swatches' ) ), $link( 'product' ) ),
 				array( __( 'Phone login', 'cartlum' ), $state( $on( 'phone_login' ), $sms ), $link( 'account' ) ),
 				array( __( 'Order again', 'cartlum' ), $state( $on( 'reorder_enabled' ) ), $link( 'account' ) ),
+			),
+			__( 'Customer Loyalty', 'cartlum' )   => array(
+				array( __( 'Loyalty points', 'cartlum' ), $pro_one( 'loyalty', $state( $on( 'pro_points_enabled' ) ) ), $link( 'loyalty' ) ),
+				array( __( 'Gift cards', 'cartlum' ), $pro_one( 'gift_cards', $state( $on( 'pro_gift_enabled' ) ) ), $link( 'gift_cards' ) ),
+				array( __( 'Win-back SMS', 'cartlum' ), $pro_one( 'winback', $state( $on( 'pro_winback_enabled' ), $sms ) ), $link( 'winback' ) ),
 			),
 			__( 'AI & marketing', 'cartlum' )     => array(
 				array( __( 'Sell through AI assistants', 'cartlum' ), $state( $on( 'ai_shop_enabled' ) ), $link( 'ai_shop' ) ),

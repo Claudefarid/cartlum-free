@@ -28,7 +28,15 @@ class Cartlum_Admin_Offers {
 		 *                       added to orders (optional), color: the card's letter colour }.
 		 */
 		$items = apply_filters( 'cartlum_offers_overview', array() );
-		return is_array( $items ) ? array_values( array_filter( $items, 'is_array' ) ) : array();
+		// Only the kinds that live on Offers (loyalty points and gift cards have their own page).
+		return is_array( $items ) ? array_values(
+			array_filter(
+				$items,
+				function ( $item ) {
+					return is_array( $item ) && 'cartlum-offers' === Cartlum_Admin_Settings::page_for_tab( (string) ( $item['id'] ?? '' ) );
+				}
+			)
+		) : array();
 	}
 
 	/**
