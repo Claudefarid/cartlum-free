@@ -4,7 +4,7 @@ Tags: abandoned cart, fake order, cash on delivery, order sms, automation
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.36.0
+Stable tag: 0.37.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -114,6 +114,9 @@ It can, for stores that only used CartFlows for a shorter checkout. CartFlows' g
 6. Integrations: every connected service with its status.
 
 == Changelog ==
+
+= 0.37.0 =
+* Order tracking in My Account shows the parcel's steps (for example "Reached Mirpur hub", with the time, newest first) when the courier details include them.
 
 = 0.36.0 =
 * New: Checkout & Buttons → Cart page (each setting off by default).

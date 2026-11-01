@@ -1,7 +1,8 @@
 <?php
 /**
  * Order tracking in My Account: a progress bar (placed, processing, with the courier, delivered)
- * and the courier's consignment and status on each order's page.
+ * and the courier's consignment and status on each order's page, with the parcel's steps when the
+ * courier details include them.
  *
  * Steadfast is read out of the box; other couriers can supply their details through the
  * cartlum_order_courier filter.
@@ -31,7 +32,7 @@ class Cartlum_Order_Tracking {
 	 * The courier's details for an order, or null.
 	 *
 	 * @param WC_Order $order Order.
-	 * @return array|null { name, id, status, status_label, url }
+	 * @return array|null { name, id, status, status_label, url, steps }
 	 */
 	public static function courier( $order ) {
 		$courier = null;
@@ -47,8 +48,9 @@ class Cartlum_Order_Tracking {
 		}
 
 		/**
-		 * Courier details for an order: { name, id, status } or null. Status words such as
-		 * "delivered", "cancelled", "hold" and "in_review" get friendly labels.
+		 * Courier details for an order: { name, id, status } or null, optionally with url and
+		 * steps: [ { time: timestamp, text } ] oldest first ("Reached Mirpur hub"). Status words
+		 * such as "delivered", "cancelled", "hold" and "in_review" get friendly labels.
 		 *
 		 * @param array|null $courier Details.
 		 * @param WC_Order   $order   Order.
@@ -61,6 +63,16 @@ class Cartlum_Order_Tracking {
 		$courier['status_label'] = self::courier_status_label( $courier['status'] );
 		$pattern                 = trim( (string) Cartlum_Settings::get( 'courier_tracking_url' ) );
 		$courier['url']          = '' !== $pattern ? str_replace( '{consignment}', rawurlencode( $courier['id'] ), $pattern ) : (string) ( $courier['url'] ?? '' );
+		$given                   = (array) ( $courier['steps'] ?? array() );
+		$courier['steps']        = array();
+		foreach ( $given as $step ) {
+			if ( is_array( $step ) && '' !== trim( (string) ( $step['text'] ?? '' ) ) ) {
+				$courier['steps'][] = array(
+					'time' => (int) ( $step['time'] ?? 0 ),
+					'text' => (string) $step['text'],
+				);
+			}
+		}
 		return $courier;
 	}
 
@@ -178,6 +190,18 @@ class Cartlum_Order_Tracking {
 						<a class="clx-track__link" href="<?php echo esc_url( $courier['url'] ); ?>" target="_blank" rel="noopener"><?php esc_html_e( 'Track parcel', 'cartlum' ); ?></a>
 					<?php endif; ?>
 				</div>
+				<?php if ( $courier['steps'] ) : ?>
+					<ol class="clx-track__journey" aria-label="<?php esc_attr_e( 'Parcel steps', 'cartlum' ); ?>">
+						<?php foreach ( array_reverse( $courier['steps'] ) as $i => $step ) : ?>
+							<li class="clx-track__event<?php echo 0 === $i ? ' is-latest' : ''; ?>">
+								<span class="clx-track__event-text"><?php echo esc_html( $step['text'] ); ?></span>
+								<?php if ( $step['time'] ) : ?>
+									<time class="clx-track__event-time" datetime="<?php echo esc_attr( wp_date( 'c', $step['time'] ) ); ?>"><?php echo esc_html( wp_date( 'j M, g:i a', $step['time'] ) ); ?></time>
+								<?php endif; ?>
+							</li>
+						<?php endforeach; ?>
+					</ol>
+				<?php endif; ?>
 			<?php endif; ?>
 		</section>
 		<?php

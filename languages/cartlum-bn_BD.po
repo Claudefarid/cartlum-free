@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Cartlum – Cart Recovery, Fake Order Protection & Automation for WooCommerce 0.35.1\n"
+"Project-Id-Version: Cartlum – Cart Recovery, Fake Order Protection & Automation for WooCommerce 0.37.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/cartlum\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Bangla\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-31T11:03:44+00:00\n"
+"POT-Creation-Date: 2026-11-01T06:52:09+00:00\n"
 "PO-Revision-Date: 2026-10-10 12:00+0600
 "
 "X-Generator: WP-CLI 2.12.0\n"
@@ -792,15 +792,15 @@ msgstr "নম্বর আনব্লক হয়েছে।"
 #: includes/admin/class-cartlum-admin-reports.php:220
 #: includes/admin/class-cartlum-admin-settings.php:883
 #: includes/class-cartlum-ai-shop.php:743
-#: includes/class-cartlum-order-tracking.php:78
-#: includes/class-cartlum-order-tracking.php:79
-#: includes/class-cartlum-order-tracking.php:125
-#: includes/class-cartlum-order-tracking.php:145
+#: includes/class-cartlum-order-tracking.php:90
+#: includes/class-cartlum-order-tracking.php:91
+#: includes/class-cartlum-order-tracking.php:137
+#: includes/class-cartlum-order-tracking.php:157
 msgid "Delivered"
 msgstr "ডেলিভারি হয়েছে"
 
 #: includes/admin/class-cartlum-admin-reports.php:122
-#: includes/class-cartlum-order-tracking.php:124
+#: includes/class-cartlum-order-tracking.php:136
 msgid "With the courier"
 msgstr "কুরিয়ারের কাছে"
 
@@ -1683,8 +1683,8 @@ msgid "When the order goes through."
 msgstr "যখন অর্ডার সম্পন্ন হয়।"
 
 #: includes/admin/class-cartlum-admin-settings.php:882
-#: includes/class-cartlum-order-tracking.php:85
-#: includes/class-cartlum-order-tracking.php:95
+#: includes/class-cartlum-order-tracking.php:97
+#: includes/class-cartlum-order-tracking.php:107
 msgid "Handed to the courier"
 msgstr "কুরিয়ারে দেওয়া হয়েছে"
 
@@ -1697,8 +1697,8 @@ msgid "When the order is marked completed, or Steadfast reports it delivered."
 msgstr "যখন অর্ডার সম্পন্ন করা হয়, অথবা Steadfast ডেলিভারি জানায়।"
 
 #: includes/admin/class-cartlum-admin-settings.php:884
-#: includes/class-cartlum-order-tracking.php:82
-#: includes/class-cartlum-order-tracking.php:83
+#: includes/class-cartlum-order-tracking.php:94
+#: includes/class-cartlum-order-tracking.php:95
 msgid "Cancelled"
 msgstr "বাতিল"
 
@@ -2240,7 +2240,7 @@ msgid "Automatic reminders"
 msgstr "স্বয়ংক্রিয় রিমাইন্ডার"
 
 #: includes/admin/class-cartlum-admin-today.php:80
-#: includes/class-cartlum-order-tracking.php:154
+#: includes/class-cartlum-order-tracking.php:166
 msgid "Order tracking"
 msgstr "অর্ডার ট্র্যাকিং"
 
@@ -3731,65 +3731,69 @@ msgstr "Cartlum: “%1$s” SMS %2$s নম্বরে পাঠানো হ�
 msgid "The SMS provider was slow to confirm it; it usually still arrives."
 msgstr "SMS প্রোভাইডার নিশ্চিত করতে দেরি করেছে; সাধারণত তবুও পৌঁছে যায়।"
 
-#: includes/class-cartlum-order-tracking.php:75
+#: includes/class-cartlum-order-tracking.php:87
 msgid "Being checked by the courier"
 msgstr "কুরিয়ার যাচাই করছে"
 
-#: includes/class-cartlum-order-tracking.php:76
-#: includes/class-cartlum-order-tracking.php:87
+#: includes/class-cartlum-order-tracking.php:88
+#: includes/class-cartlum-order-tracking.php:99
 msgid "On the way"
 msgstr "পথে আছে"
 
-#: includes/class-cartlum-order-tracking.php:77
+#: includes/class-cartlum-order-tracking.php:89
 msgid "On hold at the courier"
 msgstr "কুরিয়ারে আটকে আছে"
 
-#: includes/class-cartlum-order-tracking.php:80
-#: includes/class-cartlum-order-tracking.php:81
+#: includes/class-cartlum-order-tracking.php:92
+#: includes/class-cartlum-order-tracking.php:93
 msgid "Partly delivered"
 msgstr "আংশিক ডেলিভারি"
 
-#: includes/class-cartlum-order-tracking.php:86
+#: includes/class-cartlum-order-tracking.php:98
 msgid "Picked up by the courier"
 msgstr "কুরিয়ার পার্সেল তুলে নিয়েছে"
 
-#: includes/class-cartlum-order-tracking.php:88
+#: includes/class-cartlum-order-tracking.php:100
 msgid "Out for delivery"
 msgstr "ডেলিভারির জন্য বের হয়েছে"
 
-#: includes/class-cartlum-order-tracking.php:89
+#: includes/class-cartlum-order-tracking.php:101
 msgid "Being returned"
 msgstr "ফেরত আসছে"
 
-#: includes/class-cartlum-order-tracking.php:90
+#: includes/class-cartlum-order-tracking.php:102
 msgid "Returned"
 msgstr "ফেরত এসেছে"
 
-#: includes/class-cartlum-order-tracking.php:115
+#: includes/class-cartlum-order-tracking.php:127
 msgid "Cancelled by the courier"
 msgstr "কুরিয়ার বাতিল করেছে"
 
-#: includes/class-cartlum-order-tracking.php:117
+#: includes/class-cartlum-order-tracking.php:129
 msgid "Returned by the courier"
 msgstr "কুরিয়ার ফেরত দিয়েছে"
 
-#: includes/class-cartlum-order-tracking.php:122
+#: includes/class-cartlum-order-tracking.php:134
 msgid "Order placed"
 msgstr "অর্ডার দেওয়া হয়েছে"
 
-#: includes/class-cartlum-order-tracking.php:123
+#: includes/class-cartlum-order-tracking.php:135
 msgid "Processing"
 msgstr "প্রসেসিং"
 
 #. translators: %s: consignment number
-#: includes/class-cartlum-order-tracking.php:173
+#: includes/class-cartlum-order-tracking.php:185
 #, php-format
 msgid "Consignment %s"
 msgstr "কনসাইনমেন্ট %s"
 
-#: includes/class-cartlum-order-tracking.php:178
+#: includes/class-cartlum-order-tracking.php:190
 msgid "Track parcel"
 msgstr "পার্সেল ট্র্যাক করুন"
+
+#: includes/class-cartlum-order-tracking.php:194
+msgid "Parcel steps"
+msgstr "পার্সেলের ধাপ"
 
 #: includes/class-cartlum-otp.php:83
 msgid "A code was just sent. Please wait a minute before asking for a new one."

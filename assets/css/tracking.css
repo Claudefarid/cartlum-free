@@ -141,3 +141,59 @@
 	outline: 2px solid var(--clx-ink);
 	outline-offset: 2px;
 }
+
+/* The parcel's steps from the courier, newest first. */
+.clx-track .clx-track__journey {
+	margin: 16px 0 0;
+	padding: 0;
+	list-style: none;
+}
+
+.clx-track .clx-track__event {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	margin: 0;
+	padding: 0 0 14px 22px;
+}
+
+/* The dot, and the line down to the step before. */
+.clx-track .clx-track__event::before {
+	content: "";
+	position: absolute;
+	top: 5px;
+	left: 0;
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	background: var(--clx-line);
+}
+
+.clx-track .clx-track__event:not(:last-child)::after {
+	content: "";
+	position: absolute;
+	top: 17px;
+	bottom: -3px;
+	left: 4px;
+	width: 2px;
+	background: var(--clx-line);
+}
+
+.clx-track .clx-track__event:last-child {
+	padding-bottom: 0;
+}
+
+.clx-track .clx-track__event.is-latest::before {
+	background: var(--clx-accent);
+}
+
+.clx-track .clx-track__event.is-latest .clx-track__event-text {
+	font-weight: 600;
+}
+
+.clx-track .clx-track__event-time {
+	color: var(--clx-muted);
+	font-size: 13px;
+	white-space: nowrap;
+}

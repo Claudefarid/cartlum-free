@@ -85,7 +85,7 @@ class Cartlum_Admin_Today {
 			__( 'Fake Orders', 'cartlum' )        => array(
 				array( __( 'Fake-order protection', 'cartlum' ), $state( $on( 'protect_enabled' ) ), $link( 'protection' ) ),
 				array( __( 'SMS code for risky orders', 'cartlum' ), $state( $on( 'protect_enabled' ) && $on( 'protect_otp' ), $sms ), $link( 'protection' ) ),
-				array( __( 'Courier check', 'cartlum' ), $pro_one( 'courier', $state( $on( 'pro_courier_checkout' ), 'on' === $ints['fraudbd']['status'] ) ), $link( 'courier' ) ),
+				array( __( 'Courier check', 'cartlum' ), $pro_one( 'courier', $state( $on( 'pro_courier_checkout' ), 'on' === $ints[ 'steadfast' === ( $s['pro_courier_source'] ?? '' ) ? 'steadfast' : 'fraudbd' ]['status'] ) ), $link( 'courier' ) ),
 			),
 			__( 'Checkout & Buttons', 'cartlum' ) => array(
 				array( __( 'Easy checkout', 'cartlum' ), $state( $on( 'checkout_enabled' ) ), $link( 'checkout' ) ),
