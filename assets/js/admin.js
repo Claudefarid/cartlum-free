@@ -595,4 +595,51 @@
 			}
 		} );
 	}
+
+	// Lists the store puts in order (Thank-you page sections): drag rows, or use their arrows. The
+	// hidden inputs carry the order when the tab is saved.
+	document.addEventListener( 'click', function ( e ) {
+		var button = e.target.closest( '[data-cl-sort-move]' );
+		if ( ! button ) {
+			return;
+		}
+		var row = button.closest( '[data-cl-sort-item]' );
+		var up = '-1' === button.getAttribute( 'data-cl-sort-move' );
+		var other = up ? row.previousElementSibling : row.nextElementSibling;
+		if ( other ) {
+			row.parentNode.insertBefore( row, up ? other : other.nextElementSibling );
+			button.focus();
+		}
+	} );
+	var sorting = null;
+	document.addEventListener( 'dragstart', function ( e ) {
+		sorting = e.target.closest && e.target.closest( '[data-cl-sort-item]' );
+		if ( sorting ) {
+			e.dataTransfer.effectAllowed = 'move';
+			e.dataTransfer.setData( 'text/plain', sorting.getAttribute( 'data-cl-sort-item' ) );
+			sorting.style.opacity = '0.5';
+		}
+	} );
+	document.addEventListener( 'dragover', function ( e ) {
+		var row = sorting && e.target.closest && e.target.closest( '[data-cl-sort-item]' );
+		if ( ! row || row.parentNode !== sorting.parentNode ) {
+			return;
+		}
+		e.preventDefault();
+		if ( row !== sorting ) {
+			var box = row.getBoundingClientRect();
+			row.parentNode.insertBefore( sorting, e.clientY > box.top + box.height / 2 ? row.nextElementSibling : row );
+		}
+	} );
+	document.addEventListener( 'drop', function ( e ) {
+		if ( sorting ) {
+			e.preventDefault();
+		}
+	} );
+	document.addEventListener( 'dragend', function () {
+		if ( sorting ) {
+			sorting.style.opacity = '';
+			sorting = null;
+		}
+	} );
 }() );

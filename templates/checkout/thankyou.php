@@ -1,7 +1,8 @@
 <?php
 /**
  * Thank-you page in the phone-first checkout's style: the confirmation and order details on the left,
- * the order summary on the right (on phones, the folding bar at the top).
+ * the order summary on the right (on phones, the folding bar at the top). The left side's sections
+ * come in the order the store chose (Cartlum_Thankyou).
  *
  * Replaces WooCommerce's checkout/thankyou.php while the phone-first checkout is on. WooCommerce's
  * thank-you hooks still run, so payment instructions (e.g. bank details) and tracking keep working.
@@ -120,82 +121,90 @@ $message   = '' !== $message ? $message : __( 'We have received your order and w
 					</div>
 				</div>
 
-				<?php if ( $failed ) : ?>
-					<section class="clx-card">
-						<p><?php esc_html_e( 'Your order is saved, but the payment was declined by the bank or payment provider. Please try again.', 'cartlum' ); ?></p>
-						<p class="clx-thanks__actions">
-							<a class="clx-btn" href="<?php echo esc_url( $order->get_checkout_payment_url() ); ?>"><?php esc_html_e( 'Pay again', 'cartlum' ); ?></a>
-						</p>
-					</section>
-				<?php else : ?>
-					<section class="clx-card">
-						<h2 class="clx-card__title"><?php esc_html_e( 'Your order is confirmed', 'cartlum' ); ?></h2>
-						<p><?php echo esc_html( str_replace( '{phone}', $phone, $message ) ); ?></p>
-					</section>
-					<?php
-					/**
-					 * Fires under "Your order is confirmed" on Cartlum's thank-you page, high enough to
-					 * be seen (Cartlum Pro: the offer after the order).
-					 *
-					 * @param WC_Order $order Order.
-					 */
-					do_action( 'cartlum_thankyou_after_confirmation', $order );
-					?>
-				<?php endif; ?>
-
-				<?php
-				// Payment instructions (e.g. bank details), in a box only when the method prints any.
-				ob_start();
-				do_action( 'woocommerce_thankyou_' . $order->get_payment_method(), $order->get_id() );
-				$gateway_note = trim( (string) ob_get_clean() );
-				if ( '' !== $gateway_note ) {
-					echo '<div class="clx-gateway-note">' . $gateway_note . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- the payment method's own output.
-				}
-				?>
-
-				<section class="clx-card">
-					<h2 class="clx-card__title"><?php esc_html_e( 'Order details', 'cartlum' ); ?></h2>
-					<dl class="clx-details">
-						<div>
-							<dt><?php esc_html_e( 'Contact', 'cartlum' ); ?></dt>
-							<dd>
-								<?php echo esc_html( $phone ); ?>
-								<?php if ( $order->get_billing_email() ) : ?>
-									<br><?php echo esc_html( $order->get_billing_email() ); ?>
-								<?php endif; ?>
-							</dd>
-						</div>
-						<div>
-							<dt><?php esc_html_e( 'Delivery address', 'cartlum' ); ?></dt>
-							<dd><?php echo wp_kses_post( $order->get_formatted_shipping_address( $order->get_formatted_billing_address() ) ); ?></dd>
-						</div>
-						<?php if ( $order->get_shipping_method() ) : ?>
-							<div>
-								<dt><?php esc_html_e( 'Shipping method', 'cartlum' ); ?></dt>
-								<dd><?php echo esc_html( $order->get_shipping_method() ); ?></dd>
-							</div>
-						<?php endif; ?>
-						<div>
-							<dt><?php esc_html_e( 'Payment', 'cartlum' ); ?></dt>
-							<dd>
-								<?php echo esc_html( $order->get_payment_method_title() ); ?>
-								<?php if ( 'cod' === $order->get_payment_method() && ! $failed ) : ?>
-									<br><span class="clx-muted">
-										<?php /* translators: %s: order total */ echo wp_kses_post( sprintf( __( 'Pay %s when it arrives', 'cartlum' ), $order->get_formatted_order_total() ) ); ?>
-									</span>
-								<?php endif; ?>
-							</dd>
-						</div>
-					</dl>
-				</section>
-
-				<p class="clx-thanks__actions">
-					<a class="clx-btn" href="<?php echo esc_url( apply_filters( 'woocommerce_return_to_shop_redirect', wc_get_page_permalink( 'shop' ) ) ); ?>"><?php esc_html_e( 'Continue shopping', 'cartlum' ); ?></a>
-					<?php if ( $wa_number ) : ?>
-						<?php /* translators: %s: order number */ $wa_text = sprintf( __( 'Hi! About my order #%s', 'cartlum' ), $order->get_order_number() ); ?>
-						<a class="clx-btn clx-btn--ghost" href="<?php echo esc_url( 'https://wa.me/' . $wa_number . '?text=' . rawurlencode( $wa_text ) ); ?>" target="_blank" rel="noopener"><?php esc_html_e( 'Message us on WhatsApp', 'cartlum' ); ?></a>
+				<?php foreach ( Cartlum_Thankyou::layout() as $section => $shown ) : ?>
+					<?php if ( ! $shown ) : ?>
+						<?php continue; ?>
+					<?php elseif ( 'message' === $section ) : ?>
+					<?php if ( $failed ) : ?>
+						<section class="clx-card">
+							<p><?php esc_html_e( 'Your order is saved, but the payment was declined by the bank or payment provider. Please try again.', 'cartlum' ); ?></p>
+							<p class="clx-thanks__actions">
+								<a class="clx-btn" href="<?php echo esc_url( $order->get_checkout_payment_url() ); ?>"><?php esc_html_e( 'Pay again', 'cartlum' ); ?></a>
+							</p>
+						</section>
+					<?php else : ?>
+						<section class="clx-card">
+							<h2 class="clx-card__title"><?php esc_html_e( 'Your order is confirmed', 'cartlum' ); ?></h2>
+							<p><?php echo esc_html( str_replace( '{phone}', $phone, $message ) ); ?></p>
+						</section>
+						<?php
+						/**
+						 * Fires under "Your order is confirmed" on Cartlum's thank-you page, high enough to
+						 * be seen (Cartlum Pro: the offer after the order).
+						 *
+						 * @param WC_Order $order Order.
+						 */
+						do_action( 'cartlum_thankyou_after_confirmation', $order );
+						?>
 					<?php endif; ?>
-				</p>
+
+					<?php
+					// Payment instructions (e.g. bank details), in a box only when the method prints any.
+					ob_start();
+					do_action( 'woocommerce_thankyou_' . $order->get_payment_method(), $order->get_id() );
+					$gateway_note = trim( (string) ob_get_clean() );
+					if ( '' !== $gateway_note ) {
+						echo '<div class="clx-gateway-note">' . $gateway_note . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- the payment method's own output.
+					}
+					?>
+					<?php elseif ( 'details' === $section ) : ?>
+					<section class="clx-card">
+						<h2 class="clx-card__title"><?php esc_html_e( 'Order details', 'cartlum' ); ?></h2>
+						<dl class="clx-details">
+							<div>
+								<dt><?php esc_html_e( 'Contact', 'cartlum' ); ?></dt>
+								<dd>
+									<?php echo esc_html( $phone ); ?>
+									<?php if ( $order->get_billing_email() ) : ?>
+										<br><?php echo esc_html( $order->get_billing_email() ); ?>
+									<?php endif; ?>
+								</dd>
+							</div>
+							<div>
+								<dt><?php esc_html_e( 'Delivery address', 'cartlum' ); ?></dt>
+								<dd><?php echo wp_kses_post( $order->get_formatted_shipping_address( $order->get_formatted_billing_address() ) ); ?></dd>
+							</div>
+							<?php if ( $order->get_shipping_method() ) : ?>
+								<div>
+									<dt><?php esc_html_e( 'Shipping method', 'cartlum' ); ?></dt>
+									<dd><?php echo esc_html( $order->get_shipping_method() ); ?></dd>
+								</div>
+							<?php endif; ?>
+							<div>
+								<dt><?php esc_html_e( 'Payment', 'cartlum' ); ?></dt>
+								<dd>
+									<?php echo esc_html( $order->get_payment_method_title() ); ?>
+									<?php if ( 'cod' === $order->get_payment_method() && ! $failed ) : ?>
+										<br><span class="clx-muted">
+											<?php /* translators: %s: order total */ echo wp_kses_post( sprintf( __( 'Pay %s when it arrives', 'cartlum' ), $order->get_formatted_order_total() ) ); ?>
+										</span>
+									<?php endif; ?>
+								</dd>
+							</div>
+						</dl>
+					</section>
+					<?php elseif ( 'buttons' === $section ) : ?>
+					<p class="clx-thanks__actions">
+						<a class="clx-btn" href="<?php echo esc_url( apply_filters( 'woocommerce_return_to_shop_redirect', wc_get_page_permalink( 'shop' ) ) ); ?>"><?php esc_html_e( 'Continue shopping', 'cartlum' ); ?></a>
+						<?php if ( $wa_number ) : ?>
+							<?php /* translators: %s: order number */ $wa_text = sprintf( __( 'Hi! About my order #%s', 'cartlum' ), $order->get_order_number() ); ?>
+							<a class="clx-btn clx-btn--ghost" href="<?php echo esc_url( 'https://wa.me/' . $wa_number . '?text=' . rawurlencode( $wa_text ) ); ?>" target="_blank" rel="noopener"><?php esc_html_e( 'Message us on WhatsApp', 'cartlum' ); ?></a>
+						<?php endif; ?>
+					</p>
+					<?php else : ?>
+						<?php echo Cartlum_Thankyou::section( $section, 'clx-card' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- built escaped in section(); a video is WordPress's own oEmbed HTML. ?>
+					<?php endif; ?>
+				<?php endforeach; ?>
 
 				<?php do_action( 'woocommerce_thankyou', $order->get_id() ); ?>
 			</div>

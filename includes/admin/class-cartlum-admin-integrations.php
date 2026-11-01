@@ -83,6 +83,14 @@ class Cartlum_Admin_Integrations {
 				'pro'    => true,
 				'status' => $fb_pix ? 'on' : 'off',
 			),
+			'tiktok'     => array(
+				'name'   => 'TikTok',
+				'for'    => __( 'Purchases and shop visits reported to TikTok', 'cartlum' ),
+				'tab'    => 'tiktok',
+				'color'  => '#111111',
+				'pro'    => true,
+				'status' => $filled( array( 'pro_tt_pixel' ) ) ? 'on' : 'off',
+			),
 			'fraudbd'    => array(
 				'name'   => 'FraudBD',
 				'for'    => __( 'Each customer’s record at all couriers', 'cartlum' ),

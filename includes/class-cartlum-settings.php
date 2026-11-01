@@ -49,6 +49,10 @@ class Cartlum_Settings {
 			'checkout_accent'       => '#1f2937',
 			'checkout_logo'         => '',
 			'thankyou_message'      => '',      // Empty = the default text, translated. {phone} = the customer's number.
+			'thankyou_layout'       => '',      // Sections in order, "-" before a hidden one (Cartlum_Thankyou).
+			'thankyou_video'        => '',
+			'thankyou_follow'       => '',
+			'thankyou_text'         => '',
 			'webhook_url'           => '',
 			'webhook_on_captured'   => 'no',
 			'webhook_on_abandoned'  => 'yes',

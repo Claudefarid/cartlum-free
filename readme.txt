@@ -4,7 +4,7 @@ Tags: abandoned cart, fake order, cash on delivery, order sms, automation
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.37.0
+Stable tag: 0.38.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -50,6 +50,7 @@ Cartlum is for WooCommerce stores that sell cash on delivery, where customers ch
 * **Order again** (optional): one tap puts an earlier order back in the cart and opens a filled-in checkout, from My Account or from {reorder_link} in an order SMS; returning guests find the checkout filled in from their last order.
 * **Option buttons** (optional): colours and sizes as buttons instead of drop-down lists, with unavailable choices crossed out.
 * **Cart page settings** (optional): choose where Add to cart leads (stay, cart or checkout), skip the cart page, ask for the mobile number on the cart page, and give free delivery from an amount with a "how much more" bar on the cart and checkout.
+* **Thank-you page**: your message, the order, a video, "follow us" links and your own text after an order, in the order you choose.
 * **Bangla included**, and a "Language for customers" setting to show shoppers Bangla while your admin stays in English.
 * Unsubscribe link in every message, automatic data deletion, and WordPress privacy export/erase support.
 
@@ -114,6 +115,9 @@ It can, for stores that only used CartFlows for a shorter checkout. CartFlows' g
 6. Integrations: every connected service with its status.
 
 == Changelog ==
+
+= 0.38.0 =
+* New: Checkout & Buttons → Thank-you page. Add a video, "follow us" links and your own text, and drag the phone-first thank-you page's sections into any order (or hide them); on WooCommerce's own thank-you page the video, links and text show above the order details. The thank-you message moved here.
 
 = 0.37.0 =
 * Order tracking in My Account shows the parcel's steps (for example "Reached Mirpur hub", with the time, newest first) when the courier details include them.

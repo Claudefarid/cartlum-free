@@ -44,6 +44,7 @@ class Cartlum_Admin_Settings {
 			'general'        => __( 'General', 'cartlum' ),
 			'checkout'       => __( 'Easy checkout', 'cartlum' ),
 			'cart'           => __( 'Cart page', 'cartlum' ),
+			'thankyou'       => __( 'Thank-you page', 'cartlum' ),
 			'product'        => __( 'Buy now & buttons', 'cartlum' ),
 			'popup'          => __( 'Save-cart popup', 'cartlum' ),
 			'account'        => __( 'Customer login', 'cartlum' ),
@@ -116,7 +117,7 @@ class Cartlum_Admin_Settings {
 			),
 			'cartlum-checkout'     => array(
 				'label' => __( 'Checkout & Buttons', 'cartlum' ),
-				'tabs'  => array( 'checkout', 'cart', 'product', 'account', 'ai_shop' ),
+				'tabs'  => array( 'checkout', 'fields', 'cart', 'sidecart', 'thankyou', 'product', 'account', 'ai_shop' ),
 				'view'  => '',
 			),
 			// Pro's tools for bigger orders, and for bringing customers back; without Pro these pages
@@ -138,7 +139,7 @@ class Cartlum_Admin_Settings {
 			),
 			'cartlum-integrations' => array(
 				'label' => __( 'Integrations', 'cartlum' ),
-				'tabs'  => array( 'int_sms', 'int_steadfast', 'int_pathao', 'int_redx', 'int_paperfly', 'facebook', 'int_fraudbd', 'int_whatsapp', 'int_elevenlabs', 'int_ai', 'webhooks' ),
+				'tabs'  => array( 'int_sms', 'int_steadfast', 'int_pathao', 'int_redx', 'int_paperfly', 'facebook', 'tiktok', 'int_fraudbd', 'int_whatsapp', 'int_elevenlabs', 'int_ai', 'webhooks' ),
 				'view'  => __( 'Overview', 'cartlum' ),
 			),
 			'cartlum-settings'     => array(
@@ -275,6 +276,7 @@ class Cartlum_Admin_Settings {
 			'courier_tracking_url'  => array( 'tracking', '' ),
 			'cancel_reasons'        => array( 'tracking', '' ),
 			'cancel_reason_old_key' => array( 'tracking', '' ),
+			'thankyou_message'      => array( 'thankyou', '' ),
 			'sms_template'        => array( 'texts', $texts['sms'] ),
 			'whatsapp_template'   => array( 'texts', $texts['whatsapp'] ),
 			'email_design'        => array( 'texts', $texts['email'] ),
@@ -412,6 +414,7 @@ class Cartlum_Admin_Settings {
 			'protection'     => __( 'Stops fake and repeat orders before they cost you a delivery.', 'cartlum' ),
 			'checkout'       => __( 'A short one-page checkout: mobile number first, then name, address and district.', 'cartlum' ),
 			'cart'           => __( 'Where “Add to cart” leads, and what shoppers see on the cart page.', 'cartlum' ),
+			'thankyou'       => __( 'What customers see right after they order: your message, the order, a video, your pages and your own words.', 'cartlum' ),
 			'product'        => __( 'Buttons on each product: Buy now, Order on WhatsApp, Call to order, and colours and sizes as buttons.', 'cartlum' ),
 			'account'        => __( 'Customers log in to My Account with their mobile number and an SMS code.', 'cartlum' ),
 			'ai_shop'        => __( 'Help ChatGPT, Gemini, Claude, Grok, Perplexity and Kimi recommend your products and send buyers to your checkout.', 'cartlum' ),
@@ -693,6 +696,25 @@ class Cartlum_Admin_Settings {
 						'help'  => __( 'Empty = “Save my cart”', 'cartlum' ),
 					),
 				);
+			case 'thankyou':
+				return array(
+					'thankyou_video'  => array(
+						'label' => __( 'Video link', 'cartlum' ),
+						'type'  => 'text',
+						'help'  => __( 'A YouTube link, e.g. how to use the product or how delivery works. Shown as a player where WordPress can embed it, otherwise as a link.', 'cartlum' ),
+					),
+					'thankyou_follow' => array(
+						'label' => __( 'Follow us links', 'cartlum' ),
+						'type'  => 'textarea',
+						'help'  => __( 'One per line: Name | address, e.g. Facebook | https://facebook.com/yourpage', 'cartlum' ),
+					),
+					'thankyou_text'   => array(
+						'label' => __( 'Your own text', 'cartlum' ),
+						'type'  => 'textarea',
+						'help'  => __( 'For example your exchange policy or when to expect the delivery call.', 'cartlum' ),
+					),
+				);
+
 			case 'cart':
 				$phone_help = __( 'A mobile number field above “Proceed to checkout”. The cart is saved as soon as a number is typed, as on the checkout, and the checkout has the number filled in. Not needed with “Skip the cart page”.', 'cartlum' );
 				if ( 'yes' !== Cartlum_Settings::get( 'enabled' ) ) {
@@ -1507,7 +1529,7 @@ class Cartlum_Admin_Settings {
 		}
 		$tab    = isset( $_POST['tab'] ) ? sanitize_key( $_POST['tab'] ) : 'general';
 		$result = self::store( $tab, isset( $_POST['cartlum'] ) && is_array( $_POST['cartlum'] ) ? wp_unslash( $_POST['cartlum'] ) : array() ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- sanitized per field in store().
-		$reload = (bool) array_intersect( self::hook_tabs( $tab ), array( 'automation', 'bundles', 'qty_offers', 'bump', 'upsells', 'gift_cards', 'licence' ) );
+		$reload = (bool) array_intersect( self::hook_tabs( $tab ), array( 'automation', 'bundles', 'qty_offers', 'bump', 'upsells', 'gift_cards', 'licence', 'fields' ) );
 		wp_send_json_success(
 			array(
 				'message' => $result['message'],
