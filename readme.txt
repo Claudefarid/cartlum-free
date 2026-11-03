@@ -4,7 +4,7 @@ Tags: abandoned cart, fake order, cash on delivery, order sms, automation
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.38.0
+Stable tag: 0.39.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -115,6 +115,9 @@ It can, for stores that only used CartFlows for a shorter checkout. CartFlows' g
 6. Integrations: every connected service with its status.
 
 == Changelog ==
+
+= 0.39.0 =
+* Admin: a Customers page in the menu, for add-ons that list customers.
 
 = 0.38.0 =
 * New: Checkout & Buttons → Thank-you page. Add a video, "follow us" links and your own text, and drag the phone-first thank-you page's sections into any order (or hide them); on WooCommerce's own thank-you page the video, links and text show above the order details. The thank-you message moved here.

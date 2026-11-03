@@ -110,6 +110,12 @@ class Cartlum_Admin_Settings {
 				'tabs'  => array( 'protection', 'courier', 'network' ),
 				'view'  => __( 'Risky orders', 'cartlum' ),
 			),
+			'cartlum-customers'    => array(
+				'label' => __( 'Customers', 'cartlum' ),
+				// Filled by Cartlum Pro: the customers list, broadcasts and automations.
+				'tabs'  => array( 'broadcasts', 'automations' ),
+				'view'  => '',
+			),
 			'cartlum-reports'      => array(
 				'label' => __( 'Reports', 'cartlum' ),
 				'tabs'  => array(),
@@ -175,6 +181,10 @@ class Cartlum_Admin_Settings {
 			if ( ! in_array( $tab, $placed, true ) && self::has_content( $tab ) ) {
 				$sections['cartlum-settings']['tabs'][] = $tab;
 			}
+		}
+		// Customers opens on the customers list, when an add-on draws it (Cartlum Pro).
+		if ( has_action( 'cartlum_customers_page' ) ) {
+			$sections['cartlum-customers']['view'] = __( 'Customers', 'cartlum' );
 		}
 		// Offers opens on an overview of its tabs, when an add-on fills it (Cartlum Pro).
 		if ( ! empty( $sections['cartlum-offers']['tabs'] ) && has_filter( 'cartlum_offers_overview' ) ) {
@@ -1293,6 +1303,11 @@ class Cartlum_Admin_Settings {
 				Cartlum_Admin_Integrations::page();
 			} elseif ( 'cartlum-offers' === $slug ) {
 				Cartlum_Admin_Offers::page();
+			} elseif ( 'cartlum-customers' === $slug ) {
+				/**
+				 * The Customers page's list (Cartlum Pro).
+				 */
+				do_action( 'cartlum_customers_page' );
 			}
 			return;
 		}
@@ -1529,7 +1544,7 @@ class Cartlum_Admin_Settings {
 		}
 		$tab    = isset( $_POST['tab'] ) ? sanitize_key( $_POST['tab'] ) : 'general';
 		$result = self::store( $tab, isset( $_POST['cartlum'] ) && is_array( $_POST['cartlum'] ) ? wp_unslash( $_POST['cartlum'] ) : array() ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- sanitized per field in store().
-		$reload = (bool) array_intersect( self::hook_tabs( $tab ), array( 'automation', 'bundles', 'qty_offers', 'bump', 'upsells', 'gift_cards', 'licence', 'fields' ) );
+		$reload = (bool) array_intersect( self::hook_tabs( $tab ), array( 'automation', 'bundles', 'qty_offers', 'bump', 'upsells', 'gift_cards', 'licence', 'fields', 'automations', 'sidecart' ) );
 		wp_send_json_success(
 			array(
 				'message' => $result['message'],
