@@ -138,7 +138,7 @@ class Cartlum_Thankyou {
 	/* ---------- Settings ---------- */
 
 	/**
-	 * The sections list on Checkout & Buttons → Thank-you page.
+	 * The sections list on Checkout → Thank-you page.
 	 *
 	 * @param string $tab    Tab.
 	 * @param array  $values Settings.

@@ -70,7 +70,7 @@ class Cartlum_Admin_Today {
 		// Pro 0.12+ has Orders → Parcels for every courier; older Pro a Steadfast tab.
 		$parcels = isset( $tabs['parcels'] ) ? 'parcels' : 'steadfast';
 		$groups  = array(
-			__( 'Abandoned Carts', 'cartlum' )    => array(
+			__( 'Incomplete Orders', 'cartlum' )  => array(
 				array( __( 'Save carts as numbers are typed', 'cartlum' ), $state( $on( 'enabled' ) ), $link( 'capture' ) ),
 				array( __( 'Automatic reminders', 'cartlum' ), $state( $on( 'flow_enabled' ), 'email' === ( $s['flow_channel'] ?? 'sms' ) || $sms ), $link( 'automation' ) ),
 				array( __( 'Save-cart popup', 'cartlum' ), $state( $on( 'popup_enabled' ) ), $link( 'popup' ) ),
@@ -87,7 +87,7 @@ class Cartlum_Admin_Today {
 				array( __( 'SMS code for risky orders', 'cartlum' ), $state( $on( 'protect_enabled' ) && $on( 'protect_otp' ), $sms ), $link( 'protection' ) ),
 				array( __( 'Courier check', 'cartlum' ), $pro_one( 'courier', $state( $on( 'pro_courier_checkout' ), 'on' === $ints[ 'steadfast' === ( $s['pro_courier_source'] ?? '' ) ? 'steadfast' : 'fraudbd' ]['status'] ) ), $link( 'courier' ) ),
 			),
-			__( 'Checkout & Buttons', 'cartlum' ) => array(
+			__( 'Checkout', 'cartlum' )           => array(
 				array( __( 'Easy checkout', 'cartlum' ), $state( $on( 'checkout_enabled' ) ), $link( 'checkout' ) ),
 				array( __( 'Cart page', 'cartlum' ), $state( '' !== ( $s['cart_after_add'] ?? '' ) || $on( 'cart_skip' ) || $on( 'cart_phone' ) || (float) ( $s['cart_free_amount'] ?? 0 ) > 0 ), $link( 'cart' ) ),
 				array( __( 'Buy now button', 'cartlum' ), $state( $on( 'buy_now_enabled' ) ), $link( 'product' ) ),

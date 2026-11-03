@@ -95,7 +95,7 @@ class Cartlum_Admin_Settings {
 		}
 		$sections = array(
 			'cartlum-carts'        => array(
-				'label' => __( 'Abandoned Carts', 'cartlum' ),
+				'label' => __( 'Incomplete Orders', 'cartlum' ),
 				'tabs'  => array( 'automation', 'texts', 'coupons', 'popup', 'capture' ),
 				'view'  => __( 'Carts', 'cartlum' ),
 			),
@@ -112,8 +112,8 @@ class Cartlum_Admin_Settings {
 			),
 			'cartlum-customers'    => array(
 				'label' => __( 'Customers', 'cartlum' ),
-				// Filled by Cartlum Pro: the customers list, broadcasts and automations.
-				'tabs'  => array( 'broadcasts', 'automations' ),
+				// Filled by Cartlum Pro: the customers list and broadcasts.
+				'tabs'  => array( 'broadcasts' ),
 				'view'  => '',
 			),
 			'cartlum-reports'      => array(
@@ -122,7 +122,7 @@ class Cartlum_Admin_Settings {
 				'view'  => __( 'Reports', 'cartlum' ),
 			),
 			'cartlum-checkout'     => array(
-				'label' => __( 'Checkout & Buttons', 'cartlum' ),
+				'label' => __( 'Checkout', 'cartlum' ),
 				'tabs'  => array( 'checkout', 'fields', 'cart', 'sidecart', 'thankyou', 'product', 'account', 'ai_shop' ),
 				'view'  => '',
 			),
@@ -134,8 +134,14 @@ class Cartlum_Admin_Settings {
 				'view'  => '',
 			),
 			'cartlum-loyalty'      => array(
-				'label' => __( 'Customer Loyalty', 'cartlum' ),
+				'label' => __( 'Loyalty', 'cartlum' ),
 				'tabs'  => array( 'loyalty', 'gift_cards', 'winback' ),
+				'view'  => '',
+			),
+			// Cartlum Pro's automation rules and daily summary.
+			'cartlum-automations'  => array(
+				'label' => __( 'Automations', 'cartlum' ),
+				'tabs'  => array( 'automations' ),
 				'view'  => '',
 			),
 			'cartlum-ai'           => array(
@@ -728,7 +734,7 @@ class Cartlum_Admin_Settings {
 			case 'cart':
 				$phone_help = __( 'A mobile number field above “Proceed to checkout”. The cart is saved as soon as a number is typed, as on the checkout, and the checkout has the number filled in. Not needed with “Skip the cart page”.', 'cartlum' );
 				if ( 'yes' !== Cartlum_Settings::get( 'enabled' ) ) {
-					$phone_help .= ' ' . __( 'Turn on “Capture carts” (Abandoned Carts → Capture) first; without it nothing is saved.', 'cartlum' );
+					$phone_help .= ' ' . __( 'Turn on “Capture carts” (Incomplete Orders → Capture) first; without it nothing is saved.', 'cartlum' );
 				}
 				return array(
 					'cart_after_add'   => array(

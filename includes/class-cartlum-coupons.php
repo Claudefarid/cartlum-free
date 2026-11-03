@@ -29,7 +29,7 @@ class Cartlum_Coupons {
 		// Free delivery: no discount on the products; the delivery charge becomes 0 (see free_delivery()).
 		$amount = $free ? 0 : (float) Cartlum_Settings::get( 'coupon_amount' );
 		if ( ! $free && $amount <= 0 ) {
-			return new WP_Error( 'cartlum_coupon_amount', __( 'Set a coupon amount in Cartlum → Abandoned Carts → Coupons first.', 'cartlum' ) );
+			return new WP_Error( 'cartlum_coupon_amount', __( 'Set a coupon amount in Cartlum → Incomplete Orders → Coupons first.', 'cartlum' ) );
 		}
 		$days = max( 1, (int) Cartlum_Settings::get( 'coupon_expiry_days' ) );
 

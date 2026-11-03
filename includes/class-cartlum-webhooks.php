@@ -188,11 +188,12 @@ class Cartlum_Webhooks {
 	/**
 	 * Sends a body to the URL.
 	 *
-	 * @param array $data Body.
+	 * @param array  $data Body.
+	 * @param string $url  Another address ('' = the one in the settings), e.g. an add-on's own.
 	 * @return true|WP_Error
 	 */
-	public static function post( array $data ) {
-		$url = self::url();
+	public static function post( array $data, $url = '' ) {
+		$url = '' !== $url ? $url : self::url();
 		if ( '' === $url || ! wp_http_validate_url( $url ) || ! Cartlum_Guard::is_public_url( $url ) ) {
 			return new WP_Error( 'cartlum_webhook_url', __( 'The webhook URL must be a public internet address starting with https:// or http://.', 'cartlum' ) );
 		}

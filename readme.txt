@@ -4,7 +4,7 @@ Tags: abandoned cart, fake order, cash on delivery, order sms, automation
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.39.0
+Stable tag: 0.40.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -78,7 +78,7 @@ Cart details are stored in your own WordPress database and are deleted automatic
 1. Install and activate WooCommerce.
 2. Install Cartlum from Plugins → Add New, or upload the zip, and activate it.
 3. Open Cartlum → Today and follow "Set up Cartlum in 5 minutes": choose your SMS provider, send yourself a test SMS, then the checkout, order SMS and buy buttons.
-4. Optional: turn on the automatic reminder under Abandoned Carts → Reminders. Set a test phone number first, so you receive the reminders yourself before customers do.
+4. Optional: turn on the automatic reminder under Incomplete Orders → Reminders. Set a test phone number first, so you receive the reminders yourself before customers do.
 
 == Frequently Asked Questions ==
 
@@ -115,6 +115,10 @@ It can, for stores that only used CartFlows for a shorter checkout. CartFlows' g
 6. Integrations: every connected service with its status.
 
 == Changelog ==
+
+= 0.40.0 =
+* New menu in seven groups: Today · Incomplete & Fake Orders · Customer Loyalty · Sell More · 30-Second Checkout · AI & Automation · Setup & Integration. Abandoned Carts is now Incomplete Orders, Checkout & Buttons is Checkout, and old links still work.
+* Webhooks: add-ons can send to an address of their own, signed with the same secret.
 
 = 0.39.0 =
 * Admin: a Customers page in the menu, for add-ons that list customers.

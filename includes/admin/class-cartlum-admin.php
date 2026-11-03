@@ -92,7 +92,8 @@ class Cartlum_Admin {
 	}
 
 	/**
-	 * The menu in its groups (Daily work, Sell more, Setup), with how many jobs wait behind the
+	 * The menu in its groups (Today, Incomplete & Fake Orders, Customer Loyalty, Sell More,
+	 * 30-Second Checkout, AI & Automation, Setup & Integration), with how many jobs wait behind the
 	 * daily pages. Counts come from Today's cache only, so the menu never adds a query.
 	 *
 	 * @param array $items Menu items.
@@ -100,27 +101,46 @@ class Cartlum_Admin {
 	 */
 	private static function rail_groups( array $items ) {
 		$home   = array(
-			'cartlum'              => 'daily',
-			'cartlum-carts'        => 'daily',
-			'cartlum-orders'       => 'daily',
-			'cartlum-fraud'        => 'daily',
-			'cartlum-reports'      => 'daily',
-			'cartlum-customers'    => 'sell',
-			'cartlum-offers'       => 'sell',
-			'cartlum-landing'      => 'sell',
-			'cartlum-loyalty'      => 'sell',
+			'cartlum'             => 'today',
+			'cartlum-orders'      => 'today',
+			'cartlum-reports'     => 'today',
+			'cartlum-carts'       => 'orders',
+			'cartlum-fraud'       => 'orders',
+			'cartlum-customers'   => 'loyalty',
+			'cartlum-loyalty'     => 'loyalty',
+			'cartlum-offers'      => 'sell',
+			'cartlum-landing'     => 'sell',
+			'cartlum-checkout'    => 'checkout',
+			'cartlum-automations' => 'auto',
+			'cartlum-ai'          => 'auto',
 		);
 		$groups = array(
-			'daily' => array(
-				'label' => __( 'Daily work', 'cartlum' ),
+			'today'    => array(
+				'label' => __( 'Today', 'cartlum' ),
 				'items' => array(),
 			),
-			'sell'  => array(
-				'label' => __( 'Sell more', 'cartlum' ),
+			'orders'   => array(
+				'label' => __( 'Incomplete & Fake Orders', 'cartlum' ),
 				'items' => array(),
 			),
-			'setup' => array(
-				'label' => __( 'Setup', 'cartlum' ),
+			'loyalty'  => array(
+				'label' => __( 'Customer Loyalty', 'cartlum' ),
+				'items' => array(),
+			),
+			'sell'     => array(
+				'label' => __( 'Sell More', 'cartlum' ),
+				'items' => array(),
+			),
+			'checkout' => array(
+				'label' => __( '30-Second Checkout', 'cartlum' ),
+				'items' => array(),
+			),
+			'auto'     => array(
+				'label' => __( 'AI & Automation', 'cartlum' ),
+				'items' => array(),
+			),
+			'setup'    => array(
+				'label' => __( 'Setup & Integration', 'cartlum' ),
 				'items' => array(),
 			),
 		);
@@ -186,6 +206,7 @@ class Cartlum_Admin {
 			'cartlum-checkout'     => '<rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M7 15h4"/>',
 			'cartlum-offers'       => '<path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="7.5" r="1.5"/>',
 			'cartlum-loyalty'      => '<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/>',
+			'cartlum-automations'  => '<path d="M13 2L4 14h7l-1 8 9-12h-7z"/>',
 			'cartlum-ai'           => '<path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><circle cx="12" cy="12" r="5"/>',
 			'cartlum-integrations' => '<path d="M9 7V3M15 7V3M7 7h10v5a5 5 0 0 1-10 0zM12 17v4"/>',
 			'cartlum-settings'     => '<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/>',
