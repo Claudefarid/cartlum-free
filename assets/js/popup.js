@@ -2,6 +2,8 @@
  * Save-cart popup. Opens once when a shopper with items in the cart is about to leave (mouse
  * heading out of the window on computers, a quick scroll back up on phones) and/or right after
  * "Add to cart". After "No thanks" it stays away for 3 days; after a number is saved, for 30.
+ * When the number is required there is no "No thanks": it opens after "Add to cart" and on every
+ * page while the cart has products, and only "Remove the products" (empties the cart) gets out.
  */
 ( function () {
 	var cfg = window.cartlumPopup;
@@ -40,7 +42,7 @@
 	}
 
 	function open() {
-		if ( opened || snoozed() || ! hasCart() ) {
+		if ( opened || ( snoozed() && ! cfg.required ) || ! hasCart() ) {
 			return;
 		}
 		opened = true;
@@ -53,8 +55,8 @@
 	}
 
 	function close() {
-		if ( box.hidden ) {
-			return;
+		if ( box.hidden || ( cfg.required && ! form.hidden ) ) {
+			return; // Required: only the "saved" screen closes.
 		}
 		if ( ! form.hidden ) {
 			snooze( 3 );
@@ -69,6 +71,15 @@
 	box.addEventListener( 'click', function ( e ) {
 		if ( e.target.closest( '[data-cartlum-close]' ) ) {
 			close();
+		}
+		var empty = e.target.closest( '[data-cartlum-empty]' );
+		if ( empty ) {
+			empty.disabled = true;
+			fetch( cfg.emptyUrl, { method: 'POST', credentials: 'same-origin' } )
+				.catch( function () {} )
+				.then( function () {
+					window.location.reload();
+				} );
 		}
 	} );
 	document.addEventListener( 'keydown', function ( e ) {
@@ -109,7 +120,11 @@
 	var onAdd = 'exit' !== cfg.trigger;
 	var onExit = 'add_to_cart' !== cfg.trigger;
 
-	if ( onAdd ) {
+	if ( cfg.required && hasCart() ) {
+		setTimeout( open, 400 ); // Every page, while the cart has products and no number.
+	}
+
+	if ( onAdd || cfg.required ) {
 		if ( cfg.justAdded ) {
 			setTimeout( open, 800 );
 		}

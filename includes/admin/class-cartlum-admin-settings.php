@@ -696,6 +696,11 @@ class Cartlum_Admin_Settings {
 						),
 						'help'    => __( 'On computers “about to leave” means the mouse heads out of the window; on phones, a quick scroll back to the top. On phones “Right after Add to cart” catches more shoppers.', 'cartlum' ),
 					),
+					'popup_required' => array(
+						'label' => __( 'Number required', 'cartlum' ),
+						'type'  => 'checkbox',
+						'help'  => __( 'No “No thanks”: after Add to cart the popup cannot be closed, and it comes back on every page while there is something in the cart, until the shopper gives a mobile number. The only other way out is “Remove the products”, which empties the cart. Not on the checkout, which asks for the number anyway. Fewer shoppers may add to the cart, but every cart has a number.', 'cartlum' ),
+					),
 					'popup_title'   => array(
 						'label' => __( 'Heading', 'cartlum' ),
 						'type'  => 'text',

@@ -59,6 +59,7 @@ class Cartlum_Settings {
 			'webhook_on_recovered'  => 'yes',
 			'popup_enabled'         => 'no',
 			'popup_trigger'         => 'exit',
+			'popup_required'        => 'no',
 			'popup_title'           => '',      // Empty = translated defaults, see Cartlum_Popup.
 			'popup_text'            => '',
 			'popup_button'          => '',

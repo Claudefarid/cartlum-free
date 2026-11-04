@@ -2,7 +2,9 @@
 /**
  * Save-cart popup: asks for the mobile number when a shopper with items in the cart is about to
  * leave, or right after "Add to cart", so carts are saved even when the shopper never reaches the
- * checkout. Never shown on the checkout, account or thank-you pages, and easy to close.
+ * checkout. Never shown on the checkout, account or thank-you pages, and easy to close, unless
+ * the store makes the number required: then it opens after "Add to cart" and on every page while
+ * the cart has products, until a number is given or the products are removed.
  *
  * @package Cartlum
  */
@@ -28,7 +30,8 @@ class Cartlum_Popup {
 		// No nonce: pages are often cached, and a nonce would not stop a script anyway. Abuse is held
 		// back by the capture limit per IP address and the reminder limits per number.
 		add_action( 'wc_ajax_cartlum_popup', array( __CLASS__, 'ajax_save' ) );
-		if ( 'exit' !== self::trigger() ) {
+		add_action( 'wc_ajax_cartlum_popup_empty', array( __CLASS__, 'ajax_empty' ) );
+		if ( 'exit' !== self::trigger() || self::required() ) {
 			add_action( 'woocommerce_add_to_cart', array( __CLASS__, 'mark_added' ) );
 		}
 	}
@@ -40,6 +43,15 @@ class Cartlum_Popup {
 	 */
 	private static function trigger() {
 		return (string) Cartlum_Settings::get( 'popup_trigger' );
+	}
+
+	/**
+	 * Whether the number is required (no "No thanks").
+	 *
+	 * @return bool
+	 */
+	private static function required() {
+		return 'yes' === Cartlum_Settings::get( 'popup_required' );
 	}
 
 	/**
@@ -94,7 +106,9 @@ class Cartlum_Popup {
 			'cartlumPopup',
 			array(
 				'url'       => WC_AJAX::get_endpoint( 'cartlum_popup' ),
+				'emptyUrl'  => WC_AJAX::get_endpoint( 'cartlum_popup_empty' ),
 				'trigger'   => self::trigger(),
+				'required'  => self::required(),
 				'justAdded' => $just_added,
 				'error'     => __( 'Could not save right now. Please try again.', 'cartlum' ),
 			)
@@ -108,11 +122,14 @@ class Cartlum_Popup {
 		if ( ! wp_script_is( 'cartlum-popup', 'enqueued' ) ) {
 			return;
 		}
+		$required = self::required();
 		?>
-		<div class="clx-popup" id="cartlum-popup" hidden>
-			<div class="clx-popup__backdrop" data-cartlum-close></div>
+		<div class="clx-popup<?php echo $required ? ' is-required' : ''; ?>" id="cartlum-popup" hidden>
+			<div class="clx-popup__backdrop"<?php echo $required ? '' : ' data-cartlum-close'; ?>></div>
 			<div class="clx-popup__card" role="dialog" aria-modal="true" aria-labelledby="cartlum-popup-title">
-				<button type="button" class="clx-popup__x" data-cartlum-close aria-label="<?php esc_attr_e( 'Close', 'cartlum' ); ?>">&times;</button>
+				<?php if ( ! $required ) : ?>
+					<button type="button" class="clx-popup__x" data-cartlum-close aria-label="<?php esc_attr_e( 'Close', 'cartlum' ); ?>">&times;</button>
+				<?php endif; ?>
 				<form class="clx-popup__form" novalidate>
 					<h2 class="clx-popup__title" id="cartlum-popup-title"><?php echo esc_html( self::text( 'popup_title', __( 'Save your cart?', 'cartlum' ) ) ); ?></h2>
 					<p class="clx-popup__text"><?php echo esc_html( self::text( 'popup_text', __( 'Leave your mobile number and we will keep your cart for you. We may send you a reminder by SMS.', 'cartlum' ) ) ); ?></p>
@@ -121,7 +138,11 @@ class Cartlum_Popup {
 					<input type="text" name="cartlum_website" value="" tabindex="-1" autocomplete="off" class="clx-popup__hp" aria-hidden="true">
 					<p class="clx-popup__error" role="alert"></p>
 					<button type="submit" class="clx-popup__button"><?php echo esc_html( self::text( 'popup_button', __( 'Save my cart', 'cartlum' ) ) ); ?></button>
-					<button type="button" class="clx-popup__later" data-cartlum-close><?php esc_html_e( 'No thanks', 'cartlum' ); ?></button>
+					<?php if ( $required ) : ?>
+						<button type="button" class="clx-popup__later" data-cartlum-empty><?php esc_html_e( 'Remove the products', 'cartlum' ); ?></button>
+					<?php else : ?>
+						<button type="button" class="clx-popup__later" data-cartlum-close><?php esc_html_e( 'No thanks', 'cartlum' ); ?></button>
+					<?php endif; ?>
 				</form>
 				<div class="clx-popup__done" hidden>
 					<h2 class="clx-popup__title"><?php esc_html_e( 'Your cart is saved', 'cartlum' ); ?></h2>
@@ -143,6 +164,16 @@ class Cartlum_Popup {
 	private static function text( $key, $fallback ) {
 		$value = trim( (string) Cartlum_Settings::get( $key ) );
 		return '' !== $value ? $value : $fallback;
+	}
+
+	/**
+	 * AJAX: "Remove the products" in a required popup empties the cart.
+	 */
+	public static function ajax_empty() {
+		if ( self::required() && WC()->cart ) {
+			WC()->cart->empty_cart();
+		}
+		wp_send_json_success();
 	}
 
 	/**

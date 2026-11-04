@@ -15,6 +15,7 @@ defined( 'ABSPATH' ) || exit;
 class Cartlum_Capture {
 
 	const SESSION_KEY = 'cartlum_cart_id';
+	const FROM_LINK   = 'cartlum_cart_from_link';
 
 	/**
 	 * Hooks.
@@ -135,6 +136,14 @@ class Cartlum_Capture {
 		}
 
 		$existing = self::current_cart();
+		// A cart opened from its link belongs to that customer: another number typed here is someone
+		// else, with a cart of their own. (A shopper correcting their own number still updates theirs.)
+		if ( $existing && ! empty( $data['phone'] ) && '' !== (string) $existing->phone && $data['phone'] !== $existing->phone
+			&& (int) WC()->session->get( self::FROM_LINK ) === (int) $existing->id ) {
+			$existing = null;
+			WC()->session->set( self::SESSION_KEY, null );
+			WC()->session->set( self::FROM_LINK, null );
+		}
 		if ( $existing ) {
 			// Typing again on the checkout page means they are active again.
 			$data['status'] = 'active';

@@ -116,21 +116,12 @@ class Cartlum_Restore {
 			WC()->cart->apply_coupon( $cart->coupon_code );
 		}
 
-		// Pre-fill what we already know, so checkout is quicker.
 		if ( WC()->customer ) {
-			if ( $cart->phone && ! WC()->customer->get_billing_phone() ) {
-				WC()->customer->set_billing_phone( '+' . $cart->phone );
-			}
-			if ( $cart->email && ! WC()->customer->get_billing_email() ) {
-				WC()->customer->set_billing_email( $cart->email );
-			}
-			if ( $cart->name && ! WC()->customer->get_billing_first_name() ) {
-				WC()->customer->set_billing_first_name( $cart->name );
-			}
-			WC()->customer->save();
+			self::fill_customer( $cart );
 		}
 
 		WC()->session->set( Cartlum_Capture::SESSION_KEY, (int) $cart->id );
+		WC()->session->set( Cartlum_Capture::FROM_LINK, (int) $cart->id );
 
 		// Following our link is a response to our contact, so an order from here counts as recovered.
 		Cartlum_Carts::update(
@@ -145,6 +136,38 @@ class Cartlum_Restore {
 
 		wp_safe_redirect( wc_get_checkout_url() );
 		exit;
+	}
+
+	/**
+	 * Fills the checkout with what we know about this cart's customer. The link is personal: details
+	 * another customer's link or the account of whoever opened it left in this browser must not stay,
+	 * or the checkout would show them and save them over this cart. Someone opening their own link
+	 * keeps what they already typed.
+	 *
+	 * @param object $cart Row.
+	 */
+	private static function fill_customer( $cart ) {
+		$customer = WC()->customer;
+		$same     = $cart->phone
+			? Cartlum_Phone::normalize( (string) $customer->get_billing_phone() ) === (string) $cart->phone
+			: strtolower( (string) $customer->get_billing_email() ) === strtolower( (string) $cart->email );
+		if ( ! $same ) {
+			foreach ( array( 'first_name', 'last_name', 'company', 'address_1', 'address_2', 'city', 'state', 'postcode', 'phone' ) as $field ) {
+				$customer->{'set_billing_' . $field}( '' );
+				$customer->{'set_shipping_' . $field}( '' );
+			}
+			$customer->set_billing_email( '' );
+		}
+		if ( $cart->phone ) {
+			$customer->set_billing_phone( '+' . $cart->phone );
+		}
+		if ( $cart->email && ! $customer->get_billing_email() ) {
+			$customer->set_billing_email( $cart->email );
+		}
+		if ( $cart->name && ! $customer->get_billing_first_name() ) {
+			$customer->set_billing_first_name( $cart->name );
+		}
+		$customer->save();
 	}
 
 	/**

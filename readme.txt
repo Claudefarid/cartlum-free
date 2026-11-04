@@ -4,7 +4,7 @@ Tags: abandoned cart, fake order, cash on delivery, order sms, automation
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.40.0
+Stable tag: 0.41.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -17,7 +17,7 @@ Cartlum is for WooCommerce stores that sell cash on delivery, where customers ch
 = 1. Cart recovery =
 
 * **Captures the cart the moment a phone number is typed** at checkout — before "Place order" — on the classic checkout, the block checkout, and CartFlows.
-* **Save-cart popup** (optional): asks shoppers with something in the cart for their number when they are about to leave or right after "Add to cart", so carts are saved even before checkout.
+* **Save-cart popup** (optional): asks shoppers with something in the cart for their number when they are about to leave or right after "Add to cart", so carts are saved even before checkout; the number can be made required.
 * **One-tap cart link** in every message: refills the cart, applies the coupon and opens checkout.
 * **SMS** through eSMS, BulkSMSBD, SSL Wireless, Alpha SMS or MiMSMS (Bangladesh), Twilio, or any HTTP SMS API — no code needed.
 * **Phone call list** for your team: call with one tap, log how it went.
@@ -115,6 +115,11 @@ It can, for stores that only used CartFlows for a shorter checkout. CartFlows' g
 6. Integrations: every connected service with its status.
 
 == Changelog ==
+
+= 0.41.0 =
+* Save-cart popup: “Number required” (Incomplete Orders → Save-cart popup, off by default). After Add to cart the popup has no “No thanks” and comes back on every page while the cart has products, until the shopper gives a mobile number or removes the products. Never on the checkout.
+* Admin menu: a little wider and tighter, so the seven groups fit a laptop screen.
+* Fixed: a cart link opened in a browser that already held other details (another customer's link, or a logged-in account with its own number) showed those details at checkout and could save them over the customer's cart, so several carts ended up with one number. A link now always shows its own customer, and the cart keeps that customer's number.
 
 = 0.40.0 =
 * New menu in seven groups: Today · Incomplete & Fake Orders · Customer Loyalty · Sell More · 30-Second Checkout · AI & Automation · Setup & Integration. Abandoned Carts is now Incomplete Orders, Checkout & Buttons is Checkout, and old links still work.
