@@ -287,20 +287,24 @@ class Cartlum_Admin_Actions {
 	}
 
 	/**
-	 * Export link for the carts list, keeping its status filter and search.
+	 * Export link for the carts list, keeping its status filter, search, period and product.
 	 *
-	 * @param string $status Status filter.
-	 * @param string $search Search.
+	 * @param string $status  Status filter.
+	 * @param string $search  Search.
+	 * @param string $period  today|7|30|all.
+	 * @param int    $product Product id or 0.
 	 * @return string
 	 */
-	public static function export_url( $status, $search ) {
+	public static function export_url( $status, $search, $period = 'all', $product = 0 ) {
 		return wp_nonce_url(
 			add_query_arg(
 				array_filter(
 					array(
-						'action' => 'cartlum_export',
-						'status' => $status,
-						's'      => $search,
+						'action'  => 'cartlum_export',
+						'status'  => $status,
+						's'       => $search,
+						'period'  => 'all' === $period ? '' : $period,
+						'product' => $product ? (int) $product : '',
 					)
 				),
 				admin_url( 'admin-post.php' )
@@ -354,6 +358,8 @@ class Cartlum_Admin_Actions {
 				array(
 					'status'   => $status,
 					'search'   => $search,
+					'since'    => Cartlum_Carts::period_since( isset( $_GET['period'] ) ? sanitize_key( wp_unslash( $_GET['period'] ) ) : 'all' ),
+					'product'  => isset( $_GET['product'] ) ? absint( $_GET['product'] ) : 0,
 					'per_page' => 500,
 					'page'     => $page,
 					'orderby'  => 'created_at',

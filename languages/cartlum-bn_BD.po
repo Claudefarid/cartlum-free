@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-04T19:53:27+00:00\n"
+"POT-Creation-Date: 2026-11-15T20:31:12+00:00\n"
 "PO-Revision-Date: 2026-10-10 12:00+0600
 "
 "X-Generator: WP-CLI 2.12.0\n"
@@ -40,7 +40,7 @@ msgstr "Cartlum"
 #: includes/admin/class-cartlum-admin-actions.php:61
 #: includes/admin/class-cartlum-admin-actions.php:231
 #: includes/admin/class-cartlum-admin-actions.php:263
-#: includes/admin/class-cartlum-admin-actions.php:317
+#: includes/admin/class-cartlum-admin-actions.php:321
 #: includes/admin/class-cartlum-admin-protection.php:223
 #: includes/admin/class-cartlum-admin-settings.php:1534
 #: includes/admin/class-cartlum-admin.php:342
@@ -135,34 +135,34 @@ msgstr "টেস্ট SMS পাঠানো হয়েছে, তবে আ
 msgid "Test SMS sent."
 msgstr "টেস্ট SMS পাঠানো হয়েছে।"
 
-#: includes/admin/class-cartlum-admin-actions.php:331
+#: includes/admin/class-cartlum-admin-actions.php:335
 #: includes/admin/views/cart.php:226
 #: includes/class-cartlum-phone-login.php:406
 #: includes/class-cartlum-phone-login.php:410
 msgid "Cart"
 msgstr "কার্ট"
 
-#: includes/admin/class-cartlum-admin-actions.php:332
+#: includes/admin/class-cartlum-admin-actions.php:336
 msgid "Created"
 msgstr "তৈরি"
 
-#: includes/admin/class-cartlum-admin-actions.php:333
+#: includes/admin/class-cartlum-admin-actions.php:337
 #: includes/admin/class-cartlum-carts-table.php:43
 msgid "Status"
 msgstr "অবস্থা"
 
-#: includes/admin/class-cartlum-admin-actions.php:334
+#: includes/admin/class-cartlum-admin-actions.php:338
 #: includes/admin/views/cart.php:64
 #: includes/class-cartlum-privacy.php:88
 msgid "Name"
 msgstr "নাম"
 
-#: includes/admin/class-cartlum-admin-actions.php:335
+#: includes/admin/class-cartlum-admin-actions.php:339
 #: includes/class-cartlum-privacy.php:84
 msgid "Phone"
 msgstr "ফোন"
 
-#: includes/admin/class-cartlum-admin-actions.php:336
+#: includes/admin/class-cartlum-admin-actions.php:340
 #: includes/admin/class-cartlum-admin-settings.php:58
 #: includes/admin/class-cartlum-admin-settings.php:280
 #: includes/admin/views/cart.php:130
@@ -171,43 +171,43 @@ msgstr "ফোন"
 msgid "Email"
 msgstr "ইমেইল"
 
-#: includes/admin/class-cartlum-admin-actions.php:337
+#: includes/admin/class-cartlum-admin-actions.php:341
 #: includes/class-cartlum-ai-shop.php:439
 msgid "Products"
 msgstr "পণ্য"
 
-#: includes/admin/class-cartlum-admin-actions.php:338
+#: includes/admin/class-cartlum-admin-actions.php:342
 #: includes/class-cartlum-messages.php:26
 msgid "Cart total"
 msgstr "কার্টের মোট"
 
-#: includes/admin/class-cartlum-admin-actions.php:339
+#: includes/admin/class-cartlum-admin-actions.php:343
 msgid "Currency"
 msgstr "মুদ্রা"
 
-#: includes/admin/class-cartlum-admin-actions.php:340
+#: includes/admin/class-cartlum-admin-actions.php:344
 msgid "Source"
 msgstr "উৎস"
 
-#: includes/admin/class-cartlum-admin-actions.php:341
+#: includes/admin/class-cartlum-admin-actions.php:345
 msgid "Times contacted"
 msgstr "কতবার যোগাযোগ"
 
-#: includes/admin/class-cartlum-admin-actions.php:342
+#: includes/admin/class-cartlum-admin-actions.php:346
 msgid "Call outcome"
 msgstr "কলের ফলাফল"
 
-#: includes/admin/class-cartlum-admin-actions.php:343
+#: includes/admin/class-cartlum-admin-actions.php:347
 #: includes/admin/views/cart.php:68
 #: includes/admin/views/cart.php:256
 msgid "Coupon"
 msgstr "কুপন"
 
-#: includes/admin/class-cartlum-admin-actions.php:344
+#: includes/admin/class-cartlum-admin-actions.php:348
 msgid "Order"
 msgstr "অর্ডার"
 
-#: includes/admin/class-cartlum-admin-actions.php:345
+#: includes/admin/class-cartlum-admin-actions.php:349
 msgid "Order total"
 msgstr "অর্ডারের মোট"
 
@@ -238,7 +238,7 @@ msgstr "ফিরে পাওয়া অর্ডার"
 
 #: includes/admin/class-cartlum-admin-charts.php:218
 #: includes/admin/class-cartlum-admin.php:506
-#: includes/admin/class-cartlum-carts-table.php:79
+#: includes/admin/class-cartlum-carts-table.php:140
 #: includes/admin/views/dashboard.php:39
 #: includes/admin/views/dashboard.php:140
 msgid "Recovered"
@@ -284,7 +284,7 @@ msgid "Done."
 msgstr "হয়ে গেছে।"
 
 #: includes/admin/class-cartlum-admin-confirm.php:164
-#: includes/admin/class-cartlum-carts-table.php:74
+#: includes/admin/class-cartlum-carts-table.php:135
 msgid "All"
 msgstr "সব"
 
@@ -411,7 +411,7 @@ msgstr "%1$d সম্পন্ন · %2$d বাতিল"
 #. translators: %s: customer name
 #: includes/admin/class-cartlum-admin-confirm.php:460
 #: includes/admin/class-cartlum-admin-fraud.php:167
-#: includes/admin/class-cartlum-carts-table.php:235
+#: includes/admin/class-cartlum-carts-table.php:299
 #: includes/admin/views/partials/person-row.php:36
 #, php-format
 msgid "Call %s"
@@ -420,7 +420,7 @@ msgstr "%s-কে কল করুন"
 #. translators: %s: name
 #. translators: %s: customer name
 #: includes/admin/class-cartlum-admin-confirm.php:461
-#: includes/admin/class-cartlum-carts-table.php:237
+#: includes/admin/class-cartlum-carts-table.php:301
 #: includes/admin/views/partials/person-row.php:37
 #, php-format
 msgid "WhatsApp %s"
@@ -833,6 +833,7 @@ msgid "Where your orders ended up, and what stopped the ones that did not arrive
 msgstr "আপনার অর্ডারগুলো শেষ পর্যন্ত কোথায় গেল, আর যেগুলো পৌঁছায়নি সেগুলো কেন থেমে গেল।"
 
 #: includes/admin/class-cartlum-admin-reports.php:178
+#: includes/admin/views/carts.php:39
 #: includes/admin/views/dashboard.php:78
 msgid "Period"
 msgstr "সময়কাল"
@@ -2455,6 +2456,7 @@ msgstr "Cartlum যা যা পারে, আর সেটি চালু ক
 #: includes/admin/class-cartlum-admin.php:36
 #: includes/admin/class-cartlum-admin.php:119
 #: includes/admin/class-cartlum-admin.php:217
+#: includes/admin/views/carts.php:19
 #: includes/admin/views/dashboard.php:68
 msgid "Today"
 msgstr "আজ"
@@ -2572,27 +2574,27 @@ msgid "%d selected"
 msgstr "%dটি বাছাই করা"
 
 #: includes/admin/class-cartlum-admin.php:504
-#: includes/admin/class-cartlum-carts-table.php:78
+#: includes/admin/class-cartlum-carts-table.php:139
 msgid "Checking out"
 msgstr "চেকআউট করছেন"
 
 #: includes/admin/class-cartlum-admin.php:505
-#: includes/admin/class-cartlum-carts-table.php:77
+#: includes/admin/class-cartlum-carts-table.php:138
 msgid "Abandoned"
 msgstr "অসম্পূর্ণ"
 
 #: includes/admin/class-cartlum-admin.php:507
-#: includes/admin/class-cartlum-carts-table.php:80
+#: includes/admin/class-cartlum-carts-table.php:141
 msgid "Ordered"
 msgstr "অর্ডার করেছেন"
 
 #: includes/admin/class-cartlum-admin.php:508
-#: includes/admin/class-cartlum-carts-table.php:81
+#: includes/admin/class-cartlum-carts-table.php:142
 msgid "Lost"
 msgstr "হারানো"
 
 #: includes/admin/class-cartlum-admin.php:509
-#: includes/admin/class-cartlum-carts-table.php:82
+#: includes/admin/class-cartlum-carts-table.php:143
 #: includes/admin/views/cart.php:43
 #: includes/class-cartlum-restore.php:195
 msgid "Unsubscribed"
@@ -2832,43 +2834,43 @@ msgstr "যোগাযোগ"
 msgid "Reach out"
 msgstr "যোগাযোগ করুন"
 
-#: includes/admin/class-cartlum-carts-table.php:101
+#: includes/admin/class-cartlum-carts-table.php:162
 #: includes/admin/views/cart.php:308
 msgid "Mark as lost"
 msgstr "হারানো চিহ্নিত করুন"
 
-#: includes/admin/class-cartlum-carts-table.php:102
+#: includes/admin/class-cartlum-carts-table.php:163
 msgid "Delete"
 msgstr "মুছুন"
 
-#: includes/admin/class-cartlum-carts-table.php:151
+#: includes/admin/class-cartlum-carts-table.php:215
 #: includes/admin/views/cart.php:20
 msgid "(no name)"
 msgstr "(নাম নেই)"
 
 #. translators: %d: order number
-#: includes/admin/class-cartlum-carts-table.php:181
+#: includes/admin/class-cartlum-carts-table.php:245
 #, php-format
 msgid "Order #%d"
 msgstr "অর্ডার #%d"
 
-#: includes/admin/class-cartlum-carts-table.php:214
+#: includes/admin/class-cartlum-carts-table.php:278
 msgid "Not yet"
 msgstr "এখনো নয়"
 
 #. translators: %d: number of times
-#: includes/admin/class-cartlum-carts-table.php:217
+#: includes/admin/class-cartlum-carts-table.php:281
 #, php-format
 msgid "%d time"
 msgid_plural "%d times"
 msgstr[0] "%d বার"
 msgstr[1] "%d বার"
 
-#: includes/admin/class-cartlum-carts-table.php:246
+#: includes/admin/class-cartlum-carts-table.php:310
 msgid "No carts here yet."
 msgstr "এখনো কোনো কার্ট নেই।"
 
-#: includes/admin/class-cartlum-carts-table.php:246
+#: includes/admin/class-cartlum-carts-table.php:310
 msgid "A cart appears as soon as a customer types a phone number or email on the checkout page — before they place the order."
 msgstr "চেকআউট পেজে ক্রেতা ফোন নম্বর বা ইমেইল লেখামাত্র কার্ট দেখা যায় — অর্ডার দেওয়ার আগেই।"
 
@@ -3133,33 +3135,63 @@ msgstr "এই কার্ট আবার খুলুন"
 msgid "History"
 msgstr "ইতিহাস"
 
-#: includes/admin/views/carts.php:19
+#: includes/admin/views/carts.php:20
+msgid "Last 7 days"
+msgstr "গত ৭ দিন"
+
+#: includes/admin/views/carts.php:21
+msgid "Last 30 days"
+msgstr "গত ৩০ দিন"
+
+#: includes/admin/views/carts.php:22
+msgid "All time"
+msgstr "সব সময়"
+
+#: includes/admin/views/carts.php:34
 msgid "Abandoned carts"
 msgstr "ফেলে যাওয়া কার্ট"
 
-#: includes/admin/views/carts.php:20
+#: includes/admin/views/carts.php:35
 msgid "Export CSV"
 msgstr "CSV এক্সপোর্ট"
 
-#: includes/admin/views/carts.php:30
+#: includes/admin/views/carts.php:59
+msgid "Product"
+msgstr "পণ্য"
+
+#: includes/admin/views/carts.php:61
+msgid "All products"
+msgstr "সব পণ্য"
+
+#. translators: 1: product, 2: number of carts
+#: includes/admin/views/carts.php:70
+#, php-format
+msgid "%1$s (%2$d)"
+msgstr "%1$s (%2$d)"
+
+#: includes/admin/views/carts.php:75
+msgid "Filter"
+msgstr "ফিল্টার"
+
+#: includes/admin/views/carts.php:78
 msgid "Search"
 msgstr "খুঁজুন"
 
-#: includes/admin/views/carts.php:50
+#: includes/admin/views/carts.php:98
 msgid "Pages"
 msgstr "পেজ"
 
-#: includes/admin/views/carts.php:52
+#: includes/admin/views/carts.php:100
 msgid "Newer"
 msgstr "নতুন"
 
 #. translators: 1: page, 2: pages
-#: includes/admin/views/carts.php:57
+#: includes/admin/views/carts.php:105
 #, php-format
 msgid "%1$d of %2$d"
 msgstr "%2$d-এর %1$d"
 
-#: includes/admin/views/carts.php:61
+#: includes/admin/views/carts.php:109
 msgid "Older"
 msgstr "পুরনো"
 
@@ -3512,7 +3544,7 @@ msgid "Saved. The checkout has your number filled in."
 msgstr "সেভ হয়েছে। চেকআউটে আপনার নম্বর বসানো আছে।"
 
 #. translators: %s: first day of the week, e.g. 12 Oct
-#: includes/class-cartlum-carts.php:304
+#: includes/class-cartlum-carts.php:374
 #, php-format
 msgid "Week of %s"
 msgstr "%s-এর সপ্তাহ"

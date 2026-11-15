@@ -812,3 +812,9 @@ h1 .cl-badge { font-size: 13px; margin-left: var(--cl-s2); vertical-align: 4px; 
 	.cartlum .cl-dl td { padding: 2px 0; }
 	.cartlum .cl-dl__num { text-align: left; }
 }
+
+/* Carts list: period chips and the product filter. */
+.cartlum .cl-carts-period { margin: var(--cl-s2, 8px) 0 4px; }
+.cartlum .cl-carts-product { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 8px 0; }
+.cartlum .cl-carts-product label { font-weight: 600; }
+.cartlum .cl-carts-product select { max-width: min(100%, 360px); }

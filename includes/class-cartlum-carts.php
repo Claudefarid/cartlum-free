@@ -179,7 +179,7 @@ class Cartlum_Carts {
 	/**
 	 * Paged list for the admin screen.
 	 *
-	 * @param array $args { status, search, per_page, page, orderby, order }.
+	 * @param array $args { status, search, since (UTC, carts started then or later), product (id), per_page, page, orderby, order }.
 	 * @return array { rows, total }
 	 */
 	public static function query( array $args ) {
@@ -189,6 +189,8 @@ class Cartlum_Carts {
 			array(
 				'status'   => '',
 				'search'   => '',
+				'since'    => '',
+				'product'  => 0,
 				'per_page' => 20,
 				'page'     => 1,
 				'orderby'  => 'updated_at',
@@ -206,6 +208,15 @@ class Cartlum_Carts {
 			$like    = '%' . $wpdb->esc_like( $args['search'] ) . '%';
 			$where[] = '(phone LIKE %s OR name LIKE %s OR email LIKE %s)';
 			array_push( $vals, $like, $like, $like );
+		}
+		if ( '' !== $args['since'] ) {
+			$where[] = 'created_at >= %s';
+			$vals[]  = $args['since'];
+		}
+		if ( (int) $args['product'] > 0 ) {
+			// Items are stored as JSON: {"product_id":123,"variation_id":…}.
+			$where[] = 'cart_contents LIKE %s';
+			$vals[]  = '%' . $wpdb->esc_like( '"product_id":' . (int) $args['product'] . ',' ) . '%';
 		}
 
 		$orderby = in_array( $args['orderby'], array( 'updated_at', 'created_at', 'cart_total', 'abandoned_at' ), true ) ? $args['orderby'] : 'updated_at';
@@ -226,6 +237,65 @@ class Cartlum_Carts {
 			'rows'  => $rows,
 			'total' => $total,
 		);
+	}
+
+	/**
+	 * The carts list's periods: when each starts (UTC, as stored), '' for all time.
+	 *
+	 * @param string $period today|7|30|all.
+	 * @return string
+	 */
+	public static function period_since( $period ) {
+		if ( 'today' === $period ) {
+			$start = new DateTime( 'today', wp_timezone() ); // Midnight in the store's time zone.
+			return gmdate( 'Y-m-d H:i:s', $start->getTimestamp() );
+		}
+		if ( in_array( $period, array( '7', '30' ), true ) ) {
+			return gmdate( 'Y-m-d H:i:s', time() - (int) $period * DAY_IN_SECONDS );
+		}
+		return '';
+	}
+
+	/**
+	 * Products in the carts started since a time, for the carts list's product filter.
+	 *
+	 * @param string $since UTC, or '' for all time.
+	 * @return array product id => { name, carts }, most carts first.
+	 */
+	public static function products_in( $since ) {
+		global $wpdb;
+		$rows = $wpdb->get_results( // phpcs:ignore WordPress.DB.DirectDatabaseQuery -- Cartlum's own table, staff screen.
+			$wpdb->prepare(
+				'SELECT cart_contents FROM %i WHERE created_at >= %s ORDER BY id DESC LIMIT 5000',
+				Cartlum_Install::table( 'carts' ),
+				'' !== $since ? $since : '1970-01-01 00:00:00'
+			)
+		);
+		$out = array();
+		foreach ( (array) $rows as $row ) {
+			$seen = array();
+			foreach ( self::items( $row ) as $item ) {
+				$id = (int) ( $item['product_id'] ?? 0 );
+				if ( ! $id || isset( $seen[ $id ] ) ) {
+					continue;
+				}
+				$seen[ $id ] = true;
+				if ( ! isset( $out[ $id ] ) ) {
+					$out[ $id ] = array(
+						'name'  => (string) ( $item['name'] ?? '' ),
+						'carts' => 0,
+					);
+				}
+				++$out[ $id ]['carts'];
+			}
+		}
+		uasort(
+			$out,
+			function ( $a, $b ) {
+				return $b['carts'] <=> $a['carts'];
+			}
+		);
+		return $out;
 	}
 
 	/**
