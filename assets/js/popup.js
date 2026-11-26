@@ -45,6 +45,9 @@
 		if ( opened || ( snoozed() && ! cfg.required ) || ! hasCart() ) {
 			return;
 		}
+		if ( ! cfg.required && document.querySelector( '.clx-popup:not([hidden])' ) ) {
+			return; // Another popup (Cartlum Pro's offer) is open: not on top of it.
+		}
 		opened = true;
 		lastFocus = document.activeElement;
 		box.hidden = false;

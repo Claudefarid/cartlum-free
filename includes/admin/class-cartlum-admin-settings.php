@@ -46,7 +46,7 @@ class Cartlum_Admin_Settings {
 			'cart'           => __( 'Cart page', 'cartlum' ),
 			'thankyou'       => __( 'Thank-you page', 'cartlum' ),
 			'product'        => __( 'Buy now & buttons', 'cartlum' ),
-			'popup'          => __( 'Save-cart popup', 'cartlum' ),
+			'popup'          => __( 'Popup', 'cartlum' ),
 			'account'        => __( 'Customer login', 'cartlum' ),
 			'ai_shop'        => __( 'AI assistants', 'cartlum' ),
 			'orders'         => __( 'Order SMS', 'cartlum' ),
@@ -96,8 +96,10 @@ class Cartlum_Admin_Settings {
 		$sections = array(
 			'cartlum-carts'        => array(
 				'label' => __( 'Incomplete Orders', 'cartlum' ),
-				'tabs'  => array( 'automation', 'texts', 'coupons', 'popup', 'capture' ),
+				'tabs'  => array( 'automation', 'texts', 'coupons', 'capture' ),
 				'view'  => __( 'Carts', 'cartlum' ),
+				// Tabs that live on another page, linked from this one's tabs too.
+				'links' => array( 'popup' => __( 'Save-cart popup', 'cartlum' ) ),
 			),
 			'cartlum-orders'       => array(
 				'label' => __( 'Orders', 'cartlum' ),
@@ -126,11 +128,11 @@ class Cartlum_Admin_Settings {
 				'tabs'  => array( 'checkout', 'fields', 'cart', 'sidecart', 'thankyou', 'product', 'account', 'ai_shop' ),
 				'view'  => '',
 			),
-			// Pro's tools for bigger orders, and for bringing customers back; without Pro these pages
-			// have no tabs and stay out of the menu.
+			// Pro's tools for bigger orders, and for bringing customers back; without Pro, Offers has
+			// only the popups and Loyalty has no tabs and stays out of the menu.
 			'cartlum-offers'       => array(
 				'label' => __( 'Offers', 'cartlum' ),
-				'tabs'  => array( 'bundles', 'qty_offers', 'bump', 'upsells', 'reco' ),
+				'tabs'  => array( 'bundles', 'qty_offers', 'bump', 'upsells', 'reco', 'popup' ),
 				'view'  => '',
 			),
 			'cartlum-loyalty'      => array(
@@ -504,12 +506,20 @@ class Cartlum_Admin_Settings {
 		foreach ( $section['tabs'] as $tab ) {
 			$links[ $tab ] = $all[ $tab ];
 		}
+		$away = array(); // Tabs on another page: tab => that page.
+		foreach ( (array) ( $section['links'] ?? array() ) as $tab => $label ) {
+			$home = self::page_for_tab( $tab );
+			if ( $home !== $slug && ! empty( $sections[ $home ] ) && in_array( $tab, $sections[ $home ]['tabs'], true ) ) {
+				$links[ $tab ] = $label;
+				$away[ $tab ]  = $home;
+			}
+		}
 		if ( count( $links ) < 2 ) {
 			return;
 		}
 		echo '<nav class="nav-tab-wrapper cl-nav">';
 		foreach ( $links as $tab => $label ) {
-			$url = Cartlum_Admin::url( $slug, '' !== $tab ? array( 'tab' => $tab ) : array() );
+			$url = Cartlum_Admin::url( $away[ $tab ] ?? $slug, '' !== $tab ? array( 'tab' => $tab ) : array() );
 			printf( '<a class="nav-tab%1$s" href="%2$s"%3$s>%4$s</a>', $tab === $current ? ' nav-tab-active' : '', esc_url( $url ), $tab === $current ? ' aria-current="page"' : '', esc_html( $label ) );
 		}
 		echo '</nav>';

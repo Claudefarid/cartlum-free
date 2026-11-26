@@ -108,7 +108,7 @@ class Cartlum_Admin {
 			'cartlum-fraud'       => 'orders',
 			'cartlum-customers'   => 'loyalty',
 			'cartlum-loyalty'     => 'loyalty',
-			'cartlum-offers'      => 'sell',
+			'cartlum-offers'      => 'offers',
 			'cartlum-landing'     => 'sell',
 			'cartlum-checkout'    => 'checkout',
 			'cartlum-automations' => 'auto',
@@ -125,6 +125,10 @@ class Cartlum_Admin {
 			),
 			'loyalty'  => array(
 				'label' => __( 'Customer Loyalty', 'cartlum' ),
+				'items' => array(),
+			),
+			'offers'   => array(
+				'label' => __( 'Offers', 'cartlum' ),
 				'items' => array(),
 			),
 			'sell'     => array(
@@ -156,7 +160,7 @@ class Cartlum_Admin {
 				$item['tone']        = $jobs[ $slug ][1];
 				$item['count_label'] = $jobs[ $slug ][2];
 			}
-			$group = isset( $item['group'] ) && isset( $groups[ $item['group'] ] ) ? $item['group'] : ( $home[ $slug ] ?? 'setup' );
+			$group = isset( $item['group'] ) && isset( $groups[ $item['group'] ] ) ? $item['group'] : ( $home[ $item['page'] ?? $slug ] ?? 'setup' );
 			$groups[ $group ]['items'][ $slug ] = $item;
 		}
 		return array_filter(
@@ -212,14 +216,42 @@ class Cartlum_Admin {
 			'cartlum-settings'     => '<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/>',
 			'cartlum-pro'          => '<path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6-5.3-3-5.3 3 1.2-6L3.4 9.3l6-.7z"/>',
 		);
+		// Offers: one line per tab.
+		$offer_icons = array(
+			''           => '<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>',
+			'bundles'    => '<path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M4 7.5l8 4.5 8-4.5M12 12v9"/>',
+			'qty_offers' => '<path d="M4 7h16M4 12h16M4 17h10"/>',
+			'bump'       => '<rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 12l3 3 5-6"/>',
+			'upsells'    => '<path d="M12 20V5M6 11l6-6 6 6"/>',
+			'reco'       => '<path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6-5.3-3-5.3 3 1.2-6L3.4 9.3l6-.7z"/>',
+			'popup'      => '<rect x="3" y="5" width="18" height="14" rx="2"/><rect x="7" y="9" width="10" height="6" rx="1"/>',
+		);
 		$items = array(
 			'cartlum' => array(
 				'label' => __( 'Today', 'cartlum' ),
 				'icon'  => $icons['cartlum'],
 			),
 		);
+		$all_tabs = Cartlum_Admin_Settings::tabs();
 		foreach ( Cartlum_Admin_Settings::sections() as $slug => $section ) {
 			if ( ! $section['tabs'] && '' === $section['view'] ) {
+				continue;
+			}
+			if ( 'cartlum-offers' === $slug ) {
+				// Offers is a group of its own: each of its tabs is a line in the menu.
+				$links = '' !== $section['view'] ? array( '' => $section['view'] ) : array();
+				foreach ( $section['tabs'] as $tab ) {
+					$links[ $tab ] = $all_tabs[ $tab ];
+				}
+				foreach ( $links as $tab => $label ) {
+					$items[ '' === $tab ? $slug : $slug . '/' . $tab ] = array(
+						'label' => wp_strip_all_tags( $label ),
+						'icon'  => $offer_icons[ $tab ] ?? $icons[ $slug ],
+						'url'   => self::url( $slug, '' !== $tab ? array( 'tab' => $tab ) : array() ),
+						'page'  => $slug,
+						'tab'   => $tab,
+					);
+				}
 				continue;
 			}
 			$items[ $slug ] = array(
@@ -252,10 +284,12 @@ class Cartlum_Admin {
 		}
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- navigation only.
 		$page  = isset( $_GET['page'] ) ? sanitize_key( $_GET['page'] ) : 'cartlum';
-		$items = self::rail_items();
-		$crumb = $items[ $page ]['label'] ?? 'Cartlum';
-		$tab   = '';
+		$items   = self::rail_items();
+		$crumb   = $items[ $page ]['label'] ?? 'Cartlum';
+		$tab     = '';
+		$current = '';
 		if ( isset( Cartlum_Admin_Settings::sections()[ $page ] ) ) {
+			$crumb   = Cartlum_Admin_Settings::sections()[ $page ]['label'];
 			$current = Cartlum_Admin_Settings::current_tab( $page );
 			$section = Cartlum_Admin_Settings::sections()[ $page ];
 			$tab     = '' !== $current ? ( Cartlum_Admin_Settings::tabs()[ $current ] ?? '' ) : $section['view'];
@@ -272,7 +306,7 @@ class Cartlum_Admin {
 							<ul aria-labelledby="cl-rail-<?php echo esc_attr( $gid ); ?>">
 								<?php foreach ( $group['items'] as $slug => $item ) : ?>
 									<li>
-										<a href="<?php echo esc_url( isset( $item['url'] ) ? $item['url'] : self::url( $slug ) ); ?>"<?php echo $slug === $page ? ' aria-current="page"' : ''; ?>>
+										<a href="<?php echo esc_url( isset( $item['url'] ) ? $item['url'] : self::url( $slug ) ); ?>"<?php echo ( isset( $item['page'] ) ? $item['page'] === $page && $item['tab'] === $current : $slug === $page ) ? ' aria-current="page"' : ''; ?>>
 											<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><?php echo wp_kses( $item['icon'], self::svg_tags() ); ?></svg>
 											<span><?php echo esc_html( $item['label'] ); ?></span>
 											<?php if ( ! empty( $item['count'] ) ) : ?>
