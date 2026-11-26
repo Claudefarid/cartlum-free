@@ -570,6 +570,7 @@ h1 .cl-badge { font-size: 13px; margin-left: var(--cl-s2); vertical-align: 4px; 
 
 /* Reports */
 .cartlum .cl-out--delivered.cl-went__seg, .cartlum .cl-out--delivered .cl-swatch { background: var(--cl-good); }
+.cartlum .cl-out--unknown.cl-went__seg, .cartlum .cl-out--unknown .cl-swatch { background: #b9d6c3; }
 .cartlum .cl-out--shipping.cl-went__seg, .cartlum .cl-out--shipping .cl-swatch { background: #5b8fc7; }
 .cartlum .cl-out--waiting.cl-went__seg, .cartlum .cl-out--waiting .cl-swatch { background: #c9852a; }
 .cartlum .cl-out--cancelled.cl-went__seg, .cartlum .cl-out--cancelled .cl-swatch { background: #a7aaad; }

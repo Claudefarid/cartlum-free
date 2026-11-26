@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Cartlum – Cart Recovery, Fake Order Protection & Automation for WooCommerce 0.41.0\n"
+"Project-Id-Version: Cartlum – Cart Recovery, Fake Order Protection & Automation for WooCommerce 0.42.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/cartlum\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Bangla\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-15T20:31:12+00:00\n"
+"POT-Creation-Date: 2026-11-26T08:58:36+00:00\n"
 "PO-Revision-Date: 2026-10-10 12:00+0600
 "
 "X-Generator: WP-CLI 2.12.0\n"
@@ -238,7 +238,7 @@ msgstr "ফিরে পাওয়া অর্ডার"
 
 #: includes/admin/class-cartlum-admin-charts.php:218
 #: includes/admin/class-cartlum-admin.php:506
-#: includes/admin/class-cartlum-carts-table.php:140
+#: includes/admin/class-cartlum-carts-table.php:143
 #: includes/admin/views/dashboard.php:39
 #: includes/admin/views/dashboard.php:140
 msgid "Recovered"
@@ -284,7 +284,7 @@ msgid "Done."
 msgstr "হয়ে গেছে।"
 
 #: includes/admin/class-cartlum-admin-confirm.php:164
-#: includes/admin/class-cartlum-carts-table.php:135
+#: includes/admin/class-cartlum-carts-table.php:138
 msgid "All"
 msgstr "সব"
 
@@ -411,7 +411,7 @@ msgstr "%1$d সম্পন্ন · %2$d বাতিল"
 #. translators: %s: customer name
 #: includes/admin/class-cartlum-admin-confirm.php:460
 #: includes/admin/class-cartlum-admin-fraud.php:167
-#: includes/admin/class-cartlum-carts-table.php:299
+#: includes/admin/class-cartlum-carts-table.php:302
 #: includes/admin/views/partials/person-row.php:36
 #, php-format
 msgid "Call %s"
@@ -420,7 +420,7 @@ msgstr "%s-কে কল করুন"
 #. translators: %s: name
 #. translators: %s: customer name
 #: includes/admin/class-cartlum-admin-confirm.php:461
-#: includes/admin/class-cartlum-carts-table.php:301
+#: includes/admin/class-cartlum-carts-table.php:304
 #: includes/admin/views/partials/person-row.php:37
 #, php-format
 msgid "WhatsApp %s"
@@ -792,8 +792,8 @@ msgstr "নম্বর ব্লক হয়েছে: এখন থেকে 
 msgid "Number unblocked."
 msgstr "নম্বর আনব্লক হয়েছে।"
 
-#: includes/admin/class-cartlum-admin-reports.php:121
-#: includes/admin/class-cartlum-admin-reports.php:220
+#: includes/admin/class-cartlum-admin-reports.php:144
+#: includes/admin/class-cartlum-admin-reports.php:244
 #: includes/admin/class-cartlum-admin-settings.php:926
 #: includes/class-cartlum-ai-shop.php:743
 #: includes/class-cartlum-order-tracking.php:90
@@ -803,150 +803,162 @@ msgstr "নম্বর আনব্লক হয়েছে।"
 msgid "Delivered"
 msgstr "ডেলিভারি হয়েছে"
 
-#: includes/admin/class-cartlum-admin-reports.php:122
+#: includes/admin/class-cartlum-admin-reports.php:145
+msgid "Completed, delivery not known"
+msgstr "Completed, ডেলিভারি জানা নেই"
+
+#: includes/admin/class-cartlum-admin-reports.php:146
 #: includes/class-cartlum-order-tracking.php:136
 msgid "With the courier"
 msgstr "কুরিয়ারের কাছে"
 
-#: includes/admin/class-cartlum-admin-reports.php:123
-#: includes/admin/class-cartlum-admin-reports.php:298
+#: includes/admin/class-cartlum-admin-reports.php:147
+#: includes/admin/class-cartlum-admin-reports.php:330
 msgid "Not sent yet"
 msgstr "এখনো পাঠানো হয়নি"
 
-#: includes/admin/class-cartlum-admin-reports.php:124
-#: includes/admin/class-cartlum-admin-reports.php:297
+#: includes/admin/class-cartlum-admin-reports.php:148
+#: includes/admin/class-cartlum-admin-reports.php:329
 msgid "Cancelled before shipping"
 msgstr "পাঠানোর আগেই বাতিল"
 
-#: includes/admin/class-cartlum-admin-reports.php:125
+#: includes/admin/class-cartlum-admin-reports.php:149
 msgid "Returned or refused"
 msgstr "ফেরত বা নেয়নি"
 
-#: includes/admin/class-cartlum-admin-reports.php:175
+#: includes/admin/class-cartlum-admin-reports.php:199
 #: includes/admin/class-cartlum-admin-settings.php:120
 #: includes/admin/class-cartlum-admin-settings.php:122
 msgid "Reports"
 msgstr "রিপোর্ট"
 
-#: includes/admin/class-cartlum-admin-reports.php:176
+#: includes/admin/class-cartlum-admin-reports.php:200
 msgid "Where your orders ended up, and what stopped the ones that did not arrive."
 msgstr "আপনার অর্ডারগুলো শেষ পর্যন্ত কোথায় গেল, আর যেগুলো পৌঁছায়নি সেগুলো কেন থেমে গেল।"
 
-#: includes/admin/class-cartlum-admin-reports.php:178
+#: includes/admin/class-cartlum-admin-reports.php:202
 #: includes/admin/views/carts.php:39
 #: includes/admin/views/dashboard.php:78
 msgid "Period"
 msgstr "সময়কাল"
 
 #. translators: %d: number of days
-#: includes/admin/class-cartlum-admin-reports.php:183
+#: includes/admin/class-cartlum-admin-reports.php:207
 #: includes/admin/views/dashboard.php:83
 #, php-format
 msgid "%d days"
 msgstr "%d দিন"
 
 #. translators: %d: number of days
-#: includes/admin/class-cartlum-admin-reports.php:197
+#: includes/admin/class-cartlum-admin-reports.php:221
 #, php-format
 msgid "No orders in the last %d days."
 msgstr "গত %d দিনে কোনো অর্ডার নেই।"
 
-#: includes/admin/class-cartlum-admin-reports.php:208
+#: includes/admin/class-cartlum-admin-reports.php:232
 msgid "Summary"
 msgstr "সারসংক্ষেপ"
 
-#: includes/admin/class-cartlum-admin-reports.php:210
+#: includes/admin/class-cartlum-admin-reports.php:234
 msgid "Delivery success"
 msgstr "ডেলিভারি সফলতা"
 
 #. translators: 1: delivered orders, 2: returned orders
-#: includes/admin/class-cartlum-admin-reports.php:215
+#: includes/admin/class-cartlum-admin-reports.php:239
 #, php-format
 msgid "%1$d delivered · %2$d returned or refused"
 msgstr "%1$d টি ডেলিভারি হয়েছে · %2$d টি ফেরত বা নেয়নি"
 
 #. translators: 1: orders, 2: money
-#: includes/admin/class-cartlum-admin-reports.php:225
+#: includes/admin/class-cartlum-admin-reports.php:249
 #, php-format
 msgid "of %1$d order worth %2$s"
 msgid_plural "of %1$d orders worth %2$s"
 msgstr[0] "মোট %1$d টি অর্ডার, মূল্য %2$s"
 msgstr[1] "মোট %1$d টি অর্ডার, মূল্য %2$s"
 
-#: includes/admin/class-cartlum-admin-reports.php:230
+#: includes/admin/class-cartlum-admin-reports.php:254
 msgid "Fake orders stopped"
 msgstr "ফেক অর্ডার আটকানো"
 
-#: includes/admin/class-cartlum-admin-reports.php:232
+#: includes/admin/class-cartlum-admin-reports.php:256
 msgid "cancelled as fake before shipping"
 msgstr "পাঠানোর আগেই ফেক হিসেবে বাতিল"
 
 #. translators: %d: number of orders
-#: includes/admin/class-cartlum-admin-reports.php:238
+#: includes/admin/class-cartlum-admin-reports.php:262
 #, php-format
 msgid "Where %d order went"
 msgid_plural "Where %d orders went"
 msgstr[0] "%d টি অর্ডার কোথায় গেল"
 msgstr[1] "%d টি অর্ডার কোথায় গেল"
 
-#: includes/admin/class-cartlum-admin-reports.php:258
+#. translators: %d: number of orders
+#: includes/admin/class-cartlum-admin-reports.php:283
+#, php-format
+msgid "%d order was set to Completed without a parcel Cartlum knows of, so whether it arrived is not known. Delivery success counts only the parcels the courier finished."
+msgid_plural "%d orders were set to Completed without a parcel Cartlum knows of, so whether they arrived is not known. Delivery success counts only the parcels the courier finished."
+msgstr[0] "%d টি অর্ডার Completed করা হয়েছে, কিন্তু Cartlum-এ এর কোনো পার্সেল নেই, তাই পৌঁছেছে কি না জানা নেই। ডেলিভারি সফলতায় শুধু কুরিয়ারের শেষ করা পার্সেল গোনা হয়।"
+msgstr[1] "%d টি অর্ডার Completed করা হয়েছে, কিন্তু Cartlum-এ এর কোনো পার্সেল নেই, তাই পৌঁছেছে কি না জানা নেই। ডেলিভারি সফলতায় শুধু কুরিয়ারের শেষ করা পার্সেল গোনা হয়।"
+
+#: includes/admin/class-cartlum-admin-reports.php:290
 msgid "Why orders did not arrive"
 msgstr "অর্ডার কেন পৌঁছায়নি"
 
-#: includes/admin/class-cartlum-admin-reports.php:260
+#: includes/admin/class-cartlum-admin-reports.php:292
 msgid "No cancelled or returned orders in this period."
 msgstr "এই সময়ে কোনো বাতিল বা ফেরত অর্ডার নেই।"
 
-#: includes/admin/class-cartlum-admin-reports.php:276
+#: includes/admin/class-cartlum-admin-reports.php:308
 msgid "No reason given"
 msgstr "কারণ দেওয়া হয়নি"
 
-#: includes/admin/class-cartlum-admin-reports.php:283
+#: includes/admin/class-cartlum-admin-reports.php:315
 msgid "Tag the cancelled orders without a reason"
 msgstr "কারণ ছাড়া বাতিল অর্ডারগুলোতে কারণ দিন"
 
-#: includes/admin/class-cartlum-admin-reports.php:289
+#: includes/admin/class-cartlum-admin-reports.php:321
 msgid "Confirmation"
 msgstr "কনফার্মেশন"
 
-#: includes/admin/class-cartlum-admin-reports.php:292
+#: includes/admin/class-cartlum-admin-reports.php:324
 msgid "Confirmed on the phone"
 msgstr "ফোনে কনফার্ম"
 
-#: includes/admin/class-cartlum-admin-reports.php:293
+#: includes/admin/class-cartlum-admin-reports.php:325
 msgid "Confirmed by the customer’s link"
 msgstr "ক্রেতার লিংকে কনফার্ম"
 
-#: includes/admin/class-cartlum-admin-reports.php:295
+#: includes/admin/class-cartlum-admin-reports.php:327
 msgid "Confirmed by an AI call"
 msgstr "AI কলে কনফার্ম"
 
-#: includes/admin/class-cartlum-admin-reports.php:301
+#: includes/admin/class-cartlum-admin-reports.php:333
 msgid "Every order cancelled before shipping is a courier charge and a return you did not pay for."
 msgstr "পাঠানোর আগে বাতিল হওয়া প্রতিটি অর্ডার মানে একটি কুরিয়ার চার্জ আর রিটার্ন খরচ বেঁচে গেল।"
 
-#: includes/admin/class-cartlum-admin-reports.php:314
+#: includes/admin/class-cartlum-admin-reports.php:346
 msgid "With Cartlum Pro: delivery success and returns by district and by product, to see where to ask for an advance."
 msgstr "Cartlum Pro দিয়ে: জেলা ও প্রোডাক্ট অনুযায়ী ডেলিভারি সফলতা ও রিটার্ন, যাতে বুঝতে পারেন কোথায় অগ্রিম নেবেন।"
 
-#: includes/admin/class-cartlum-admin-reports.php:314
+#: includes/admin/class-cartlum-admin-reports.php:346
 #: includes/admin/class-cartlum-admin.php:637
 msgid "See what Pro adds"
 msgstr "Pro-তে কী আছে দেখুন"
 
 #. translators: %s: time ago
-#: includes/admin/class-cartlum-admin-reports.php:320
+#: includes/admin/class-cartlum-admin-reports.php:352
 #, php-format
 msgid "Orders by the date they were placed. Updated %s ago."
 msgstr "অর্ডার দেওয়ার তারিখ অনুযায়ী। %s আগে আপডেট হয়েছে।"
 
-#: includes/admin/class-cartlum-admin-reports.php:322
+#: includes/admin/class-cartlum-admin-reports.php:354
 #: includes/admin/class-cartlum-admin-today.php:260
 msgid "Refresh"
 msgstr "রিফ্রেশ"
 
 #. translators: %d: number of orders
-#: includes/admin/class-cartlum-admin-reports.php:326
+#: includes/admin/class-cartlum-admin-reports.php:358
 #, php-format
 msgid "Only the newest %d orders are counted."
 msgstr "শুধু সর্বশেষ %d টি অর্ডার গোনা হয়েছে।"
@@ -2574,27 +2586,27 @@ msgid "%d selected"
 msgstr "%dটি বাছাই করা"
 
 #: includes/admin/class-cartlum-admin.php:504
-#: includes/admin/class-cartlum-carts-table.php:139
+#: includes/admin/class-cartlum-carts-table.php:142
 msgid "Checking out"
 msgstr "চেকআউট করছেন"
 
 #: includes/admin/class-cartlum-admin.php:505
-#: includes/admin/class-cartlum-carts-table.php:138
+#: includes/admin/class-cartlum-carts-table.php:141
 msgid "Abandoned"
 msgstr "অসম্পূর্ণ"
 
 #: includes/admin/class-cartlum-admin.php:507
-#: includes/admin/class-cartlum-carts-table.php:141
+#: includes/admin/class-cartlum-carts-table.php:144
 msgid "Ordered"
 msgstr "অর্ডার করেছেন"
 
 #: includes/admin/class-cartlum-admin.php:508
-#: includes/admin/class-cartlum-carts-table.php:142
+#: includes/admin/class-cartlum-carts-table.php:145
 msgid "Lost"
 msgstr "হারানো"
 
 #: includes/admin/class-cartlum-admin.php:509
-#: includes/admin/class-cartlum-carts-table.php:143
+#: includes/admin/class-cartlum-carts-table.php:146
 #: includes/admin/views/cart.php:43
 #: includes/class-cartlum-restore.php:195
 msgid "Unsubscribed"
@@ -2834,43 +2846,43 @@ msgstr "যোগাযোগ"
 msgid "Reach out"
 msgstr "যোগাযোগ করুন"
 
-#: includes/admin/class-cartlum-carts-table.php:162
+#: includes/admin/class-cartlum-carts-table.php:165
 #: includes/admin/views/cart.php:308
 msgid "Mark as lost"
 msgstr "হারানো চিহ্নিত করুন"
 
-#: includes/admin/class-cartlum-carts-table.php:163
+#: includes/admin/class-cartlum-carts-table.php:166
 msgid "Delete"
 msgstr "মুছুন"
 
-#: includes/admin/class-cartlum-carts-table.php:215
+#: includes/admin/class-cartlum-carts-table.php:218
 #: includes/admin/views/cart.php:20
 msgid "(no name)"
 msgstr "(নাম নেই)"
 
 #. translators: %d: order number
-#: includes/admin/class-cartlum-carts-table.php:245
+#: includes/admin/class-cartlum-carts-table.php:248
 #, php-format
 msgid "Order #%d"
 msgstr "অর্ডার #%d"
 
-#: includes/admin/class-cartlum-carts-table.php:278
+#: includes/admin/class-cartlum-carts-table.php:281
 msgid "Not yet"
 msgstr "এখনো নয়"
 
 #. translators: %d: number of times
-#: includes/admin/class-cartlum-carts-table.php:281
+#: includes/admin/class-cartlum-carts-table.php:284
 #, php-format
 msgid "%d time"
 msgid_plural "%d times"
 msgstr[0] "%d বার"
 msgstr[1] "%d বার"
 
-#: includes/admin/class-cartlum-carts-table.php:310
+#: includes/admin/class-cartlum-carts-table.php:313
 msgid "No carts here yet."
 msgstr "এখনো কোনো কার্ট নেই।"
 
-#: includes/admin/class-cartlum-carts-table.php:310
+#: includes/admin/class-cartlum-carts-table.php:313
 msgid "A cart appears as soon as a customer types a phone number or email on the checkout page — before they place the order."
 msgstr "চেকআউট পেজে ক্রেতা ফোন নম্বর বা ইমেইল লেখামাত্র কার্ট দেখা যায় — অর্ডার দেওয়ার আগেই।"
 

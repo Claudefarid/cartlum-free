@@ -4,7 +4,7 @@ Tags: abandoned cart, fake order, cash on delivery, order sms, automation
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.42.0
+Stable tag: 0.42.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -115,6 +115,9 @@ It can, for stores that only used CartFlows for a shorter checkout. CartFlows' g
 6. Integrations: every connected service with its status.
 
 == Changelog ==
+
+= 0.42.1 =
+* Reports ask the courier before the order status. An order set to Completed whose parcel came back now counts as returned, and one whose parcel is still on the way as with the courier. In a shop that sends parcels, an order set to Completed with no parcel shows as "Completed, delivery not known" and is left out of the delivery success rate, which counts only the parcels the courier finished. A shop that never sends parcels sees Completed as delivered, as before.
 
 = 0.42.0 =
 * Incomplete Orders → Carts: filter by when the cart was started (Today, Last 7 days, Last 30 days, All time, each with its count; today is from midnight in the store's time zone) and by product (every product in the period's carts, with how many carts hold it). They work together with the status links and the search, and the CSV export keeps them.

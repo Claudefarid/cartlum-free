@@ -18,15 +18,19 @@ class Cartlum_Admin_Reports {
 	const LIMIT = 3000;
 
 	/**
-	 * Where an order ended up.
+	 * Where an order ended up. The parcel is asked first: an order set to Completed whose parcel
+	 * came back is a return, and one whose parcel is still on the way is with the courier.
+	 * Completed with no parcel counts as delivered here; Reports shows it as "delivery not known"
+	 * when the store sends parcels (see data()).
 	 *
-	 * @param WC_Order $order Order.
+	 * @param WC_Order   $order   Order.
+	 * @param array|null $courier The order's courier details, when already looked up.
 	 * @return string delivered|returned|cancelled|shipping|waiting|''
 	 */
-	public static function outcome( $order ) {
-		$courier = Cartlum_Order_Tracking::courier( $order );
+	public static function outcome( $order, $courier = false ) {
+		$courier = false === $courier ? Cartlum_Order_Tracking::courier( $order ) : $courier;
 		$state   = $courier ? (string) $courier['status'] : '';
-		if ( $order->has_status( 'completed' ) || 0 === strpos( $state, 'delivered' ) || 0 === strpos( $state, 'partial_delivered' ) ) {
+		if ( 0 === strpos( $state, 'delivered' ) || 0 === strpos( $state, 'partial_delivered' ) ) {
 			return 'delivered';
 		}
 		if ( in_array( $state, array( 'returned', 'returning', 'cancelled', 'cancelled_approval_pending' ), true ) ) {
@@ -37,8 +41,14 @@ class Cartlum_Admin_Reports {
 			$reason = class_exists( 'Cartlum_Cancel_Reasons' ) ? Cartlum_Cancel_Reasons::get( $order ) : '';
 			return $courier || 0 === strpos( $reason, 'refused_' ) ? 'returned' : 'cancelled';
 		}
+		if ( $order->has_status( array( 'completed', 'processing', 'on-hold' ) ) && $courier ) {
+			return 'shipping';
+		}
+		if ( $order->has_status( 'completed' ) ) {
+			return 'delivered';
+		}
 		if ( $order->has_status( array( 'processing', 'on-hold' ) ) ) {
-			return $courier ? 'shipping' : 'waiting';
+			return 'waiting';
 		}
 		return ''; // Pending payment, drafts: not real orders yet.
 	}
@@ -69,10 +79,16 @@ class Cartlum_Admin_Reports {
 				'order'        => 'DESC',
 			)
 		);
+		$parcels = false;
 		foreach ( $orders as $order ) {
-			$outcome = self::outcome( $order );
+			$courier = Cartlum_Order_Tracking::courier( $order );
+			$outcome = self::outcome( $order, $courier );
+			$parcels = $parcels || (bool) $courier;
 			if ( '' === $outcome ) {
 				continue;
+			}
+			if ( 'delivered' === $outcome && ! $courier ) {
+				$outcome = 'completed'; // Settled below.
 			}
 			$products = array();
 			foreach ( $order->get_items() as $item ) {
@@ -89,6 +105,13 @@ class Cartlum_Admin_Reports {
 				'by'       => (string) $order->get_meta( Cartlum_Confirm::BY ),
 				'reason'   => in_array( $outcome, array( 'cancelled', 'returned' ), true ) ? Cartlum_Cancel_Reasons::get( $order ) : '',
 			);
+		}
+		// A store that sends parcels learns from the courier whether an order arrived; there,
+		// Completed without a parcel only says that someone changed the status.
+		foreach ( $rows as $i => $row ) {
+			if ( 'completed' === $row['outcome'] ) {
+				$rows[ $i ]['outcome'] = $parcels ? 'unknown' : 'delivered';
+			}
 		}
 		$out = array(
 			'rows'   => $rows,
@@ -119,6 +142,7 @@ class Cartlum_Admin_Reports {
 	public static function outcome_labels() {
 		return array(
 			'delivered' => __( 'Delivered', 'cartlum' ),
+			'unknown'   => __( 'Completed, delivery not known', 'cartlum' ),
 			'shipping'  => __( 'With the courier', 'cartlum' ),
 			'waiting'   => __( 'Not sent yet', 'cartlum' ),
 			'cancelled' => __( 'Cancelled before shipping', 'cartlum' ),
@@ -252,6 +276,14 @@ class Cartlum_Admin_Reports {
 					</span>
 				</div>
 			</section>
+			<?php if ( $count['unknown'] ) : ?>
+				<p class="cl-note">
+					<?php
+					/* translators: %d: number of orders */
+					echo esc_html( sprintf( _n( '%d order was set to Completed without a parcel Cartlum knows of, so whether it arrived is not known. Delivery success counts only the parcels the courier finished.', '%d orders were set to Completed without a parcel Cartlum knows of, so whether they arrived is not known. Delivery success counts only the parcels the courier finished.', $count['unknown'], 'cartlum' ), $count['unknown'] ) );
+					?>
+				</p>
+			<?php endif; ?>
 
 			<div class="cl-columns">
 				<section class="cl-section">
